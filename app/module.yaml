@@ -1,0 +1,14 @@
+product: jvm/app
+
+dependencies:
+  - //editor
+  - $compose.desktop.currentOs
+
+settings:
+  compose:
+    enabled: true
+  jvm:
+    jdk:
+      version: 25
+    release: 25
+    mainClass: tessera.app.MainKt

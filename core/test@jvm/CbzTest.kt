@@ -13,6 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 class CbzTest {
@@ -97,7 +98,10 @@ class CbzTest {
         val page = comic.document.pages[2]
         val n = page.frames.size
         page.addFrame(Polygon.rectangle(5, 5, 50, 50))
-        val reopened = ComicFiles.save(comic, copy)
+        val saved = ComicFiles.save(comic, copy)
+        assertSame(comic.document, saved.document)
+        assertNotNull(saved.image(saved.document.pages[2].imageHref))
+        val reopened = ComicFiles.open(copy)
         assertEquals(n + 1, reopened.document.pages[2].frames.size)
         ZipFile(source).use { a ->
             ZipFile(copy).use { b ->

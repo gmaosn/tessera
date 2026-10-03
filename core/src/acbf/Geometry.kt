@@ -18,9 +18,12 @@ data class Polygon(val points: List<Point>) {
     val maxY: Int get() = points.maxOf { it.y }
 
     /** True when the polygon is an axis-aligned rectangle given by its four corners. */
-    val isRectangle: Boolean
-        get() = points.size == 4 && points.all { (it.x == minX || it.x == maxX) && (it.y == minY || it.y == maxY) } &&
-            points.toSet().size == 4
+    val isRectangle: Boolean get() = isRectangle(0)
+
+    /** Same, allowing each corner to be [tolerance] pixels off (hand-drawn frames). */
+    fun isRectangle(tolerance: Int): Boolean =
+        points.size == 4 && points.toSet().size == 4 &&
+            points.all { (abs(it.x - minX) <= tolerance || abs(it.x - maxX) <= tolerance) && (abs(it.y - minY) <= tolerance || abs(it.y - maxY) <= tolerance) }
 
     /** Signed shoelace area; positive or negative depending on winding. */
     val signedArea: Double

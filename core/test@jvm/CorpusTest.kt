@@ -69,6 +69,30 @@ class CorpusTest {
     }
 
     @Test
+    fun restoringAnEarlierStateGivesBackTheSameBytes() {
+        for (name in listOf("Revoy", "Purple", "Doctorow, Cory - Craphound-1.1", "NYC2123")) {
+            val f = corpus.first { it.name.startsWith(name) }
+            val original = f.readBytes()
+            val doc = AcbfDocument.parse(original)
+            val page = doc.pages.first { it.frames.size >= 3 || name == "NYC2123" }
+            val state = page.frameState()
+            // A mix of everything the editor does.
+            page.addFrame(Polygon.rectangle(1, 1, 9, 9), 0)
+            page.frames.getOrNull(2)?.let { page.removeFrame(it) }
+            page.frames.getOrNull(1)?.let { page.moveFrame(it, page.frames.size - 1) }
+            page.frames.last().polygon = Polygon.rectangle(3, 3, 7, 7)
+            val middle = page.frameState()
+            page.restoreFrames(state)
+            assertContentEquals(original, doc.write(), name)
+            // And forward again (redo).
+            page.restoreFrames(middle)
+            assertEquals(middle.map { it.points }, page.frameState().map { it.points })
+            page.restoreFrames(state)
+            assertContentEquals(original, doc.write(), "$name after redo and undo")
+        }
+    }
+
+    @Test
     fun framesCanBeAddedToAPageThatHasNone() {
         val f = corpus.first { it.name.startsWith("NYC2123") }
         val doc = AcbfDocument.parse(f.readBytes())

@@ -57,28 +57,38 @@ object ComicFiles {
     }
 
     /**
-     * Saves [comic], read from [file], back to [file], and returns the reopened comic. The new
-     * content is written beside the file and moved over it only once complete.
+     * Saves [comic], read from [file], back to [file]. The new content is written beside the file
+     * and moved over it only once complete. Returns the comic with the same document, reading its
+     * images from the saved file from now on.
      */
     fun save(comic: Comic, file: File): Comic {
         val target = if (file.isDirectory) File(file, comic.acbfPath) else file
         val temp = File.createTempFile(".${target.name}.", ".tmp", target.absoluteFile.parentFile)
         try {
-            when (val container = comic.container) {
-                is ZipContainer -> {
-                    FileOutputStream(temp).buffered(1 shl 20).use { out ->
-                        comic.writeCbz(object : ByteSink {
-                            override fun write(bytes: ByteArray) = out.write(bytes)
-                        })
-                    }
-                    (container.archive.source as? Closeable)?.close()
+            val zip = comic.container as? ZipContainer
+            if (zip != null) {
+                FileOutputStream(temp).buffered(1 shl 20).use { out ->
+                    comic.writeCbz(object : ByteSink {
+                        override fun write(bytes: ByteArray) = out.write(bytes)
+                    })
                 }
-                else -> temp.writeBytes(comic.document.write())
+            } else {
+                temp.writeBytes(comic.document.write())
             }
-            Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+            val source = zip?.archive?.source as? Closeable
+            try {
+                Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+            } catch (e: java.io.IOException) {
+                // Windows will not replace a file that is still open: close it and try again.
+                if (source == null) throw e
+                source.close()
+                Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+            }
+            if (zip == null) return Comic(comic.document, comic.container, comic.acbfPath, generated = false)
+            source?.close()
+            return Comic(comic.document, ZipContainer(ZipArchive(FileSource(file))), comic.acbfPath, generated = false)
         } finally {
             temp.delete()
         }
-        return open(file)
     }
 }

@@ -1,0 +1,20 @@
+product:
+  type: kmp/lib
+  platforms: [jvm, android]
+
+dependencies:
+  - //core: exported
+  - $compose.foundation
+  - $compose.material
+
+settings:
+  compose:
+    enabled: true
+  jvm:
+    release: 25
+    jdk:
+      version: 25
+
+test-dependencies@jvm:
+  - $compose.uiTest
+  - $compose.desktop.currentOs

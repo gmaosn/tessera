@@ -105,6 +105,9 @@ class AcbfDocument(val xml: XmlDocument) {
 
 data class LanguageLayer(val lang: String, val show: Boolean)
 
+/** A frame element and its `points` text, as remembered for undo. */
+class FrameState(val element: XmlElement, val points: String?)
+
 class AcbfPage internal constructor(val document: AcbfDocument, val element: XmlElement, val isCover: Boolean) {
     val imageHref: String? get() = element.element("image")?.get("href")
 
@@ -122,21 +125,10 @@ class AcbfPage internal constructor(val document: AcbfDocument, val element: Xml
      * existing ones; on a page without frames, after the last child, as ACBF Editor does.
      */
     fun addFrame(polygon: Polygon, index: Int = frames.size): AcbfFrame {
-        val current = element.elements("frame").toList()
-        require(index in 0..current.size)
+        require(index in 0..frames.size)
         val e = XmlElement(qualified("frame"))
         e["points"] = polygon.format()
-        val lineBreak = document.xml.lineBreak
-        when {
-            current.isEmpty() -> element.appendElement(e, lineBreak)
-            index == current.size -> element.insertElement(e, current.last(), lineBreak)
-            else -> {
-                // Before frame [index]: after its previous element sibling.
-                val target = current[index]
-                val before = element.elements.takeWhile { it !== target }.lastOrNull()
-                element.insertElement(e, before, lineBreak)
-            }
-        }
+        placeFrame(e, index)
         return AcbfFrame(this, e)
     }
 
@@ -144,17 +136,43 @@ class AcbfPage internal constructor(val document: AcbfDocument, val element: Xml
 
     /** Moves a frame to reading position [to]. */
     fun moveFrame(frame: AcbfFrame, to: Int) {
-        val moved = frame.element
-        element.removeElement(moved)
-        val remaining = element.elements("frame").toList()
+        element.removeElement(frame.element)
+        placeFrame(frame.element, to)
+    }
+
+    /** What [restoreFrames] needs to bring the frames back: each element with its points. */
+    fun frameState(): List<FrameState> = element.elements("frame").map { FrameState(it, it["points"]) }.toList()
+
+    /**
+     * Brings the frames back to an earlier [frameState]: frames that were added since are
+     * removed, removed ones come back as the same elements, order and points are restored.
+     * Frames that did not move keep their place and their text untouched.
+     */
+    fun restoreFrames(state: List<FrameState>) {
+        val wanted = state.map { it.element }.toSet()
+        for (e in element.elements("frame").toList()) if (e !in wanted) element.removeElement(e)
+        state.forEachIndexed { i, s ->
+            val current = element.elements("frame").toList()
+            if (current.getOrNull(i) !== s.element) {
+                if (s.element.parent === element) element.removeElement(s.element)
+                placeFrame(s.element, i)
+            }
+            s.element["points"] = s.points
+        }
+    }
+
+    /** Inserts a detached frame element at reading position [index], with matching indentation. */
+    private fun placeFrame(e: XmlElement, index: Int) {
+        val current = element.elements("frame").toList()
         val lineBreak = document.xml.lineBreak
         when {
-            remaining.isEmpty() -> element.appendElement(moved, lineBreak)
-            to >= remaining.size -> element.insertElement(moved, remaining.last(), lineBreak)
+            current.isEmpty() -> element.appendElement(e, lineBreak)
+            index >= current.size -> element.insertElement(e, current.last(), lineBreak)
             else -> {
-                val target = remaining[to.coerceAtLeast(0)]
+                // Before frame [index]: after its previous element sibling.
+                val target = current[index.coerceAtLeast(0)]
                 val before = element.elements.takeWhile { it !== target }.lastOrNull()
-                element.insertElement(moved, before, lineBreak)
+                element.insertElement(e, before, lineBreak)
             }
         }
     }

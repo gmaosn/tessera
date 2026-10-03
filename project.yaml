@@ -1,2 +1,4 @@
 modules:
   - core
+  - editor
+  - app
