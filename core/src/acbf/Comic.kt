@@ -1,9 +1,9 @@
-package acbf
+package tessera.acbf
 
-import acbf.xml.XmlParser
-import acbf.zip.ByteSink
-import acbf.zip.ZipArchive
-import acbf.zip.ZipRewriter
+import tessera.xml.XmlParser
+import tessera.zip.ByteSink
+import tessera.zip.ZipArchive
+import tessera.zip.ZipRewriter
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 

@@ -1,11 +1,11 @@
-package acbf
+package tessera.acbf
 
-import acbf.xml.XmlDocument
-import acbf.xml.XmlElement
-import acbf.xml.XmlParser
-import acbf.xml.appendElement
-import acbf.xml.insertElement
-import acbf.xml.removeElement
+import tessera.xml.XmlDocument
+import tessera.xml.XmlElement
+import tessera.xml.XmlParser
+import tessera.xml.appendElement
+import tessera.xml.insertElement
+import tessera.xml.removeElement
 
 /** The ACBF namespaces met in real files. Each document keeps the one it was written with. */
 object AcbfNamespaces {
@@ -74,8 +74,8 @@ class AcbfDocument(val xml: XmlDocument) {
          * others are pages. Laid out the way lxml's pretty printer (ACBF Editor) writes it.
          */
         fun create(title: String, images: List<String>): AcbfDocument {
-            fun attr(s: String) = acbf.xml.escapeAttribute(s, '"')
-            fun text(s: String) = acbf.xml.escapeText(s)
+            fun attr(s: String) = tessera.xml.escapeAttribute(s, '"')
+            fun text(s: String) = tessera.xml.escapeText(s)
             val xml = buildString {
                 append("<?xml version='1.0' encoding='UTF-8'?>\n")
                 append("<ACBF xmlns=\"${AcbfNamespaces.DEFAULT}\">\n")

@@ -1,4 +1,4 @@
-package acbf.zip
+package tessera.zip
 
 /** Random access to the bytes of an archive. */
 interface ByteSource {

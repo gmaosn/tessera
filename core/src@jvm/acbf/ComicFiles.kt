@@ -1,9 +1,9 @@
-package acbf
+package tessera.acbf
 
-import acbf.xml.XmlParser
-import acbf.zip.ByteSink
-import acbf.zip.ByteSource
-import acbf.zip.ZipArchive
+import tessera.xml.XmlParser
+import tessera.zip.ByteSink
+import tessera.zip.ByteSource
+import tessera.zip.ZipArchive
 import java.io.Closeable
 import java.io.File
 import java.io.FileOutputStream

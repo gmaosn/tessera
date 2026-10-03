@@ -1,4 +1,4 @@
-package acbf.zip
+package tessera.zip
 
 import java.io.ByteArrayOutputStream
 import java.util.zip.Deflater

@@ -1,4 +1,4 @@
-package acbf.xml
+package tessera.xml
 
 class XmlParseException(message: String, val line: Int, val column: Int) :
     Exception("$message (line $line, column $column)")

@@ -1,5 +1,5 @@
-import acbf.AcbfDocument
-import acbf.Polygon
+import tessera.acbf.AcbfDocument
+import tessera.acbf.Polygon
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertContentEquals

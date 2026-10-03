@@ -1,5 +1,5 @@
-import acbf.Point
-import acbf.Polygon
+import tessera.acbf.Point
+import tessera.acbf.Polygon
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

@@ -1,9 +1,9 @@
-import acbf.Comic
-import acbf.ComicFiles
-import acbf.Polygon
-import acbf.zip.ByteArraySource
-import acbf.zip.ByteSink
-import acbf.zip.ZipArchive
+import tessera.acbf.Comic
+import tessera.acbf.ComicFiles
+import tessera.acbf.Polygon
+import tessera.zip.ByteArraySource
+import tessera.zip.ByteSink
+import tessera.zip.ZipArchive
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.zip.ZipEntry
