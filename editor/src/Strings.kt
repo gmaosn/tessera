@@ -1,51 +1,133 @@
 package tessera.editor
 
-/** User-visible text, in one place for a later translation. French for now. */
-object Strings {
-    const val modeFrames = "Cases"
-    const val modeTexts = "Textes"
-    const val modeInfo = "Informations"
-    const val nextStep = "Prochaine étape"
-    const val read = "Lire"
-    const val readHint = "Lire case par case (Espace)"
-    const val save = "Enregistrer"
-    const val cover = "Couv."
-    const val coverPage = "Couverture"
-    const val frames = "Cases"
-    const val page = "Planche"
-    const val inFile = "Dans le fichier"
-    const val inFileNote = "Seuls les attributs points modifiés changent ; tout le reste du fichier est réécrit à l’octet près."
-    const val background = "Fond"
-    const val transition = "Transition"
-    const val transitionDefault = "Par défaut (fondu)"
-    const val autoOrder = "Ordre auto"
-    const val leftToRight = "Gauche → droite"
-    const val rightToLeft = "Droite → gauche"
-    const val direction = "Sens"
-    const val rectangle = "Rectangle"
-    const val noFrames = "Aucune case. Tracez-en une avec R, ou cliquez point par point avec P."
-    const val fit = "Ajuster"
-    const val orderNeedsTwo = "Il faut au moins deux cases"
-    const val threePointsMinimum = "Une case garde au moins trois points"
-    const val orderSaved = "Ordre de lecture enregistré"
-    const val autoOrderLtr = "Ordre : lignes de haut en bas, de gauche à droite"
-    const val autoOrderRtl = "Ordre : lignes de haut en bas, de droite à gauche"
-    const val nothingToSave = "Rien à enregistrer"
-    const val noFramesToRead = "Aucune case à lire"
-    const val close = "Fermer"
-    const val imageMissing = "Image introuvable"
-    const val toolSelect = "Sélection (V)"
-    const val toolRect = "Rectangle (R)"
-    const val toolPoly = "Polygone (P)"
-    const val toolOrder = "Ordre de lecture (O)"
-    const val validate = "Valider"
-    const val cancel = "Annuler"
-    const val inherited = "hérité"
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
-    fun pageOf(n: Int, total: Int) = "Planche $n sur $total"
-    fun polygon(points: Int) = "Polygone · $points points"
-    fun frameOf(n: Int, total: Int) = "Case $n / $total"
-    fun orderProgress(done: Int, total: Int) = "Ordre de lecture : $done / $total"
-    fun saved(addedAcbf: Boolean) = if (addedAcbf) "Enregistré : fichier ACBF ajouté au CBZ" else "Enregistré : seul le fichier ACBF a changé"
-    fun saveFailed(reason: String?) = "Enregistrement impossible : ${reason ?: "erreur inconnue"}"
+enum class Language(val code: String, val label: String) {
+    English("en", "English"),
+    French("fr", "Français"),
+    ;
+
+    companion object {
+        fun of(code: String?): Language = entries.firstOrNull { it.code == code?.lowercase()?.take(2) } ?: English
+    }
+}
+
+/**
+ * Every user-visible text, in English and French. [language] is Compose state: changing it
+ * redraws the interface in the other language at once.
+ */
+object Strings {
+    var language by mutableStateOf(Language.English)
+
+    /** The command and option keys as this system names them; set by the app. */
+    var cmd = "⌘"
+    var alt = "⌥"
+
+    private fun t(en: String, fr: String) = if (language == Language.French) fr else en
+
+    val modeFrames get() = t("Frames", "Cases")
+    val modeTexts get() = t("Texts", "Textes")
+    val modeInfo get() = t("Book info", "Informations")
+    val read get() = t("Read", "Lire")
+    val save get() = t("Save", "Enregistrer")
+    val cover get() = t("Cover", "Couv.")
+    val coverPage get() = t("Cover", "Couverture")
+    val frames get() = t("Frames", "Cases")
+    val page get() = t("Page", "Planche")
+    val inFile get() = t("In the file", "Dans le fichier")
+    val inFileNote get() = t(
+        "Only the points attributes you change are rewritten; the rest of the file stays byte for byte the same.",
+        "Seuls les attributs points modifiés changent ; tout le reste du fichier est réécrit à l’octet près.",
+    )
+    val background get() = t("Background", "Fond")
+    val transition get() = t("Transition", "Transition")
+    val transitionDefault get() = t("Default (fade)", "Par défaut (fondu)")
+    val autoOrder get() = t("Auto order", "Ordre auto")
+    val leftToRight get() = t("Left → right", "Gauche → droite")
+    val rightToLeft get() = t("Right → left", "Droite → gauche")
+    val rectangle get() = t("Rectangle", "Rectangle")
+    val noFrames get() = t("No frames yet. Draw one with R, or click point by point with P.", "Aucune case. Tracez-en une avec R, ou cliquez point par point avec P.")
+    val fit get() = t("Fit", "Ajuster")
+    val orderNeedsTwo get() = t("Reading order needs at least two frames", "Il faut au moins deux cases")
+    val threePointsMinimum get() = t("A frame keeps at least three points", "Une case garde au moins trois points")
+    val orderSaved get() = t("Reading order saved", "Ordre de lecture enregistré")
+    val autoOrderLtr get() = t("Order: rows top to bottom, left to right", "Ordre : lignes de haut en bas, de gauche à droite")
+    val autoOrderRtl get() = t("Order: rows top to bottom, right to left", "Ordre : lignes de haut en bas, de droite à gauche")
+    val nothingToSave get() = t("Nothing to save", "Rien à enregistrer")
+    val noFramesToRead get() = t("No frames to read", "Aucune case à lire")
+    val close get() = t("Close", "Fermer")
+    val validate get() = t("Done", "Valider")
+    val cancel get() = t("Cancel", "Annuler")
+    val inherited get() = t("inherited", "hérité")
+    val spaceKey get() = t("Space", "Espace")
+    val escKey get() = t("Esc", "Échap")
+    val previewKeys get() = t("← →  frame · Esc  close", "← →  case · Échap  fermer")
+
+    fun pageOf(n: Int, total: Int) = t("Page $n of $total", "Planche $n sur $total")
+    fun polygon(points: Int) = t("Polygon · $points points", "Polygone · $points points")
+    fun frameOf(n: Int, total: Int) = t("Frame $n / $total", "Case $n / $total")
+    fun orderProgress(done: Int, total: Int) = t("Reading order: $done / $total", "Ordre de lecture : $done / $total")
+    fun saved(addedAcbf: Boolean) =
+        if (addedAcbf) t("Saved: ACBF file added to the CBZ", "Enregistré : fichier ACBF ajouté au CBZ")
+        else t("Saved: only the ACBF file changed", "Enregistré : seul le fichier ACBF a changé")
+    fun saveFailed(reason: String?) = t("Could not save: ${reason ?: "unknown error"}", "Enregistrement impossible : ${reason ?: "erreur inconnue"}")
+
+    // ----- Hint bar -----
+
+    fun hintMode(tool: Tool) = when (tool) {
+        Tool.Select -> t("Select", "Sélection")
+        Tool.Rectangle -> t("Rectangle", "Rectangle")
+        Tool.Polygon -> t("Polygon", "Polygone")
+        Tool.Order -> t("Reading order", "Ordre de lecture")
+    }
+
+    fun hints(tool: Tool): List<Hint> = when (tool) {
+        Tool.Select -> listOf(
+            Hint(text = t("Drag a frame:", "Glisser une case :"), strong = t("move", "déplacer")),
+            Hint(text = t("Drag a corner:", "Glisser un coin :"), strong = t("adjust", "ajuster")),
+            Hint(text = t("Dot in the middle of a side:", "Point au milieu d’un côté :"), strong = t("add", "ajouter")),
+            Hint(listOf(alt), t("click a corner:", "clic sur un coin :"), t("remove", "retirer")),
+            Hint(listOf("←↑→↓"), t("1 px · ⇧ 10 px", "1 px · ⇧ 10 px")),
+            Hint(listOf("⌫"), t("delete", "supprimer")),
+            Hint(listOf("${cmd}Z"), t("undo", "annuler")),
+        )
+        Tool.Rectangle -> listOf(
+            Hint(text = t("Drag:", "Glisser :"), strong = t("draw a frame", "tracer une case")),
+            Hint(text = t("Edges snap to nearby frames and to the image border", "Les bords s’aimantent aux cases voisines et au bord de l’image")),
+            Hint(listOf(escKey), t("back to Select", "retour à la sélection")),
+        )
+        Tool.Polygon -> listOf(
+            Hint(text = t("Click:", "Clic :"), strong = t("add a point", "ajouter un point")),
+            Hint(listOf("↵"), t("or click the first point:", "ou clic sur le premier point :"), t("close", "fermer")),
+            Hint(listOf("⌫"), t("last point", "dernier point")),
+            Hint(listOf(escKey), t("cancel", "annuler")),
+        )
+        Tool.Order -> listOf(
+            Hint(text = t("Click the frames", "Cliquez les cases"), strong = t("in the order they are read", "dans l’ordre où on les lit")),
+            Hint(listOf("↵"), t("done", "valider")),
+            Hint(listOf(escKey), t("cancel", "annuler")),
+        )
+    }
+
+    val hintRead get() = Hint(listOf(spaceKey), t("read frame by frame", "lire case par case"))
+
+    fun toolTip(tool: Tool) = when (tool) {
+        Tool.Select -> t("Select (V)", "Sélection (V)")
+        Tool.Rectangle -> t("Rectangle (R)", "Rectangle (R)")
+        Tool.Polygon -> t("Polygon (P)", "Polygone (P)")
+        Tool.Order -> t("Reading order (O)", "Ordre de lecture (O)")
+    }
+
+    // ----- Application -----
+
+    val menuFile get() = t("File", "Fichier")
+    val menuOpen get() = t("Open…", "Ouvrir…")
+    val menuLanguage get() = t("Language", "Langue")
+    val welcome get() = t("Open a CBZ or ACBF comic, or drop it here.", "Ouvrez une bande dessinée CBZ ou ACBF, ou déposez-la ici.")
+    val openDialog get() = t("Open a comic", "Ouvrir une bande dessinée")
+    val unsavedTitle get() = t("Unsaved changes", "Modifications non enregistrées")
+    fun unsavedMessage(file: String) = t("Save the changes to “$file” before closing?", "Enregistrer les modifications de « $file » avant de fermer ?")
+    val dontSave get() = t("Don’t save", "Ne pas enregistrer")
 }

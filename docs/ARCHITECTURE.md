@@ -1,0 +1,74 @@
+# Architecture
+
+## Modules
+
+| Module | Platforms | Role |
+|---|---|---|
+| `core` | JVM, Android | Lossless XML, the ACBF model, ZIP (CBZ) reading and raw rewriting. No UI. |
+| `editor` | JVM, Android | The frame editor: session (undo, dirty state), frame tool, Compose UI, strings. |
+| `app` | JVM desktop | The window, menus, file dialogs, drag and drop, the unsaved-changes prompt. |
+
+Everything is pure Kotlin. Platform code is small and isolated: DEFLATE (`java.util.zip`) in
+`core/src@jvm` and `core/src@android`, image decoding (Skia on the desktop, `BitmapFactory` on
+Android) in `editor/src@jvm` and `editor/src@android`, and file access (`ComicFiles`) on the JVM.
+The editor UI is common code, so a tablet version needs only a host, not a rewrite; nothing in
+it depends on hover or right-click alone.
+
+## Lossless XML (`core/src/xml`)
+
+`XmlParser` builds a tree in which every node keeps its source text: attributes keep their
+order, quotes and spacing; text keeps its entities; comments, processing instructions, CDATA
+and the DOCTYPE are nodes too. `write()` gives back the source byte for byte. Changing an
+attribute or a text marks only that node, which is then serialised afresh.
+
+`XmlLayout.kt` inserts and removes elements with the indentation and line breaks of their
+neighbours, so an edit looks as if the original tool had written it.
+
+## ACBF model (`core/src/acbf`)
+
+`AcbfDocument`, `AcbfPage` and `AcbfFrame` are thin views over the XML tree; there is no
+second model to keep in sync, and whatever they do not know about is untouched. Pages are the
+cover first, then the body pages, as readers number them.
+
+Frame edits: `addFrame`, `removeFrame`, `moveFrame`, and `frameState`/`restoreFrames` for undo.
+`restoreFrames` brings back the very same elements in their places, which is why undoing every
+change gives back the original bytes (tested on four real books).
+
+`Polygon.format()` writes points the only way ACBF Viewer can read them: integers, one space
+between points (it parses with `split(' ')` and `int()`).
+
+## Comics and saving
+
+`Comic` ties a document to a `Container` (a CBZ, a folder, or nothing) and resolves image
+`href`s: relative paths (to the ACBF file's folder), `#id` for embedded binaries, case
+differences, percent-encoding.
+
+`ZipArchive` reads the central directory and inflates entries on demand. `ZipRewriter` writes a
+new archive in which every entry is copied raw (local header, compressed data, data descriptor)
+except the ACBF document, which is replaced in place or added at the end. `ComicFiles.save`
+writes to a temporary file beside the original and moves it over atomically, then reopens the
+archive while keeping the same in-memory document, so undo history survives saving.
+
+## Editor (`editor/src`)
+
+- `Session`: the open comic, the current page, undo and redo steps (frame states or attribute
+  changes), the dirty flag, and the frames' saved points for the "In the file" highlight.
+  `beginGesture()` turns a drag into a single undo step.
+- `FrameTool`: everything between the pointer and the frames, in image pixels. The canvas
+  passes the zoom so that handle sizes and snapping distances stay constant on screen. Pure
+  logic, tested without a UI (`editor/test/FrameToolTest.kt`).
+- `PageCanvas` (`CanvasView` holds zoom and scroll), `PageStrip`, `Inspector`, `ReaderPreview`,
+  `EditorScreen`: the Compose UI, in Aster's palette (`Theme.kt`).
+- `ReaderPreview` animates one progress value: camera position, a geometric zoom, the frame
+  outline (both outlines resampled to 128 points and morphed) and the background colour.
+- `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
+  redraws the UI at once.
+
+## Tests
+
+- `core/test`, `core/test@jvm`: XML round trips and edits, geometry, the corpus (byte-for-byte
+  round trip of the eight sample documents, frame edits, undo), CBZ reading and rewriting
+  (checked with `java.util.zip` as an independent reader).
+- `editor/test`: the frame tool (drawing, snapping, handles, order, undo).
+- `editor/test@jvm/ScreensTest.kt`: renders every screen state on real books into
+  `build/screens/` for a visual check, including the reading preview mid-transition.

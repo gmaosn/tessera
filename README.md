@@ -1,18 +1,44 @@
 # Tessera
 
-A modern editor and reader for ACBF comics (Advanced Comic Book Format), in Kotlin and Compose.
-Perfect compatibility with ACBF: files are rewritten byte for byte, except what you change.
+*[Version française](README.fr.md)*
 
-- `core/` — lossless XML, the ACBF model, CBZ reading and raw rewriting (JVM and Android).
-- `editor/` — the frame editor's logic and Compose UI (desktop now, tablet later).
-- `app/` — the desktop application.
+A modern editor and reader for comics in the ACBF format (Advanced Comic Book Format), written
+in Kotlin and Compose.
+
+ACBF describes a comic's frames, so that a reader can zoom from frame to frame on a small
+screen; its text layers per language, so that a comic can be translated without touching the
+images; and rich metadata. The format is open and good; its tools (ACBF Editor and ACBF
+Viewer, Python and GTK) have aged. Tessera aims at perfect compatibility: a file is written back
+byte for byte, except what you changed.
+
+![The frame editor](docs/images/editor-en.jpg)
+
+## Status
+
+- **Frame editor** (desktop): drawing, adjusting and ordering frames, reading preview, undo,
+  saving, English and French. See the [user guide](docs/GUIDE.md).
+- Next: text layers and translations, book information, then the Android reader.
+
+## Building and running
+
+The repository carries the `./kotlin` launcher (Kotlin Toolchain 0.12, JDK 25), which provisions
+everything on first use.
 
 ```sh
-./kotlin test -p jvm                        # every test
 ./kotlin run -m app -- path/to/comic.cbz    # the editor
-tools/fetch-fixtures.sh                     # the sample books used by tests and screenshots
+./kotlin test -p jvm                        # every test
+tools/fetch-fixtures.sh                     # the sample books (about 120 MB) for tests and screenshots
 ```
 
-`editor/test@jvm/ScreensTest.kt` renders each screen into `build/screens/` for a visual check.
-See `docs/COMPATIBILITY.md` for what the format and the original tools taught us, and
-`NOTES.md` (French) for the owner's decisions.
+## Documentation
+
+- [User guide](docs/GUIDE.md) · [Guide d’utilisation](docs/GUIDE.fr.md)
+- [Architecture](docs/ARCHITECTURE.md): modules, the lossless XML layer, how saving works.
+- [ACBF compatibility notes](docs/COMPATIBILITY.md): what the specification, the original tools
+  and real files taught us.
+- `NOTES.md` (French): the owner's decisions and progress.
+
+## Licence of the sample books
+
+The books in `fixtures/` keep their own Creative Commons or public-domain licences; see
+[fixtures/README.md](fixtures/README.md).

@@ -6,3 +6,6 @@ fixtures/samples/
 # Upstream sources, cloned for reference only
 ref/
 *.png
+
+# Documentation screenshots
+!/docs/images/*.jpg

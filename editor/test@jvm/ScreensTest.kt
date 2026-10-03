@@ -11,6 +11,8 @@ import kotlinx.coroutines.runBlocking
 import tessera.acbf.ComicFiles
 import tessera.editor.EditorScreen
 import tessera.editor.FrameTool
+import tessera.editor.Language
+import tessera.editor.Strings
 import tessera.editor.Tool
 import tessera.editor.ImageCache
 import tessera.editor.Session
@@ -59,6 +61,16 @@ class ScreensTest {
 
     @Test
     fun craphoundPage() = shot("01-craphound", "Doctorow, Cory - Craphound", 1)
+
+    @Test
+    fun craphoundFrench() {
+        Strings.language = Language.French
+        try {
+            shot("10-craphound-fr", "Doctorow, Cory - Craphound", 1) { _, tool -> tool.selected = 3 }
+        } finally {
+            Strings.language = Language.English
+        }
+    }
 
     @Test
     fun craphoundDark() = shot("02-craphound-dark", "Doctorow, Cory - Craphound", 1, dark = true)

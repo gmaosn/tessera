@@ -143,7 +143,7 @@ fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
                 frames.indices.forEach { k -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (k == index) PreviewDotOn else PreviewDot)) }
             }
             Spacer(Modifier.weight(1f))
-            Label("← →  case · Échap  fermer", color = PreviewText, size = 12.5.sp)
+            Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)
         }
     }
 }

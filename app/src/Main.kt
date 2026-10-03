@@ -36,6 +36,7 @@ import tessera.acbf.ComicFiles
 import tessera.editor.EditorScreen
 import tessera.editor.ImageCache
 import tessera.editor.Label
+import tessera.editor.Language
 import tessera.editor.LocalPalette
 import tessera.editor.Pill
 import tessera.editor.Session
@@ -44,6 +45,9 @@ import tessera.editor.TesseraTheme
 import java.awt.FileDialog
 import java.awt.datatransfer.DataFlavor
 import java.io.File
+import java.util.Locale
+import java.util.prefs.Preferences
+import javax.swing.JOptionPane
 
 /** One open comic: the file on disk, the editing session and its images. */
 private class Opened(val file: File, val session: Session, val images: ImageCache)
@@ -53,16 +57,21 @@ private fun open(file: File): Opened {
     return Opened(file, Session(comic, file.name), ImageCache(comic))
 }
 
-fun main(args: Array<String>) = application {
-    var opened by remember { mutableStateOf(args.firstOrNull()?.let { runCatching { open(File(it)) }.getOrNull() }) }
-    var error by remember { mutableStateOf<String?>(null) }
-    val state = rememberWindowState(size = DpSize(1440.dp, 920.dp))
-    val title = opened?.let { "${it.file.name}${if (it.session.dirty) " •" else ""} — Tessera" } ?: "Tessera"
+private val isMac = System.getProperty("os.name").lowercase().contains("mac")
+private val prefs: Preferences = Preferences.userRoot().node("tessera")
 
-    Window(onCloseRequest = ::exitApplication, state = state, title = title) {
-        fun load(f: File) {
-            runCatching { open(f) }.onSuccess { opened = it; error = null }.onFailure { error = "${f.name} : ${it.message}" }
-        }
+fun main(args: Array<String>) {
+    // The language chosen in the menu, else the system's.
+    Strings.language = Language.of(prefs.get("language", null) ?: Locale.getDefault().language)
+    if (!isMac) {
+        Strings.cmd = "Ctrl+"; Strings.alt = "Alt"
+    }
+    application {
+        var opened by remember { mutableStateOf(args.firstOrNull()?.let { runCatching { open(File(it)) }.getOrNull() }) }
+        var error by remember { mutableStateOf<String?>(null) }
+        val state = rememberWindowState(size = DpSize(1440.dp, 920.dp))
+        val title = opened?.let { "${it.file.name}${if (it.session.dirty) " •" else ""} — Tessera" } ?: "Tessera"
+
         fun save(o: Opened): String = runCatching {
             val addedAcbf = o.session.comic.generated
             val reopened = ComicFiles.save(o.session.comic, o.file)
@@ -71,28 +80,63 @@ fun main(args: Array<String>) = application {
             Strings.saved(addedAcbf)
         }.getOrElse { Strings.saveFailed(it.message) }
 
-        val current = opened
-        Menus(onOpen = { pickFile(window)?.let(::load) }, onSave = current?.let { o -> { save(o); Unit } })
-        TesseraTheme {
-            Box(Modifier.fillMaxSize().fileDrop(::load)) {
-                if (current == null) Welcome(error) { pickFile(window)?.let(::load) }
-                else EditorScreen(current.session, current.images, onSave = { save(current) })
+        Window(onCloseRequest = { if (mayDiscard(opened, ::save)) exitApplication() }, state = state, title = title) {
+            fun load(f: File) {
+                if (!mayDiscard(opened, ::save)) return
+                runCatching { open(f) }.onSuccess { opened = it; error = null }.onFailure { error = "${f.name} : ${it.message}" }
+            }
+
+            val current = opened
+            Menus(onOpen = { pickFile(window)?.let(::load) }, onSave = current?.let { o -> { save(o); Unit } })
+            TesseraTheme {
+                Box(Modifier.fillMaxSize().fileDrop(::load)) {
+                    if (current == null) Welcome(error) { pickFile(window)?.let(::load) }
+                    else EditorScreen(current.session, current.images, onSave = { save(current) })
+                }
             }
         }
+    }
+}
+
+/**
+ * True when the open comic may be closed: nothing unsaved, or the user chose to save (and it
+ * worked) or to discard. False when the user cancels.
+ */
+private fun mayDiscard(o: Opened?, save: (Opened) -> String): Boolean {
+    if (o == null || !o.session.dirty) return true
+    val options = arrayOf(Strings.save, Strings.dontSave, Strings.cancel)
+    val choice = JOptionPane.showOptionDialog(
+        null, Strings.unsavedMessage(o.file.name), Strings.unsavedTitle,
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0],
+    )
+    return when (choice) {
+        0 -> {
+            val message = save(o)
+            if (o.session.dirty) JOptionPane.showMessageDialog(null, message)
+            !o.session.dirty
+        }
+        1 -> true
+        else -> false
     }
 }
 
 @Composable
 private fun FrameWindowScope.Menus(onOpen: () -> Unit, onSave: (() -> Unit)?) {
     MenuBar {
-        Menu("Fichier") {
-            Item("Ouvrir…", shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
-            Item("Enregistrer", enabled = onSave != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac), onClick = { onSave?.invoke() })
+        Menu(Strings.menuFile) {
+            Item(Strings.menuOpen, shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
+            Item(Strings.save, enabled = onSave != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac), onClick = { onSave?.invoke() })
+        }
+        Menu(Strings.menuLanguage) {
+            for (l in Language.entries) {
+                RadioButtonItem(l.label, selected = Strings.language == l, onClick = {
+                    Strings.language = l
+                    prefs.put("language", l.code)
+                })
+            }
         }
     }
 }
-
-private val isMac = System.getProperty("os.name").lowercase().contains("mac")
 
 @Composable
 private fun Welcome(error: String?, onOpen: () -> Unit) {
@@ -103,15 +147,15 @@ private fun Welcome(error: String?, onOpen: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Label("Tessera", size = 26.sp, weight = FontWeight.SemiBold)
-            Label("Ouvrez une bande dessinée CBZ ou ACBF, ou déposez-la ici.", color = c.muted)
-            Pill("Ouvrir…", onOpen, primary = true)
+            Label(Strings.welcome, color = c.muted)
+            Pill(Strings.menuOpen, onOpen, primary = true)
             if (error != null) Label(error, color = c.danger, size = 12.sp)
         }
     }
 }
 
 private fun pickFile(window: java.awt.Frame): File? {
-    val dialog = FileDialog(window, "Ouvrir une bande dessinée", FileDialog.LOAD)
+    val dialog = FileDialog(window, Strings.openDialog, FileDialog.LOAD)
     dialog.setFilenameFilter { _, name -> name.substringAfterLast('.').lowercase() in setOf("cbz", "zip", "acbf") }
     dialog.isVisible = true
     return dialog.file?.let { File(dialog.directory, it) }
