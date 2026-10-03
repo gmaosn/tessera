@@ -1,7 +1,10 @@
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.v2.runDesktopComposeUiTest
 import kotlinx.coroutines.runBlocking
@@ -85,4 +88,25 @@ class ScreensTest {
 
     @Test
     fun readingPreview() = shot("08-preview", "Doctorow, Cory - Craphound", 1, previewing = true)
+
+    /** The reading preview halfway between frames 4 and 5: one continuous move, no blank. */
+    @Test
+    fun readingPreviewTransition() {
+        val file = book("Doctorow, Cory - Craphound") ?: return
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name).apply { goToPage(1) }
+        val images = ImageCache(comic)
+        runBlocking { images.page(session.page.imageHref) }
+        runDesktopComposeUiTest(1440, 900) {
+            mainClock.autoAdvance = false
+            setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, startPreviewing = true) } }
+            mainClock.advanceTimeBy(800)
+            repeat(3) { onRoot().performKeyInput { pressKey(Key.DirectionRight) }; mainClock.advanceTimeBy(800) }
+            onRoot().performKeyInput { pressKey(Key.DirectionRight) }
+            for ((k, ms) in listOf(100L, 200L, 300L).withIndex()) {
+                mainClock.advanceTimeBy(if (k == 0) ms else 100L)
+                javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("09-preview-move-$ms.png"))
+            }
+        }
+    }
 }

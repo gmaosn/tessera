@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -43,14 +44,13 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.graphics.drawscope.withTransform
+import tessera.acbf.Polygon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlin.math.exp
+import kotlin.math.ln
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 private val PreviewBar = Color(0xFF111111)
 private val PreviewText = Color(0xFFDDDDDD)
@@ -59,7 +59,8 @@ private val PreviewDotOn = Color(0xFFC7B5E6)
 
 /**
  * Frame-by-frame reading, as a reader app shows it: the camera glides from frame to frame and
- * everything outside the frame takes the frame's background colour.
+ * everything outside the frame takes the frame's background colour. The outline morphs from one
+ * frame to the next during the move.
  */
 @Composable
 fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
@@ -84,50 +85,44 @@ fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
             val vw = constraints.maxWidth.toFloat()
             val vh = constraints.maxHeight.toFloat()
-            val cx = remember { Animatable(0f) }
-            val cy = remember { Animatable(0f) }
-            val scale = remember { Animatable(0f) }
-            val mask = remember { Animatable(0f) }
-            val target = frames.getOrNull(index)
+            // One progress value drives the whole transition: camera, frame outline and
+            // background move together, so nothing jumps or blinks between two frames.
+            val progress = remember { Animatable(1f) }
+            var from by remember { mutableStateOf<Shot?>(null) }
+            var to by remember { mutableStateOf<Shot?>(null) }
             LaunchedEffect(index, vw, vh) {
-                val (poly, _) = target ?: return@LaunchedEffect
-                val pad = 16f
-                val s = min((vw - 2 * pad) / (poly.maxX - poly.minX).coerceAtLeast(1), (vh - 2 * pad) / (poly.maxY - poly.minY).coerceAtLeast(1))
-                val x = (poly.minX + poly.maxX) / 2f
-                val y = (poly.minY + poly.maxY) / 2f
-                val spec = tween<Float>(550, easing = FastOutSlowInEasing)
-                if (scale.value == 0f) {
-                    cx.snapTo(x); cy.snapTo(y); scale.snapTo(s); mask.snapTo(1f)
+                val (poly, bg) = frames.getOrNull(index) ?: return@LaunchedEffect
+                val target = Shot.of(poly, parseColor(bg) ?: fallbackBg, vw, vh)
+                val now = to?.let { t -> from?.lerp(t, progress.value) ?: t }
+                if (now == null) {
+                    from = target; to = target; progress.snapTo(1f)
                     return@LaunchedEffect
                 }
-                coroutineScope {
-                    launch { cx.animateTo(x, spec) }
-                    launch { cy.animateTo(y, spec) }
-                    launch { scale.animateTo(s, spec) }
-                    launch { mask.snapTo(0.35f); mask.animateTo(1f, tween(650, easing = FastOutSlowInEasing)) }
-                }
+                from = now; to = target
+                progress.snapTo(0f)
+                progress.animateTo(1f, tween(600, easing = FastOutSlowInEasing))
             }
-            Canvas(
-                Modifier.fillMaxSize().clickable(remember { MutableInteractionSource() }, null) { },
-            ) {
-                if (image == null || target == null) return@Canvas
-                val s = scale.value
-                val origin = Offset(vw / 2 - cx.value * s, vh / 2 - cy.value * s)
-                drawImage(
-                    image, dstOffset = IntOffset(origin.x.roundToInt(), origin.y.roundToInt()),
-                    dstSize = IntSize((image.width * s).roundToInt(), (image.height * s).roundToInt()), filterQuality = FilterQuality.High,
-                )
-                val (poly, bg) = target
+            Canvas(Modifier.fillMaxSize()) {
+                val a = from ?: return@Canvas
+                val b = to ?: return@Canvas
+                if (image == null) return@Canvas
+                val shot = a.lerp(b, progress.value)
+                val s = shot.scale
+                val origin = Offset(vw / 2 - shot.cx * s, vh / 2 - shot.cy * s)
+                // Sub-pixel placement: rounding to whole pixels makes the page tremble in motion.
+                withTransform({ translate(origin.x, origin.y); scale(s, s, Offset.Zero) }) {
+                    drawImage(image, filterQuality = FilterQuality.High)
+                }
                 val outside = Path().apply {
                     fillType = PathFillType.EvenOdd
                     addRect(androidx.compose.ui.geometry.Rect(Offset.Zero, Size(vw, vh)))
-                    poly.points.forEachIndexed { k, p ->
+                    shot.outline.forEachIndexed { k, p ->
                         val o = Offset(origin.x + p.x * s, origin.y + p.y * s)
                         if (k == 0) moveTo(o.x, o.y) else lineTo(o.x, o.y)
                     }
                     close()
                 }
-                drawPath(outside, (parseColor(bg) ?: fallbackBg).copy(alpha = mask.value))
+                drawPath(outside, shot.background)
             }
             // Click zones: left third goes back, the rest goes forward.
             Row(Modifier.fillMaxSize()) {
@@ -149,6 +144,54 @@ fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
             }
             Spacer(Modifier.weight(1f))
             Label("← →  case · Échap  fermer", color = PreviewText, size = 12.5.sp)
+        }
+    }
+}
+
+/** What the reader shows: the camera, the frame outline in image pixels, the background. */
+private class Shot(val cx: Float, val cy: Float, val scale: Float, val outline: List<Offset>, val background: Color) {
+    fun lerp(to: Shot, t: Float): Shot = Shot(
+        cx + (to.cx - cx) * t,
+        cy + (to.cy - cy) * t,
+        // Zooming feels even when the scale changes geometrically.
+        exp(ln(scale) + (ln(to.scale) - ln(scale)) * t),
+        outline.zip(to.outline) { p, q -> Offset(p.x + (q.x - p.x) * t, p.y + (q.y - p.y) * t) },
+        androidx.compose.ui.graphics.lerp(background, to.background, t),
+    )
+
+    companion object {
+        private const val PADDING = 16f
+        private const val OUTLINE_POINTS = 128
+
+        fun of(poly: Polygon, background: Color, vw: Float, vh: Float): Shot {
+            val s = min((vw - 2 * PADDING) / (poly.maxX - poly.minX).coerceAtLeast(1), (vh - 2 * PADDING) / (poly.maxY - poly.minY).coerceAtLeast(1))
+            return Shot((poly.minX + poly.maxX) / 2f, (poly.minY + poly.maxY) / 2f, s, outline(poly), background)
+        }
+
+        /**
+         * The polygon walked at even steps, always in the same direction and starting near its
+         * top-left corner, so that two frames' outlines can morph point by point.
+         */
+        fun outline(poly: Polygon): List<Offset> {
+            var pts = poly.points.map { Offset(it.x.toFloat(), it.y.toFloat()) }
+            if (poly.signedArea < 0) pts = pts.reversed()
+            val start = pts.indices.minBy { (pts[it].x - poly.minX).let { d -> d * d } + (pts[it].y - poly.minY).let { d -> d * d } }
+            pts = pts.drop(start) + pts.take(start)
+            val lengths = pts.indices.map { k -> (pts[(k + 1) % pts.size] - pts[k]).getDistance() }
+            val total = lengths.sum()
+            if (total <= 0f) return List(OUTLINE_POINTS) { pts[0] }
+            val out = ArrayList<Offset>(OUTLINE_POINTS)
+            var segment = 0
+            var walked = 0f
+            for (k in 0 until OUTLINE_POINTS) {
+                val at = total * k / OUTLINE_POINTS
+                while (segment < pts.size - 1 && walked + lengths[segment] < at) walked += lengths[segment++]
+                val a = pts[segment]
+                val b = pts[(segment + 1) % pts.size]
+                val f = if (lengths[segment] > 0f) ((at - walked) / lengths[segment]).coerceIn(0f, 1f) else 0f
+                out += Offset(a.x + (b.x - a.x) * f, a.y + (b.y - a.y) * f)
+            }
+            return out
         }
     }
 }
