@@ -1,0 +1,9 @@
+product:
+  type: kmp/lib
+  platforms: [jvm, android]
+
+settings:
+  jvm:
+    release: 25
+    jdk:
+      version: 25

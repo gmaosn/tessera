@@ -1,0 +1,8 @@
+build/
+.kotlin/
+.DS_Store
+# Real-world sample comics (about 120 MB), fetched by tools/fetch-fixtures.sh
+fixtures/samples/
+# Upstream sources, cloned for reference only
+ref/
+*.png

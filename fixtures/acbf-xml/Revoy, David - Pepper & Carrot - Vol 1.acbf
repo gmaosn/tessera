@@ -1,0 +1,3203 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ACBF xmlns="http://www.fictionbook-lib.org/xml/acbf/1.1"><style type="text/css">
+   text-area {font-family: Panefresco250wtRegular.ttf, "Dejavu Sans", Arial, Sans;
+              font-style: normal;
+              font-stretch: condensed}
+   emphasis {font-family: Panefresco999wt-Italic.ttf, "Dejavu Sans", Arial, Sans;
+             font-style: oblique; 
+             font-weight: bold;}
+   strong {font-family: Panefresco999wt-Italic.ttf, "Dejavu Sans", Arial, Sans;
+           font-style: normal; 
+           font-weight: bold;}
+   text-area[type=commentary] {font-family: Risque.otf, "Dejavu Sans", Arial, Sans;
+      font-style: normal;
+      font-stretch: condensed}
+   text-area[type=heading] {font-family: Lavi.ttf, "Dejavu Sans", Arial, Sans;
+      font-style: normal;
+      font-stretch: condensed}
+   text-area[type=sign] {font-family: Redressed.ttf, "Dejavu Sans", Arial, Sans;
+      font-style: normal;
+      font-stretch: condensed}
+   text-area[type=letter] {font-family: Redressed.ttf, "Dejavu Sans", Arial, Sans;
+      font-style: normal;
+      font-stretch: condensed}
+ </style>
+<meta-data>
+    <book-info>
+      <coverpage>
+        <image href="00cover.jpg"/>
+      </coverpage>
+      <author activity="Writer"><first-name>David</first-name><last-name>Revoy</last-name></author>
+      <author activity="Artist"><first-name>David</first-name><last-name>Revoy</last-name></author>
+      <author activity="Translator" lang="en"><first-name>David</first-name><last-name>Revoy</last-name></author>
+      <author activity="Translator" lang="en"><first-name>Amireti</first-name><last-name>.</last-name></author>
+      <author activity="Translator" lang="en"><first-name>Alex</first-name><last-name>Gryson</last-name></author>
+      <author activity="Translator" lang="sk"><first-name>Róbert</first-name><last-name>Pastierovič</last-name></author>
+      <author activity="Translator" lang="sk"><first-name>talime</first-name><last-name>.</last-name></author>
+      <author activity="Translator" lang="fr"><first-name>David</first-name><last-name>Revoy</last-name></author>
+      <author activity="Translator" lang="fr"><first-name>Aurélien</first-name><last-name>Gâteau</last-name></author>
+      <genre>fantasy</genre><genre>children</genre><genre>humor</genre>
+      <languages>
+        <text-layer lang="en" show="False"/>
+        <text-layer lang="en" show="True"/>
+        <text-layer lang="fr" show="True"/>
+        <text-layer lang="sk" show="True"/>
+      </languages>
+      <keywords></keywords>
+      <characters><name>Papper</name><name>Carrot</name><name>Saffron</name><name>Coriander</name><name>Shichimi</name><name>Thym</name><name>Cayenne</name><name>Cumin</name></characters>
+	  <sequence title="Pepper &amp; Carrot">1</sequence>
+	  <book-title lang="sk">Pepper &amp; Carrot - Zväzok č. 1</book-title><book-title lang="fr">Pepper &amp; Carrot - Tome 1</book-title><book-title lang="en">Pepper &amp; Carrot - Vol. 1</book-title><annotation lang="sk"><p>Pepper&amp;amp;amp;amp;Carrot je komiks o “Pepper”, mladej čarodejnici a jej kocúrovi “Carrot”. Žijú vo fantazijnom vesmíre plnom mágie, lektvárov a rôznych kreatúr. Ide o humorný komiks vhodný pre každého.</p><p>Prvý zväzok obsahuje prvých 10 epizód komiksu plus komiksové príbehy "Poľovanie na trofeje" a "Ďedičstvo vo farbe".</p></annotation><annotation lang="fr"><p>Au sein du monde merveilleux de Hereva, la jeune Pepper vit avec son chat Carrot dans une petite maison au fin fond de la forêt de Bout-un-Cureuil. Leur spécialité : faire des potions magiques ! Une activité qui comporte pas mal de risques étant donné que, chez eux, les préparations, incantations et autres invocations ont vite tendance à dégénérer... Partagez le quotidien mouvementé de cette Mélusine d’aujourd’hui dans une série d’histoires courtes au cœur d’un univers de fantasy fun et décalé fait de potions, de créatures, de magie… mais surtout d’humour !</p></annotation><annotation lang="en"><p>Pepper&amp;Carrot is a comic about “Pepper”, a young witch and her cat, “Carrot”. They live in a fantasy universe of potions, magics, and creatures.</p><p>It’s a comedy/humor comic suited for everyone.</p><p>This volume contains first 10 episodes plus "Trophy Hunting" and "Legacy in color" comic stories.</p></annotation></book-info>
+    <publish-info><publish-date value="2015-09-07">2015</publish-date><publisher>www.acbf.info</publisher><city></city><isbn></isbn><license>Creative Commons Attribution 4.0 International</license></publish-info>
+    <document-info><author><nickname>jrw</nickname></author></document-info>
+  </meta-data>
+  <body bgcolor="#ffffff">
+    <page>
+      <title lang="fr">Chasse au trophée</title>
+      <title lang="sk">Poľovanie na trofeje</title>
+      <image href="01 - Trophy hunting/chat-etoile-vdm_davidrevoy.webp"/>
+      <frame points="28,66 682,60 682,355 13,382 5,188"/>
+      <frame points="2,529 45,401 166,378 622,363 689,409 691,601 636,660 88,680 8,594"/>
+      <frame points="4,841 19,725 73,681 612,665 688,724 688,895 621,959 95,977 21,926"/>
+      <frame points="8,1121 43,986 621,967 691,1028 692,1195 626,1268 92,1284 17,1226"/>
+      <frame points="27,1375 62,1287 627,1271 693,1363 692,1519 633,1594 279,1618 51,1597"/>
+      <frame points="52,1615 622,1607 693,1693 690,1871 614,1950 123,1966 24,1910"/>
+      <frame points="38,2065 76,1951 176,1963 656,1955 698,2046 692,2218 625,2283 238,2291 79,2303 47,2247"/>
+      <frame points="27,2425 107,2296 299,2284 629,2285 693,2420 691,2546 640,2627 251,2653 76,2644 38,2583"/>
+      <frame points="21,2795 79,2641 270,2652 632,2634 696,2733 695,2886 644,2979 465,3016 109,3013 32,2936"/>
+      <frame points="87,3075 264,3077 294,3050 315,3061 364,3060 391,3048 392,3068 403,3068 459,3029 494,3031 427,3073 428,3078 600,3077 601,3314 632,3351 632,3360 453,3362 85,3362"/>
+    <title lang="en">Trophy hunting</title></page>
+    <page>
+      <title lang="fr">L heritage en couleur</title>
+      <title lang="sk">Dedičstvo vo farbe</title>
+      <image href="02 - L heritage en couleur/0-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="16,10 721,12 719,568 592,564 540,538 403,596 209,543 164,598 6,434"/>
+      <frame points="10,669 214,536 406,591 542,542 620,570 730,560 751,767 751,1006 4,1006"/>
+      <frame bgcolor="#acacb4" points="5,1498 49,1537 99,1532 129,1508 134,1451 183,1390 179,1262 304,1268 443,1259 570,1225 552,1395 566,1403 613,1407 625,1445 625,1508 607,1543 607,1568 627,1580 619,1620 2,1617"/>
+    <title lang="en">Legacy in color</title></page>
+    <page>
+      <image href="02 - L heritage en couleur/1-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="0,12 5,9 744,9 750,14 750,369 745,374 7,373 0,368"/>
+      <frame points="1,390 5,386 744,386 749,392 750,744 744,748 5,748 0,743"/>
+      <frame points="0,764 6,761 743,761 750,767 750,1117 745,1121 5,1121 0,1115"/>
+      <frame points="0,1137 5,1133 744,1133 749,1139 750,1477 745,1481 6,1481 0,1475"/>
+      <frame points="0,1498 6,1494 743,1494 750,1499 750,1860 745,1863 6,1863 0,1854"/>
+      <frame points="1,1881 7,1876 744,1876 750,1880 749,2375 724,2387 581,2388 500,2397 22,2391 1,2360"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/2-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="1,41 141,15 477,20 749,15 750,909 745,914 6,913 1,908"/>
+      <frame points="0,930 5,927 744,926 750,933 750,1260 744,1264 5,1264 1,1260"/>
+      <frame points="0,1281 4,1278 744,1278 750,1284 749,1638 745,1642 6,1642 1,1638"/>
+      <frame points="0,1659 5,1656 743,1656 749,1662 750,1944 745,1948 6,1948 1,1944"/>
+      <frame points="1,1964 5,1962 744,1962 750,1968 750,2168 744,2172 6,2173 1,2167"/>
+      <frame points="0,2188 5,2185 743,2185 750,2192 750,2394 745,2398 5,2399 0,2394"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/3-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="1,13 6,10 743,10 750,16 750,522 746,526 6,526 1,522"/>
+      <frame points="1,542 5,540 744,540 750,547 750,1058 745,1062 6,1062 0,1058"/>
+      <frame points="1,1078 5,1076 744,1076 750,1082 750,1435 745,1440 6,1440 1,1436"/>
+      <frame points="1,1457 6,1454 744,1454 749,1461 749,1793 744,1797 5,1797 0,1793"/>
+      <frame points="0,1814 5,1811 743,1811 750,1817 749,2164 745,2169 6,2169 0,2165"/>
+      <frame points="1,2186 6,2183 743,2183 750,2190 750,2557 745,2562 5,2562 1,2558"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/4-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="2,11 6,6 745,7 749,12 750,526 746,530 6,530 1,526"/>
+      <frame points="1,547 6,544 744,544 751,552 750,737 745,744 5,744 1,739"/>
+      <frame points="0,761 6,758 743,758 749,765 749,969 745,975 6,975 1,971"/>
+      <frame points="1,992 5,989 743,989 749,996 749,1337 745,1343 6,1343 1,1339"/>
+      <frame points="1,1360 6,1357 744,1356 750,1364 749,1696 745,1700 6,1700 1,1696"/>
+      <frame points="1,1717 4,1714 744,1715 750,1721 750,2067 744,2072 6,2072 1,2068"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/5-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="1,10 6,6 743,6 750,12 750,412 744,419 6,419 1,414"/>
+      <frame points="1,436 5,433 743,433 750,441 750,775 744,780 5,780 1,775"/>
+      <frame points="1,798 6,794 743,794 749,801 750,1140 744,1145 6,1145 1,1140"/>
+      <frame points="1,1162 5,1159 743,1160 750,1165 750,1505 744,1509 6,1509 1,1505"/>
+      <frame points="1,1527 6,1523 744,1523 749,1531 750,1868 745,1872 6,1872 1,1868"/>
+      <frame points="1,1889 6,1887 743,1886 749,1893 749,2237 744,2241 5,2241 1,2237"/>
+      <frame points="1,2259 6,2256 744,2255 750,2263 749,2454 744,2459 6,2460 1,2455"/>
+      <frame points="1,2477 5,2473 743,2473 750,2480 749,2986 744,2991 6,2991 1,2986"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/6-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="1,5 66,11 116,12 237,7 371,12 520,5 643,11 750,13 750,814 745,821 5,821 1,818"/>
+      <frame points="1,837 5,834 73,834 92,820 105,814 125,813 128,809 140,803 155,800 173,798 200,800 228,806 238,810 253,824 262,832 743,833 750,840 750,1068 746,1072 749,1087 750,1185 743,1191 5,1192 0,1187"/>
+      <frame points="1,1206 5,1203 744,1203 750,1212 750,1455 745,1458 749,1473 749,1553 745,1559 5,1559 1,1555"/>
+      <frame points="0,1575 4,1573 743,1573 749,1583 749,2454 743,2459 5,2459 1,2456"/>
+      <frame points="0,2475 4,2473 743,2473 749,2482 750,2823 744,2828 5,2829 0,2823"/>
+      <frame points="1,2842 6,2839 744,2839 750,2847 750,3194 745,3198 5,3199 1,3194"/>
+      <frame points="1,3212 5,3210 743,3210 750,3218 750,3727 745,3733 4,3733 1,3729"/>
+      <frame points="1,3747 4,3744 744,3744 750,3753 750,4227 744,4231 4,4232 0,4228"/>
+      <frame points="1,4246 5,4243 743,4244 750,4253 750,4616 745,4620 5,4621 0,4616"/>
+      <frame points="0,4635 5,4632 744,4632 749,4641 750,5558 677,5570 10,5572 1,5543"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/7-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="3,147 34,40 147,7 749,1 750,902 745,907 6,907 0,901 1,152"/>
+      <frame points="0,923 5,919 745,918 750,924 750,1266 746,1272 6,1271 0,1266"/>
+      <frame points="0,1288 5,1284 745,1283 750,1290 750,1622 745,1627 6,1626 1,1621"/>
+      <frame points="1,1643 6,1639 743,1639 749,1644 750,2147 745,2152 6,2152 0,2146"/>
+      <frame points="1,2168 6,2164 744,2164 749,2169 750,2505 745,2509 6,2509 0,2503"/>
+      <frame points="1,2524 5,2521 745,2520 749,2526 749,3057 745,3061 6,3061 0,3055"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/8-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="0,12 4,8 743,8 750,15 750,356 745,361 5,362 1,357"/>
+      <frame points="0,378 4,374 745,375 749,381 750,719 745,724 5,724 0,719"/>
+      <frame points="0,739 5,735 744,736 750,744 749,1086 745,1092 6,1093 0,1088"/>
+      <frame points="0,1108 5,1105 744,1105 750,1112 749,1449 745,1453 5,1454 1,1449"/>
+      <frame points="1,1469 4,1466 744,1467 750,1473 750,1811 745,1815 5,1815 0,1811"/>
+      <frame points="0,1831 4,1827 744,1828 749,1834 749,2179 745,2185 6,2186 0,2181"/>
+      <frame points="0,2207 20,2194 749,2194 750,3083 744,3089 5,3089 0,3084 0,2256"/>
+      <frame points="1,3104 6,3101 744,3101 750,3107 750,3305 745,3310 5,3309 0,3305 1,3108"/>
+      <frame points="1,3325 5,3322 744,3322 749,3329 749,3836 745,3840 5,3841 0,3836"/>
+    </page>
+    <page>
+      <image href="02 - L heritage en couleur/9-heritage-en-couleur_by_david_revoy.webp"/>
+      <frame points="0,9 5,6 743,6 750,14 749,207 744,212 5,213 1,208"/>
+      <frame points="0,228 4,225 380,224 382,228 382,574 378,579 5,579 0,574"/>
+      <frame points="393,228 396,224 744,224 750,231 750,572 744,580 396,579 392,574"/>
+      <frame points="0,593 5,590 744,590 749,597 750,1109 745,1114 5,1114 0,1110"/>
+      <frame points="0,1129 4,1126 743,1126 750,1133 750,1992 745,1998 5,1998 0,1994"/>
+      <frame points="0,2013 4,2009 744,2009 749,2017 750,2234 744,2239 3,2238 0,2234"/>
+      <frame points="1,2253 4,2250 745,2250 750,2258 749,2599 745,2604 5,2604 1,2601"/>
+      <frame points="1,2620 4,2617 743,2617 750,2623 750,2963 745,2969 5,2969 0,2965"/>
+      <frame points="5,2981 743,2982 750,2989 749,3591 740,3615 687,3635 614,3637 511,3655 392,3645 335,3661 222,3639 138,3634 8,3629 1,3594 1,3274"/>
+      <frame points="0,3682 33,3649 189,3634 228,3639 616,3785 739,4137 744,4343 605,4346 463,4265 127,4252 16,4073 0,3769"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E01.webp"/>
+      <title lang="fr">Episode 1: Potion d'envol</title>
+      <title lang="sk">Epizóda 1: Elixír lietania</title>
+      <title lang="en">Episode 1: The Potion of Flight</title>
+      <text-layer lang="en" bgcolor="#2c3c39">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" type="heading" inverted="True">
+          <p>Episode 1: The Potion of Flight</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr" bgcolor="#2c3c39">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" type="heading" inverted="True">
+          <p>Episode 1: Potion d'envol</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk" bgcolor="#2c3c39">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" type="heading" inverted="True">
+          <p>Epizóda 1: Elixír lietania</p>
+        </text-area>
+      </text-layer>
+	</page>
+    <page bgcolor="#727a63">
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E01P01.webp"/>
+      <text-layer lang="en" bgcolor="#fefde9">
+        <text-area points="303,145 688,145 690,189 302,191" bgcolor="#727a63" type="heading">
+          <p>Episode 1: Potion of flight</p>
+        </text-area>
+        <text-area points="437,276 444,257 460,242 489,233 525,232 558,240 578,252 588,269 589,282 577,300 552,312 523,316 486,315 458,306 441,295">
+          <p>...and the last touch</p>
+        </text-area>
+        <text-area points="485,864 489,843 507,821 534,804 561,796 589,804 614,818 630,836 642,862 643,883 629,900 606,908 560,916 526,909 499,893 486,877">
+          <p>...mmm probably not strong enough</p>
+        </text-area>
+        <text-area points="739,2009 747,1992 765,1977 787,1969 808,1972 828,1982 842,1998 846,2011 844,2026 835,2038 817,2045 780,2043 759,2037 744,2023">
+          <p>ha... perfect</p>
+        </text-area>
+        <text-area points="471,2518 477,2504 496,2487 522,2474 557,2469 593,2476 630,2489 657,2509 658,2521 649,2544 628,2561 596,2569 549,2569 507,2555 477,2532">
+          <p>NO! Don't even think about it</p>
+        </text-area>
+        <text-area points="232,3667 238,3654 254,3644 285,3637 327,3640 368,3650 384,3659 388,3668 382,3681 352,3692 316,3697 277,3693 247,3685 233,3674" bgcolor="#a6c9c5">
+          <p>Happy?!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr" bgcolor="#fefde9">
+        <text-area points="303,145 688,145 690,189 302,191" bgcolor="#727a63" type="heading">
+          <p>Episode 1: Potion d'envol</p>
+        </text-area>
+        <text-area points="437,276 444,257 460,242 489,233 525,232 558,240 578,252 588,269 589,282 577,300 552,312 523,316 486,315 458,306 441,295">
+          <p>...et la dernière touche</p>
+        </text-area>
+        <text-area points="485,864 489,843 507,821 534,804 561,796 589,804 614,818 630,836 642,862 643,883 629,900 606,908 560,916 526,909 499,893 486,877">
+          <p>...mmm probablement pas assez</p>
+        </text-area>
+        <text-area points="739,2009 747,1992 765,1977 787,1969 808,1972 828,1982 842,1998 846,2011 844,2026 835,2038 817,2045 780,2043 759,2037 744,2023">
+          <p>ha... parfait</p>
+        </text-area>
+        <text-area points="471,2518 477,2504 496,2487 522,2474 557,2469 593,2476 630,2489 657,2509 658,2521 649,2544 628,2561 596,2569 549,2569 507,2555 477,2532">
+          <p>NON! N'y pense même pas</p>
+        </text-area>
+        <text-area points="232,3667 238,3654 254,3644 285,3637 327,3640 368,3650 384,3659 388,3668 382,3681 352,3692 316,3697 277,3693 247,3685 233,3674" bgcolor="#a6c9c5">
+          <p>Satisfait?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk" bgcolor="#fefde9">
+        <text-area points="303,145 688,145 690,189 302,191" bgcolor="#727a63" type="heading">
+          <p>Epizóda 1: Elixír lietania</p>
+        </text-area>
+        <text-area points="437,276 444,257 460,242 489,233 525,232 558,240 578,252 588,269 589,282 577,300 552,312 523,316 486,315 458,306 441,295">
+          <p>...a ešte kúsok tohto</p>
+        </text-area>
+        <text-area points="485,864 489,843 507,821 534,804 561,796 589,804 614,818 630,836 642,862 643,883 629,900 606,908 560,916 526,909 499,893 486,877">
+          <p>...mmm asi to nie je dosť silné</p>
+        </text-area>
+        <text-area points="739,2009 747,1992 765,1977 787,1969 808,1972 828,1982 842,1998 846,2011 844,2026 835,2038 817,2045 780,2043 759,2037 744,2023">
+          <p>ha... perfektné</p>
+        </text-area>
+        <text-area points="471,2518 477,2504 496,2487 522,2474 557,2469 593,2476 630,2489 657,2509 658,2521 649,2544 628,2561 596,2569 549,2569 507,2555 477,2532">
+          <p>NIE! Nech ti to ani nenapadne</p>
+        </text-area>
+        <text-area points="232,3667 238,3654 254,3644 285,3637 327,3640 368,3650 384,3659 388,3668 382,3681 352,3692 316,3697 277,3693 247,3685 233,3674" bgcolor="#a6c9c5">
+          <p>Štastný?!</p>
+        </text-area>
+      </text-layer>
+      <frame points="30,191 963,191 964,725 29,725"/>
+      <frame points="31,745 962,746 964,1282 29,1281"/>
+      <frame points="30,1303 963,1303 964,1828 29,1828"/>
+      <frame points="30,1850 963,1850 964,2381 30,2381"/>
+      <frame points="30,2402 963,2403 964,2915 30,2916"/>
+      <frame points="30,2937 963,2936 965,3459 31,3459"/>
+      <frame points="1,3501 992,3500 992,4485 1,4485"/>
+    </page>
+    <page>
+      <title lang="fr">Episode 2: Les potions arc-en-ciel</title>
+      <title lang="sk">Epizóda 2: Dúhové elixíry</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E02.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#7e5f5d" type="heading" inverted="True">
+          <p>Episode 2: Rainbow potions</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#7e5f5d" type="heading" inverted="True">
+          <p>Episode 2: Les potions arc-en-ciel</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#7e5f5d" type="heading" inverted="True">
+          <p>Epizóda 2: Dúhové elixíry</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 2: Rainbow potions</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E02P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="321,125 672,125 672,159 319,159">
+          <p>Episode 2: Rainbow potions</p>
+        </text-area>
+        <text-area points="107,6583 908,6583 908,6622 107,6622" bgcolor="#eddebf">
+          <p>This webcomic is open-source and this episode was funded by my 21 patrons on</p>
+        </text-area>
+        <text-area points="416,6650 577,6650 577,6678 415,6678" bgcolor="#f7ecd0">
+          <p>Many thanks to</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="321,125 672,125 672,159 319,159">
+          <p>Episode 2: Les potions arc-en-ciel</p>
+        </text-area>
+        <text-area points="107,6583 908,6583 908,6622 107,6622" bgcolor="#eddebf">
+          <p>Cette BD est open-source et cet épisode a été sponsorisé par 21 mécènes sur</p>
+        </text-area>
+        <text-area points="416,6650 577,6650 577,6678 415,6678" bgcolor="#f7ecd0">
+          <p>Merci à:</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="321,125 672,125 672,159 319,159">
+          <p>Epizóda 2: Dúhové elixíry</p>
+        </text-area>
+        <text-area points="107,6583 908,6583 908,6622 107,6622" bgcolor="#eddebf">
+          <p>Tento komiks je open-source a túto epizódu finančne podporilo 21 fanúškov na</p>
+        </text-area>
+        <text-area points="416,6650 577,6650 577,6678 415,6678" bgcolor="#f7ecd0">
+          <p>Veľká vďaka patrí</p>
+        </text-area>
+      </text-layer>
+      <frame points="2,206 19,176 89,157 283,164 585,163 820,161 973,176 989,227 988,939 976,996 500,1003 26,995 4,933 -2,832"/>
+      <frame points="21,1043 50,1016 953,1007 976,1038 974,1490 957,1516 100,1527 32,1508 25,1454"/>
+      <frame points="31,1535 950,1537 973,1569 974,2007 956,2027 45,2024 29,2006"/>
+      <frame points="34,2077 47,2051 948,2047 967,2074 961,2505 945,2537 108,2549 45,2546 34,2515 29,2080"/>
+      <frame points="35,2562 948,2563 965,2589 966,3007 932,3024 59,3017 35,2996"/>
+      <frame points="35,3059 58,3034 487,3038 499,3059 499,3546 478,3558 64,3564 40,3549"/>
+      <frame points="500,3059 513,3036 959,3037 963,3289 963,3547 646,3562 506,3552 501,3473"/>
+      <frame points="38,3717 60,3684 241,3681 322,3614 388,3599 527,3593 633,3597 711,3637 751,3679 930,3687 960,3708 963,4499 912,4517 502,4523 142,4524 45,4511 39,4484"/>
+      <frame points="31,4567 52,4544 170,4547 355,4544 933,4540 966,4574 965,4899 938,4930 300,4931 45,4926 29,4908"/>
+      <frame points="33,4976 61,4945 343,4938 458,4948 938,4945 959,4967 960,5218 951,5312 630,5317 41,5313"/>
+      <frame points="35,5362 56,5334 553,5329 960,5338 967,5373 965,5717 965,5895 961,6134 946,6137 754,6138 143,6144 34,6135"/>
+      <frame points="178,6502 184,6504 956,6502 957,6133 795,6135 664,6316 375,6342 178,6450"/>
+      <frame points="40,6560 273,6560 500,6554 742,6563 959,6565 970,6771 973,6867 941,6894 869,6894 838,6877 131,6869 131,6890 18,6890 18,6811 33,6810"/>
+    </page>
+    <page>
+      <title lang="fr">Episode 3: L'ingrédient secret</title>
+      <title lang="sk">Epizóda 3: Tajné prísady</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#28758f" type="heading" inverted="True">
+          <p>Episode 3: The secret ingredients</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#28758f" type="heading" inverted="True">
+          <p>Episode 3: L'ingrédient secret</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#28758f" type="heading" inverted="True">
+          <p>Epizóda 3: Tajné prísady</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 3: The secret ingredients</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="76,34 201,34 201,57 77,57" bgcolor="#ffeb7b" type="commentary">
+          <p>Komona City;</p>
+        </text-area>
+        <text-area points="152,59 261,59 252,81 149,81 149,58" bgcolor="#ffeb7b" type="commentary">
+          <p>Market day</p>
+        </text-area>
+        <text-area points="92,892 96,866 115,846 253,844 276,858 291,880 289,903 273,930 249,949 207,961 158,956 113,941 98,924">
+          <p>Good morning Sir, I would like eight pumpkinstars, please</p>
+        </text-area>
+        <text-area points="435,883 436,863 444,850 454,844 566,843 585,852 594,862 597,875 592,895 579,907 562,907 513,902 450,900 438,890">
+          <p>Here you are, that's 60Ko*</p>
+        </text-area>
+        <text-area points="839,981 842,966 862,956 896,958 928,961 937,974 940,990 921,1000 858,998 843,992">
+          <p>...Oh dear</p>
+        </text-area>
+        <text-area points="366,1333 561,1333 561,1349 365,1349">
+          <p>*Ko = Komona currency unit</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="76,34 201,34 201,57 77,57" bgcolor="#ffeb7b" type="commentary">
+          <p>Ville de Komona,</p>
+        </text-area>
+        <text-area points="152,59 261,59 252,81 149,81 149,58" bgcolor="#ffeb7b" type="commentary">
+          <p>Jour de marché</p>
+        </text-area>
+        <text-area points="92,892 96,866 115,846 253,844 276,858 291,880 289,903 273,930 249,949 207,961 158,956 113,941 98,924">
+          <p>Bonjour Monsieur, je voudrais huit courgétoiles, s'il vous plait!</p>
+        </text-area>
+        <text-area points="435,883 436,863 444,850 454,844 566,843 585,852 594,862 597,875 592,895 579,907 562,907 513,902 450,900 438,890">
+          <p>Et voici, ça fait 60Ko*</p>
+        </text-area>
+        <text-area points="839,981 842,966 862,956 896,958 928,961 937,974 940,990 921,1000 858,998 843,992">
+          <p>zut...</p>
+        </text-area>
+        <text-area points="366,1333 561,1333 561,1349 365,1349">
+          <p>* Ko = unité monétaire de Komona</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="76,34 201,34 201,57 77,57" bgcolor="#ffeb7b" type="commentary">
+          <p>Mesto Komona;</p>
+        </text-area>
+        <text-area points="152,59 261,59 252,81 149,81 149,58" bgcolor="#ffeb7b" type="commentary">
+          <p>Jarmočný deň</p>
+        </text-area>
+        <text-area points="92,892 96,866 115,846 253,844 276,858 291,880 289,903 273,930 249,949 207,961 158,956 113,941 98,924">
+          <p>Dobré ráno pane, chcela by som osem dyňohviezd, prosím</p>
+        </text-area>
+        <text-area points="435,883 436,863 444,850 454,844 566,843 585,852 594,862 597,875 592,895 579,907 562,907 513,902 450,900 438,890">
+          <p>Tu ich máš, bude to 60Ko*</p>
+        </text-area>
+        <text-area points="839,981 842,966 862,956 896,958 928,961 937,974 940,990 921,1000 858,998 843,992">
+          <p>...Och</p>
+        </text-area>
+        <text-area points="366,1333 561,1333 561,1349 365,1349">
+          <p>*Ko = Komonská menová jednotka</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,12 953,12 953,817 40,816"/>
+      <frame points="40,841 355,841 356,1333 37,1334"/>
+      <frame points="366,841 654,841 655,1347 365,1348"/>
+      <frame points="666,841 954,840 954,1334 664,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P02.webp"/>
+      <text-layer lang="en">
+        <text-area points="191,257 196,239 216,226 282,223 336,226 357,231 368,243 373,257 369,272 342,288 304,297 263,301 238,300 208,289 193,272">
+          <p>Uhh, sorry, I'll have to take only four...</p>
+        </text-area>
+        <text-area points="816,15 896,14 899,28 880,45 843,44 825,35 816,25">
+          <p>Grrr...</p>
+        </text-area>
+        <text-area points="373,340 563,341 570,356 562,393 565,412 568,425 555,456 533,463 505,469 457,463 423,467 397,464 379,449 370,430 380,389 367,357">
+          <p>Greetings, good Sir. Please prepare two dozen of everything for me. Premium quality, as usual.</p>
+        </text-area>
+        <text-area points="378,568 387,543 409,524 449,512 494,510 532,524 549,541 558,562 556,584 537,603 452,606 428,601 405,601 387,590">
+          <p>It's always a pleasure to serve you, Miss Saffron</p></text-area>
+        <text-area points="458,688 462,673 474,658 524,653 567,657 590,673 599,693 591,710 573,718 484,719 466,707">
+          <p>Hey look, it's Pepper</p>
+        </text-area>
+        <text-area points="429,789 440,751 453,732 488,723 574,724 606,741 628,767 633,789 618,815 565,848 531,857 475,843 440,820 429,803">
+          <p>Oh, let me guess business is booming in the countryside?</p>
+        </text-area>
+        <text-area points="625,912 628,904 643,896 652,895 663,897 671,903 674,912 671,921 662,927 646,928 633,922">
+          <p>...</p>
+        </text-area>
+        <text-area points="297,1069 306,1044 335,1022 460,1021 472,1028 484,1067 483,1105 473,1129 445,1150 417,1158 344,1155 325,1147 303,1105">
+          <p>I guess you're preparing the ingredients for tomorrow's potion challenge?</p>
+        </text-area>
+        <text-area points="509,1091 514,1074 528,1060 560,1054 596,1055 628,1063 642,1072 648,1089 645,1108 629,1124 597,1131 552,1126 519,1116 509,1098">
+          <p>...a potion challenge?</p>
+        </text-area>
+        <text-area points="524,1165 529,1154 559,1139 605,1143 643,1143 667,1140 678,1151 679,1166 659,1183 587,1184 551,1187 527,1176">
+          <p>...tomorrow?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="191,257 196,239 216,226 282,223 336,226 357,231 368,243 373,257 369,272 342,288 304,297 263,301 238,300 208,289 193,272">
+          <p>Heuu, désolée je vais en prendre que quatre finalement</p>
+        </text-area>
+        <text-area points="816,15 896,14 899,28 880,45 843,44 825,35 816,25">
+          <p>Grrr...</p>
+        </text-area>
+        <text-area points="373,340 563,341 570,356 562,393 565,412 568,425 555,456 533,463 505,469 457,463 423,467 397,464 379,449 370,430 380,389 367,357">
+          <p>Bonjour cher marchand, s'il vous plait deux dizaines de chaque. Qualité premium, comme d'habitude.</p>
+        </text-area>
+        <text-area points="378,568 387,543 409,524 449,512 494,510 532,524 549,541 558,562 556,584 537,603 452,606 428,601 405,601 387,590">
+          <p>C'est toujours un plaisir de vous servir Mademoiselle Safran</p></text-area>
+        <text-area points="458,688 462,673 474,658 524,653 567,657 590,673 599,693 591,710 573,718 484,719 466,707">
+          <p>Hè, mais regardez moi ça, c'est Pepper</p>
+        </text-area>
+        <text-area points="429,789 440,751 453,732 488,723 574,724 606,741 628,767 633,789 618,815 565,848 531,857 475,843 440,820 429,803">
+          <p>Dis donc ; je vois que les affaires marchent bien à la campagne?</p>
+        </text-area>
+        <text-area points="625,912 628,904 643,896 652,895 663,897 671,903 674,912 671,921 662,927 646,928 633,922">
+          <p>...</p>
+        </text-area>
+        <text-area points="297,1069 306,1044 335,1022 460,1021 472,1028 484,1067 483,1105 473,1129 445,1150 417,1158 344,1155 325,1147 303,1105">
+          <p>J'imagine que tu prépares déjà tes ingrédients pour le concours de potions de demain?</p>
+        </text-area>
+        <text-area points="509,1091 514,1074 528,1060 560,1054 596,1055 628,1063 642,1072 648,1089 645,1108 629,1124 597,1131 552,1126 519,1116 509,1098">
+          <p>...un concours de potions?</p>
+        </text-area>
+        <text-area points="524,1165 529,1154 559,1139 605,1143 643,1143 667,1140 678,1151 679,1166 659,1183 587,1184 551,1187 527,1176">
+          <p>...demain?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="191,257 196,239 216,226 282,223 336,226 357,231 368,243 373,257 369,272 342,288 304,297 263,301 238,300 208,289 193,272">
+          <p>Oh, prepáčte, môžem vziať iba štyri...</p>
+        </text-area>
+        <text-area points="816,15 896,14 899,28 880,45 843,44 825,35 816,25">
+          <p>Hmm...</p>
+        </text-area>
+        <text-area points="373,340 563,341 570,356 562,393 565,412 568,425 555,456 533,463 505,469 457,463 423,467 397,464 379,449 370,430 380,389 367,357">
+          <p>Zdravím, dobrý pane. Pripravte prosím pre mňa dva tucty zo všetkého. Prémiovej kvality, ako obyčajne.</p>
+        </text-area>
+        <text-area points="378,568 387,543 409,524 449,512 494,510 532,524 549,541 558,562 556,584 537,603 452,606 428,601 405,601 387,590">
+          <p>Je mi vždy cťou Vám poslúžiť, slečna Saffron</p></text-area>
+        <text-area points="458,688 462,673 474,658 524,653 567,657 590,673 599,693 591,710 573,718 484,719 466,707">
+          <p>Pozrime sa, to je Pepper</p>
+        </text-area>
+        <text-area points="429,789 440,751 453,732 488,723 574,724 606,741 628,767 633,789 618,815 565,848 531,857 475,843 440,820 429,803">
+          <p>Nechaj ma hádať. Obchodu sa veľmi dobre nedarí na vidieku?</p>
+        </text-area>
+        <text-area points="625,912 628,904 643,896 652,895 663,897 671,903 674,912 671,921 662,927 646,928 633,922">
+          <p>...</p>
+        </text-area>
+        <text-area points="297,1069 306,1044 335,1022 460,1021 472,1028 484,1067 483,1105 473,1129 445,1150 417,1158 344,1155 325,1147 303,1105">
+          <p>Tipujem, že zháňaš prísady na zajtrajšiu súťaž o najlepší elixír. Že áno?</p>
+        </text-area>
+        <text-area points="509,1091 514,1074 528,1060 560,1054 596,1055 628,1063 642,1072 648,1089 645,1108 629,1124 597,1131 552,1126 519,1116 509,1098">
+          <p>...súťaž o najlepší elixír?</p>
+        </text-area>
+        <text-area points="524,1165 529,1154 559,1139 605,1143 643,1143 667,1140 678,1151 679,1166 659,1183 587,1184 551,1187 527,1176">
+          <p>...zajtra?</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,11 954,11 954,313 39,314"/>
+      <frame points="38,337 954,338 953,612 39,613"/>
+      <frame points="39,636 954,637 955,993 39,994"/>
+      <frame points="39,1017 492,1017 491,1238 39,1238"/>
+      <frame points="502,1017 954,1017 954,1238 500,1237"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P03.webp"/>
+      <text-layer lang="en">
+        <text-area points="190,674 342,651 378,713 215,742" text-rotation="10" bgcolor="#e9d9a0" type="letter">
+          <p>Komona Potion Challenge</p>
+        </text-area>
+        <text-area points="185,763 414,719 450,765 394,779 408,805 225,845" text-rotation="12" bgcolor="#e2c58d" type="letter">
+          <p>50000Ko grand prize FOR THE BEST POTION</p>
+        </text-area>
+        <text-area points="254,876 491,826 534,878 300,932" text-rotation="13" bgcolor="#cca85c" type="letter">
+          <p>On Azurday, 3 Pinkmoon Grand Plaza of Komona</p>
+        </text-area>
+        <text-area points="520,1084 529,1066 545,1052 652,1045 718,1046 754,1061 772,1081 770,1097 744,1116 679,1125 586,1123 546,1114 524,1093">
+          <p>Lucky me, I still have a full day to prepare!</p>
+        </text-area>
+        <text-area points="531,1237 520,1191 537,1175 580,1169 620,1163 669,1178 687,1189 678,1232 656,1252 584,1254">
+          <p>Let's win this challenge!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="190,674 342,651 378,713 215,742" text-rotation="10" bgcolor="#e9d9a0" type="letter">
+          <p>Concours de Potions de Komona</p>
+        </text-area>
+        <text-area points="185,763 414,719 450,765 394,779 408,805 225,845" text-rotation="12" bgcolor="#e2c58d" type="letter">
+          <p>grand prix de 50 000Ko POUR LA MEILLEURE POTION</p>
+        </text-area>
+        <text-area points="254,876 491,826 534,878 300,932" text-rotation="13" bgcolor="#cca85c" type="letter">
+          <p>Azarday, 3 Pinkmoon Grand' place de Komona</p>
+        </text-area>
+        <text-area points="520,1084 529,1066 545,1052 652,1045 718,1046 754,1061 772,1081 770,1097 744,1116 679,1125 586,1123 546,1114 524,1093">
+          <p>Quelle chance ce concours! Et j'ai encore un jour complet pour me préparer</p>
+        </text-area>
+        <text-area points="531,1237 520,1191 537,1175 580,1169 620,1163 669,1178 687,1189 678,1232 656,1252 584,1254">
+          <p>Bien sûr que je vais participer!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="190,674 342,651 378,713 215,742" text-rotation="10" bgcolor="#e9d9a0" type="letter">
+          <p>Súťaž o Komonský elixír</p>
+        </text-area>
+        <text-area points="185,763 414,719 450,765 394,779 408,805 225,845" text-rotation="12" bgcolor="#e2c58d" type="letter">
+          <p>50000Ko cena pre víťaza</p><p>ZA NAJLEPŠÍ ELIXÍR</p>
+        </text-area>
+        <text-area points="254,876 491,826 534,878 300,932" text-rotation="13" bgcolor="#cca85c" type="letter">
+          <p>Na azúrový deň, 3. ružomesiac Hlavné Námestie v Komone</p>
+        </text-area>
+        <text-area points="520,1084 529,1066 545,1052 652,1045 718,1046 754,1061 772,1081 770,1097 744,1116 679,1125 586,1123 546,1114 524,1093">
+          <p>Naštastie, mám ešte celý deň na prípravu!</p>
+        </text-area>
+        <text-area points="531,1237 520,1191 537,1175 580,1169 620,1163 669,1178 687,1189 678,1232 656,1252 584,1254">
+          <p>Poďme tú súťaž vyhrať!</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,11 953,12 954,980 38,981"/>
+      <frame points="73,562 638,562 638,976 63,976"/>
+      <frame points="40,1004 954,1005 954,1334 38,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P04.webp"/>
+      <text-layer lang="en">
+        <text-area points="92,524 95,515 107,510 126,509 140,516 147,524 140,536 126,540 110,539 96,534">
+          <p>...</p>
+        </text-area>
+        <text-area points="51,868 53,850 65,836 75,830 138,830 156,845 163,864 161,881 152,900 133,910 109,913 78,904 58,891">
+          <p>Oh ...! I know...</p>
+        </text-area>
+        <text-area points="394,858 397,841 410,831 570,831 582,842 585,862 565,882 531,893 441,891 408,880 396,865">
+          <p>...that's exactly what I need!</p>
+        </text-area>
+        <text-area points="723,866 728,832 865,832 879,865 868,868">
+          <p>Carrot!</p>
+        </text-area>
+        <text-area points="676,905 691,882 722,875 865,874 895,889 899,916 881,941 850,949 752,949 704,941 677,922">
+          <p>Get ready, we'll hunt the ingredients together</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="92,524 95,515 107,510 126,509 140,516 147,524 140,536 126,540 110,539 96,534">
+          <p>...</p>
+        </text-area>
+        <text-area points="51,868 53,850 65,836 75,830 138,830 156,845 163,864 161,881 152,900 133,910 109,913 78,904 58,891">
+          <p>Oh ...! je sais!</p>
+        </text-area>
+        <text-area points="394,858 397,841 410,831 570,831 582,842 585,862 565,882 531,893 441,891 408,880 396,865">
+          <p>...c'est exactement ce qu'il me faut!</p>
+        </text-area>
+        <text-area points="723,866 728,832 865,832 879,865 868,868">
+          <p>Carotte!</p>
+        </text-area>
+        <text-area points="676,905 691,882 722,875 865,874 895,889 899,916 881,941 850,949 752,949 704,941 677,922">
+          <p>prépare-toi, on part à la chasse aux ingrédients!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="92,524 95,515 107,510 126,509 140,516 147,524 140,536 126,540 110,539 96,534">
+          <p>...</p>
+        </text-area>
+        <text-area points="51,868 53,850 65,836 75,830 138,830 156,845 163,864 161,881 152,900 133,910 109,913 78,904 58,891">
+          <p>Jáj ...! Mám to...</p>
+        </text-area>
+        <text-area points="394,858 397,841 410,831 570,831 582,842 585,862 565,882 531,893 441,891 408,880 396,865">
+          <p>...to je presne to, čo potrebujem!</p>
+        </text-area>
+        <text-area points="723,866 728,832 865,832 879,865 868,868">
+          <p>Carrot!</p>
+        </text-area>
+        <text-area points="676,905 691,882 722,875 865,874 895,889 899,916 881,941 850,949 752,949 704,941 677,922">
+          <p>Priprav sa, ideme spoločne nazbierať prísady</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,10 954,11 954,477 39,477"/>
+      <frame points="38,499 955,498 955,803 39,804"/>
+      <frame points="39,825 343,826 343,1334 39,1334"/>
+      <frame points="353,826 641,826 642,1334 352,1334"/>
+      <frame points="650,826 956,825 955,1335 650,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P05.webp"/>
+      <text-layer lang="en">
+        <text-area points="650,279 657,254 687,236 730,229 786,236 836,235 867,278 858,305 838,324 769,342 709,340 678,331 658,304">
+          <p>First, I need a few pearls of mist from those black clouds ...</p>
+        </text-area>
+        <text-area points="434,727 440,706 455,693 466,688 630,688 642,698 647,721 642,744 612,763 564,778 524,779 477,768 443,749">
+          <p>... and some red berries from the haunted jungle</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="650,279 657,254 687,236 730,229 786,236 836,235 867,278 858,305 838,324 769,342 709,340 678,331 658,304">
+          <p>Premièrement, il me faudrait des perles de brumes de nuages noirs ...</p>
+        </text-area>
+        <text-area points="434,727 440,706 455,693 466,688 630,688 642,698 647,721 642,744 612,763 564,778 524,779 477,768 443,749">
+          <p>... et quelques baies rouges de la forêt maléfique</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="650,279 657,254 687,236 730,229 786,236 836,235 867,278 858,305 838,324 769,342 709,340 678,331 658,304">
+          <p>Najskôr potrebujeme zopár hmlových perál z tamtých čiernych mrakov ...</p>
+        </text-area>
+        <text-area points="434,727 440,706 455,693 466,688 630,688 642,698 647,721 642,744 612,763 564,778 524,779 477,768 443,749">
+          <p>... a niekoľko červených bobúľ zo strašidelnej džungle</p>
+        </text-area>
+      </text-layer>
+      <frame points="34,8 956,11 954,661 37,663"/>
+      <frame points="37,684 956,684 955,1334 36,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P06.webp"/>
+      <text-layer lang="en">
+        <text-area points="66,356 74,329 87,307 113,293 191,293 210,296 245,319 252,340 244,372 225,395 204,404 137,413 95,399 70,371">
+          <p>... plus egg shells from the Phoenix valley of the volcanos ...</p>
+        </text-area>
+        <text-area points="492,1250 491,1225 502,1206 538,1192 627,1187 672,1190 698,1202 715,1222 720,1241 708,1262 689,1273 667,1287 608,1288 539,1284 504,1268">
+          <p>... and finally a drop of milk from a young DragonCow</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="66,356 74,329 87,307 113,293 191,293 210,296 245,319 252,340 244,372 225,395 204,404 137,413 95,399 70,371">
+          <p>... puis quelques coquilles d'oeuf de Phoenix de la vallée des volcans ...</p>
+        </text-area>
+        <text-area points="492,1250 491,1225 502,1206 538,1192 627,1187 672,1190 698,1202 715,1222 720,1241 708,1262 689,1273 667,1287 608,1288 539,1284 504,1268">
+          <p>... Et enfin quelques gouttes de lait d'une jeune DragonVache</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="66,356 74,329 87,307 113,293 191,293 210,296 245,319 252,340 244,372 225,395 204,404 137,413 95,399 70,371">
+          <p>... ešte vajíčkové škrupiny z údolia Fénixa z vulkánov ...</p>
+        </text-area>
+        <text-area points="492,1250 491,1225 502,1206 538,1192 627,1187 672,1190 698,1202 715,1222 720,1241 708,1262 689,1273 667,1287 608,1288 539,1284 504,1268">
+          <p>... a napokon kvapku mlieka z mladej Drakokravy</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,10 956,660 39,661"/>
+      <frame points="40,684 954,684 955,1334 39,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P07.webp"/>
+      <text-layer lang="en">
+        <text-area points="218,65 220,43 233,25 257,14 389,14 417,30 428,52 426,77 404,99 366,107 287,106 239,94">
+          <p>That's it Carrot, I think I have everything I need</p></text-area>
+        <text-area points="240,457 223,448 225,436 242,424 288,420 340,423 357,433 357,443 347,456">
+          <p>It looks...</p>
+        </text-area>
+        <text-area points="235,486 237,470 244,464 349,460 363,465 370,476 361,497 336,508 310,510 260,504 240,495">
+          <p>...Perfect</p>
+        </text-area>
+        <text-area points="219,866 207,858 210,850 227,845 245,835 273,844 297,842 308,852 323,860 311,872 227,874">
+          <p>Mmm...</p>
+        </text-area>
+        <text-area points="141,934 148,913 162,896 195,881 229,877 321,877 361,891 386,909 395,929 385,954 355,978 308,991 225,989 174,977 145,953">
+          <p>Best ... Cofee ... Ever!</p>
+        </text-area>
+        <text-area points="127,1081 133,1053 150,1026 183,1005 226,996 282,1000 324,1011 356,1033 371,1073 367,1107 347,1138 299,1157 227,1157 168,1141 135,1112">
+          <p>It's everything I'll need to work all night long and make the best potion for tomorrow's challenge</p>
+        </text-area>
+        <text-area points="812,1334 979,1334 980,1364 811,1362">
+          <p>To be continued ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="218,65 220,43 233,25 257,14 389,14 417,30 428,52 426,77 404,99 366,107 287,106 239,94">
+          <p>ça y est Carotte, je pense qu'on a tout</p>
+        </text-area>
+        <text-area points="240,457 223,448 225,436 242,424 288,420 340,423 357,433 357,443 347,456">
+          <p>Ça m'a l'air ...</p>
+        </text-area>
+        <text-area points="235,486 237,470 244,464 349,460 363,465 370,476 361,497 336,508 310,510 260,504 240,495">
+          <p>... parfait</p>
+        </text-area>
+        <text-area points="219,866 207,858 210,850 227,845 245,835 273,844 297,842 308,852 323,860 311,872 227,874">
+          <p>Hmm...</p>
+        </text-area>
+        <text-area points="141,934 148,913 162,896 195,881 229,877 321,877 361,891 386,909 395,929 385,954 355,978 308,991 225,989 174,977 145,953">
+          <p>Best ... Café ... Ever!</p>
+        </text-area>
+        <text-area points="127,1081 133,1053 150,1026 183,1005 226,996 282,1000 324,1011 356,1033 371,1073 367,1107 347,1138 299,1157 227,1157 168,1141 135,1112">
+          <p>C'est tout ce dont j'avais besoin avant de bosser toute la nuit sur la meilleure potion pour le concours de demain</p>
+        </text-area>
+        <text-area points="812,1334 979,1334 980,1364 811,1362">
+          <p>à suivre ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="218,65 220,43 233,25 257,14 389,14 417,30 428,52 426,77 404,99 366,107 287,106 239,94">
+          <p>Tak to by sme mali Carrot, myslím, že máme všetko, čo potrebujeme</p>
+        </text-area>
+        <text-area points="240,457 223,448 225,436 242,424 288,420 340,423 357,433 357,443 347,456">
+          <p>Vyzerá to...</p>
+        </text-area>
+        <text-area points="235,486 237,470 244,464 349,460 363,465 370,476 361,497 336,508 310,510 260,504 240,495">
+          <p>...perfektne</p>
+        </text-area>
+        <text-area points="219,866 207,858 210,850 227,845 245,835 273,844 297,842 308,852 323,860 311,872 227,874">
+          <p>Hmm...</p>
+        </text-area>
+        <text-area points="141,934 148,913 162,896 195,881 229,877 321,877 361,891 386,909 395,929 385,954 355,978 308,991 225,989 174,977 145,953">
+          <p>Najlepšia ... káva ... na svete!</p>
+        </text-area>
+        <text-area points="127,1081 133,1053 150,1026 183,1005 226,996 282,1000 324,1011 356,1033 371,1073 367,1107 347,1138 299,1157 227,1157 168,1141 135,1112">
+          <p>To je všetko, čo potrebujem, aby som mohla pracovať celú noc a pripraviť najlepší elixír na zajtrajšiu súťaž</p>
+        </text-area>
+        <text-area points="812,1334 979,1334 980,1364 811,1362">
+          <p>Pokračovanie na budúce ...</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,12 953,12 953,313 40,313"/>
+      <frame points="39,337 953,337 954,776 40,776"/>
+      <frame points="39,800 953,800 953,1333 39,1333"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E03P08.webp"/>
+      <text-layer lang="en">
+        <text-area points="295,26 665,26 665,53 295,53" bgcolor="#e7e4d1">
+          <p>This webcomic is totally free and open-sorce</p>
+        </text-area>
+        <text-area points="130,53 832,53 832,75 132,75" bgcolor="#d9d3bd">
+          <p>(Creative Commons Attribution 3.0 Unported, hi-res source files available to download)</p>
+        </text-area>
+        <text-area points="192,81 775,81 775,107 193,107" bgcolor="#e7e4d1">
+          <p>This episode couldn't exist without the support of my 93 patrons</p>
+        </text-area>
+        <text-area points="44,200 43,179 56,165 88,156 124,152 161,159 183,183 174,203 137,218 93,220 61,213">
+          <p>Thank you!</p>
+        </text-area>
+        <text-area points="381,573 601,573 601,640 376,640 376,573" bgcolor="#e7e4d1">
+          <p>Special thanks to: David Tschumperlé (Gmic) and all Krita team!</p>
+        </text-area>
+        <text-area points="339,640 635,640 635,663 339,663" bgcolor="#e7e4d1">
+          <p>Translation &amp; corrections: Amireeti</p>
+        </text-area>
+        <text-area points="286,669 710,669 710,715 286,715" bgcolor="#e5e0ca">
+          <p>This episode was made with 100% free and open-source tools Krita and Gmic on Xubuntu (GNU/Linux)</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="295,26 665,26 665,53 295,53" bgcolor="#e7e4d1">
+          <p>ce webcomic est entièrement libre et open-source</p>
+        </text-area>
+        <text-area points="130,53 832,53 832,75 132,75" bgcolor="#d9d3bd">
+          <p>(Creative Commons Attribution 3.0, fichiers haute resolution disponible au téléchargement)</p>
+        </text-area>
+        <text-area points="192,81 775,81 775,107 193,107" bgcolor="#e7e4d1">
+          <p>Cet épisode ne pourrait exister sans le soutient de 93 mécènes</p>
+        </text-area>
+        <text-area points="44,200 43,179 56,165 88,156 124,152 161,159 183,183 174,203 137,218 93,220 61,213">
+          <p>Mille mercis!</p>
+        </text-area>
+        <text-area points="381,573 601,573 601,640 376,640 376,573" bgcolor="#e7e4d1">
+          <p>Remerciement spécial Amireeti,  David Tschumperlé (Gmic) et toute la 'team Krita'!</p>
+        </text-area>
+        <text-area points="339,640 635,640 635,663 339,663" bgcolor="#e7e4d1">
+          <p>.</p>
+        </text-area>
+        <text-area points="286,669 710,669 710,715 286,715" bgcolor="#e5e0ca">
+          <p>This episode was made with 100% free and open-source tools Krita and Gmic on Xubuntu (GNU/Linux)</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="295,26 665,26 665,53 295,53" bgcolor="#e7e4d1">
+          <p>Tento komiks je úple zdarma a open-sorce</p>
+        </text-area>
+        <text-area points="130,53 832,53 832,75 132,75" bgcolor="#d9d3bd">
+          <p>(Creative Commons Attribution 3.0 Unported, zdrojové súbory k dispozícii na stiahnutie)</p>
+        </text-area>
+        <text-area points="192,81 775,81 775,107 193,107" bgcolor="#e7e4d1">
+          <p>Táto epizóda by nevznikla bez podpory mojich 93 fanúšikov na</p>
+        </text-area>
+        <text-area points="44,200 43,179 56,165 88,156 124,152 161,159 183,183 174,203 137,218 93,220 61,213">
+          <p>Ďakujem!</p>
+        </text-area>
+        <text-area points="381,573 601,573 601,640 376,640 376,573" bgcolor="#e7e4d1">
+          <p>Špeciálna vďaka patrí: David Tschumperlé (Gmic) and celý Krita team!</p>
+        </text-area>
+        <text-area points="339,640 635,640 635,663 339,663" bgcolor="#e7e4d1">
+          <p>Preklad &amp; korekcie do slovenčiny: JRW</p>
+        </text-area>
+        <text-area points="286,669 710,669 710,715 286,715" bgcolor="#e5e0ca">
+          <p>Táto epizóda bola vyrobená pomocou 100% slobodných a open-source nástrojov Krita a Gmic na Xubuntu (GNU/Linux)</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,10 955,749 40,749"/>
+    </page>
+    <page>
+      <title lang="fr">Episode 4: Éclair de génie</title>
+      <title lang="sk">Epizóda 4: Geniálny nápad</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#46292b" type="heading" inverted="True">
+          <p>Episode 4: Stroke of Genius</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#46292b" type="heading" inverted="True">
+          <p>Episode 4: Éclair de génie</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#46292b" type="heading" inverted="True">
+          <p>Epizóda 4: Geniálny nápad</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 4: Stroke of Genius</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="66,27 393,27 393,54 224,54 224,75 66,75" bgcolor="#4d9ed6" type="commentary">
+          <p>The night before the Potion challenge</p><p>2:00 AM</p>
+        </text-area>
+        <text-area points="203,953 198,928 193,901 196,873 227,856 284,853 360,857 399,869 413,883 413,940 400,958 256,959 217,957">
+          <p>Finally ... With this potion, No one, not even Saffron, can dare match my skill!</p></text-area>
+        <text-area points="283,1016 287,987 296,971 375,970 388,980 392,1026 384,1066 318,1072 296,1063 284,1037">
+          <p>I do need to test it on someone ...</p>
+        </text-area>
+        <text-area points="749,912 749,846 950,845 950,910 932,922 846,928 761,917">
+          <p>CAAAAAAAA~ ~AAARROT!!!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="66,27 393,27 393,54 224,54 224,75 66,75" bgcolor="#4d9ed6" type="commentary">
+          <p>La veille du concours de potion,</p><p>2h00 du mat' ...</p>
+        </text-area>
+        <text-area points="203,953 198,928 193,901 196,873 227,856 284,853 360,857 399,869 413,883 413,940 400,958 256,959 217,957">
+          <p>Enfin ... Avec cette potion, même pas Safran, ne m'arrivera à la cheville!</p>
+        </text-area>
+        <text-area points="283,1016 287,987 296,971 375,970 388,980 392,1026 384,1066 318,1072 296,1063 284,1037">
+          <p>J'ai seulement besoin de la tester ...</p>
+        </text-area>
+        <text-area points="749,912 749,846 950,845 950,910 932,922 846,928 761,917">
+          <p>CAAAAAAAA~ ~AAAROTTE!!!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="66,27 393,27 393,54 224,54 224,75 66,75" bgcolor="#4d9ed6" type="commentary">
+          <p>Noc pred začiatkom súťaže</p><p>2:00 hodiny ráno</p>
+        </text-area>
+        <text-area points="203,953 198,928 193,901 196,873 227,856 284,853 360,857 399,869 413,883 413,940 400,958 256,959 217,957">
+          <p>Konečne ... s týmto elixírom sa nikto, ani len Saffron, nemôže vyrovnať môjmu umeniu!</p></text-area>
+        <text-area points="283,1016 287,987 296,971 375,970 388,980 392,1026 384,1066 318,1072 296,1063 284,1037">
+          <p>Musím ho najskôr na niekom otestovať ...</p>
+        </text-area>
+        <text-area points="749,912 749,846 950,845 950,910 932,922 846,928 761,917">
+          <p>CAAAAAAAA~ ~AAARROT!!!</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,11 955,819 40,819"/>
+      <frame points="38,841 737,838 737,1335 39,1336"/>
+      <frame points="747,1335 745,841 956,841 956,1336"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P02.webp"/>
+      <text-layer lang="en">
+        <text-area points="44,44 43,15 157,14 158,26 149,39 97,48 62,49">
+          <p>Carrot?</p>
+        </text-area>
+        <text-area points="218,366 209,350 217,324 257,304 320,302 383,312 405,309 419,315 421,360 417,365">
+          <p>Amazing! Not even under the bed?</p>
+        </text-area>
+        <text-area points="437,43 438,15 526,13 533,25 531,41 513,53 483,53 456,51">
+          <p>Carrot!</p>
+        </text-area>
+        <text-area points="559,146 552,136 557,118 574,108 611,107 645,113 652,119 651,144 639,153 568,149">
+          <p>Carrot?</p>
+        </text-area>
+        <text-area points="437,197 436,168 456,161 479,165 516,163 533,173 536,189 517,203 461,204 451,207">
+          <p>Carrot?!</p>
+        </text-area>
+        <text-area points="491,327 505,307 521,300 570,304 601,304 612,314 607,335 575,343 520,343 501,336">
+          <p>Carrot?!!!</p>
+        </text-area>
+        <text-area points="813,351 797,303 806,267 840,258 935,264 950,277 950,348 918,361 838,361">
+          <p>I really didn't think I would have to use this trick ...</p>
+        </text-area>
+        <text-area points="357,583 308,567 276,539 266,511 273,485 305,465 326,471 343,489 371,461 396,459 417,472 423,506 399,548 367,579">
+          <p>Carrot!</p>
+        </text-area>
+        <text-area points="504,1242 490,1229 493,1217 518,1214 540,1211 556,1218 560,1228 553,1238 538,1242 520,1240">
+          <p>Groo</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="44,44 43,15 157,14 158,26 149,39 97,48 62,49">
+          <p>Carotte?</p>
+        </text-area>
+        <text-area points="218,366 209,350 217,324 257,304 320,302 383,312 405,309 419,315 421,360 417,365">
+          <p>Incroyable!... même pas sous le lit?</p>
+        </text-area>
+        <text-area points="437,43 438,15 526,13 533,25 531,41 513,53 483,53 456,51">
+          <p>Carotte!</p>
+        </text-area>
+        <text-area points="559,146 552,136 557,118 574,108 611,107 645,113 652,119 651,144 639,153 568,149">
+          <p>Carotte?</p>
+        </text-area>
+        <text-area points="437,197 436,168 456,161 479,165 516,163 533,173 536,189 517,203 461,204 451,207">
+          <p>Carotte?!</p>
+        </text-area>
+        <text-area points="491,327 505,307 521,300 570,304 601,304 612,314 607,335 575,343 520,343 501,336">
+          <p>Carotte?!!!</p>
+        </text-area>
+        <text-area points="813,351 797,303 806,267 840,258 935,264 950,277 950,348 918,361 838,361">
+          <p>Je ne pensais pas devoir en arriver là et utiliser cette technique ...</p>
+        </text-area>
+        <text-area points="357,583 308,567 276,539 266,511 273,485 305,465 326,471 343,489 371,461 396,459 417,472 423,506 399,548 367,579">
+          <p>Carotte!</p>
+        </text-area>
+        <text-area points="504,1242 490,1229 493,1217 518,1214 540,1211 556,1218 560,1228 553,1238 538,1242 520,1240">
+          <p>Groo</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="44,44 43,15 157,14 158,26 149,39 97,48 62,49">
+          <p>Carrot?</p>
+        </text-area>
+        <text-area points="218,366 209,350 217,324 257,304 320,302 383,312 405,309 419,315 421,360 417,365">
+          <p>Zaujímavé! Nie je ani pod posteľou</p>
+        </text-area>
+        <text-area points="437,43 438,15 526,13 533,25 531,41 513,53 483,53 456,51">
+          <p>Carrot!</p>
+        </text-area>
+        <text-area points="559,146 552,136 557,118 574,108 611,107 645,113 652,119 651,144 639,153 568,149">
+          <p>Carrot?</p>
+        </text-area>
+        <text-area points="437,197 436,168 456,161 479,165 516,163 533,173 536,189 517,203 461,204 451,207">
+          <p>Carrot?!</p>
+        </text-area>
+        <text-area points="491,327 505,307 521,300 570,304 601,304 612,314 607,335 575,343 520,343 501,336">
+          <p>Carrot?!!!</p>
+        </text-area>
+        <text-area points="813,351 797,303 806,267 840,258 935,264 950,277 950,348 918,361 838,361">
+          <p>Skutočne som si nemyslela, že budem musieť použiť tento trik ...</p>
+        </text-area>
+        <text-area points="357,583 308,567 276,539 266,511 273,485 305,465 326,471 343,489 371,461 396,459 417,472 423,506 399,548 367,579">
+          <p>Carrot!</p>
+        </text-area>
+        <text-area points="504,1242 490,1229 493,1217 518,1214 540,1211 556,1218 560,1228 553,1238 538,1242 520,1240">
+          <p>Chrr</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,10 424,12 425,370 39,370"/>
+      <frame points="655,10 656,369 434,370 434,12"/>
+      <frame points="664,11 954,11 955,370 665,369"/>
+      <frame points="39,392 954,391 955,817 39,817"/>
+      <frame points="40,840 341,840 343,1335 39,1335"/>
+      <frame points="351,840 641,840 642,1335 351,1336"/>
+      <frame points="651,839 955,840 956,1335 650,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P03.webp"/>
+      <text-layer lang="en">
+        <text-area points="41,94 41,43 53,20 63,15 210,16 229,33 236,56 225,96 192,122 152,128 90,126 73,125">
+          <p>Awww, Carrot! you sweet kitty cat you've come all by yourself</p>
+        </text-area>
+        <text-area points="423,88 412,53 424,15 594,16 607,30 614,66 595,100 500,110 444,103">
+          <p>At the very moment when I need my favorite assistant</p>
+        </text-area>
+        <text-area points="164,383 151,350 158,324 183,303 314,304 332,352 325,380 261,396 188,393">
+          <p>Here, I present you my final masterpiece</p>
+        </text-area>
+        <text-area points="792,770 775,741 772,706 793,690 907,695 918,713 919,753 891,773">
+          <p>the potion of Genius</p>
+        </text-area>
+        <text-area points="242,979 208,962 198,939 209,916 309,913 321,932 312,960 279,976">
+          <p>Do please take a sip</p>
+        </text-area>
+        <text-area points="696,1033 669,998 684,953 842,953 880,972 881,1016 846,1036 780,1036">
+          <p>If it works, you should have a stroke of a genius</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="41,94 41,43 53,20 63,15 210,16 229,33 236,56 225,96 192,122 152,128 90,126 73,125">
+          <p>ooooh, Carotte! t'es trop minou d'être venu tout seul</p>
+        </text-area>
+        <text-area points="423,88 412,53 424,15 594,16 607,30 614,66 595,100 500,110 444,103">
+          <p>Pil poil au moment ou j'ai besoin de mon assistant préféré</p>
+        </text-area>
+        <text-area points="164,383 151,350 158,324 183,303 314,304 332,352 325,380 261,396 188,393">
+          <p>Taaadaaaa! Je te présente mon chef-d'oeuvre</p>
+        </text-area>
+        <text-area points="792,770 775,741 772,706 793,690 907,695 918,713 919,753 891,773">
+          <p>la potion des Génies</p>
+        </text-area>
+        <text-area points="242,979 208,962 198,939 209,916 309,913 321,932 312,960 279,976">
+          <p>juste une petite gorgée ...</p>
+        </text-area>
+        <text-area points="696,1033 669,998 684,953 842,953 880,972 881,1016 846,1036 780,1036">
+          <p>.. et tu devrais être frappé d'un éclair de génie</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="41,94 41,43 53,20 63,15 210,16 229,33 236,56 225,96 192,122 152,128 90,126 73,125">
+          <p>Aaa, Carrot! Ty moje zlatíčko, prišiel si sám od seba</p>
+        </text-area>
+        <text-area points="423,88 412,53 424,15 594,16 607,30 614,66 595,100 500,110 444,103">
+          <p>A práve včas keď potrebujem svojho obľúbeného pomocníka</p>
+        </text-area>
+        <text-area points="164,383 151,350 158,324 183,303 314,304 332,352 325,380 261,396 188,393">
+          <p>Toto je moje majstrovské dielo</p>
+        </text-area>
+        <text-area points="792,770 775,741 772,706 793,690 907,695 918,713 919,753 891,773">
+          <p>elixír génia</p>
+        </text-area>
+        <text-area points="242,979 208,962 198,939 209,916 309,913 321,932 312,960 279,976">
+          <p>Odpi si kúsok prosím</p>
+        </text-area>
+        <text-area points="696,1033 669,998 684,953 842,953 880,972 881,1016 846,1036 780,1036">
+          <p>Ak to bude fungovať, mal by si dostať geniálny nápad</p>
+        </text-area>
+      </text-layer>
+      <frame points="35,12 954,11 954,277 36,275"/>
+      <frame points="35,300 953,300 954,885 36,885"/>
+      <frame points="37,908 348,909 349,930 356,948 363,960 215,1276 148,1270 102,1257 80,1242 68,1228 55,1201 45,1165 40,1116 38,1062 37,986"/>
+      <frame points="371,966 391,978 419,988 457,994 517,997 571,997 618,1290 595,1284 544,1280 435,1280 334,1280 223,1276 239,1239"/>
+      <frame points="580,998 665,997 669,973 696,952 772,949 861,955 889,976 888,1015 911,1028 928,1048 941,1079 949,1120 954,1176 955,1335 656,1335 653,1321 641,1302 628,1294 607,1172"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P04.webp"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P05.webp"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P06.webp"/>
+      <text-layer lang="en">
+        <text-area points="483,268 481,246 488,223 660,222 671,239 671,264 659,293 635,315 580,321 537,320 504,307">
+          <p>WOW ... Carrot! that's amazing... a real alphabet ...</p>
+        </text-area>
+        <text-area points="774,274 779,253 796,238 835,234 878,240 904,260 905,285 900,300 859,309 806,307 783,296">
+          <p>You... You write?</p>
+        </text-area>
+        <text-area points="797,402 790,394 807,370 853,363 880,387 877,404 865,416">
+          <p>E?</p>
+        </text-area>
+        <text-area points="734,441 746,421 796,407 857,423 875,436 865,451 797,471 750,461">
+          <p>Energy?</p>
+        </text-area>
+        <text-area points="804,497 796,486 807,472 880,448 925,461 945,484 936,507 907,520 871,521 826,508">
+          <p>Eternal?</p>
+        </text-area>
+        <text-area points="718,533 725,519 762,503 800,503 855,520 865,536 855,556 736,558 721,545">
+          <p>Emotion?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="483,268 481,246 488,223 660,222 671,239 671,264 659,293 635,315 580,321 537,320 504,307">
+          <p>Poc ouaouh ... Carotte! c'est fantastique...</p>
+        </text-area>
+        <text-area points="774,274 779,253 796,238 835,234 878,240 904,260 905,285 900,300 859,309 806,307 783,296">
+          <p>tu... ...tu écris?</p>
+        </text-area>
+        <text-area points="797,402 790,394 807,370 853,363 880,387 877,404 865,416">
+          <p>E?</p>
+        </text-area>
+        <text-area points="734,441 746,421 796,407 857,423 875,436 865,451 797,471 750,461">
+          <p>Energie?</p>
+        </text-area>
+        <text-area points="804,497 796,486 807,472 880,448 925,461 945,484 936,507 907,520 871,521 826,508">
+          <p>Eternel?</p>
+        </text-area>
+        <text-area points="718,533 725,519 762,503 800,503 855,520 865,536 855,556 736,558 721,545">
+          <p>Emotion?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="483,268 481,246 488,223 660,222 671,239 671,264 659,293 635,315 580,321 537,320 504,307">
+          <p>WOW ... Carrot! to je úžasné... skutočná abeceda ...</p>
+        </text-area>
+        <text-area points="774,274 779,253 796,238 835,234 878,240 904,260 905,285 900,300 859,309 806,307 783,296">
+          <p>Ty... vieš písať?</p>
+        </text-area>
+        <text-area points="797,402 790,394 807,370 853,363 880,387 877,404 865,416">
+          <p>E?</p>
+        </text-area>
+        <text-area points="734,441 746,421 796,407 857,423 875,436 865,451 797,471 750,461">
+          <p>Energia?</p>
+        </text-area>
+        <text-area points="804,497 796,486 807,472 880,448 925,461 945,484 936,507 907,520 871,521 826,508">
+          <p>Elektrina?</p>
+        </text-area>
+        <text-area points="718,533 725,519 762,503 800,503 855,520 865,536 855,556 736,558 721,545">
+          <p>Emócia?</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,0 491,1 491,193 40,193"/>
+      <frame points="502,0 953,0 953,194 501,194"/>
+      <frame points="40,219 953,219 954,562 40,562"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P07.webp"/>
+      <text-layer lang="en">
+        <text-area points="192,67 74,65 81,15 226,13 226,38">
+          <p>What else can this mean?</p>
+        </text-area>
+        <text-area points="91,80 110,70 191,71 199,86 162,111 131,112 93,103 85,92">
+          <p>Embed?</p>
+        </text-area>
+        <text-area points="166,113 204,87 244,93 263,104 262,126 239,139 199,140 170,126">
+          <p>Empty?</p>
+        </text-area>
+        <text-area points="295,135 304,114 333,94 371,83 443,82 513,95 549,125 551,146 544,170 499,185 449,192 357,185 312,171">
+          <p>C'mon Carrot I'm running out of words this really doesn't make any sense!</p></text-area>
+        <text-area points="70,550 311,550 311,599 70,599" bgcolor="#61445a" inverted="true">
+          <p><inverted>... this really doesn't make any sense ...</inverted></p>
+        </text-area>
+        <text-area points="752,583 733,556 731,546 916,544 911,574 856,577">
+          <p>Grrrrrrr!!!</p>
+        </text-area>
+        <text-area points="667,787 679,762 938,762 938,788">
+          <p>nothing ever works with me!</p>
+        </text-area>
+        <text-area points="43,855 42,817 111,818 126,829 122,839 86,856">
+          <p>Bah ...</p>
+        </text-area>
+        <text-area points="103,898 116,871 158,853 234,844 278,850 304,862 320,895 312,926 279,945 210,952 137,940 106,914">
+          <p>I still have time to invent another potion</p>
+        </text-area>
+        <text-area points="629,1185 633,1168 643,1156 740,1156 745,1170 735,1194 711,1210 675,1215 643,1207 631,1193">
+          <p>Sleep well Carrot</p>
+        </text-area>
+        <text-area points="771,1337 932,1337 932,1361 770,1361">
+          <p>To be continued...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="192,67 74,65 81,15 226,13 226,38">
+          <p>Quoi?</p>
+        </text-area>
+        <text-area points="91,80 110,70 191,71 199,86 162,111 131,112 93,103 85,92">
+          <p>Embué?</p>
+        </text-area>
+        <text-area points="166,113 204,87 244,93 263,104 262,126 239,139 199,140 170,126">
+          <p>Emané?</p>
+        </text-area>
+        <text-area points="295,135 304,114 333,94 371,83 443,82 513,95 549,125 551,146 544,170 499,185 449,192 357,185 312,171">
+          <p>Allez Carotte, fait un effort, ça ne veut rien dire tout ça</p></text-area>
+        <text-area points="70,550 311,550 311,599 70,599" bgcolor="#61445a" inverted="true">
+          <p><inverted>... ça ne veut rien dire tout ça ...</inverted></p>
+        </text-area>
+        <text-area points="752,583 733,556 731,546 916,544 911,574 856,577">
+          <p>Grrrrrrr!!!</p>
+        </text-area>
+        <text-area points="667,787 679,762 938,762 938,788">
+          <p>Rien ne marche jamais avec moi!</p>
+        </text-area>
+        <text-area points="43,855 42,817 111,818 126,829 122,839 86,856">
+          <p>Bof ...</p>
+        </text-area>
+        <text-area points="103,898 116,871 158,853 234,844 278,850 304,862 320,895 312,926 279,945 210,952 137,940 106,914">
+          <p>il me reste encore du temps pour en préparer une meilleure</p>
+        </text-area>
+        <text-area points="629,1185 633,1168 643,1156 740,1156 745,1170 735,1194 711,1210 675,1215 643,1207 631,1193">
+          <p>... bonne nuit Carotte ...</p>
+        </text-area>
+        <text-area points="771,1337 932,1337 932,1361 770,1361">
+          <p>à suivre ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="192,67 74,65 81,15 226,13 226,38">
+          <p>Čo iné to môže znamenať?</p>
+        </text-area>
+        <text-area points="91,80 110,70 191,71 199,86 162,111 131,112 93,103 85,92">
+          <p>Element?</p>
+        </text-area>
+        <text-area points="166,113 204,87 244,93 263,104 262,126 239,139 199,140 170,126">
+          <p>Empatia?</p>
+        </text-area>
+        <text-area points="295,135 304,114 333,94 371,83 443,82 513,95 549,125 551,146 544,170 499,185 449,192 357,185 312,171">
+          <p>Ale choď Carrot, dochádzajú mi slová, toto nedáva žiaden zmysel!</p></text-area>
+        <text-area points="70,550 311,550 311,599 70,599" bgcolor="#61445a" inverted="true">
+          <p><inverted>... toto skutočne nedáva žiaden zmysel ...</inverted></p>
+        </text-area>
+        <text-area points="752,583 733,556 731,546 916,544 911,574 856,577">
+          <p>Chrrrrrr!!!</p>
+        </text-area>
+        <text-area points="667,787 679,762 938,762 938,788">
+          <p>Nič mi nevychádza!</p>
+        </text-area>
+        <text-area points="43,855 42,817 111,818 126,829 122,839 86,856">
+          <p>Aah ...</p>
+        </text-area>
+        <text-area points="103,898 116,871 158,853 234,844 278,850 304,862 320,895 312,926 279,945 210,952 137,940 106,914">
+          <p>Stále mám čas vymyslieť nejaký ďalší elixír</p>
+        </text-area>
+        <text-area points="629,1185 633,1168 643,1156 740,1156 745,1170 735,1194 711,1210 675,1215 643,1207 631,1193">
+          <p>Spi sladko Carrot</p>
+        </text-area>
+        <text-area points="771,1337 932,1337 932,1361 770,1361">
+          <p>Pokračovanie nabudúce...</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,12 953,12 954,517 40,518"/>
+      <frame points="40,541 341,541 343,790 40,790"/>
+      <frame points="352,542 640,541 641,790 352,790"/>
+      <frame points="652,540 953,540 954,792 651,790"/>
+      <frame points="40,813 954,813 953,1130 39,1130"/>
+      <frame points="121,1153 873,1153 873,1334 121,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E04P08.webp"/>
+      <text-layer lang="en">
+        <text-area points="102,21 898,21 898,85 105,85" bgcolor="#c3bda3">
+          <p>Pepper&amp;Carrot is totally free, open-source, and sponsored thanks to the help of patrons. This episode was sponsored by 156 patrons:</p>
+        </text-area>
+        <text-area points="405,607 584,607 584,631 405,631" bgcolor="#dcd9ba">
+          <p>Support the project,</p>
+        </text-area>
+        <text-area points="219,630 779,630 779,655 220,655" bgcolor="#dcd9ba">
+          <p>a single dollar donation per webcomic can help Pepper&amp;Carrot a lot!</p>
+        </text-area>
+        <text-area points="296,719 716,719 716,764 296,764" bgcolor="#d6d2b5">
+          <p>License: Creative Commons Attribution to 'David Revoy' you can do derivations, modifications, repost, sell-it, etc...</p>
+        </text-area>
+        <text-area points="252,768 753,768 753,818 250,818" bgcolor="#d6d2b5">
+          <p>Open-source: high resolution layered source files for printing, with fonts available to download, sell, modify, translate, etc...</p>
+        </text-area>
+        <text-area points="263,820 735,820 735,866 266,866" bgcolor="#d5d0b2">
+          <p>Tools: This episode was made with 100% free and open-source tools Krita, Gmic, Blender, Gimp on Ubuntu Gnome (GNU/Linux)</p>
+        </text-area>
+        <text-area points="742,584 847,621 843,642 735,607" text-rotation="342" bgcolor="#d4d3b7">
+          <p>Thank you!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="102,21 898,21 898,85 105,85" bgcolor="#c3bda3">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat des lecteurs, pour cet épisode, merci aux 156 Mécènes:</p>
+        </text-area>
+        <text-area points="405,607 584,607 584,631 405,631" bgcolor="#dcd9ba">
+          <p>Vous aussi,</p>
+        </text-area>
+        <text-area points="219,630 779,630 779,655 220,655" bgcolor="#dcd9ba">
+          <p>devenez mécène de Pepper&amp;Carrot pour le prochain épisode:</p>
+        </text-area>
+        <text-area points="296,719 716,719 716,764 296,764" bgcolor="#d6d2b5">
+          <p>License: Creative Commons Attribution à 'David Revoy' vous pouvez modifier, repartager, vendre, etc...</p>
+        </text-area>
+        <text-area points="252,768 753,768 753,818 250,818" bgcolor="#d6d2b5">
+          <p>Open-source: toutes les sources, polices d'écritures, fichiers avec calques sont disponibles sur le site officiel au téléchargement.</p>
+        </text-area>
+        <text-area points="263,820 735,820 735,866 266,866" bgcolor="#d5d0b2">
+          <p>Tools: Cet épisode a été dessiné a 100% avec des logiciels libres Krita, Gmic, Blender, Gimp sur Ubuntu Gnome (Gnu/Linux)</p>
+        </text-area>
+        <text-area points="742,584 847,621 843,642 735,607" text-rotation="342" bgcolor="#d4d3b7">
+          <p>Merci!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="102,21 898,21 898,85 105,85" bgcolor="#c3bda3">
+          <p>Komiks Pepper&amp;Carrot je úplne zdarma, open-source, a sponzorovaný vďaka pomoci fanúšikov. Táto epizóda bola sponzorovaná 156 fanúšikmi:</p>
+        </text-area>
+        <text-area points="405,607 584,607 584,631 405,631" bgcolor="#dcd9ba">
+          <p>Podporte projekt,</p>
+        </text-area>
+        <text-area points="219,630 779,630 779,655 220,655" bgcolor="#dcd9ba">
+          <p>každé darované euro na jeden komis môže veľmi pomôcť Pepper&amp;Carrot!</p>
+        </text-area>
+        <text-area points="296,719 716,719 716,764 296,764" bgcolor="#d6d2b5">
+          <p>Licencia: Creative Commons Attribution to 'David Revoy' je dovolené robiť derivácie, modifikácie, kópie, predaj, atď...</p>
+        </text-area>
+        <text-area points="252,768 753,768 753,818 250,818" bgcolor="#d6d2b5">
+          <p>Open-source: zdrojové súbory vo vysokom rozlíšení na tlač, s fontami sú k dispozícii na stiahnutie, predaj, modifikáciu, preklady, atď...</p>
+        </text-area>
+        <text-area points="263,820 735,820 735,866 266,866" bgcolor="#d5d0b2">
+          <p>Nástroje: Táto epizóda bola vytvorená so 100% slobodnými a open-source nástrojmi Krita, Gmic, Blender, Gimp na Ubuntu Gnome (GNU/Linux)</p>
+        </text-area>
+        <text-area points="742,584 847,621 843,642 735,607" text-rotation="342" bgcolor="#d4d3b7">
+          <p>Ďakujem!</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,12 954,924 39,924"/>
+    </page>
+    <page>
+      <title lang="fr">Episode 5: Episode spécial de Noël</title>
+      <title lang="sk">Epizóda 5: Špeciálna sviatočná epizóda</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E05.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#f2eadd" type="heading">
+          <p>Episode 5: Special Holiday Episode</p></text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#f2eadd" type="heading">
+          <p>Episode 5: Episode spécial de Noël</p></text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#f2eadd" type="heading">
+          <p>Epizóda 5: Mimoriadna sviatočná epizóda</p></text-area>
+      </text-layer>
+    <title lang="en">Episode 5: Special Holiday Episode</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E05P01.webp"/>
+      <frame points="39,23 953,20 954,610 39,609"/>
+      <frame points="39,633 954,632 954,986 39,987"/>
+      <frame points="40,1009 954,1010 954,1335 39,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E05P02.webp"/>
+      <frame points="39,11 954,9 956,504 39,505"/>
+      <frame points="40,526 956,527 956,969 39,969"/>
+      <frame points="39,990 957,990 956,1334 38,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E05P03.webp"/>
+      <frame points="40,12 954,11 954,436 38,437"/>
+      <frame points="39,460 954,461 954,775 39,775"/>
+      <frame points="39,798 328,799 328,1333 39,1334"/>
+      <frame points="337,798 641,798 641,1334 339,1334"/>
+      <frame points="652,798 953,799 954,1334 652,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E05P04.webp"/>
+      <frame points="40,12 954,12 954,690 39,690"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E05P05.webp"/>
+      <text-layer lang="en">
+        <text-area points="112,19 897,19 897,87 111,87" bgcolor="#d4d6e2">
+          <p>Pepper&amp;Carrot is totally free, open-source, and sponsored thanks to the help of patrons. This episode was sponsored by 170 patrons:</p>
+        </text-area>
+        <text-area points="419,647 595,647 595,671 418,671" bgcolor="#f8f3ed">
+          <p>Support the project,</p>
+        </text-area>
+        <text-area points="231,669 789,669 789,696 231,696" bgcolor="#f8f3ed">
+          <p>a single dollar donation per webcomic can help Pepper&amp;Carrot a lot!</p>
+        </text-area>
+        <text-area points="314,731 719,731 719,775 315,775" bgcolor="#f8f3ed">
+          <p>License: Creative Commons Attribution to 'David Revoy' you can do derivations, modifications, repost, sell-it, etc...</p>
+        </text-area>
+        <text-area points="262,778 766,778 766,823 265,823" bgcolor="#f8f3ed">
+          <p>Open-source: high resolution layered source files for printing, with fonts available to download, sell, modify, translate, etc...</p>
+        </text-area>
+        <text-area points="262,824 750,824 750,869 271,869" bgcolor="#f8f3ed">
+          <p>Tools: This episode was made with 100% free and open-source tools Krita, Gmic, Blender, Gimp on Ubuntu Gnome (GNU/Linux)</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="112,19 897,19 897,87 111,87" bgcolor="#d4d6e2">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat des lecteurs, pour cet épisode, merci aux 156 Mécènes:</p>
+        </text-area>
+        <text-area points="419,647 595,647 595,671 418,671" bgcolor="#f8f3ed">
+          <p>Vous aussi,</p>
+        </text-area>
+        <text-area points="231,669 789,669 789,696 231,696" bgcolor="#f8f3ed">
+          <p>devenez mécène de Pepper&amp;Carrot pour le prochain épisode:</p>
+        </text-area>
+        <text-area points="314,731 719,731 719,775 315,775" bgcolor="#f8f3ed">
+          <p>License: Creative Commons Attribution à 'David Revoy' vous pouvez modifier, repartager, vendre, etc...</p>
+        </text-area>
+        <text-area points="262,778 766,778 766,823 265,823" bgcolor="#f8f3ed">
+          <p>Open-source: toutes les sources, polices d'écritures, fichiers avec calques sont disponibles sur le site officiel au téléchargement.</p>
+        </text-area>
+        <text-area points="262,824 750,824 750,869 271,869" bgcolor="#f8f3ed">
+          <p>Tools: Cet épisode a été dessiné a 100% avec des logiciels libres Krita, Gmic, Blender, Gmic sur Ubuntu Gnome (Gnu/Linux)</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="112,19 897,19 897,87 111,87" bgcolor="#d4d6e2">
+          <p>Komiks Pepper&amp;Carrot je úplne zdarma, open-source, a sponzorovaný vďaka pomoci fanúšikov. Táto epizóda bola sponzorovaná 170 fanúšikmi:</p>
+        </text-area>
+        <text-area points="419,647 595,647 595,671 418,671" bgcolor="#f8f3ed">
+          <p>Podporte projekt,</p>
+        </text-area>
+        <text-area points="231,669 789,669 789,696 231,696" bgcolor="#f8f3ed">
+          <p>každé darované euro na jeden komis môže veľmi pomôcť Pepper&amp;Carrot!</p>
+        </text-area>
+        <text-area points="314,731 719,731 719,775 315,775" bgcolor="#f8f3ed">
+          <p>Licencia: Creative Commons Attribution to 'David Revoy' je dovolené robiť derivácie, modifikácie, kópie, predaj, atď...</p>
+        </text-area>
+        <text-area points="262,778 766,778 766,823 265,823" bgcolor="#f8f3ed">
+          <p>Open-source: zdrojové súbory vo vysokom rozlíšení na tlač, s fontami sú k dispozícii na stiahnutie, predaj, modifikáciu, preklady, atď...</p>
+        </text-area>
+        <text-area points="262,824 750,824 750,869 271,869" bgcolor="#f8f3ed">
+          <p>Nástroje: Táto epizóda bola vytvorená so 100% slobodnými a open-source nástrojmi Krita, Gmic, Blender, Gimp na Ubuntu Gnome (GNU/Linux)</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,11 954,11 954,924 39,924"/>
+    </page>
+    <page>
+      <title lang="fr">Episode 6: Le concours de potion</title>
+      <title lang="sk">Epizóda 6: Súťaž o najlepší elixír</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#a16f58" type="heading" inverted="True">
+          <p>Episode 6: The Potion Contest</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#a16f58" type="heading" inverted="True">
+          <p>Episode 6: Le concours de potion</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#a16f58" type="heading" inverted="True">
+          <p>Epizóda 6: Súťaž o najlepší elixír</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 6: The Potion Contest</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="42,416 42,349 64,338 209,337 236,355 243,388 222,417 180,428 119,428 68,424">
+          <p>Oh shoot, I fell asleep with the window open, again...</p>
+        </text-area>
+        <text-area points="102,514 132,495 222,496 258,511 260,527 239,543 155,550 107,538">
+          <p>... it's so windy ...</p>
+        </text-area>
+        <text-area points="108,676 121,639 173,618 288,625 318,648 306,695 252,714 159,710 120,694">
+          <p>... and why can I see Komona through the window?</p></text-area>
+        <text-area points="335,858 334,845 342,833 383,829 418,835 427,844 423,862 373,869 343,865">
+          <p>KOMONA!</p>
+        </text-area>
+        <text-area points="458,825 576,824 584,844 572,869 515,873 467,871 455,848">
+          <p>The Potion Contest!</p>
+        </text-area>
+        <text-area points="626,864 630,839 640,824 772,824 797,837 806,862 797,898 715,903 648,896 630,882">
+          <p>I must've... must've accidentally fallen asleep!*</p>
+        </text-area>
+        <text-area points="754,1066 952,1066 952,1080 754,1080">
+          <p>*See Episode 4: Stroke of Genius</p>
+        </text-area>
+        <text-area points="469,1118 477,1105 502,1095 539,1096 558,1105 566,1118 561,1132 536,1143 507,1143 483,1136 471,1127">
+          <p>... but?</p>
+        </text-area>
+        <text-area points="628,1136 631,1109 644,1096 710,1096 732,1105 743,1130 722,1160 673,1170 643,1156">
+          <p>Where am I?!?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="42,416 42,349 64,338 209,337 236,355 243,388 222,417 180,428 119,428 68,424">
+          <p>Oh zut, je me suis encore couchée sans fermer la fenêtre...</p>
+        </text-area>
+        <text-area points="102,514 132,495 222,496 258,511 260,527 239,543 155,550 107,538">
+          <p>... mais quel vent!</p>
+        </text-area>
+        <text-area points="108,676 121,639 173,618 288,625 318,648 306,695 252,714 159,710 120,694">
+          <p>... et pourquoi je vois Komona par la fenêtre?</p>
+        </text-area>
+        <text-area points="335,858 334,845 342,833 383,829 418,835 427,844 423,862 373,869 343,865">
+          <p>KOMONA!</p>
+        </text-area>
+        <text-area points="458,825 576,824 584,844 572,869 515,873 467,871 455,848">
+          <p>Le concours de Potion!</p>
+        </text-area>
+        <text-area points="626,864 630,839 640,824 772,824 797,837 806,862 797,898 715,903 648,896 630,882">
+          <p>J'ai... J'ai dû m'endormir sans le faire exprès!*</p>
+        </text-area>
+        <text-area points="754,1066 952,1066 952,1080 754,1080">
+          <p>*voir episode 4: Coup de génie</p>
+        </text-area>
+        <text-area points="469,1118 477,1105 502,1095 539,1096 558,1105 566,1118 561,1132 536,1143 507,1143 483,1136 471,1127">
+          <p>... mais?</p>
+        </text-area>
+        <text-area points="628,1136 631,1109 644,1096 710,1096 732,1105 743,1130 722,1160 673,1170 643,1156">
+          <p>Où je suis là?!?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="42,416 42,349 64,338 209,337 236,355 243,388 222,417 180,428 119,428 68,424">
+          <p>Do pekla, zaspala som znova pri otvorenom okne...</p>
+        </text-area>
+        <text-area points="102,514 132,495 222,496 258,511 260,527 239,543 155,550 107,538">
+          <p>... je taký vietor ...</p>
+        </text-area>
+        <text-area points="108,676 121,639 173,618 288,625 318,648 306,695 252,714 159,710 120,694">
+          <p>... a ako to, že vidím cez okno Komonu?</p></text-area>
+        <text-area points="335,858 334,845 342,833 383,829 418,835 427,844 423,862 373,869 343,865">
+          <p>KOMONA!</p>
+        </text-area>
+        <text-area points="458,825 576,824 584,844 572,869 515,873 467,871 455,848">
+          <p>Súťaž o najlepší elixír!</p>
+        </text-area>
+        <text-area points="626,864 630,839 640,824 772,824 797,837 806,862 797,898 715,903 648,896 630,882">
+          <p>Musela som... musela som nečakane zaspať!*</p>
+        </text-area>
+        <text-area points="754,1066 952,1066 952,1080 754,1080">
+          <p>*pozri epizódu 4: Geniálny nápad</p>
+        </text-area>
+        <text-area points="469,1118 477,1105 502,1095 539,1096 558,1105 566,1118 561,1132 536,1143 507,1143 483,1136 471,1127">
+          <p>... ale?</p>
+        </text-area>
+        <text-area points="628,1136 631,1109 644,1096 710,1096 732,1105 743,1130 722,1160 673,1170 643,1156">
+          <p>Kde som to?!?</p>
+        </text-area>
+      </text-layer>
+      <frame points="38,81 40,25 260,7 720,39 956,105 956,800 36,800"/>
+      <frame points="38,818 956,817 957,1081 39,1081"/>
+      <frame points="36,1086 955,1089 956,1336 38,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P02.webp"/>
+      <text-layer lang="en">
+        <text-area points="262,275 259,245 272,231 317,231 319,269 298,283 272,283">
+          <p>!!!</p>
+        </text-area>
+        <text-area points="267,721 288,689 495,689 490,800 381,806 311,797 283,776 269,739">
+          <p>Carrot! You're so cute to have thought of bringing me to the Contest!</p>
+        </text-area>
+        <text-area points="605,987 610,971 656,954 724,965 779,961 795,978 778,1003 676,1006 635,1007">
+          <p>Fan-tas-tic!</p>
+        </text-area>
+        <text-area points="690,1103 698,1060 724,1042 899,1043 917,1056 925,1107 902,1142 776,1151 718,1143 692,1104">
+          <p>You even thought of bringing a potion, my clothes, and my hat...</p>
+        </text-area>
+        <text-area points="722,1245 720,1222 749,1198 809,1187 892,1201 919,1215 917,1245 901,1268 781,1276 737,1265">
+          <p>... let's see which potion you brought...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="262,275 259,245 272,231 317,231 319,269 298,283 272,283">
+          <p>!!!</p>
+        </text-area>
+        <text-area points="267,721 288,689 495,689 490,800 381,806 311,797 283,776 269,739">
+          <p>Carotte! T'es trop mignon d'avoir pensé à m'emmener au concours!</p>
+        </text-area>
+        <text-area points="605,987 610,971 656,954 724,965 779,961 795,978 778,1003 676,1006 635,1007">
+          <p>Ma-gni-fi-que!</p>
+        </text-area>
+        <text-area points="690,1103 698,1060 724,1042 899,1043 917,1056 925,1107 902,1142 776,1151 718,1143 692,1104">
+          <p>Tu as même pensé à prendre une potion, mes vêtements, et mon chapeau...</p>
+        </text-area>
+        <text-area points="722,1245 720,1222 749,1198 809,1187 892,1201 919,1215 917,1245 901,1268 781,1276 737,1265">
+          <p>.. voyons voir quelle potion tu as pris ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="262,275 259,245 272,231 317,231 319,269 298,283 272,283">
+          <p>!!!</p>
+        </text-area>
+        <text-area points="267,721 288,689 495,689 490,800 381,806 311,797 283,776 269,739">
+          <p>Carrot! Ty si taký zlatý, že si vymyslel ako ma dostať na súťaž!</p>
+        </text-area>
+        <text-area points="605,987 610,971 656,954 724,965 779,961 795,978 778,1003 676,1006 635,1007">
+          <p>Fan-tas-tic-ké!</p>
+        </text-area>
+        <text-area points="690,1103 698,1060 724,1042 899,1043 917,1056 925,1107 902,1142 776,1151 718,1143 692,1104">
+          <p>Myslel si dokonca na to, ako vziať aj môj elixír, moje šaty a môj klobúk...</p>
+        </text-area>
+        <text-area points="722,1245 720,1222 749,1198 809,1187 892,1201 919,1215 917,1245 901,1268 781,1276 737,1265">
+          <p>... pozrime sa, čo za elixír si vzal ...</p>
+        </text-area>
+      </text-layer>
+      <frame points="36,194 266,165 313,113 477,70 613,82 648,143 744,149 954,191 956,664 34,665"/>
+      <frame points="38,682 492,683 492,911 39,912"/>
+      <frame points="500,684 955,684 956,912 502,912"/>
+      <frame points="37,932 956,931 956,1335 39,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P03.webp"/>
+      <text-layer lang="en">
+        <text-area points="232,312 439,312 439,373 234,373">
+          <p>WHAT?!!</p>
+        </text-area>
+        <text-area points="145,795 156,760 187,739 269,735 332,737 373,753 395,774 391,802 360,836 286,848 208,846 161,824">
+          <p>As Mayor of Komona, I declare the potion contest... Open!</p>
+        </text-area>
+        <text-area points="67,951 84,912 114,893 287,897 352,902 373,915 382,962 364,998 330,1015 161,1016 108,1005 74,969">
+          <p>Our town is delighted to welcome no fewer than four witches for this first edition</p>
+        </text-area>
+        <text-area points="209,1135 202,1066 234,1051 364,1052 410,1070 413,1124 404,1139 239,1140">
+          <p>Please give a <strong>huge</strong> round of applause:</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="232,312 439,312 439,373 234,373">
+          <p>QUOI?!!</p>
+        </text-area>
+        <text-area points="145,795 156,760 187,739 269,735 332,737 373,753 395,774 391,802 360,836 286,848 208,846 161,824">
+          <p>Je déclare, en tant que Maire de Komona, le concours de potion ouvert!</p>
+        </text-area>
+        <text-area points="67,951 84,912 114,893 287,897 352,902 373,915 382,962 364,998 330,1015 161,1016 108,1005 74,969">
+          <p>Notre ville est très contente d'accueillir pas moins de quatre sorcières pour cette première.</p>
+        </text-area>
+        <text-area points="209,1135 202,1066 234,1051 364,1052 410,1070 413,1124 404,1139 239,1140">
+          <p>Merci d'applaudir <strong>bien fort:</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="232,312 439,312 439,373 234,373">
+          <p>ČOŽE?!!</p>
+        </text-area>
+        <text-area points="145,795 156,760 187,739 269,735 332,737 373,753 395,774 391,802 360,836 286,848 208,846 161,824">
+          <p>Ako starosta Komony, vyhlasujem súťaž o najlepší elixír za... otvorenú!</p>
+        </text-area>
+        <text-area points="67,951 84,912 114,893 287,897 352,902 373,915 382,962 364,998 330,1015 161,1016 108,1005 74,969">
+          <p>Naše mesto je poctené privítať nie menej ako štyri čarodejnice na prvom ročníku súťaže</p>
+        </text-area>
+        <text-area points="209,1135 202,1066 234,1051 364,1052 410,1070 413,1124 404,1139 239,1140">
+          <p>Prosím vytvorte <strong>obrovský</strong> aplauz</p>
+        </text-area>
+      </text-layer>
+      <frame points="54,29 80,20 321,15 483,11 702,12 876,13 956,17 957,95 943,174 935,215 804,226 402,228 88,226 46,209 43,152"/>
+      <frame points="39,245 955,244 955,622 40,623"/>
+      <frame points="39,649 149,644 932,645 953,669 954,917 376,917 351,902 242,893 117,891 90,906 81,915 38,915"/>
+      <frame points="40,937 66,937 81,910 109,891 205,889 341,897 368,908 385,936 954,937 955,1334 38,1336"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P04.webp"/>
+      <text-layer lang="en">
+        <text-area points="42,118 40,20 316,20 301,97 275,117">
+          <p>All the way from the great Technologist's Union, it's an honor to welcome the ravishing and ingenious</p>
+        </text-area>
+        <text-area points="91,122 231,121 231,151 91,151">
+          <p><strong>Coriander!</strong></p>
+        </text-area>
+        <text-area points="317,116 336,20 488,20 484,110 476,116">
+          <p>... not to forget our local girl, Komona's very own witch</p>
+        </text-area>
+        <text-area points="345,120 464,120 464,150 345,150">
+          <p><strong>Saffron!</strong></p>
+        </text-area>
+        <text-area points="503,95 502,21 682,21 695,97 678,118 517,116">
+          <p>... Our third participant comes to us from the lands of the setting moons,</p>
+        </text-area>
+        <text-area points="540,119 658,120 658,151 540,151">
+          <p><strong>Shichimi!</strong></p>
+        </text-area>
+        <text-area points="716,99 710,16 952,16 948,96 914,117 743,119">
+          <p>... and finally, our last participant, from the forest of Squirrel's End,</p>
+        </text-area>
+        <text-area points="784,121 890,121 890,152 782,152">
+          <p><strong>Pepper!</strong></p>
+        </text-area>
+        <text-area points="93,681 75,654 74,626 83,616 238,616 248,644 229,678 159,693">
+          <p>Let the games begin!</p>
+        </text-area>
+        <text-area points="250,714 256,694 279,683 375,681 425,689 440,710 428,736 394,747 331,751 281,747 255,728">
+          <p>The vote will be by applaud-o-meter</p>
+        </text-area>
+        <text-area points="172,895 158,861 177,820 321,820 335,856 329,893 262,906 198,905">
+          <p>First up, Coriander's demonstration</p>
+        </text-area>
+        <text-area points="259,998 247,974 261,953 312,936 365,947 389,968 385,998 372,1010 336,1019 292,1012">
+          <p>Ladies &amp; Gentlemen ...</p>
+        </text-area>
+        <text-area points="385,862 380,819 580,817 581,861 562,878 492,883 408,876">
+          <p>... fear death no more, thanks to my ...</p>
+        </text-area>
+        <text-area points="657,880 649,862 657,839 702,820 820,820 865,840 877,854 875,878 840,903 778,911 702,900">
+          <p>... Potion of <strong>ZOMBIFICATION!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="42,118 40,20 316,20 301,97 275,117">
+          <p>Venue du grand pays de l'Union des Technologistes, c'est un honneur d'accueillir la ravissante et ingénieuse</p>
+        </text-area>
+        <text-area points="91,122 231,121 231,151 91,151">
+          <p><strong>Coriandre!</strong></p>
+        </text-area>
+        <text-area points="317,116 336,20 488,20 484,110 476,116">
+          <p>... sans oublier notre fille du pays, la sorcière elle même de Komona</p>
+        </text-area>
+        <text-area points="345,120 464,120 464,150 345,150">
+          <p><strong>Safran!</strong></p>
+        </text-area>
+        <text-area points="503,95 502,21 682,21 695,97 678,118 517,116">
+          <p>... notre troisième participante nous vient du pays des lunes couchantes</p>
+        </text-area>
+        <text-area points="540,119 658,120 658,151 540,151">
+          <p><strong>Shichimi!</strong></p>
+        </text-area>
+        <text-area points="716,99 710,16 952,16 948,96 914,117 743,119">
+          <p>... enfin, notre dernière participante qui nous vient de la forêt de</p>
+        </text-area>
+        <text-area points="784,121 890,121 890,152 782,152">
+          <p><strong>Pepper!</strong></p>
+        </text-area>
+        <text-area points="93,681 75,654 74,626 83,616 238,616 248,644 229,678 159,693">
+          <p>Que le concours commence!</p>
+        </text-area>
+        <text-area points="250,714 256,694 279,683 375,681 425,689 440,710 428,736 394,747 331,751 281,747 255,728">
+          <p>Le vote se fera à l'applaudimètre!</p>
+        </text-area>
+        <text-area points="172,895 158,861 177,820 321,820 335,856 329,893 262,906 198,905">
+          <p>Et tout d'abord, place à la démonstration de Coriandre</p>
+        </text-area>
+        <text-area points="259,998 247,974 261,953 312,936 365,947 389,968 385,998 372,1010 336,1019 292,1012">
+          <p>Mesdames et Messieurs...</p>
+        </text-area>
+        <text-area points="385,862 380,819 580,817 581,861 562,878 492,883 408,876">
+          <p>... plus besoin d'avoir peur de la mort grâce à ...</p>
+        </text-area>
+        <text-area points="657,880 649,862 657,839 702,820 820,820 865,840 877,854 875,878 840,903 778,911 702,900">
+          <p>.. ma Potion de <strong>ZOMBIFICATION!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="42,118 40,20 316,20 301,97 275,117">
+          <p>Až z ďalekej technologickej únie, je mi cťou privítať okúzlujúcu a vynaliezavú</p>
+        </text-area>
+        <text-area points="91,122 231,121 231,151 91,151">
+          <p><strong>Coriander!</strong></p>
+        </text-area>
+        <text-area points="317,116 336,20 488,20 484,110 476,116">
+          <p>... nezabúdajúc na naše miestne dievča, našu Komonskú čarodejnicu</p>
+        </text-area>
+        <text-area points="345,120 464,120 464,150 345,150">
+          <p><strong>Saffron!</strong></p>
+        </text-area>
+        <text-area points="503,95 502,21 682,21 695,97 678,118 517,116">
+          <p>... Tretia účastníčka k nám prichádza z krajiny zapadajúceho mesiaca,</p>
+        </text-area>
+        <text-area points="540,119 658,120 658,151 540,151">
+          <p><strong>Shichimi!</strong></p>
+        </text-area>
+        <text-area points="716,99 710,16 952,16 948,96 914,117 743,119">
+          <p>... a napokon, naša posledná účastníčka, z lesa na veveričom konci,</p>
+        </text-area>
+        <text-area points="784,121 890,121 890,152 782,152">
+          <p><strong>Pepper!</strong></p>
+        </text-area>
+        <text-area points="93,681 75,654 74,626 83,616 238,616 248,644 229,678 159,693">
+          <p>Nech zvíťazí najlepšia!</p>
+        </text-area>
+        <text-area points="250,714 256,694 279,683 375,681 425,689 440,710 428,736 394,747 331,751 281,747 255,728">
+          <p>O víťazke rozhodne merač aplauzu</p>
+        </text-area>
+        <text-area points="172,895 158,861 177,820 321,820 335,856 329,893 262,906 198,905">
+          <p>Prvá je na rade Corianderina ukážka</p>
+        </text-area>
+        <text-area points="259,998 247,974 261,953 312,936 365,947 389,968 385,998 372,1010 336,1019 292,1012">
+          <p>Dámi a páni ...</p>
+        </text-area>
+        <text-area points="385,862 380,819 580,817 581,861 562,878 492,883 408,876">
+          <p>... už sa nemusíte báť smrti, vďaka môjmu ...</p>
+        </text-area>
+        <text-area points="657,880 649,862 657,839 702,820 820,820 865,840 877,854 875,878 840,903 778,911 702,900">
+          <p>... elixíru <strong>ZOMBIFIKÁCIE!</strong></p>
+        </text-area>
+      </text-layer>
+      <frame points="39,591 39,16 326,15 220,593"/>
+      <frame points="228,591 330,15 492,17 493,591"/>
+      <frame points="501,591 501,15 684,17 788,590"/>
+      <frame points="796,591 692,17 958,19 957,591"/>
+      <frame points="38,610 956,610 957,795 39,797"/>
+      <frame points="39,815 372,815 375,946 386,962 390,977 387,996 381,1006 375,1014 374,1335 38,1337"/>
+      <frame points="379,815 583,814 583,870 581,1336 381,1337"/>
+      <frame points="589,816 956,814 956,1334 745,1335 737,1345 729,1343 723,1334 588,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P05.webp"/>
+      <text-layer lang="en">
+        <text-area points="46,41 46,13 203,13 198,42">
+          <p><strong>FANTASTIC!</strong></p>
+        </text-area>
+        <text-area points="131,70 145,43 364,43 380,69 366,105 324,124 245,128 160,113 137,95">
+          <p>Coriander defies death itself with this mi-ra-cu-lous potion!</p>
+        </text-area>
+        <text-area points="92,296 84,264 97,232 290,232 300,260 290,299 268,305 232,313 162,315 112,310">
+          <p>... but please, save your applause, people of Komona!</p>
+        </text-area>
+        <text-area points="259,362 237,314 297,299 389,310 389,346 363,356 280,356">
+          <p>because here is <emphasis>MY</emphasis> Potion</p>
+        </text-area>
+        <text-area points="925,438 909,452 798,459 728,460 694,448 677,400 689,362 718,349 842,343 910,350 927,365 937,403">
+          <p>The real potion you've all been waiting for: the one which will amaze your neighbors ...</p>
+        </text-area>
+        <text-area points="807,462 926,453 943,463 946,493 937,511 817,510 801,488">
+          <p>... <emphasis>make them jealous!</emphasis></p>
+        </text-area>
+        <text-area points="226,633 196,608 192,571 228,540 489,542 511,571 508,609 480,632 391,641">
+          <p>... all this is possible with the simple application of a single drop of my ...</p>
+        </text-area>
+        <text-area points="623,605 609,561 644,542 871,543 870,585 865,615 716,612">
+          <p>... Potion of <strong>POSHNESS!</strong></p>
+        </text-area>
+        <text-area points="42,1164 44,1084 287,1081 277,1117 257,1121 260,1147 226,1172 147,1181 75,1179">
+          <p>Fantastic! Incredible! This potion could make all of Komona rich!</p>
+        </text-area>
+        <text-area points="329,1321 308,1292 311,1251 346,1230 431,1227 506,1235 534,1255 537,1290 505,1329 456,1334 345,1332">
+          <p>Your applause can't be wrong. Coriander has already been eliminated</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="46,41 46,13 203,13 198,42">
+          <p><strong>FANTASTIQUE!</strong></p>
+        </text-area>
+        <text-area points="131,70 145,43 364,43 380,69 366,105 324,124 245,128 160,113 137,95">
+          <p>Coriandre défie la mort elle-même avec cette potion mi-ra-cu-leu-se!</p>
+        </text-area>
+        <text-area points="92,296 84,264 97,232 290,232 300,260 290,299 268,305 232,313 162,315 112,310">
+          <p>... mais enfin, gardez vos applaudissements, peuple de Komona!</p>
+        </text-area>
+        <text-area points="259,362 237,314 297,299 389,310 389,346 363,356 280,356">
+          <p>car voici <emphasis>MA</emphasis> Potion</p>
+        </text-area>
+        <text-area points="925,438 909,452 798,459 728,460 694,448 677,400 689,362 718,349 842,343 910,350 927,365 937,403">
+          <p>La vraie potion que vous attendez tous: celle qui peut impressionner tous vos voisins ...</p>
+        </text-area>
+        <text-area points="807,462 926,453 943,463 946,493 937,511 817,510 801,488">
+          <p><emphasis>... les rendre jaloux!</emphasis></p>
+        </text-area>
+        <text-area points="226,633 196,608 192,571 228,540 489,542 511,571 508,609 480,632 391,641">
+          <p>... tout ceci est désormais possible par l'application d'une simple goutte de ma ...</p>
+        </text-area>
+        <text-area points="623,605 609,561 644,542 871,543 870,585 865,615 716,612">
+          <p>... potion de <strong>BOURGEOISIE!</strong></p>
+        </text-area>
+        <text-area points="42,1164 44,1084 287,1081 277,1117 257,1121 260,1147 226,1172 147,1181 75,1179">
+          <p>Fantastique! Incroyable! cette potion pourrait rendre le tout Komona riche!</p>
+        </text-area>
+        <text-area points="329,1321 308,1292 311,1251 346,1230 431,1227 506,1235 534,1255 537,1290 505,1329 456,1334 345,1332">
+          <p>Vos applaudissements ne s'y trompent pas; Coriandre est déjà éliminée.</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="46,41 46,13 203,13 198,42">
+          <p><strong>FANTASTICKÉ!</strong></p>
+        </text-area>
+        <text-area points="131,70 145,43 364,43 380,69 366,105 324,124 245,128 160,113 137,95">
+          <p>Coriander poráža samotnú smrť so svojim zázračným elixírom!</p>
+        </text-area>
+        <text-area points="92,296 84,264 97,232 290,232 300,260 290,299 268,305 232,313 162,315 112,310">
+          <p>... ale pozor, šetrite si aplauz, ľudia Komony!</p>
+        </text-area>
+        <text-area points="259,362 237,314 297,299 389,310 389,346 363,356 280,356">
+          <p>pretože je tu <emphasis>MÔJ </emphasis> elixír</p>
+        </text-area>
+        <text-area points="925,438 909,452 798,459 728,460 694,448 677,400 689,362 718,349 842,343 910,350 927,365 937,403">
+          <p>Skutočný elixír, na ktorý ste všetci čakali: ten, ktorý nechá v úžase všetkých vašich susedov ...</p>
+        </text-area>
+        <text-area points="807,462 926,453 943,463 946,493 937,511 817,510 801,488">
+          <p>... <emphasis>vyblednú závisťou!</emphasis></p>
+        </text-area>
+        <text-area points="226,633 196,608 192,571 228,540 489,542 511,571 508,609 480,632 391,641">
+          <p>... toto všetko je možné použitím len jedinej kvapky môjho ...</p>
+        </text-area>
+        <text-area points="623,605 609,561 644,542 871,543 870,585 865,615 716,612">
+          <p>... elixíru <strong>VZNEŠENOSTI!</strong></p>
+        </text-area>
+        <text-area points="42,1164 44,1084 287,1081 277,1117 257,1121 260,1147 226,1172 147,1181 75,1179">
+          <p>Fantastické! Neuveriteľné! Tento elixír urobí všetkých z Komony bohatých!</p>
+        </text-area>
+        <text-area points="329,1321 308,1292 311,1251 346,1230 431,1227 506,1235 534,1255 537,1290 505,1329 456,1334 345,1332">
+          <p>Sila vášho aplauzu sa nemôže mýliť. Coriander bola týmto vyradená</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,54 41,11 240,11 955,12 954,206 40,206 39,152 35,142 35,121 40,111"/>
+      <frame points="40,228 954,228 955,514 39,515"/>
+      <frame points="40,536 539,537 540,1051 38,1053"/>
+      <frame points="550,537 953,536 955,970 965,967 971,977 969,1000 959,1013 959,1033 955,1038 956,1053 933,1053 911,1067 905,1062 904,1052 889,1052 876,1065 869,1061 846,1074 838,1074 834,1062 836,1053 799,1052 789,1058 785,1058 780,1053 724,1053 704,1065 694,1061 692,1053 655,1052 646,1060 636,1057 627,1059 627,1055 599,1069 592,1063 592,1053 569,1052 558,1062 549,1062 545,1052 545,1014 549,1005"/>
+      <frame points="37,1075 953,1074 954,1335 930,1335 931,1341 896,1358 761,1356 565,1355 509,1350 505,1337 308,1334 294,1345 272,1347 270,1341 228,1364 115,1364 40,1366 34,1360 33,1336 36,1326 39,1320"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P06.webp"/>
+      <text-layer lang="en">
+        <text-area points="103,88 94,51 105,14 340,14 357,40 359,75 338,99 298,109 194,110 121,99">
+          <p>That last demonstration would now seem difficult to beat for Shichimi!</p>
+        </text-area>
+        <text-area points="43,378 45,326 66,308 110,299 165,304 184,318 190,369 181,393 153,408 70,405">
+          <p>I... I did not know we had to give a demonstration</p>
+        </text-area>
+        <text-area points="425,113 417,84 421,52 448,31 494,18 536,24 572,43 583,73 574,112 546,134 496,138 449,129">
+          <p>... come on Shichimi, everyone's waiting for you</p></text-area>
+        <text-area points="420,337 425,309 487,311 490,337">
+          <p><strong>NO!</strong></p>
+        </text-area>
+        <text-area points="393,371 411,348 497,340 556,351 581,372 571,403 530,407 415,404 399,390">
+          <p>I cannot, it is too dangerous</p>
+        </text-area>
+        <text-area points="429,410 530,410 539,438 436,436">
+          <p><strong>SORRY!</strong></p>
+        </text-area>
+        <text-area points="703,56 710,28 725,15 927,16 944,31 947,68 923,93 864,109 765,104 721,91">
+          <p>It seems, Ladies &amp; Gentlemen that Shichimi forfeits...</p>
+        </text-area>
+        <text-area points="89,572 98,541 148,533 200,543 203,573 182,600 139,606 99,591">
+          <p>Give me that!</p>
+        </text-area>
+        <text-area points="282,598 282,535 314,516 378,508 463,513 488,529 496,582 474,617 427,633 324,624 292,614">
+          <p>... and stop pretending to be shy, you're spoiling the show</p>
+        </text-area>
+        <text-area points="284,810 290,775 309,750 468,742 509,759 526,785 513,828 471,854 412,860 330,857 291,834">
+          <p>Everyone already knows that I've won the contest no matter what your potion does ...</p>
+        </text-area>
+        <text-area points="877,547 882,514 928,518 929,552 897,557">
+          <p>!!!</p>
+        </text-area>
+        <text-area points="736,1025 753,912 950,913 948,1025">
+          <p><strong>CAREFUL!!!</strong> It's a potion for <strong>GIANT MONSTERS!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="103,88 94,51 105,14 340,14 357,40 359,75 338,99 298,109 194,110 121,99">
+          <p>Cela va être à présent difficile de rivaliser pour Shichimi!</p>
+        </text-area>
+        <text-area points="43,378 45,326 66,308 110,299 165,304 184,318 190,369 181,393 153,408 70,405">
+          <p>Je... je ne savais pas qu'il fallait faire une démonstration</p>
+        </text-area>
+        <text-area points="425,113 417,84 421,52 448,31 494,18 536,24 572,43 583,73 574,112 546,134 496,138 449,129">
+          <p>... allons Shichimi, tout le monde vous attend</p>
+        </text-area>
+        <text-area points="420,337 425,309 487,311 490,337">
+          <p><strong>NON!</strong></p>
+        </text-area>
+        <text-area points="393,371 411,348 497,340 556,351 581,372 571,403 530,407 415,404 399,390">
+          <p>je ne peux pas, trop dangereux</p>
+        </text-area>
+        <text-area points="429,410 530,410 539,438 436,436">
+          <p><strong>PARDON!</strong></p>
+        </text-area>
+        <text-area points="703,56 710,28 725,15 927,16 944,31 947,68 923,93 864,109 765,104 721,91">
+          <p>Il semblerait, Mesdames et Messieurs que Shichimi déclare forfait...</p>
+        </text-area>
+        <text-area points="89,572 98,541 148,533 200,543 203,573 182,600 139,606 99,591">
+          <p>Donne moi ça!</p>
+        </text-area>
+        <text-area points="282,598 282,535 314,516 378,508 463,513 488,529 496,582 474,617 427,633 324,624 292,614">
+          <p>... et puis arrête de faire ta timide et ne gâche pas le spectacle</p>
+        </text-area>
+        <text-area points="284,810 290,775 309,750 468,742 509,759 526,785 513,828 471,854 412,860 330,857 291,834">
+          <p>Tout le monde sait déjà que j'ai gagné le concours alors quoi que ta potion fasse ...</p>
+        </text-area>
+        <text-area points="877,547 882,514 928,518 929,552 897,557">
+          <p>!!!</p>
+        </text-area>
+        <text-area points="736,1025 753,912 950,913 948,1025">
+          <p><strong>ATTENTION!!!</strong> C'est une potion de <strong>MONSTRE GÉANT!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="103,88 94,51 105,14 340,14 357,40 359,75 338,99 298,109 194,110 121,99">
+          <p>Táto posledná ukážka vyzerá byť teraz ťažko prekonateľná pre Shichimi!</p>
+        </text-area>
+        <text-area points="43,378 45,326 66,308 110,299 165,304 184,318 190,369 181,393 153,408 70,405">
+          <p>Ja... Ja som netušila, že musíme predviezť ukážku</p>
+        </text-area>
+        <text-area points="425,113 417,84 421,52 448,31 494,18 536,24 572,43 583,73 574,112 546,134 496,138 449,129">
+          <p>... poď Shichimi, každý na teba čaká</p></text-area>
+        <text-area points="420,337 425,309 487,311 490,337">
+          <p><strong>NIE!</strong></p>
+        </text-area>
+        <text-area points="393,371 411,348 497,340 556,351 581,372 571,403 530,407 415,404 399,390">
+          <p>Ja nemôžem, je to príliš nebezpečné</p>
+        </text-area>
+        <text-area points="429,410 530,410 539,438 436,436">
+          <p><strong>PREPÁČTE!</strong></p>
+        </text-area>
+        <text-area points="703,56 710,28 725,15 927,16 944,31 947,68 923,93 864,109 765,104 721,91">
+          <p>Vyzerá to, dámi a páni, že Shichimi sa vzdáva...</p>
+        </text-area>
+        <text-area points="89,572 98,541 148,533 200,543 203,573 182,600 139,606 99,591">
+          <p>Daj mi to!</p>
+        </text-area>
+        <text-area points="282,598 282,535 314,516 378,508 463,513 488,529 496,582 474,617 427,633 324,624 292,614">
+          <p>... a prestaň predstierať ostýchavosť, kazíš nám šou</p>
+        </text-area>
+        <text-area points="284,810 290,775 309,750 468,742 509,759 526,785 513,828 471,854 412,860 330,857 291,834">
+          <p>Každý už vie, že som vyhrala súťaž bez ohľadu na to, čo tvoj elixír urobí ...</p>
+        </text-area>
+        <text-area points="877,547 882,514 928,518 929,552 897,557">
+          <p>!!!</p>
+        </text-area>
+        <text-area points="736,1025 753,912 950,913 948,1025">
+          <p><strong>POZOR!!!</strong> Je to elixír <strong>OBROVSKÝCH MONŠTIER!</strong></p>
+        </text-area>
+      </text-layer>
+      <frame points="40,11 378,11 379,483 40,483"/>
+      <frame points="389,12 681,11 682,483 388,483"/>
+      <frame points="692,12 954,11 954,482 692,483"/>
+      <frame points="39,504 267,504 268,885 39,886"/>
+      <frame points="278,505 954,504 955,886 278,886"/>
+      <frame points="39,907 956,907 955,1333 39,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P07.webp"/>
+      <text-layer lang="en">
+        <text-area points="41,1140 41,1095 155,1095 164,1113 159,1131 71,1140">
+          <p>... huh, cool!</p>
+        </text-area>
+        <text-area points="61,1155 68,1143 166,1132 223,1137 245,1153 234,1170 186,1180 81,1171">
+          <p>so it's my turn now?</p>
+        </text-area>
+        <text-area points="43,1327 43,1244 92,1225 171,1226 243,1240 273,1270 273,1303 260,1331 44,1330">
+          <p>... my potion will at least be worth a few laughs because ...</p>
+        </text-area>
+        <text-area points="811,1135 789,1120 788,1101 794,1094 902,1095 911,1117 896,1132 847,1133">
+          <p>Run, idiot!</p>
+        </text-area>
+        <text-area points="766,1331 758,1279 791,1265 932,1263 949,1275 949,1331 944,1334 770,1335">
+          <p>The competition is over! ... save yourself!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="41,1140 41,1095 155,1095 164,1113 159,1131 71,1140">
+          <p>... heu cool!</p>
+        </text-area>
+        <text-area points="61,1155 68,1143 166,1132 223,1137 245,1153 234,1170 186,1180 81,1171">
+          <p>c'est donc à mon tour maintenant?</p>
+        </text-area>
+        <text-area points="43,1327 43,1244 92,1225 171,1226 243,1240 273,1270 273,1303 260,1331 44,1330">
+          <p>... ma potion devrait au moins avoir le mérite de vous faire rire car....</p>
+        </text-area>
+        <text-area points="811,1135 789,1120 788,1101 794,1094 902,1095 911,1117 896,1132 847,1133">
+          <p>Fuis idiote!</p>
+        </text-area>
+        <text-area points="766,1331 758,1279 791,1265 932,1263 949,1275 949,1331 944,1334 770,1335">
+          <p>le concours est fini! ... sauve ta peau!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="41,1140 41,1095 155,1095 164,1113 159,1131 71,1140">
+          <p>... ha, super!</p>
+        </text-area>
+        <text-area points="61,1155 68,1143 166,1132 223,1137 245,1153 234,1170 186,1180 81,1171">
+          <p>takže som ja na rade?</p>
+        </text-area>
+        <text-area points="43,1327 43,1244 92,1225 171,1226 243,1240 273,1270 273,1303 260,1331 44,1330">
+          <p>... môj elixír bude prinajmenšom hodný chvíle smiechu pretože ...</p>
+        </text-area>
+        <text-area points="811,1135 789,1120 788,1101 794,1094 902,1095 911,1117 896,1132 847,1133">
+          <p>Bež, hlupaňa!</p>
+        </text-area>
+        <text-area points="766,1331 758,1279 791,1265 932,1263 949,1275 949,1331 944,1334 770,1335">
+          <p>Súťaž skončila! ... zachráň sa kto môžeš!</p>
+        </text-area>
+      </text-layer>
+      <frame points="40,11 954,11 954,801 40,801"/>
+      <frame points="40,897 55,845 89,839 151,836 283,829 335,820 485,820 592,821 616,829 681,817 809,798 826,795 817,832 828,831 837,842 925,826 958,858 958,1020 944,1049 894,1058 812,1065 628,1070 556,1070 425,1054 352,1068 247,1069 162,1071 111,1054 78,1038 50,991"/>
+      <frame points="39,1090 954,1090 954,1333 39,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P08.webp"/>
+      <text-layer lang="en">
+        <text-area points="190,174 176,159 181,145 224,135 293,137 322,147 332,156 324,176 207,178">
+          <p>there you go ...</p></text-area>
+        <text-area points="170,247 173,217 200,185 328,180 360,193 383,233 372,263 335,275 246,278 190,265">
+          <p>... as usual, everyone leaves just when it's our turn</p>
+        </text-area>
+        <text-area points="631,382 614,344 619,302 644,277 708,264 784,272 825,294 844,327 835,371 810,393 708,400 653,393">
+          <p>At least I have an idea of what we'll be able to do with your "potion", Carrot</p>
+        </text-area>
+        <text-area points="700,483 684,453 691,422 716,403 814,397 851,410 873,437 868,472 846,490 776,501 712,492">
+          <p>...put everything back in order here and head home!</p></text-area>
+        <text-area points="95,688 95,649 196,647 194,691">
+          <p><strong>HEY!</strong></p>
+        </text-area>
+        <text-area points="307,708 308,674 438,659 530,658 625,677 625,710 601,714 440,719">
+          <p>You <strong>Oversized-posh-zombie-canary!</strong></p>
+        </text-area>
+        <text-area points="114,1129 106,1100 131,1085 303,1086 317,1118 301,1140 184,1145">
+          <p>Wanna try one last potion? ...</p>
+        </text-area>
+        <text-area points="742,1276 741,1249 774,1226 853,1223 885,1242 889,1270 866,1290 769,1292">
+          <p>... not really, huh?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="190,174 176,159 181,145 224,135 293,137 322,147 332,156 324,176 207,178">
+          <p>et voilà:</p>
+        </text-area>
+        <text-area points="170,247 173,217 200,185 328,180 360,193 383,233 372,263 335,275 246,278 190,265">
+          <p>...comme d'habitude tout le monde part au moment où c'est à nous</p>
+        </text-area>
+        <text-area points="631,382 614,344 619,302 644,277 708,264 784,272 825,294 844,327 835,371 810,393 708,400 653,393">
+          <p>En tout cas j'ai une petite idée de ce que l'on va pouvoir faire avec ta «potion» Carotte</p>
+        </text-area>
+        <text-area points="700,483 684,453 691,422 716,403 814,397 851,410 873,437 868,472 846,490 776,501 712,492">
+          <p>...remettons de l'ordre ici et rentrons!</p>
+        </text-area>
+        <text-area points="95,688 95,649 196,647 194,691">
+          <p><strong>HÉ!</strong></p>
+        </text-area>
+        <text-area points="307,708 308,674 438,659 530,658 625,677 625,710 601,714 440,719">
+          <p>Toi le <strong>Piou-piou-géant-zombie-bourgeois!</strong></p>
+        </text-area>
+        <text-area points="114,1129 106,1100 131,1085 303,1086 317,1118 301,1140 184,1145">
+          <p>Ça te plairait de tester la dernière potion?...</p>
+        </text-area>
+        <text-area points="742,1276 741,1249 774,1226 853,1223 885,1242 889,1270 866,1290 769,1292">
+          <p>... pas vraiment hein?</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="190,174 176,159 181,145 224,135 293,137 322,147 332,156 324,176 207,178">
+          <p>tak to vidíš...</p></text-area>
+        <text-area points="170,247 173,217 200,185 328,180 360,193 383,233 372,263 335,275 246,278 190,265">
+          <p>... tak ako vždy, každý odíde hneď ako sme my na rade</p>
+        </text-area>
+        <text-area points="631,382 614,344 619,302 644,277 708,264 784,272 825,294 844,327 835,371 810,393 708,400 653,393">
+          <p>Aspoň že mám nápad ako teraz využiť tvoj "elixír", Carrot</p>
+        </text-area>
+        <text-area points="700,483 684,453 691,422 716,403 814,397 851,410 873,437 868,472 846,490 776,501 712,492">
+          <p>...dáme tu všetko do poriadku a pôjdeme domov!</p></text-area>
+        <text-area points="95,688 95,649 196,647 194,691">
+          <p><strong>HEJ!</strong></p>
+        </text-area>
+        <text-area points="307,708 308,674 438,659 530,658 625,677 625,710 601,714 440,719">
+          <p>ty <strong>obro-vznešeno-zombie-kanárik!</strong></p>
+        </text-area>
+        <text-area points="114,1129 106,1100 131,1085 303,1086 317,1118 301,1140 184,1145">
+          <p>Chceš vyskúšat ešte jeden elixír? ...</p>
+        </text-area>
+        <text-area points="742,1276 741,1249 774,1226 853,1223 885,1242 889,1270 866,1290 769,1292">
+          <p>... naozaj nie, heh?</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,11 954,611 39,611"/>
+      <frame points="39,632 954,632 955,1059 40,1059"/>
+      <frame points="39,1081 954,1081 954,1334 40,1334"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P09.webp"/>
+      <text-layer lang="en">
+        <text-area points="103,79 97,57 113,28 164,15 209,21 237,38 246,58 233,85 205,97 159,105 119,97">
+          <p>Yeah, read the label, carefully ...</p>
+        </text-area>
+        <text-area points="703,229 693,199 707,159 743,140 842,137 923,144 946,159 947,231 906,252 826,259 744,252 710,241">
+          <p>... I won't think twice before pouring it all over you if you don't get out of Komona right away!</p>
+        </text-area>
+        <text-area points="42,809 57,785 80,773 249,774 274,789 278,813 273,832 103,854 64,844 47,829">
+          <p>Because she saved our town when it was in peril</p>
+        </text-area>
+        <text-area points="107,859 284,833 324,838 347,858 352,889 333,919 260,934 188,932 131,927 103,906 97,884">
+          <p>we award first place to Pepper for her Potion of ...??!!</p>
+        </text-area>
+        <text-area points="649,1147 639,1122 647,1092 691,1078 727,1081 745,1094 750,1118 745,1133 702,1155">
+          <p>... Haha! yep ...</p>
+        </text-area>
+        <text-area points="709,1158 768,1119 845,1111 908,1118 938,1135 948,1163 948,1225 937,1249 914,1266 820,1281 747,1270 730,1264 705,1230 701,1185">
+          <p>... huh ... in fact, it's not really a potion; it's my cat's pee sample from his last trip to the vet!</p>
+        </text-area>
+        <text-area points="835,1321 820,1300 825,1283 925,1268 940,1278 945,1305 929,1320 889,1327">
+          <p>... no demo then? ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="103,79 97,57 113,28 164,15 209,21 237,38 246,58 233,85 205,97 159,105 119,97">
+          <p>Oui, lis bien l'étiquette...</p>
+        </text-area>
+        <text-area points="703,229 693,199 707,159 743,140 842,137 923,144 946,159 947,231 906,252 826,259 744,252 710,241">
+          <p>.. je n'hésiterai pas à t'en verser dessus si tu dégages pas tout de suite de Komona!</p>
+        </text-area>
+        <text-area points="42,809 57,785 80,773 249,774 274,789 278,813 273,832 103,854 64,844 47,829">
+          <p>Parce qu'elle a sauvé notre ville d'un désastre,</p>
+        </text-area>
+        <text-area points="107,859 284,833 324,838 347,858 352,889 333,919 260,934 188,932 131,927 103,906 97,884">
+          <p>nous remettons la première place à Pepper pour sa Potion de ..??!!</p>
+        </text-area>
+        <text-area points="649,1147 639,1122 647,1092 691,1078 727,1081 745,1094 750,1118 745,1133 702,1155">
+          <p>... Haha! oui ...</p>
+        </text-area>
+        <text-area points="709,1158 768,1119 845,1111 908,1118 938,1135 948,1163 948,1225 937,1249 914,1266 820,1281 747,1270 730,1264 705,1230 701,1185">
+          <p>... heu... en fait, c'est pas vraiment une potion; ce sont les échantillons d'urine de mon chat pour sa visite médicale!</p>
+        </text-area>
+        <text-area points="835,1321 820,1300 825,1283 925,1268 940,1278 945,1305 929,1320 889,1327">
+          <p>... pas de démo hein?...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="103,79 97,57 113,28 164,15 209,21 237,38 246,58 233,85 205,97 159,105 119,97">
+          <p>Áno, prečítaj si ten nápis pozorne ...</p>
+        </text-area>
+        <text-area points="703,229 693,199 707,159 743,140 842,137 923,144 946,159 947,231 906,252 826,259 744,252 710,241">
+          <p>... Nebudem váhať to na teba celé vyliať, ak nevypadneš z Komony hneď teraz!</p>
+        </text-area>
+        <text-area points="42,809 57,785 80,773 249,774 274,789 278,813 273,832 103,854 64,844 47,829">
+          <p>Pretože zachránila naše mesto, keď bolo v ohrození</p>
+        </text-area>
+        <text-area points="107,859 284,833 324,838 347,858 352,889 333,919 260,934 188,932 131,927 103,906 97,884">
+          <p>udeľujeme prvé miesto Pepper za jej elixír ...??!!</p>
+        </text-area>
+        <text-area points="649,1147 639,1122 647,1092 691,1078 727,1081 745,1094 750,1118 745,1133 702,1155">
+          <p>... Haha! ano ...</p>
+        </text-area>
+        <text-area points="709,1158 768,1119 845,1111 908,1118 938,1135 948,1163 948,1225 937,1249 914,1266 820,1281 747,1270 730,1264 705,1230 701,1185">
+          <p>... heh ... v skutočnosti, to nie je ozajstný elixír; je to vzorka moču mojho kocúra z jeho poslednej návštevy veterinára!</p>
+        </text-area>
+        <text-area points="835,1321 820,1300 825,1283 925,1268 940,1278 945,1305 929,1320 889,1327">
+          <p>... žiadna ukážka teda? ...</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,11 955,283 39,283"/>
+      <frame points="40,305 954,304 954,501 40,500"/>
+      <frame points="39,523 953,523 954,746 39,746"/>
+      <frame points="40,768 953,768 954,1368 603,1367 603,1334 40,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E06P10.webp"/>
+      <text-layer lang="en">
+        <text-area points="74,5 922,5 922,70 74,70">
+          <p>Pepper&amp;Carrot is entirely free, open-source, and sponsored thanks to the kind patronage of readers. For this episode, thank you to the 245 Patrons:</p>
+        </text-area>
+        <text-area points="345,679 658,679 658,726 345,726">
+          <p>You too can become a patron of Pepper&amp;Carrot for the next episode:</p>
+        </text-area>
+        <text-area points="345,758 639,758 639,802 346,802">
+          <p>License: Creative Commons Attribution You can modify, reshare, sell etc ...</p>
+        </text-area>
+        <text-area points="210,810 782,810 780,883 568,878 209,878">
+          <p>Open-source: all source files with layers and fonts are available on the official site.</p><p>Tools: This episode was 100% drawn with Free/Libre software Krita on Linux Mint</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="74,5 922,5 922,70 74,70">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat des lecteurs. Pour cet épisode, merci aux 245 Mécènes:</p>
+        </text-area>
+        <text-area points="345,679 658,679 658,726 345,726">
+          <p>Vous aussi, devenez mécène de Pepper&amp;Carrot pour le prochain épisode:</p>
+        </text-area>
+        <text-area points="345,758 639,758 639,802 346,802">
+          <p>License: Creative Commons Attribution vous pouvez modifier, repartager, vendre, etc...</p>
+        </text-area>
+        <text-area points="210,810 782,810 780,883 568,878 209,878">
+          <p>Open-source: toutes les sources, polices d'écritures, fichiers avec calques sont disponibles sur le site officiel au téléchargement.</p><p>Tools: Cet épisode a été dessiné a 100% avec des logiciels libres Krita sur Linux Mint</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="74,5 922,5 922,70 74,70">
+          <p>Komiks Pepper&amp;Carrot je úplne zadarmo, open-source, a sponzorovaný vďaka podpore čitateľov. Za túto epizódu patrí vďaka 245 podporovateľom:</p>
+        </text-area>
+        <text-area points="345,679 658,679 658,726 345,726">
+          <p>Ty sa tiež môžeš stať podporovateľom Pepper&amp;Carrot pre ďaľšiu epizódu:</p>
+        </text-area>
+        <text-area points="345,758 639,758 639,802 346,802">
+          <p>Licencia: Creative Commons Attribution Je možné upravovať, zdieľať, predávať atď ...</p>
+        </text-area>
+        <text-area points="210,810 782,810 780,883 568,878 209,878">
+          <p>Open-source: všetky zdrojové súbory s vrstvami a fontami sú k dispozícii na oficiálnej stránke.</p><p>Nástroje: Táto epizóda bola 100% kreslená pomocou slobodného software-u Krita na operačnom systéme Linux Mint</p>
+        </text-area>
+      </text-layer>
+    </page>
+    <page>
+      <title lang="fr">Episode 7: Le souhait</title>
+      <title lang="sk">Epizóda 7: Prianie</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#9ac86e" type="heading" inverted="True">
+          <p>Episode 7: The Wish</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#9ac86e" type="heading" inverted="True">
+          <p>Episode 7: Le souhait</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#9ac86e" type="heading" inverted="True">
+          <p>Epizóda 7: Prianie</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 7: The Wish</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="405,533 405,521 414,514 432,510 484,510 508,515 516,530 512,543 486,553 427,554 412,545">
+          <p>CARROT!</p>
+        </text-area>
+        <text-area points="764,1171 759,1117 831,1111 897,1121 910,1166 833,1184 765,1173">
+          <p><strong>CARROT!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="405,533 405,521 414,514 432,510 484,510 508,515 516,530 512,543 486,553 427,554 412,545">
+          <p>CAROTTE!</p>
+        </text-area>
+        <text-area points="764,1171 759,1117 831,1111 897,1121 910,1166 833,1184 765,1173">
+          <p><strong>CAROTTE!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="405,533 405,521 414,514 432,510 484,510 508,515 516,530 512,543 486,553 427,554 412,545">
+          <p>CARROT!</p>
+        </text-area>
+        <text-area points="764,1171 759,1117 831,1111 897,1121 910,1166 833,1184 765,1173">
+          <p><strong>CARROT!</strong></p>
+        </text-area>
+      </text-layer>
+      <frame points="39,102 53,23 142,5 632,4 917,11 961,45 962,1039 39,1042 21,1013"/>
+      <frame points="34,1074 83,1054 923,1054 957,1080 960,1311 924,1342 78,1342 31,1312"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07P02.webp"/>
+      <text-layer lang="en">
+        <text-area points="702,362 696,339 707,324 733,315 766,316 789,324 801,345 797,360 771,371 718,371">
+          <p>Found you!</p>
+        </text-area>
+        <text-area points="46,648 46,553 203,552 227,571 231,607 217,638 193,650 115,655">
+          <p>Come on, nap-time is over, time to go home!</p></text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="702,362 696,339 707,324 733,315 766,316 789,324 801,345 797,360 771,371 718,371">
+          <p>Ah! Te voilà!</p>
+        </text-area>
+        <text-area points="46,648 46,553 203,552 227,571 231,607 217,638 193,650 115,655">
+          <p>Allez, c'est fini le gros dodo, on rentre à la maison!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="702,362 696,339 707,324 733,315 766,316 789,324 801,345 797,360 771,371 718,371">
+          <p>Ha! Tak tu si!</p>
+        </text-area>
+        <text-area points="46,648 46,553 203,552 227,571 231,607 217,638 193,650 115,655">
+          <p>Poďme ty spachtoš, čas ísť domov!</p></text-area>
+      </text-layer>
+      <frame points="35,10 954,6 957,265 37,268"/>
+      <frame points="36,280 956,282 963,527 31,529"/>
+      <frame points="37,541 960,538 961,1079 32,1082"/>
+      <frame points="34,1093 959,1093 959,1334 36,1341"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07P03.webp"/>
+      <frame points="42,7 954,10 953,292 43,288"/>
+      <frame points="41,305 951,304 954,595 37,595"/>
+      <frame points="39,607 957,606 964,1341 32,1339"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07P04.webp"/>
+      <text-layer lang="en">
+        <text-area points="70,127 52,86 53,61 88,47 164,38 221,44 267,67 277,83 267,127 247,137 155,143 89,136">
+          <p>Welcome... adventurers, to the magical Fairy Cave...</p>
+        </text-area>
+        <text-area points="697,372 697,355 709,333 742,313 793,304 857,309 907,320 928,335 932,352 930,375 916,393 886,407 833,414 788,412 733,402 704,384">
+          <p>... we grant you a single wish, anything you desire and we will make it reality!</p>
+        </text-area>
+        <text-area points="186,557 174,544 175,528 188,511 225,504 293,505 311,518 317,531 313,547 297,558 243,565">
+          <p>... anything ... ... I desire</p>
+        </text-area>
+        <text-area points="350,1134 339,1107 342,1092 376,1065 444,1054 508,1060 547,1071 574,1099 576,1121 568,1137 503,1132 445,1136 416,1153 362,1142">
+          <p>I... I'd like to, uh, what I'd like is that ...</p>
+        </text-area>
+        <text-area points="430,1152 537,1152 537,1186 428,1186" bgcolor="#ffb381">
+          <p><strong>Meow!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="70,127 52,86 53,61 88,47 164,38 221,44 267,67 277,83 267,127 247,137 155,143 89,136">
+          <p>Bienvenue... dans la grotte magique des fées, aventuriers...</p>
+        </text-area>
+        <text-area points="697,372 697,355 709,333 742,313 793,304 857,309 907,320 928,335 932,352 930,375 916,393 886,407 833,414 788,412 733,402 704,384">
+          <p>...exprimez n'importe quel souhait et nous l'exaucerons!</p>
+        </text-area>
+        <text-area points="186,557 174,544 175,528 188,511 225,504 293,505 311,518 317,531 313,547 297,558 243,565">
+          <p>...n'importe... ...lequel</p>
+        </text-area>
+        <text-area points="350,1134 339,1107 342,1092 376,1065 444,1054 508,1060 547,1071 574,1099 576,1121 568,1137 503,1132 445,1136 416,1153 362,1142">
+          <p>Je ... Je souhaiterai, enfin, ce que je veux ce serai</p>
+        </text-area>
+        <text-area points="430,1152 537,1152 537,1186 428,1186" bgcolor="#ffb381">
+          <p><strong>Miaou!</strong></p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="70,127 52,86 53,61 88,47 164,38 221,44 267,67 277,83 267,127 247,137 155,143 89,136">
+          <p>Vitajte... dobrodruhovia, v magickej Čarovnej Jaskyni...</p>
+        </text-area>
+        <text-area points="697,372 697,355 709,333 742,313 793,304 857,309 907,320 928,335 932,352 930,375 916,393 886,407 833,414 788,412 733,402 704,384">
+          <p>... udelujeme vám jedno prianie, čokoľvek si želáte spravíme realitou!</p>
+        </text-area>
+        <text-area points="186,557 174,544 175,528 188,511 225,504 293,505 311,518 317,531 313,547 297,558 243,565">
+          <p>... čokoľvek ... ... si želám</p>
+        </text-area>
+        <text-area points="350,1134 339,1107 342,1092 376,1065 444,1054 508,1060 547,1071 574,1099 576,1121 568,1137 503,1132 445,1136 416,1153 362,1142">
+          <p>Ja... ja by som, eh, čo by som rada ...</p>
+        </text-area>
+        <text-area points="430,1152 537,1152 537,1186 428,1186" bgcolor="#ffb381">
+          <p><strong>Mňau!</strong></p>
+        </text-area>
+      </text-layer>
+      <frame points="37,7 959,7 959,446 37,444"/>
+      <frame points="35,457 957,459 960,706 38,712"/>
+      <frame points="37,718 957,721 962,977 33,984"/>
+      <frame points="36,994 955,994 963,1338 37,1341"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07P05.webp"/>
+      <text-layer lang="en">
+        <text-area points="495,414 500,389 524,371 610,362 676,368 704,383 719,408 716,437 686,458 593,469 535,458 507,437">
+          <p>I know that sometimes the best wish for nothing to change...</p>
+        </text-area>
+        <text-area points="593,563 567,542 582,522 748,519 771,554 724,563">
+          <p>... but seriously?</p>
+        </text-area>
+        <text-area points="655,672 629,657 621,634 635,607 671,593 742,591 802,597 818,606 825,630 819,655 791,668 726,675">
+          <p>"I wish to go back to sleep"? What a waste!</p>
+        </text-area>
+        <text-area points="702,1338 890,1338 890,1365 701,1365">
+          <p>Episode 7: The Wish</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="495,414 500,389 524,371 610,362 676,368 704,383 719,408 716,437 686,458 593,469 535,458 507,437">
+          <p>Je sais bien que parfois le meilleur des souhaits, c'est que rien ne change...</p>
+        </text-area>
+        <text-area points="593,563 567,542 582,522 748,519 771,554 724,563">
+          <p>...mais quand même</p>
+        </text-area>
+        <text-area points="655,672 629,657 621,634 635,607 671,593 742,591 802,597 818,606 825,630 819,655 791,668 726,675">
+          <p>"souhaiter retourner dormir"? Quel gâchis!</p>
+        </text-area>
+        <text-area points="702,1338 890,1338 890,1365 701,1365">
+          <p>Episode 7: le souhait</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="495,414 500,389 524,371 610,362 676,368 704,383 719,408 716,437 686,458 593,469 535,458 507,437">
+          <p>Ja viem, že niekedy je najlepšie prianie nič nemeniť...</p>
+        </text-area>
+        <text-area points="593,563 567,542 582,522 748,519 771,554 724,563">
+          <p>... ale vážne?</p>
+        </text-area>
+        <text-area points="655,672 629,657 621,634 635,607 671,593 742,591 802,597 818,606 825,630 819,655 791,668 726,675">
+          <p>"Želám si ísť opäť pospať"? Aké plytvanie!</p>
+        </text-area>
+        <text-area points="702,1338 890,1338 890,1365 701,1365">
+          <p>Epizóda 7: Prianie</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,17 864,7 958,44 958,1280 924,1331 444,1344 100,1338 31,1287"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E07P06.webp"/>
+      <text-layer lang="en">
+        <text-area points="71,5 923,5 923,67 73,67">
+          <p>Pepper&amp;Carrot is entirely free, open-source, and sponsored thanks to the kind patronage of readers. For this episode, thank you to the 273 Patrons:</p>
+        </text-area>
+        <text-area points="347,732 660,732 660,779 348,779">
+          <p>You too can become a patron of Pepper&amp;Carrot for the next episode:</p>
+        </text-area>
+        <text-area points="350,804 637,804 637,845 350,845">
+          <p>License: Creative Commons Attribution You can modify, reshare, sell etc ...</p>
+        </text-area>
+        <text-area points="213,846 780,846 780,913 214,913">
+          <p>Open-source: all source files with layers and fonts are available on the official site.</p><p>Tools: This episode was 100% drawn with Free/Libre software Krita on Linux Mint</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="71,5 923,5 923,67 73,67">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat des lecteurs. Pour cet épisode, merci aux 273 Mécènes:</p>
+        </text-area>
+        <text-area points="347,732 660,732 660,779 348,779">
+          <p>Vous aussi, devenez mécène de Pepper&amp;Carrot pour le prochain épisode:</p>
+        </text-area>
+        <text-area points="350,804 637,804 637,845 350,845">
+          <p>License : Creative Commons Attribution vous pouvez modifier, repartager, vendre, etc...</p>
+        </text-area>
+        <text-area points="213,846 780,846 780,913 214,913">
+          <p>Open-source : toutes les sources, polices d'écritures, fichiers avec calques sont disponibles sur le site officiel au téléchargement.</p><p>Tools : Cet épisode a été dessiné a 100% avec des logiciels libres Krita sur Linux Mint</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="71,5 923,5 923,67 73,67">
+          <p>Komiks Pepper&amp;Carrot je úplne zadarmo, open-source, a sponzorovaný vďaka podpore čitateľov. Za túto epizódu patrí vďaka 273 podporovateľom:</p>
+        </text-area>
+        <text-area points="347,732 660,732 660,779 348,779">
+          <p>Ty sa tiež môžeš stať podporovateľom Pepper&amp;Carrot pre ďaľšiu epizódu:</p>
+        </text-area>
+        <text-area points="350,804 637,804 637,845 350,845">
+          <p>Licencia: Creative Commons Attribution Je možné upravovať, zdieľať, predávať atď ...</p>
+        </text-area>
+        <text-area points="213,846 780,846 780,913 214,913">
+          <p>Open-source: všetky zdrojové súbory s vrstvami a fontami sú k dispozícii na oficiálnej stránke.</p><p>Nástroje: Táto epizóda bola 100% kreslená pomocou slobodného software-u Krita na operačnom systéme Linux Mint</p>
+        </text-area>
+      </text-layer>
+    </page>
+    <page>
+      <title lang="fr">Episode 8: L'anniversaire de Pepper</title>
+      <title lang="sk">Epizóda 8: Narodeninová párty pre Pepper</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#fce78a" type="heading">
+          <p>Episode 8: Pepper's Birthday Party</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#fce78a" type="heading">
+          <p>Episode 8: L'anniversaire de Pepper</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#fce78a" type="heading">
+          <p>Epizóda 8: Narodeninová párty pre Pepper</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 8: Pepper's Birthday Party</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="660,696 652,679 661,653 698,632 766,623 837,625 878,632 910,651 920,677 908,701 876,719 813,732 754,731 702,724 671,708">
+          <p>It's nearly my birthday and I don't have any friends to celebrate it with.</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="660,696 652,679 661,653 698,632 766,623 837,625 878,632 910,651 920,677 908,701 876,719 813,732 754,731 702,724 671,708">
+          <p>C'est bientôt mon anniversaire et j'ai même pas d'amis avec qui fêter ça...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="660,696 652,679 661,653 698,632 766,623 837,625 878,632 910,651 920,677 908,701 876,719 813,732 754,731 702,724 671,708">
+          <p>Blížia sa moje narodeniny a ja nemám žiadnych priateľov, s ktorými by som ich mohla osláviť.</p>
+        </text-area>
+      </text-layer>
+      <frame points="35,7 957,5 959,581 35,583"/>
+      <frame points="36,597 956,595 956,769 36,770"/>
+      <frame points="34,787 955,786 959,949 36,949"/>
+      <frame points="37,967 956,966 956,1338 36,1338"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P02.webp"/>
+      <text-layer lang="en">
+        <text-area points="43,92 43,15 218,15 234,27 245,49 239,77 225,94 159,106 74,103">
+          <p>Oh, invite the other witches we met at the Potion Contest? *</p>
+        </text-area>
+        <text-area points="465,294 457,277 462,261 483,250 557,251 578,263 584,280 581,298 562,306 490,308">
+          <p>Great idea Carrot!</p>
+        </text-area>
+        <text-area points="739,355 953,355 953,368 739,368">
+          <p>*See Episode 6: The Potion Contest</p>
+        </text-area>
+        <text-area points="345,592 356,567 424,585 415,611" text-rotation="345" bgcolor="#d6bc7f">
+          <p>Invitation</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="43,92 43,15 218,15 234,27 245,49 239,77 225,94 159,106 74,103">
+          <p>Oh, inviter les sorcières qu'on a rencontrées au concours de Potion? *</p>
+        </text-area>
+        <text-area points="465,294 457,277 462,261 483,250 557,251 578,263 584,280 581,298 562,306 490,308">
+          <p>Bonne idée Carotte!</p>
+        </text-area>
+        <text-area points="739,355 953,355 953,368 739,368">
+          <p>*voir épisode 6: Le concours de potion</p>
+        </text-area>
+        <text-area points="345,592 356,567 424,585 415,611" text-rotation="345" bgcolor="#d6bc7f">
+          <p>Invitation</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="43,92 43,15 218,15 234,27 245,49 239,77 225,94 159,106 74,103">
+          <p>Ach, pozveme ostatné čarodejnice, ktoré sme stretli na súťaži o najlepší elixír? *</p>
+        </text-area>
+        <text-area points="465,294 457,277 462,261 483,250 557,251 578,263 584,280 581,298 562,306 490,308">
+          <p>Výborný nápad Carrot!</p>
+        </text-area>
+        <text-area points="739,355 953,355 953,368 739,368">
+          <p>*Pozri Epizóda 6: Súťaž o najlepší elixír</p>
+        </text-area>
+        <text-area points="345,592 356,567 424,585 415,611" text-rotation="345" bgcolor="#d6bc7f">
+          <p>Pozvánka</p>
+        </text-area>
+      </text-layer>
+      <frame points="36,357 36,8 957,6 959,371 737,372 736,358"/>
+      <frame points="130,396 153,375 847,376 859,385 862,595 844,629 156,630 134,621"/>
+      <frame points="34,666 50,647 324,646 345,663 346,1316 330,1337 65,1339 36,1324"/>
+      <frame points="350,665 365,648 624,647 645,663 644,1317 624,1339 366,1337 349,1320"/>
+      <frame points="649,676 660,648 936,648 957,664 956,1310 943,1339 668,1340 649,1324"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P03.webp"/>
+      <text-layer lang="en">
+        <text-area points="365,146 359,136 362,127 380,117 421,111 483,112 522,119 539,127 542,137 531,147 493,156 435,156 393,154">
+          <p>And there we go ...</p>
+        </text-area>
+        <text-area points="363,488 360,463 368,445 394,432 450,426 536,427 577,432 600,444 607,472 599,497 567,514 486,519 402,514 369,501">
+          <p>... everything is ready, all we need to do now is wait for them to arrive</p></text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="365,146 359,136 362,127 380,117 421,111 483,112 522,119 539,127 542,137 531,147 493,156 435,156 393,154">
+          <p>Et voilà ...</p>
+        </text-area>
+        <text-area points="363,488 360,463 368,445 394,432 450,426 536,427 577,432 600,444 607,472 599,497 567,514 486,519 402,514 369,501">
+          <p>... tout est prêt, il n'y a plus qu'à les attendre</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="365,146 359,136 362,127 380,117 421,111 483,112 522,119 539,127 542,137 531,147 493,156 435,156 393,154">
+          <p>Tak a je to ...</p>
+        </text-area>
+        <text-area points="363,488 360,463 368,445 394,432 450,426 536,427 577,432 600,444 607,472 599,497 567,514 486,519 402,514 369,501">
+          <p>... všetko je pripravené, teraz môžeme iba čakať, kým neprídu</p></text-area>
+      </text-layer>
+      <frame points="35,85 61,26 616,5 956,15 957,383 37,386"/>
+      <frame points="35,400 957,400 956,852 37,852"/>
+      <frame points="35,867 956,866 960,1337 36,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P04.webp"/>
+      <text-layer lang="en">
+        <text-area points="352,139 334,132 331,118 349,104 418,97 493,103 528,114 532,125 523,138 509,136 355,136">
+          <p>But I'm sure that ...</p></text-area>
+        <text-area points="358,138 503,138 502,162 360,162">
+          <p>I'm certain ...</p></text-area>
+        <text-area points="437,167 588,167 594,189 577,194 438,193">
+          <p>... they'll come ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="352,139 334,132 331,118 349,104 418,97 493,103 528,114 532,125 523,138 509,136 355,136">
+          <p>Mais si,</p>
+        </text-area>
+        <text-area points="358,138 503,138 502,162 360,162">
+          <p> je suis sûre...</p>
+        </text-area>
+        <text-area points="437,167 588,167 594,189 577,194 438,193">
+          <p>...elles viendront</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="352,139 334,132 331,118 349,104 418,97 493,103 528,114 532,125 523,138 509,136 355,136">
+          <p>Ale som si istá, že ...</p></text-area>
+        <text-area points="358,138 503,138 502,162 360,162">
+          <p>... určite ...</p>
+        </text-area>
+        <text-area points="437,167 588,167 594,189 577,194 438,193">
+          <p>... oni prídu ...</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,11 954,11 954,463 39,463"/>
+      <frame points="38,484 955,484 957,931 37,931"/>
+      <frame points="38,949 955,949 956,1336 37,1336"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P05.webp"/>
+      <text-layer lang="en">
+        <text-area points="46,114 46,15 245,15 243,100 181,112">
+          <p>How could they do this to me?!! To <emphasis>me</emphasis>!!!</p>
+        </text-area>
+        <text-area points="652,648 649,601 675,597 811,597 843,611 832,645 819,654">
+          <p>... since I can't count on them ...</p></text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="46,114 46,15 245,15 243,100 181,112">
+          <p>Comment peuvent-elles me faire ça?!! à <emphasis>moi</emphasis>!!!</p>
+        </text-area>
+        <text-area points="652,648 649,601 675,597 811,597 843,611 832,645 819,654">
+          <p>... puisque je ne peux pas compter sur elles!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="46,114 46,15 245,15 243,100 181,112">
+          <p>Ako mi to len mohli urobiť?!! <emphasis>Mne</emphasis>!!!</p>
+        </text-area>
+        <text-area points="652,648 649,601 675,597 811,597 843,611 832,645 819,654">
+          <p>... keďže sa na ne nedá spoľahnúť ...</p></text-area>
+      </text-layer>
+      <frame points="955,7 956,399 38,397 38,7"/>
+      <frame points="37,417 955,416 956,1050 37,1052"/>
+      <frame points="37,1069 955,1067 957,1337 39,1337 38,1301 24,1299 38,1272"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P06.webp"/>
+      <text-layer lang="en">
+        <text-area points="66,58 60,33 82,15 138,9 270,13 284,28 281,51 224,75 157,75 91,71" bgcolor="#0f0f0f">
+          <p><inverted>Monšters of Chaosáh át your šervice</inverted></p>
+        </text-area>
+        <text-area points="704,74 677,56 677,29 688,17 868,17 880,33 881,52 833,77" bgcolor="#0f0f0f">
+          <p><inverted>Who do yôu wišh uš to <emphasis>átack?</emphasis></inverted></p>
+        </text-area>
+        <text-area points="576,1334 894,1334 894,1364 576,1364">
+          <p>Episode 8: Pepper's Birthday Party</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="66,58 60,33 82,15 138,9 270,13 284,28 281,51 224,75 157,75 91,71" bgcolor="#0f0f0f">
+          <p><inverted>Monštŗes de Chaosāh à votre šeŗvice!</inverted></p>
+        </text-area>
+        <text-area points="704,74 677,56 677,29 688,17 868,17 880,33 881,52 833,77" bgcolor="#0f0f0f">
+          <p><inverted>Qui devonš-nous <emphasis>attaqueŗ?...</emphasis></inverted></p>
+        </text-area>
+        <text-area points="576,1334 894,1334 894,1364 576,1364">
+          <p>Episode 8: L'anniversaire de Pepper</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="66,58 60,33 82,15 138,9 270,13 284,28 281,51 224,75 157,75 91,71" bgcolor="#0f0f0f">
+          <p><inverted>Monštrá Chaosu k vašej dispozícii</inverted></p>
+        </text-area>
+        <text-area points="704,74 677,56 677,29 688,17 868,17 880,33 881,52 833,77" bgcolor="#0f0f0f">
+          <p><inverted>Na koho si želáte, aby sme <emphasis>zaútočili?</emphasis></inverted></p>
+        </text-area>
+        <text-area points="576,1334 894,1334 894,1364 576,1364">
+          <p>Epizóda 8: Narodeninová párty pre Pepper</p>
+        </text-area>
+      </text-layer>
+      <frame points="37,508 38,20 92,-1 854,-2 957,38 957,508"/>
+      <frame points="38,528 956,526 955,755 39,756"/>
+      <frame points="38,772 957,773 955,1334 37,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E08P07.webp"/>
+      <text-layer lang="en">
+        <text-area points="70,28 918,28 918,91 71,91">
+          <p>Pepper&amp;Carrot is entirely free, open-source, and sponsored thanks to the kind patronage of readers. For this episode, thank you to the 354 Patrons:</p>
+        </text-area>
+        <text-area points="343,749 659,749 659,795 341,795">
+          <p>You too can become a patron of Pepper&amp;Carrot for the next episode:</p>
+        </text-area>
+        <text-area points="344,819 630,819 630,861 348,861">
+          <p>License: Creative Commons Attribution You can modify, reshare, sell etc ...</p>
+        </text-area>
+        <text-area points="208,861 781,861 781,925 206,925">
+          <p>Open-source: all source files with layers and fonts are available on the official site.</p><p>Tools: This episode was 100% drawn with Free/Libre software Krita, Inkscape on GNU/Linux</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="70,28 918,28 918,91 71,91">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat des lecteurs. Pour cet épisode, merci aux 354 Mécènes:</p>
+        </text-area>
+        <text-area points="343,749 659,749 659,795 341,795">
+          <p>Vous aussi, devenez mécène de Pepper&amp;Carrot pour le prochain épisode:</p>
+        </text-area>
+        <text-area points="344,819 630,819 630,861 348,861">
+          <p>License : Creative Commons Attribution vous pouvez modifier, repartager, vendre, etc...</p>
+        </text-area>
+        <text-area points="208,861 781,861 781,925 206,925">
+          <p>Open-source : toutes les sources, polices d'écritures, fichiers avec calques sont disponibles sur le site officiel au téléchargement.</p><p>Tools : Cet épisode a été dessiné a 100% avec des logiciels libres Krita, Inkscape sur GNU/Linux</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="70,28 918,28 918,91 71,91">
+          <p>Komiks Pepper&amp;Carrot je úplne zadarmo, open-source, a sponzorovaný vďaka podpore čitateľov. Za túto epizódu patrí vďaka 354 podporovateľom:</p>
+        </text-area>
+        <text-area points="343,749 659,749 659,795 341,795">
+          <p>Ty sa tiež môžeš stať podporovateľom Pepper&amp;Carrot pre ďaľšiu epizódu:</p>
+        </text-area>
+        <text-area points="344,819 630,819 630,861 348,861">
+          <p>Licencia: Creative Commons Attribution Je možné upravovať, zdieľať, predávať atď ...</p>
+        </text-area>
+        <text-area points="208,861 781,861 781,925 206,925">
+          <p>Open-source: všetky zdrojové súbory s vrstvami a fontami sú k dispozícii na oficiálnej stránke.</p><p>Nástroje: Táto epizóda bola 100% kreslená pomocou slobodného software-u Krita, Inkscape na operačnom systéme GNU/Linux</p>
+        </text-area>
+      </text-layer>
+    </page>
+    <page>
+      <title lang="fr">Episode 9: Le remède</title>
+      <title lang="sk">Epizóda 9: Náprava</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#ccd57a" type="heading">
+          <p>Episode 9: The Remedy</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#ccd57a" type="heading">
+          <p>Episode 9: Le remède</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#ccd57a" type="heading">
+          <p>Epizóda 9: Náprava</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 9: The Remedy</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P01.webp"/>
+      <text-layer lang="en">
+        <text-area points="41,2 233,2 233,50 42,50" bgcolor="#e5d188" type="commentary">
+          <p>The day after the party *</p>
+        </text-area>
+        <text-area points="661,694 952,694 952,716 660,716">
+          <p>*See Episode 8: Pepper's Birthday Party</p>
+        </text-area>
+        <text-area points="89,803 89,774 104,754 133,739 215,737 300,749 324,772 331,805 306,836 188,850 137,846 99,825">
+          <p>Huh? The signal of the mountains, the forest, and the clouds?</p>
+        </text-area>
+        <text-area points="197,853 311,838 343,843 358,860 356,875 332,888 251,893 222,888 198,873">
+          <p>But why?</p>
+        </text-area>
+        <text-area points="122,1230 129,1208 171,1186 243,1197 262,1223 242,1244 181,1249 137,1244">
+          <p>Oh no!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="41,2 233,2 233,50 42,50" bgcolor="#e5d188" type="commentary">
+          <p>Le lendemain de la fête* ...</p>
+        </text-area>
+        <text-area points="661,694 952,694 952,716 660,716">
+          <p>* voir episode 8: L'anniversaire de Pepper</p>
+        </text-area>
+        <text-area points="89,803 89,774 104,754 133,739 215,737 300,749 324,772 331,805 306,836 188,850 137,846 99,825">
+          <p>Tiens, le signal des montagnes, de la forêt et des nuages?</p>
+        </text-area>
+        <text-area points="197,853 311,838 343,843 358,860 356,875 332,888 251,893 222,888 198,873">
+          <p>Mais pourquoi?</p>
+        </text-area>
+        <text-area points="122,1230 129,1208 171,1186 243,1197 262,1223 242,1244 181,1249 137,1244">
+          <p>Oh non!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="41,2 233,2 233,50 42,50" bgcolor="#e5d188" type="commentary">
+          <p>Nasledujúci deň po párty *</p>
+        </text-area>
+        <text-area points="661,694 952,694 952,716 660,716">
+          <p>*Pozri Epizódu 8: Narodeninová párty pre Pepper</p>
+        </text-area>
+        <text-area points="89,803 89,774 104,754 133,739 215,737 300,749 324,772 331,805 306,836 188,850 137,846 99,825">
+          <p>Čože? Značky pohoria, lesa a mrakov?</p>
+        </text-area>
+        <text-area points="197,853 311,838 343,843 358,860 356,875 332,888 251,893 222,888 198,873">
+          <p>Ale prečo?</p>
+        </text-area>
+        <text-area points="122,1230 129,1208 171,1186 243,1197 262,1223 242,1244 181,1249 137,1244">
+          <p>Oh nie!</p>
+        </text-area>
+      </text-layer>
+      <frame points="36,84 23,71 22,1 267,0 268,9 955,11 955,714 663,714 662,695 39,696"/>
+      <frame points="39,715 955,717 956,1105 38,1104"/>
+      <frame points="39,1124 955,1124 956,1336 39,1335"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P02.webp"/>
+      <text-layer lang="en">
+        <text-area points="77,77 76,61 89,49 124,43 174,43 205,51 218,65 200,83 172,99 109,98 82,87">
+          <p><strong>Sorry...</strong></p>
+        </text-area>
+        <text-area points="177,102 224,69 288,64 347,71 388,89 403,116 389,152 352,172 302,183 236,177 197,160 175,135">
+          <p>I completely forgot to turn off my "security system"</p>
+        </text-area>
+        <text-area points="60,585 49,567 56,546 84,529 139,521 219,521 273,530 297,543 304,564 295,583 278,594 83,595">
+          <p>... but I'm so happy that you all came!</p>
+        </text-area>
+        <text-area points="72,634 75,614 86,599 279,597 300,607 307,624 304,639 285,655 124,659 91,649">
+          <p>But other than that, how was your night?</p>
+        </text-area>
+        <text-area points="114,695 115,679 128,662 287,659 299,674 303,692 285,712 253,722 204,726 140,719 118,705">
+          <p>A little light rain I believe? ...</p>
+        </text-area>
+        <text-area points="142,988 141,970 157,949 202,933 260,929 300,940 327,961 334,984 321,1008 240,1026 188,1023 159,1009">
+          <p>... I'm sorry, but no harm done, right?</p>
+        </text-area>
+        <text-area points="228,1084 229,1056 245,1029 332,1010 407,1014 453,1028 479,1049 485,1081 475,1108 440,1130 379,1140 311,1137 257,1121 231,1096">
+          <p>I've prepared tea so we can all get our good humour back after this little mishap!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="77,77 76,61 89,49 124,43 174,43 205,51 218,65 200,83 172,99 109,98 82,87">
+          <p><strong>Désolée...</strong></p>
+        </text-area>
+        <text-area points="177,102 224,69 288,64 347,71 388,89 403,116 389,152 352,172 302,183 236,177 197,160 175,135">
+          <p>J'ai complètement oublié de désactiver mon "système de sécurité"...</p>
+        </text-area>
+        <text-area points="60,585 49,567 56,546 84,529 139,521 219,521 273,530 297,543 304,564 295,583 278,594 83,595">
+          <p>... mais je suis si contente que vous soyez toutes venues! ...</p>
+        </text-area>
+        <text-area points="72,634 75,614 86,599 279,597 300,607 307,624 304,639 285,655 124,659 91,649">
+          <p>Et sinon, comment s'est passée la nuit?</p>
+        </text-area>
+        <text-area points="114,695 115,679 128,662 287,659 299,674 303,692 285,712 253,722 204,726 140,719 118,705">
+          <p>Un peu pluvieuse je crois, hein?...</p>
+        </text-area>
+        <text-area points="142,988 141,970 157,949 202,933 260,929 300,940 327,961 334,984 321,1008 240,1026 188,1023 159,1009">
+          <p>...Je suis si désolée, mais sans rancune, hein?</p>
+        </text-area>
+        <text-area points="228,1084 229,1056 245,1029 332,1010 407,1014 453,1028 479,1049 485,1081 475,1108 440,1130 379,1140 311,1137 257,1121 231,1096">
+          <p>J'ai préparé du thé pour qu'on reprenne toutes des forces après cette petite mésaventure.</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="77,77 76,61 89,49 124,43 174,43 205,51 218,65 200,83 172,99 109,98 82,87">
+          <p><strong>Prepáč...</strong></p>
+        </text-area>
+        <text-area points="177,102 224,69 288,64 347,71 388,89 403,116 389,152 352,172 302,183 236,177 197,160 175,135">
+          <p>Úplne som zabudla vypnúť môj "bezpečnostný systém"</p>
+        </text-area>
+        <text-area points="60,585 49,567 56,546 84,529 139,521 219,521 273,530 297,543 304,564 295,583 278,594 83,595">
+          <p>... ale som veľmi rada, že ste prišli!</p>
+        </text-area>
+        <text-area points="72,634 75,614 86,599 279,597 300,607 307,624 304,639 285,655 124,659 91,649">
+          <p>Odhliadnuc od toho, akú ste mali noc?</p>
+        </text-area>
+        <text-area points="114,695 115,679 128,662 287,659 299,674 303,692 285,712 253,722 204,726 140,719 118,705">
+          <p>Trochu zapršalo, myslím ...</p>
+        </text-area>
+        <text-area points="142,988 141,970 157,949 202,933 260,929 300,940 327,961 334,984 321,1008 240,1026 188,1023 159,1009">
+          <p>... Je mi to ľúto, ale nič sa vám nestalo, že áno?</p>
+        </text-area>
+        <text-area points="228,1084 229,1056 245,1029 332,1010 407,1014 453,1028 479,1049 485,1081 475,1108 440,1130 379,1140 311,1137 257,1121 231,1096">
+          <p>Pripravila som čaj, aby sme si prinavrátili dobrú náladu po tejto malej nešťastnej nehode!</p>
+        </text-area>
+      </text-layer>
+      <frame points="38,9 956,9 956,490 37,492"/>
+      <frame points="38,510 954,509 957,899 38,899"/>
+      <frame points="38,918 956,916 956,1341 41,1333"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P03.webp"/>
+      <text-layer lang="en">
+        <text-area points="388,1104 378,1072 398,1036 593,1036 613,1059 603,1098 569,1117 491,1130 420,1121">
+          <p>Stupid Pepper! Now it's too late, they all hate me...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="388,1104 378,1072 398,1036 593,1036 613,1059 603,1098 569,1117 491,1130 420,1121">
+          <p>Stupide Pepper! Maintenant c'est trop tard, elles me détestent ...</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="388,1104 378,1072 398,1036 593,1036 613,1059 603,1098 569,1117 491,1130 420,1121">
+          <p>Hlúpa Pepper! Teraz je už príliš neskoro, nenávidia ma...</p>
+        </text-area>
+      </text-layer>
+      <frame points="38,10 957,9 956,985 37,986"/>
+      <frame points="38,1006 956,1004 957,1336 38,1339"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P04.webp"/>
+      <frame points="38,9 955,9 957,260 37,261"/>
+      <frame points="38,281 954,280 957,600 37,601"/>
+      <frame points="39,620 955,619 957,1336 37,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P05.webp"/>
+      <text-layer lang="en">
+        <text-area points="338,1074 338,1050 377,1040 414,1050 411,1075 400,1090 360,1092">
+          <p><strong>Vite!</strong></p>
+        </text-area>
+        <text-area points="558,1093 545,1042 567,1037 722,1042 744,1055 738,1087">
+          <p>To the laboratory! This can be lethal!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="338,1074 338,1050 377,1040 414,1050 411,1075 400,1090 360,1092">
+          <p><strong>Quick!</strong></p>
+        </text-area>
+        <text-area points="558,1093 545,1042 567,1037 722,1042 744,1055 738,1087">
+          <p>Au laboratoire, ça peut être mortel!</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="338,1074 338,1050 377,1040 414,1050 411,1075 400,1090 360,1092">
+          <p><strong>Rýchlo!</strong></p>
+        </text-area>
+        <text-area points="558,1093 545,1042 567,1037 722,1042 744,1055 738,1087">
+          <p>Do laboratória! Toto môže byť smrteľné!</p>
+        </text-area>
+      </text-layer>
+      <frame points="39,8 956,8 956,328 38,330"/>
+      <frame points="38,348 955,348 956,996 38,997"/>
+      <frame points="38,1015 955,1013 956,1336 38,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P06.webp"/>
+      <frame points="36,8 315,9 421,476 352,514 37,356"/>
+      <frame points="321,7 684,10 569,474 498,438 429,473"/>
+      <frame points="688,9 955,9 957,356 641,513 574,477"/>
+      <frame points="37,364 347,518 404,824 38,889"/>
+      <frame points="350,519 496,442 638,520 578,827 411,826"/>
+      <frame points="641,517 955,361 959,889 583,829"/>
+      <frame points="38,893 407,828 581,833 959,894 957,1079 38,1079"/>
+      <frame points="37,1097 957,1096 957,1338 37,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P07.webp"/>
+      <text-layer lang="en">
+        <text-area points="386,62 385,33 467,33 474,52 464,67 400,72">
+          <p>Super!</p>
+        </text-area>
+        <text-area points="403,83 457,71 493,78 503,88 502,125 472,134 426,135 401,121 393,104">
+          <p>We're the best!</p>
+        </text-area>
+        <text-area points="609,80 576,60 575,47 596,35 640,33 660,51 657,69">
+          <p>Yipee!</p>
+        </text-area>
+        <text-area points="505,128 508,85 529,74 563,69 592,77 608,91 612,110 609,125 596,136 561,143 528,140">
+          <p>They've been cured!</p>
+        </text-area>
+        <text-area points="279,635 281,619 298,598 335,583 380,577 457,581 513,589 543,603 552,621 551,644 535,661 490,675 417,681 320,668 291,657">
+          <p>... It's still a pity that we couldn't avoid the potion's side-effects...</p>
+        </text-area>
+        <text-area points="482,869 483,849 504,819 547,804 622,798 688,804 724,817 746,849 746,880 727,908 684,923 617,926 524,914 496,898">
+          <p>Don't worry; the fur and feather loss is temporary, it'll grow back quickly</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="386,62 385,33 467,33 474,52 464,67 400,72">
+          <p>Super!</p>
+        </text-area>
+        <text-area points="403,83 457,71 493,78 503,88 502,125 472,134 426,135 401,121 393,104">
+          <p>On est les meilleures!</p>
+        </text-area>
+        <text-area points="609,80 576,60 575,47 596,35 640,33 660,51 657,69">
+          <p>Yihaaa!</p>
+        </text-area>
+        <text-area points="505,128 508,85 529,74 563,69 592,77 608,91 612,110 609,125 596,136 561,143 528,140">
+          <p>Ils sont guéris!</p>
+        </text-area>
+        <text-area points="279,635 281,619 298,598 335,583 380,577 457,581 513,589 543,603 552,621 551,644 535,661 490,675 417,681 320,668 291,657">
+          <p>... c'est quand même dommage qu'on n'ait pas pu empêcher les effets secondaires de la potion.</p>
+        </text-area>
+        <text-area points="482,869 483,849 504,819 547,804 622,798 688,804 724,817 746,849 746,880 727,908 684,923 617,926 524,914 496,898">
+          <p>T'inquiète pas; la perte des poils et des plumes ne sera que temporaire, ça repoussera vite.</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="386,62 385,33 467,33 474,52 464,67 400,72">
+          <p>Super!</p>
+        </text-area>
+        <text-area points="403,83 457,71 493,78 503,88 502,125 472,134 426,135 401,121 393,104">
+          <p>Sme najlepšie!</p>
+        </text-area>
+        <text-area points="609,80 576,60 575,47 596,35 640,33 660,51 657,69">
+          <p>Jupííí!</p>
+        </text-area>
+        <text-area points="505,128 508,85 529,74 563,69 592,77 608,91 612,110 609,125 596,136 561,143 528,140">
+          <p>Sú vyliečení!</p>
+        </text-area>
+        <text-area points="279,635 281,619 298,598 335,583 380,577 457,581 513,589 543,603 552,621 551,644 535,661 490,675 417,681 320,668 291,657">
+          <p>... Je však škoda, že sme sa nedokázali vyhnúť vedľajším efektom elixíru...</p>
+        </text-area>
+        <text-area points="482,869 483,849 504,819 547,804 622,798 688,804 724,817 746,849 746,880 727,908 684,923 617,926 524,914 496,898">
+          <p>Žiadne starosti; strata kožušiny a peria je iba dočasná, dorastie rýchlo naspäť</p>
+        </text-area>
+      </text-layer>
+      <frame points="37,8 955,8 957,547 38,549"/>
+      <frame points="39,567 957,568 957,942 35,942"/>
+      <frame points="33,1303 31,1059 228,1025 752,1021 856,972 934,1027 927,1272 688,1293 248,1284 123,1308"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E09P08.webp"/>
+      <text-layer lang="en">
+        <text-area points="199,45 790,45 790,129 199,129" bgcolor="#f1e6d0">
+          <p>Pepper&amp;Carrot is entirely free, open-source, and sponsored thanks to the patronage of its readers. For this episode, thank you to the 406 Patrons:</p>
+        </text-area>
+        <text-area points="180,1172 815,1172 817,1196 179,1196" bgcolor="#c4ae96">
+          <p>You too can become a patron of Pepper&amp;Carrot for the next episode:</p>
+        </text-area>
+        <text-area points="336,1244 662,1244 662,1282 335,1282">
+          <p>License: Creative Commons Attribution 4.0</p><p>Source: available at www.peppercarrot.com</p>
+        </text-area>
+        <text-area points="290,1281 703,1281 703,1327 289,1327">
+          <p>Software: this episode was 100% drawn with libre software Krita 2.9.6, Inkscape 0.91 on Linux Mint 17</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="199,45 790,45 790,129 199,129" bgcolor="#f1e6d0">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat de ses lecteurs. Pour cet épisode, merci aux 406 Mécènes:</p>
+        </text-area>
+        <text-area points="180,1172 815,1172 817,1196 179,1196" bgcolor="#c4ae96">
+          <p>Vous aussi, devenez mécène de Pepper&amp;Carrot pour le prochain épisode sur</p>
+        </text-area>
+        <text-area points="336,1244 662,1244 662,1282 335,1282">
+          <p>License: Creative Commons Attribution 4.0</p><p>Sources: disponibles sur www.peppercarrot.com</p>
+        </text-area>
+        <text-area points="290,1281 703,1281 703,1327 289,1327">
+          <p>Logiciels: cet épisode a été dessiné à 100% avec des logiciels libres Krita 2.9.6, Inkscape 0.91 sur Linux Mint 17</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="199,45 790,45 790,129 199,129" bgcolor="#f1e6d0">
+          <p>Komiks Pepper&amp;Carrot je úplne zadarmo, open-source, a sponzorovaný vďaka podpore čitateľov. Za túto epizódu patrí vďaka 406 podporovateľom:</p>
+        </text-area>
+        <text-area points="180,1172 815,1172 817,1196 179,1196" bgcolor="#c4ae96">
+          <p>Ty sa tiež môžeš stať podporovateľom Pepper&amp;Carrot pre ďaľšiu epizódu:</p>
+        </text-area>
+        <text-area points="336,1244 662,1244 662,1282 335,1282">
+          <p>Licencia: Creative Commons Attribution 4.0</p><p>Zdroje: k dispozícii na www.peppercarrot.com</p>
+        </text-area>
+        <text-area points="290,1281 703,1281 703,1327 289,1327">
+          <p>Softvér: Táto epizóda bola 100% kreslená so slobodným softvérom Krita 2.9.6, Inkscape 0.91 na operačnom systéme Linux Mint 17</p>
+        </text-area>
+      </text-layer>
+    </page>
+    <page>
+      <title lang="fr">Episode 10: Spécial été</title>
+      <title lang="sk">Epizóda 10: Letný Špeciál</title>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10.webp"/>
+      <text-layer lang="en">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#d3ca89" type="heading">
+          <p>Episode 10: Summer Special</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#d3ca89" type="heading">
+          <p>Episode 10: Spécial été</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="146,647 151,630 160,622 173,615 821,615 839,624 847,637 849,650 843,666 834,676 819,682 171,682 158,674 148,662" bgcolor="#d3ca89" type="heading">
+          <p>Epizóda 10: Letný Špeciál</p>
+        </text-area>
+      </text-layer>
+    <title lang="en">Episode 10: Summer Special</title></page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10P01.webp"/>
+      <frame points="38,9 956,8 956,275 37,277"/>
+      <frame points="39,296 956,293 957,793 37,795"/>
+      <frame points="36,810 956,809 959,1067 38,1064"/>
+      <frame points="38,1084 818,1081 844,1232 732,1337 34,1338"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10P02.webp"/>
+      <frame points="37,7 956,9 959,453 37,454"/>
+      <frame points="38,472 956,469 957,887 39,888"/>
+      <frame points="38,906 955,906 956,1338 39,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10P03.webp"/>
+      <frame points="38,8 956,10 957,673 38,671"/>
+      <frame points="37,689 955,688 956,902 37,901"/>
+      <frame points="37,919 957,919 957,1338 34,1337"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10P04.webp"/>
+      <frame points="39,9 956,7 955,303 39,303"/>
+      <frame points="39,322 956,322 956,888 38,888"/>
+      <frame points="38,907 955,906 955,1340 38,1336"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10P05.webp"/>
+      <frame points="39,7 956,9 957,452 37,454"/>
+      <frame points="39,471 956,472 956,1335 39,1336"/>
+    </page>
+    <page>
+      <image href="03 - Pepper &amp; Carrot/en_Pepper-and-Carrot_by-David-Revoy_E10P06.webp"/>
+      <text-layer lang="en">
+        <text-area points="201,57 792,57 792,145 203,145" bgcolor="#f3f3e9">
+          <p>Pepper&amp;Carrot is entirely free, open-source, and sponsored thanks to the patronage of its readers. For this episode, thank you to the 422 Patrons:</p>
+        </text-area>
+        <text-area points="179,1142 817,1142 817,1170 180,1170" bgcolor="#cbc7bb">
+          <p>You too can become a patron of Pepper&amp;Carrot for the next episode:</p>
+        </text-area>
+        <text-area points="340,1236 649,1236 649,1276 337,1276">
+          <p>License: Creative Commons Attribution 4.0</p><p>Source: available at www.peppercarrot.com</p>
+        </text-area>
+        <text-area points="292,1276 704,1276 704,1319 292,1319">
+          <p>Software: this episode was 100% drawn with libre software Krita 2.9.6, Inkscape 0.91 on Linux Mint 17</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="fr">
+        <text-area points="201,57 792,57 792,145 203,145" bgcolor="#f3f3e9">
+          <p>Pepper&amp;Carrot est entièrement gratuit, open-source, et sponsorisé grâce au mécénat de ses lecteurs. Pour cet épisode, merci aux 422 Mécènes:</p>
+        </text-area>
+        <text-area points="179,1142 817,1142 817,1170 180,1170" bgcolor="#cbc7bb">
+          <p>Vous aussi, devenez mécène de Pepper&amp;Carrot pour le prochain épisode sur</p>
+        </text-area>
+        <text-area points="340,1236 649,1236 649,1276 337,1276">
+          <p>License: Creative Commons Attribution 4.0</p><p>Sources: disponibles sur www.peppercarrot.com</p>
+        </text-area>
+        <text-area points="292,1276 704,1276 704,1319 292,1319">
+          <p>Logiciels: cet épisode a été dessiné à 100% avec des logiciels libres Krita 2.9.6, Inkscape 0.91 sur Linux Mint 17</p>
+        </text-area>
+      </text-layer>
+      <text-layer lang="sk">
+        <text-area points="201,57 792,57 792,145 203,145" bgcolor="#f3f3e9">
+          <p>Komiks Pepper&amp;Carrot je úplne zadarmo, open-source, a sponzorovaný vďaka podpore čitateľov. Za túto epizódu patrí vďaka 422 podporovateľom:</p>
+        </text-area>
+        <text-area points="179,1142 817,1142 817,1170 180,1170" bgcolor="#cbc7bb">
+          <p>Ty sa tiež môžeš stať podporovateľom Pepper&amp;Carrot pre ďaľšiu epizódu:</p>
+        </text-area>
+        <text-area points="340,1236 649,1236 649,1276 337,1276">
+          <p>Licencia: Creative Commons Attribution 4.0</p><p>Zdroje: k dispozícii na www.peppercarrot.com</p>
+        </text-area>
+        <text-area points="292,1276 704,1276 704,1319 292,1319">
+          <p>Softvér: Táto epizóda bola 100% kreslená so slobodným softvérom Krita 2.9.6, Inkscape 0.91 na operačnom systéme Linux Mint 17</p>
+        </text-area>
+      </text-layer>
+    </page>
+  </body>
+</ACBF>

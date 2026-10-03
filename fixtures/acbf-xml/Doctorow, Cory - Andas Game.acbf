@@ -1,0 +1,1936 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ACBF xmlns="http://www.fictionbook-lib.org/xml/acbf/1.1"><style type="text/css">
+   text-area {font-family: "fantasquesansmono-regular.otf", "Dejavu Sans", Arial, Sans;
+      font-style: normal;
+      font-stretch: condensed}
+   text-area[type=code] {font-family: FreeMonoBold.otf, "Dejavu Sans Mono", "Courier New", Mono, Sans;
+         font-style: normal;}
+   text-area[type=sign] {font-family: caveatbrush-regular.ttf, "Dejavu Sans Mono", "Courier New", Mono, Sans;
+         font-style: normal;}
+   text-area[type=heading] {font-family: caveatbrush-regular.ttf, "Dejavu Sans Mono", "Courier New", Mono, Sans;
+         font-style: normal;}
+   text-area[type=formal] {font-family: "LiberationSans-Regular.ttf", "Dejavu Sans", Arial, Sans;
+      font-style: normal;
+      font-stretch: condensed}
+   emphasis {font-family: fantasquesansmono-bolditalic.otf, "Dejavu Sans", Arial, Sans;
+             font-style: oblique; 
+             font-weight: bold;}
+   strong {font-family: fantasquesansmono-bold.otf, "Dejavu Sans", Arial, Sans;
+           font-style: normal; 
+           font-weight: bold;}
+ </style>
+<meta-data>
+  <book-info>
+   <author activity="Writer">
+    <first-name>Cory</first-name>
+    <last-name>Doctorow</last-name>
+   </author>
+   <author activity="Adapter">
+    <first-name>Dara</first-name>
+    <last-name>Naraghi</last-name>
+   </author>
+   <author activity="Artist">
+    <first-name>Esteve</first-name>
+    <last-name>Polls</last-name>
+   </author>
+   <author activity="Letterer">
+    <first-name>Neil</first-name>
+    <last-name>Uyetake</last-name>
+   </author>
+   <author activity="Colorist">
+    <first-name>Robert</first-name>
+    <last-name>Studio</last-name>
+   </author>
+   <author activity="CoverArtist">
+    <first-name>Sam</first-name>
+    <last-name>Kieth</last-name>
+   </author>
+   <author activity="Editor">
+    <first-name>Ted</first-name>
+    <last-name>Adams</last-name>
+   </author>
+   <author activity="Translator" lang="sk">
+    <first-name>Róbert</first-name>
+    <last-name>Pastierovič</last-name>
+   </author>
+   <genre match="70">fantasy</genre>
+   <genre match="30">computer</genre>
+   <characters>
+    <name>Anda</name>
+    <name>Lucy</name>
+    <name>Liza the Organiza</name>
+    <name>Raymond</name>
+   </characters>
+   <coverpage>
+    <image href="00cover.jpg"/>
+   </coverpage>
+   <languages>
+    <text-layer lang="en" show="False"/>
+    <text-layer lang="en" show="True"/>
+    <text-layer lang="sk" show="True"/>
+   </languages>
+   <sequence title="Cory Doctorow's Futuristic Tales of the Here and Now">1</sequence>
+  <keywords></keywords><book-title lang="sk">Andina Hra</book-title><book-title lang="en">Anda's Game</book-title><annotation lang="sk"><p>Toto je prvá časť komiksovej kolekcie IDW "Cory Doctorow's Futuristic Tales of the Here and Now," ktorá obsahuje šesť komiksov, ktoré sú adaptáciami ocenených Doctorowových sci-fi príbehov.</p><p>Táto prvá časť obsahuje komksový príbeh nazvaný Andina Hra, príbeh o dvanásťročnom dievčati a jej dobrodružstvách vo svete počítačovej hry, kde sa dozvie o "farmároch" v Latinskej Amerike, ktorí sú platení za nudnú, opakujúcu sa prácu a produkt ich práce je predávaný bohatým hráčom, ktorí sa tak dostanú na vyšší level bez tvrdej práce.</p></annotation><annotation lang="en"><p>This is the first part of the IDW comic collection "Cory Doctorow's Futuristic Tales of the Here and Now," which collects the six-issue comic of adaptations from Doctorow's award-winning science fiction stories.</p><p>This first part contains the Anda's Game comic story about a 12 years old girl and her adventure in the world of a computer game where she soon finds out about “gold farmers” in latinamerica who are being paid a pittance “grind” (undertake boring, repetitive wealth-creating tasks in a game) with the product of their labor sold on to rich northern gamers who wanted to level-up without all the hard work.</p></annotation></book-info>
+  <publish-info>
+   <publisher>www.acbf.info</publisher>
+   <publish-date value="2012-07-01">2012</publish-date>
+   <city>Bratislava, Slovakia</city>
+   <isbn>N/A</isbn>
+   <license>Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States</license>
+  </publish-info>
+  <document-info>
+   <author>
+    <nickname>jrw</nickname>
+   </author>
+   <creation-date value="2012-07-01">July 1st 2012</creation-date>
+   <source>
+     <p>Cory Doctorow's Futuristic Tales of the Here and Now</p>
+     <p>IDW Publishing (www.idwpublishing.com) May 2008</p>
+     <p>ISBN: 978-1-60010-172-4</p>
+     <p>http://www.archive.org/details/CoryDoctorowsFuturisticTalesOfTheHereAndNow</p>
+   </source>
+   <id>jrw-doctorow-craphound-0123456789</id>
+   <version>0.1</version>
+   <history>
+     <p>v 0.1 – Initial Conversion</p>
+   </history>
+  </document-info>
+ </meta-data>
+ <body bgcolor="#000000">
+  <page>
+   <image href="01.jpg"/>
+   <text-layer lang="en">
+     <text-area points="84,68 418,68 418,139 84,139" bgcolor="#f3ff9d" type="commentary">
+       <p>ANDA DIDN'T REALLY START TO PLAY THE GAME UNTIL SHE GOT HERESELF A GIRL-SHAPED <emphasis>AVATAR.</emphasis></p>
+     </text-area>
+     <text-area points="470,64 685,64 685,285 470,285" bgcolor="#f3ff9d" type="commentary">
+       <p>SHE WAS 12, AND THE ONLY GIRLS SHE'D EVER SEEN IN-GAME WERE SHAPED LIKE A BOY'S IDEA OF WHAT A GIRL LOOKED LIKE: HUGE BUZZWABS AND LONG LEGS ALL BARELY CONTAINED IN TINY, POINTLESS LEATHER BIKINI-ARMOUR.</p>
+     </text-area>
+     <text-area points="662,325 816,325 816,377 662,377" bgcolor="#f3ff9d" type="commentary">
+       <p><emphasis>BINTWARE,</emphasis> SHE CALLED IT.</p>
+     </text-area>
+     <text-area points="1136,216 1138,211 1141,207 1144,203 1150,199 1155,197 1164,194 1175,193 1212,193 1223,195 1228,197 1238,203 1244,211 1246,220 1244,231 1240,237 1230,243 1215,247 1206,249 1174,249 1163,247 1151,243 1142,237 1137,227 1136,216">
+       <p>HULLO, CHICKENS.</p>
+     </text-area>
+     <text-area points="872,459 1104,459 1104,531 872,531" bgcolor="#f3ff9d" type="commentary">
+       <p>THAT ALL CHANGED THE DAY HER SCHOOL WAS CALLED TO ASSEMBLY.</p>
+     </text-area>
+     <text-area points="256,725 258,711 268,697 284,687 304,681 340,679 384,681 412,691 426,705 432,721 430,739 422,751 408,761 386,769 362,773 314,771 294,767 276,759 264,749 258,739">
+       <p>I AM LIZA THE ORGANIZA, AND I KICK ARSE. SERIOUSLY.</p>
+     </text-area>
+     <text-area points="732,887 744,859 772,831 816,815 860,811 920,819 960,843 984,879 992,915 988,959 968,999 932,1027 884,1039 832,1039 796,1031 760,1011 736,979 728,951 728,907">
+       <p>I AM THE BEST GAMER IN THE WORLD, AND I'M EL PRESIDENTE OF THE ENTIRE <emphasis>CLAN FAHRENHEIT.</emphasis> MY BATTLE RECORD IS 3,522 KILLS IN A <emphasis>SINGLE</emphasis> BATTLE. I HAVE TAKEN HOME CASH PRIZES FROM COMPETITIONS TOTALLING MORE THAN 400,000 POUNDS.</p>
+     </text-area>
+     <text-area points="738,1181 742,1151 764,1121 790,1107 818,1103 848,1103 880,1109 904,1121 916,1135 924,1155 928,1171 928,1199 922,1221 912,1237 894,1251 870,1261 846,1265 820,1265 788,1259 766,1249 750,1231 738,1205">
+       <p>AND I'M HERE TO LET YOU IN ON A SECRET: GIRLS KICK ARSE. WE'RE FASTER, SMARTER AND BETTER THAN BOYS. WE PLAY HARDER.</p>
+     </text-area>
+     <text-area points="84,1365 86,1349 94,1335 110,1323 130,1317 168,1317 188,1321 206,1333 216,1351 216,1377 206,1395 192,1405 170,1411 130,1411 114,1407 100,1399 90,1387 86,1377">
+       <p>GAMESPACE SMELLS LIKE A BOY'S <emphasis>ARMPIT.</emphasis></p>
+     </text-area>
+     <text-area points="218,1811 222,1789 242,1767 270,1757 310,1751 352,1755 384,1765 404,1781 412,1805 412,1825 396,1849 368,1863 344,1869 284,1869 246,1857 226,1841 220,1827">
+       <p>WE'RE GOING TO CHANGE THAT, CHICKENS, YOU LOT AND ME. SO HERE'S MY OFFER TO YOU ...</p>
+     </text-area>
+     <text-area points="396,1363 404,1339 424,1319 456,1307 492,1303 544,1303 572,1307 596,1315 612,1323 628,1339 632,1359 628,1387 608,1407 584,1415 552,1423 476,1423 444,1415 424,1407 404,1391">
+       <p>... IF YOU WILL PLAY AS A GIRL, YOU WILL BE GIVEN <emphasis>PROBATIONARY MEMBERSHIPS</emphasis> IN THE CLAN FAHRENHEIT.</p>
+     </text-area>
+     <text-area points="456,1699 460,1675 472,1651 488,1639 512,1631 556,1631 580,1639 600,1655 612,1679 612,1711 604,1743 576,1767 536,1775 504,1771 480,1759 464,1739 456,1719">
+       <p>AND IF YOU MEASURE UP, YOU'LL BECOME FULL-FLEDGED MEMBERS. SO WHO'S IN, CHICKENS?</p>
+     </text-area>
+     <text-area points="1024,1727 1240,1727 1240,1863 1024,1863" bgcolor="#f3ff9d" type="commentary">
+       <p>THE FAHRENHEITS HAD CHAPTERS IN <emphasis>EVERY</emphasis> GAME. THEY WERE AMAZING AND DEADLY AND COOL. AND ANDA WAS GOING TO BE ONE OF THEM.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="84,68 418,68 418,139 84,139" bgcolor="#f3ff9d" type="commentary">
+       <p>ANDA NEZAČALA HRAŤ HRU SKÔR NEŽ DOSTALA <emphasis>AVATARA</emphasis> V TVARE DIEVČAŤA.</p>
+     </text-area>
+     <text-area points="470,64 685,64 685,285 470,285" bgcolor="#f3ff9d" type="commentary">
+       <p>MALA 12, A JEDINÉ DIEVČATÁ, KTORÉ KEDY V HRE VIDELA, BOLI TVAROVANÉ AKO CHLAPČENSKÁ PREDSTAVA DIEVČAT: VEĽKÉ PRSIA A DLHÉ NOHY A TO VŠETKO NAPRATANÉ DO MALÉHO, NEZMYSELNÉHO KOŽENÉHO BIKINI-BRNENIA.</p>
+     </text-area>
+     <text-area points="662,325 816,325 816,377 662,377" bgcolor="#f3ff9d" type="commentary">
+       <p><emphasis>BINTWARE,</emphasis> TO VOLALA.</p>
+     </text-area>
+     <text-area points="1136,216 1138,211 1141,207 1144,203 1150,199 1155,197 1164,194 1175,193 1212,193 1223,195 1228,197 1238,203 1244,211 1246,220 1244,231 1240,237 1230,243 1215,247 1206,249 1174,249 1163,247 1151,243 1142,237 1137,227 1136,216">
+       <p>HALÓ, MAČIATKA.</p>
+     </text-area>
+     <text-area points="872,459 1104,459 1104,531 872,531" bgcolor="#f3ff9d" type="commentary">
+       <p>TO VŠETKO SA ZMENILO V DEŇ, KEĎ ICH ŠKOLA BOLA ZVOLANÁ NA ZHROMAŽDENIE.</p>
+     </text-area>
+     <text-area points="256,725 258,711 268,697 284,687 304,681 340,679 384,681 412,691 426,705 432,721 430,739 422,751 408,761 386,769 362,773 314,771 294,767 276,759 264,749 258,739">
+       <p>JA SOM LÍZA ORGANÍZA, A SOM STRAŠNE COOL. VÁŽNE.</p>
+     </text-area>
+     <text-area points="732,887 744,859 772,831 816,815 860,811 920,819 960,843 984,879 992,915 988,959 968,999 932,1027 884,1039 832,1039 796,1031 760,1011 736,979 728,951 728,907">
+       <p>SOM NAJLEPŠÍ HRÁČ NA SVETE, A SOM "EL PRESIDENTE" CELÉHO <emphasis>KLANU FAHRENHEIT.</emphasis> MÔJ REKORD NA BOJISKU JE 3522 ZABITÍ V <emphasis>JEDINEJ</emphasis> BITKE. PRINIESLA SOM SI DOMOV CENY Z RÔZNYCH SÚŤAŽÍ V CELKOVEJ VÝŠKE VYŠE 400 TISÍC EUR.</p>
+     </text-area>
+     <text-area points="738,1181 742,1151 764,1121 790,1107 818,1103 848,1103 880,1109 904,1121 916,1135 924,1155 928,1171 928,1199 922,1221 912,1237 894,1251 870,1261 846,1265 820,1265 788,1259 766,1249 750,1231 738,1205">
+       <p>A PRIŠLA SOM SEM, ABY SOM VÁM PREZRADILA JEDNO TAJOMSTVO: DIEVČATÁ SÚ COOL. SME RÝCHLEJŠIE, BYSTREJŠIE A LEPŠIE AKO CHLAPCI. HRÁME USILOVNEJŠIE.</p>
+     </text-area>
+     <text-area points="84,1365 86,1349 94,1335 110,1323 130,1317 168,1317 188,1321 206,1333 216,1351 216,1377 206,1395 192,1405 170,1411 130,1411 114,1407 100,1399 90,1387 86,1377">
+       <p>HRÁČSKY PRIESTOR SMRDÍ AKO CHLAPČENSKÝ <emphasis>RITNÝ OTVOR.</emphasis></p>
+     </text-area>
+     <text-area points="218,1811 222,1789 242,1767 270,1757 310,1751 352,1755 384,1765 404,1781 412,1805 412,1825 396,1849 368,1863 344,1869 284,1869 246,1857 226,1841 220,1827">
+       <p>MY SA TO CHYSTÁME ZMENIŤ, MAČIATKA, VY VŠETKY A JA. TU JE MOJA PONUKA ...</p>
+     </text-area>
+     <text-area points="396,1363 404,1339 424,1319 456,1307 492,1303 544,1303 572,1307 596,1315 612,1323 628,1339 632,1359 628,1387 608,1407 584,1415 552,1423 476,1423 444,1415 424,1407 404,1391">
+       <p>... AK BUDETE HRAŤ AKO HRAJÚ DIEVČATÁ, DOSTANETE <emphasis>SKÚŠOBNÉ ČLENSTVO</emphasis> V KLANE FAHRENHEIT.</p>
+     </text-area>
+     <text-area points="456,1699 460,1675 472,1651 488,1639 512,1631 556,1631 580,1639 600,1655 612,1679 612,1711 604,1743 576,1767 536,1775 504,1771 480,1759 464,1739 456,1719">
+       <p>A AK SA OSVEDČÍTE, STANETE SA PLNOPRÁVNYMI ČLENMI. TAK KTO IDE DO TOHO, MAČIATKA?</p>
+     </text-area>
+     <text-area points="1024,1727 1240,1727 1240,1863 1024,1863" bgcolor="#f3ff9d" type="commentary">
+       <p>KLAN FAHRENHEIT MAL ODNOŽE V <emphasis>KAŽDEJ</emphasis> HRE. BOLI ÚŽASNÍ, SMRTIACI A STRAŠNE COOL. A ANDA SA CHYSTALA BYŤ JEDNOU Z NICH.</p>
+     </text-area>
+   </text-layer>
+   <frame points="65,52 441,52 442,652 57,650"/>
+   <frame points="458,52 837,54 838,654 456,652"/>
+   <frame points="855,277 886,252 932,220 980,190 994,188 1016,186 1037,182 1040,178 1050,177 1053,170 1065,165 1068,159 1056,160 1045,154 1044,145 1042,133 1039,128 1040,126 1040,102 1046,91 1051,71 1057,68 1082,67 1098,81 1103,95 1106,106 1110,115 1112,124 1112,134 1121,148 1128,159 1129,164 1142,165 1156,169 1214,166 1234,163 1248,160 1273,160 1272,446 1271,595 1271,656 851,654 853,503 853,425"/>
+   <frame points="40,652 1326,657 1326,1296 38,1292"/>
+   <frame points="55,1293 421,1294 421,1316 417,1317 409,1323 403,1329 399,1336 393,1349 393,1377 395,1384 399,1391 405,1399 411,1405 416,1409 421,1412 422,1548 422,1919 51,1919"/>
+   <frame points="393,1349 397,1339 403,1329 412,1321 421,1316 424,1314 425,1294 822,1295 821,1518 829,1517 834,1521 836,1526 835,1533 827,1540 826,1546 823,1548 822,1922 435,1922 438,1859 438,1823 440,1419 429,1415 421,1412 406,1400 397,1387 393,1377"/>
+   <frame points="840,1295 1265,1296 1264,1925 837,1922 839,1598 834,1597 833,1594 833,1581 837,1575 839,1573"/>
+  </page>
+  <page>
+   <image href="02.jpg"/>
+   <text-layer lang="en">
+     <text-area points="168,551 380,551 380,733 168,733" bgcolor="#f3ff9d" type="commentary">
+       <p>EVERY EVENING AFTER SCHOOL, WHILE HER PARENTS WATCHED SOMETHING LOUD ON THE TELLY, ANDA WOULD GO ON MISSIONS WITH LUCY, HER BEST FRIEND IN-GAME.</p>
+     </text-area>
+     <text-area points="460,191 744,191 744,283 460,283" bgcolor="#f3ff9d" type="commentary">
+       <p>LUCY LIVED SOMEWHERE IN THE MIDDLE OF AMERICA, WHERE IT WAS ALL VOWELS - IOWA OR OHIO OR SOMETHING.</p>
+     </text-area>
+     <text-area points="770,281 774,263 784,249 806,237 834,231 870,231 896,235 918,243 932,255 940,281 936,299 930,311 916,321 902,327 886,331 854,333 824,331 796,323 776,305 770,287">
+       <p>ANDA, HOW WOULD YOU LIKE TO MAKE SOME <emphasis>MONEY?</emphasis></p>
+     </text-area>
+     <text-area points="752,509 756,495 766,485 786,477 804,473 840,473 862,475 882,481 896,489 904,507 900,521 892,531 880,537 864,541 844,543 800,543 776,537 762,529 754,517 752,509">
+       <p>YOU MEAN <emphasis>GOLD,</emphasis> LUCY?</p>
+     </text-area>
+     <text-area points="1092,203 1096,187 1108,177 1128,171 1152,171 1172,175 1188,185 1194,203 1190,217 1180,227 1166,233 1142,235 1120,233 1104,225 1092,211">
+       <p>CALL ME SARGE!</p>
+     </text-area>
+     <text-area points="1044,635 1052,607 1068,591 1096,579 1144,579 1168,583 1192,595 1204,611 1212,635 1204,663 1188,679 1168,687 1132,695 1096,691 1064,679 1048,659">
+       <p>AND NO, NOT GOLD. I HAVE A MISSION THAT PAYS <emphasis>REAL</emphasis> CASH.</p>
+     </text-area>
+     <text-area points="136,827 140,803 156,787 184,775 220,771 256,775 288,787 300,799 308,819 300,847 288,863 260,875 220,879 192,875 160,867 144,851 136,839">
+       <p>SOUNDS A BIT WEIRD, SARGE. IS THAT AGAINST CLAN <emphasis>RULES?</emphasis></p>
+     </text-area>
+     <text-area points="462,1225 830,1225 830,1315 462,1315" bgcolor="#f3ff9d" type="commentary">
+       <p>CLAN LEADERSHIP ENFORCED A CODE OF CONDUCT THAT WAS MEANT TO ENSURE THAT NONE OF THE FAHRENHEIT GIRLIES ENDED UP BEING VIRTUAL <emphasis>PROZZIES.</emphasis></p>
+     </text-area>
+     <text-area points="1046,807 1050,789 1060,775 1076,765 1094,759 1114,755 1150,753 1190,755 1220,761 1236,769 1252,783 1260,805 1258,823 1248,837 1232,849 1208,857 1182,861 1118,861 1088,855 1070,847 1054,833 1046,819 1046,807">
+       <p>NO ... GEEZ. ALL THE EXECUTIVES IN THE CLAN PAY THE RENT DOING MISSIONS FOR MONEY.</p>
+     </text-area>
+     <text-area points="964,1241 968,1223 976,1207 994,1193 1018,1185 1046,1181 1080,1185 1100,1191 1116,1201 1126,1215 1132,1233 1132,1253 1128,1265 1120,1277 1108,1287 1094,1293 1074,1299 1028,1299 1006,1295 988,1287 976,1275 968,1259">
+       <p>BESIDES, MY CONTACT SAID THEY JUST WANT US TO GO <emphasis>KILL</emphasis> SOME GUYS.</p>
+     </text-area>
+     <text-area points="228,1415 232,1399 242,1387 256,1381 274,1377 300,1377 322,1381 334,1389 344,1401 346,1417 342,1433 328,1447 312,1453 270,1455 256,1451 242,1445 232,1433 230,1425 228,1415">
+       <p>OH, WE'RE GOOD AT <emphasis>THAT!</emphasis></p>
+     </text-area>
+     <text-area points="1020,1391 1028,1383 1220,1383 1228,1391 1228,1463 1216,1471 1028,1471 1020,1459" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;please sorry u cn have my gold sorry!!!!!!</p>
+     </text-area>
+     <text-area points="612,1739 616,1725 624,1715 638,1709 658,1703 694,1701 726,1703 754,1709 770,1717 778,1727 780,1739 778,1751 770,1761 758,1767 736,1773 700,1777 662,1773 632,1765 618,1755 614,1747">
+       <p>YOU'RE A <emphasis>NASTY</emphasis> PERSON, ANDA.</p>
+     </text-area>
+     <text-area points="616,1843 624,1837 896,1837 904,1843 904,1899 896,1907 624,1909 616,1901" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;I'm a Fahrenheit!!!!!</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="168,551 380,551 380,733 168,733" bgcolor="#f3ff9d" type="commentary">
+       <p>KAŽDÝ VEČER PO ŠKOLE, KEĎ JEJ RODIČIA POZERALI NIEČO HLASNO V TELKE, ANDA CHODILA NA MISIE S LUCY, JEJ NAJLEPŠOU KAMARÁTKOU V HRE.</p>
+     </text-area>
+     <text-area points="460,191 744,191 744,283 460,283" bgcolor="#f3ff9d" type="commentary">
+       <p>LUCY ŽILA NIEKDE V STREDE SPOJENÝCH ŠTÁTOV, KDE TO BOLO VŠETKO IBA NA SAMOHLÁSKY - IOWA, OHIO ALEBO TAKÉ NIEČO.</p>
+     </text-area>
+     <text-area points="770,281 774,263 784,249 806,237 834,231 870,231 896,235 918,243 932,255 940,281 936,299 930,311 916,321 902,327 886,331 854,333 824,331 796,323 776,305 770,287">
+       <p>ANDA, ČO TAKTO ZAROBIŤ NEJAKÉ <emphasis>PENIAZE?</emphasis></p>
+     </text-area>
+     <text-area points="752,509 756,495 766,485 786,477 804,473 840,473 862,475 882,481 896,489 904,507 900,521 892,531 880,537 864,541 844,543 800,543 776,537 762,529 754,517 752,509">
+       <p>MYSLÍŠ <emphasis>ZLATO,</emphasis> LUCY?</p>
+     </text-area>
+     <text-area points="1092,203 1096,187 1108,177 1128,171 1152,171 1172,175 1188,185 1194,203 1190,217 1180,227 1166,233 1142,235 1120,233 1104,225 1092,211">
+       <p>VOLAJ MA SERŽANT!</p>
+     </text-area>
+     <text-area points="1044,635 1052,607 1068,591 1096,579 1144,579 1168,583 1192,595 1204,611 1212,635 1204,663 1188,679 1168,687 1132,695 1096,691 1064,679 1048,659">
+       <p>A NIE, NIE ZLATO. MÁM MISIU, KTORÁ PLATÍ <emphasis>SKUTOČNÉ</emphasis> PENIAZE.</p>
+     </text-area>
+     <text-area points="136,827 140,803 156,787 184,775 220,771 256,775 288,787 300,799 308,819 300,847 288,863 260,875 220,879 192,875 160,867 144,851 136,839">
+       <p>TO ZNIE DIVNE, SERŽANT. NIE JE TO PROTI <emphasis>PRAVIDLÁM KLANU?</emphasis></p>
+     </text-area>
+     <text-area points="462,1225 830,1225 830,1315 462,1315" bgcolor="#f3ff9d" type="commentary">
+       <p>VODCOVSTVO KLANU VYNUCOVALO DODRŽIAVANIE KÓDEXU SPRÁVANIA SA, KTORÝ ZABEZPEČOVAL, ŽE ŽIADNE DIEVČA Z KLANU NESKONČILO AKO VIRTUǍLNA <emphasis>PROSTITÚTKA.</emphasis></p>
+     </text-area>
+     <text-area points="1046,807 1050,789 1060,775 1076,765 1094,759 1114,755 1150,753 1190,755 1220,761 1236,769 1252,783 1260,805 1258,823 1248,837 1232,849 1208,857 1182,861 1118,861 1088,855 1070,847 1054,833 1046,819 1046,807">
+       <p>NIE ... JEŽÍŠ. VŠETCI HLAVNÍ PREDSTAVITELIA KLANU PLATIA ZA PLNENIE DÔLEŽITÝCH MISIÍ PENIAZMI.</p>
+     </text-area>
+     <text-area points="964,1241 968,1223 976,1207 994,1193 1018,1185 1046,1181 1080,1185 1100,1191 1116,1201 1126,1215 1132,1233 1132,1253 1128,1265 1120,1277 1108,1287 1094,1293 1074,1299 1028,1299 1006,1295 988,1287 976,1275 968,1259">
+       <p>OKREM TOHO, MÔJ KONTAKT MI POVEDAL, ŽE CHCÚ, ABY SME IŠLI <emphasis>POZABÍJAŤ</emphasis> NEJAKÝCH CHALANOV.</p>
+     </text-area>
+     <text-area points="228,1415 232,1399 242,1387 256,1381 274,1377 300,1377 322,1381 334,1389 344,1401 346,1417 342,1433 328,1447 312,1453 270,1455 256,1451 242,1445 232,1433 230,1425 228,1415">
+       <p>OH, V <emphasis>TOM</emphasis> SME VEĽMI DOBRÉ!</p>
+     </text-area>
+     <text-area points="1020,1391 1028,1383 1220,1383 1228,1391 1228,1463 1216,1471 1028,1471 1020,1459" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;prosím, prepáč, môžeš mať moje zlato, prepáč!!!!!!</p>
+     </text-area>
+     <text-area points="612,1739 616,1725 624,1715 638,1709 658,1703 694,1701 726,1703 754,1709 770,1717 778,1727 780,1739 778,1751 770,1761 758,1767 736,1773 700,1777 662,1773 632,1765 618,1755 614,1747">
+       <p>SI <emphasis>ODPORNÝ</emphasis> ČLOVEK, ANDA.</p>
+     </text-area>
+     <text-area points="616,1843 624,1837 896,1837 904,1843 904,1899 896,1907 624,1909 616,1901" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;Ja som Fahrenheit!!!!!</p>
+     </text-area>
+   </text-layer>
+   <frame points="135,170 429,173 426,764 134,762"/>
+   <frame points="438,173 996,173 990,767 438,761"/>
+   <frame points="1008,175 1011,174 1104,174 1108,172 1114,171 1108,155 1111,149 1115,152 1124,164 1129,161 1133,167 1161,167 1173,170 1179,168 1184,174 1199,169 1201,175 1226,176 1227,761 1215,755 1197,752 1179,749 1128,749 1107,752 1089,755 1074,761 1065,767 1005,767"/>
+   <frame points="60,764 855,767 861,1352 57,1346"/>
+   <frame points="876,767 1062,767 1071,761 1098,752 1128,749 1179,749 1203,752 1227,761 1242,767 1284,767 1284,1358 876,1355 876,767"/>
+   <frame points="77,1367 1281,1375 1281,1640 77,1637"/>
+   <frame points="133,1652 1219,1656 1219,1948 131,1946"/>
+  </page>
+  <page>
+   <image href="03.jpg"/>
+   <text-layer lang="en">
+     <text-area points="129,185 389,185 389,261 129,261" bgcolor="#f3ff9d" type="commentary">
+       <p>THE MISSION TOOK THEM TO A COTTAGE ON THE FAR SIDE OF THE GAMEWORLD.</p>
+     </text-area>
+     <text-area points="394,312 401,283 429,261 471,251 504,249 551,254 588,268 605,289 610,313 605,338 591,357 561,371 528,378 484,379 444,372 413,357 397,333">
+       <p>GOOD THING YOU HAD A <emphasis>SCRYING</emphasis> SCROLL LEFT. LOOKS LIKE THE PLACE IS PRETTY WELL-DEFENDED.</p>
+     </text-area>
+     <text-area points="523,432 528,413 547,400 579,393 614,394 646,403 661,423 660,440 652,455 626,466 592,469 561,468 538,459 525,444">
+       <p>YEAH, I COUNT SEVEN GUARDS.</p>
+     </text-area>
+     <text-area points="863,173 1153,172 1163,186 1170,203 1167,222 1151,243 1124,256 1091,267 1039,271 984,271 937,269 893,258 863,241">
+       <p>NOT A PROBLEM. MY STANDARD <emphasis>DODGE-AND-WEAVE</emphasis> PATTERN WORKS GREAT FOR RUSHING <emphasis>NON-PLAYER CHARACTERS.</emphasis></p>
+     </text-area>
+     <text-area points="930,547 934,529 952,517 983,509 1018,513 1041,523 1050,536 1050,554 1041,570 1019,579 990,581 960,578 939,567 931,556">
+       <p>RIGHT. I'LL COVER YOU.</p>
+     </text-area>
+     <text-area points="77,786 80,768 98,752 125,746 159,750 183,762 190,781 190,798 180,815 166,823 143,827 112,826 89,817 78,800">
+       <p>THIS'LL BE OVER BEFORE -</p>
+     </text-area>
+     <text-area points="284,1178 290,1161 309,1150 333,1148 361,1155 370,1174 369,1190 358,1203 337,1208 311,1208 292,1198">
+       <p>WHAT THE - ?</p>
+     </text-area>
+     <text-area points="433,790 438,769 451,753 475,743 504,741 541,744 565,757 576,776 578,799 573,816 554,831 528,838 495,839 466,834 446,823 435,806">
+       <p>SARGE. I THINK THEY'RE ACTUALLY <emphasis>PLAYERS!</emphasis></p>
+     </text-area>
+     <text-area points="819,788 825,766 858,746 906,737 967,736 1016,746 1042,761 1052,780 1052,800 1037,822 991,839 933,844 872,837 843,825 822,806">
+       <p>BUT WHO WANTS TO <emphasis>SIT AROUND</emphasis> IN GAMESPACE WATCHING A BORING ROAD ALL DAY?</p>
+     </text-area>
+     <text-area points="899,1131 903,1114 921,1103 948,1099 984,1103 1001,1116 1005,1135 996,1152 975,1162 935,1164 909,1156 898,1142">
+       <p>WHO CARES?</p>
+     </text-area>
+     <text-area points="270,1360 278,1339 305,1326 345,1322 385,1326 410,1335 422,1352 423,1369 418,1380 396,1395 352,1402 307,1398 279,1385 271,1370">
+       <p>GET DOWN. I'M GONNA USE THE <emphasis>BFG!</emphasis></p>
+     </text-area>
+     <text-area points="133,1740 616,1741 617,1832 133,1833" bgcolor="#f3ff9d" type="commentary">
+       <p>EVERY GAME HAD ONE: <emphasis>THE BIG FRIENDLY GUN.</emphasis> THE GENERIC TERM FOR THE BADDEST-ARSE WEAPON IN THE WORLD. LUCY HAD RENTED THIS ONE FROM THE CLAN ARMORY FOR A SMALL FORTUNE IN GOLD.</p>
+     </text-area>
+     <text-area points="695,1426 700,1413 719,1405 743,1403 771,1406 787,1416 791,1428 785,1440 768,1449 724,1450 702,1443 695,1434">
+       <p>HOLY - !</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="129,185 389,185 389,261 129,261" bgcolor="#f3ff9d" type="commentary">
+       <p>MISIA ICH ZAVIEDLA DO CHATRČE NA VZDIALENEJ STRANE HERNÉHO SVETA.</p>
+     </text-area>
+     <text-area points="394,312 401,283 429,261 471,251 504,249 551,254 588,268 605,289 610,313 605,338 591,357 561,371 528,378 484,379 444,372 413,357 397,333">
+       <p>JE DOBRE, ŽE TI EŠTE ZOSTAL JEDEN <emphasis>MAGICKÝ</emphasis> ZVITOK. VYZERÁ TO, ŽE TOTO MIESTO JE VEĽMI DOBRE BRÁNENÉ.</p>
+     </text-area>
+     <text-area points="523,432 528,413 547,400 579,393 614,394 646,403 661,423 660,440 652,455 626,466 592,469 561,468 538,459 525,444">
+       <p>ÁNO, NAPOČÍTALA SOM SEDEM STRÁŽCOV.</p>
+     </text-area>
+     <text-area points="863,173 1153,172 1163,186 1170,203 1167,222 1151,243 1124,256 1091,267 1039,271 984,271 937,269 893,258 863,241">
+       <p>ŽIADEN PROBLÉM. MÔJ ŠTANDARTNÝ <emphasis>UHNI-A-SEKNI</emphasis> VZOREC FUNGUJE VYNIKAJÚCO NA ÚTOČIACE <emphasis>NEHRÁČSKE POSTAVY.</emphasis></p>
+     </text-area>
+     <text-area points="930,547 934,529 952,517 983,509 1018,513 1041,523 1050,536 1050,554 1041,570 1019,579 990,581 960,578 939,567 931,556">
+       <p>OK. BUDEM ŤA KRYŤ.</p>
+     </text-area>
+     <text-area points="77,786 80,768 98,752 125,746 159,750 183,762 190,781 190,798 180,815 166,823 143,827 112,826 89,817 78,800">
+       <p>TOTO BUDE HOTOVÉ PREDTÝM NEŽ -</p>
+     </text-area>
+     <text-area points="284,1178 290,1161 309,1150 333,1148 361,1155 370,1174 369,1190 358,1203 337,1208 311,1208 292,1198">
+       <p>ČO DO - ?</p>
+     </text-area>
+     <text-area points="433,790 438,769 451,753 475,743 504,741 541,744 565,757 576,776 578,799 573,816 554,831 528,838 495,839 466,834 446,823 435,806">
+       <p>SERŽANT. MYSLÍM, ŽE SÚ TO SKUTOČNÍ <emphasis>HRÁČI!</emphasis></p>
+     </text-area>
+     <text-area points="819,788 825,766 858,746 906,737 967,736 1016,746 1042,761 1052,780 1052,800 1037,822 991,839 933,844 872,837 843,825 822,806">
+       <p>ALE KOMU SA CHCE <emphasis>SEDIEŤ NA JEDNOM MIESTE</emphasis> V HERNOM SVETE A SLEDOVAŤ JEDNU NUDNÚ CESTU CELÝ DEŇ?</p>
+     </text-area>
+     <text-area points="899,1131 903,1114 921,1103 948,1099 984,1103 1001,1116 1005,1135 996,1152 975,1162 935,1164 909,1156 898,1142">
+       <p>ČO MA DO TOHO?</p>
+     </text-area>
+     <text-area points="270,1360 278,1339 305,1326 345,1322 385,1326 410,1335 422,1352 423,1369 418,1380 396,1395 352,1402 307,1398 279,1385 271,1370">
+       <p>KRY SA. IDEM POUŽIŤ <emphasis>VPZ!</emphasis></p>
+     </text-area>
+     <text-area points="133,1740 616,1741 617,1832 133,1833" bgcolor="#f3ff9d" type="commentary">
+       <p>KAŽDÁ HRA JU MALA: <emphasis>VEĽKÚ PRIATEĽSKÚ ZBRAŇ.</emphasis> VŠEOBECNÝ TERMÍN PRE NAJSILNEJŠIU ZBRAŇ V CELOM SVETE. LUCY SI TÚTO POŽIČALA ZO ZBROJNICE KLANU ZA MENŠÍ OBNOS ZLATA.</p>
+     </text-area>
+     <text-area points="695,1426 700,1413 719,1405 743,1403 771,1406 787,1416 791,1428 785,1440 768,1449 724,1450 702,1443 695,1434">
+       <p>PRE PÁNA - !</p>
+     </text-area>
+   </text-layer>
+   <frame points="113,171 841,171 842,711 113,709"/>
+   <frame points="860,170 1202,170 1206,714 860,713"/>
+   <frame points="53,730 403,728 400,1281 53,1281"/>
+   <frame points="420,731 794,731 795,1281 418,1281"/>
+   <frame points="813,731 1266,731 1266,1280 813,1280"/>
+   <frame points="114,1298 640,1298 641,1852 113,1853"/>
+   <frame points="657,1297 1201,1297 1205,1849 658,1851"/>
+  </page>
+  <page>
+   <image href="04.jpg"/>
+   <text-layer lang="en">
+     <text-area points="155,422 158,401 170,383 192,370 219,364 258,363 290,369 311,381 325,398 329,415 328,434 323,452 310,466 292,476 272,481 241,483 209,480 187,473 165,456 157,439">
+       <p>NUKE 'EM TILL THEY <emphasis>GLOW</emphasis> AND SHOOT 'EM IN THE <emphasis>DARK!</emphasis> YEE-HAW!</p>
+     </text-area>
+     <text-area points="585,145 589,126 607,112 638,104 672,101 710,104 738,112 754,127 758,145 753,163 736,178 708,186 669,188 628,185 602,175 588,158">
+       <p>I COUNT <emphasis>THREE</emphasis> SURVIVORS. I'M ON THEM.</p>
+     </text-area>
+     <text-area points="1075,130 1080,125 1181,126 1185,132 1185,159 1182,165 1080,165 1076,159" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;Urgh!</p>
+     </text-area>
+     <text-area points="609,878 613,860 631,847 654,840 698,841 721,848 734,860 741,880 736,899 722,912 702,919 668,921 634,915 615,902 610,889">
+       <p>MAKE THAT TWO SURVIVORS.</p>
+     </text-area>
+     <text-area points="188,1405 196,1393 211,1387 233,1383 273,1383 296,1388 312,1395 317,1405 313,1415 295,1423 270,1427 233,1427 211,1423 192,1416">
+       <p>YEEEARGH!</p>
+     </text-area>
+     <text-area points="910,1373 914,1366 997,1366 1004,1372 1004,1405 1000,1412 916,1412 910,1406" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;die!</p>
+     </text-area>
+     <text-area points="1021,1690 1025,1678 1040,1666 1068,1660 1111,1659 1139,1667 1152,1676 1159,1691 1153,1708 1136,1719 1115,1723 1087,1725 1053,1722 1032,1712 1022,1700">
+       <p>NO. NO. NO! IT'S <emphasis>STUCK!</emphasis></p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="155,422 158,401 170,383 192,370 219,364 258,363 290,369 311,381 325,398 329,415 328,434 323,452 310,466 292,476 272,481 241,483 209,480 187,473 165,456 157,439">
+       <p>ZBOMBARDUJ ICH AŽ <emphasis>ZČERNAJÚ</emphasis> A NASTRIEĽAJ IM DO <emphasis>ZADKOV!</emphasis> JÉÉ-HAW!</p>
+     </text-area>
+     <text-area points="585,145 589,126 607,112 638,104 672,101 710,104 738,112 754,127 758,145 753,163 736,178 708,186 669,188 628,185 602,175 588,158">
+       <p>VIDÍM <emphasis>TROCH</emphasis> PREŽIVŠÍCH. IDEM NA NICH.</p>
+     </text-area>
+     <text-area points="1075,130 1080,125 1181,126 1185,132 1185,159 1182,165 1080,165 1076,159" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;Urgh!</p>
+     </text-area>
+     <text-area points="609,878 613,860 631,847 654,840 698,841 721,848 734,860 741,880 736,899 722,912 702,919 668,921 634,915 615,902 610,889">
+       <p>UŽ ZOSTALI IBA DVAJA.</p>
+     </text-area>
+     <text-area points="188,1405 196,1393 211,1387 233,1383 273,1383 296,1388 312,1395 317,1405 313,1415 295,1423 270,1427 233,1427 211,1423 192,1416">
+       <p>JÉÉÉARG!</p>
+     </text-area>
+     <text-area points="910,1373 914,1366 997,1366 1004,1372 1004,1405 1000,1412 916,1412 910,1406" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;zomrieš!</p>
+     </text-area>
+     <text-area points="1021,1690 1025,1678 1040,1666 1068,1660 1111,1659 1139,1667 1152,1676 1159,1691 1153,1708 1136,1719 1115,1723 1087,1725 1053,1722 1032,1712 1022,1700">
+       <p>NIE. NIE. NIE! <emphasis>ZASEKLO</emphasis> SA MI TO!</p>
+     </text-area>
+   </text-layer>
+   <frame points="119,85 558,88 552,828 114,826"/>
+   <frame points="570,87 826,89 821,828 564,829"/>
+   <frame points="1212,90 1211,832 834,829 835,90"/>
+   <frame points="33,827 762,827 763,1323 35,1322"/>
+   <frame points="771,827 1296,831 1296,1325 776,1324"/>
+   <frame points="35,1336 637,1338 634,1893 35,1891"/>
+   <frame points="1293,1338 1295,1894 646,1894 645,1339"/>
+  </page>
+  <page>
+   <image href="05.jpg"/>
+   <text-layer lang="en">
+     <text-area points="133,180 137,168 153,159 180,156 212,160 225,170 228,180 224,191 211,200 188,203 159,201 141,194">
+       <p>GOT 'IM!</p>
+     </text-area>
+     <text-area points="520,565 525,560 620,559 626,564 627,604 621,610 526,608 521,603" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;bitch!</p>
+     </text-area>
+     <text-area points="99,707 102,694 117,686 134,682 164,684 184,689 193,699 194,713 187,724 169,731 137,733 110,727 101,719">
+       <p>SARGE!</p>
+     </text-area>
+     <text-area points="405,702 408,690 419,683 441,679 469,683 482,690 486,703 481,715 471,721 453,726 427,723 410,717 406,710">
+       <p>SHIT!</p>
+     </text-area>
+     <text-area points="966,720 969,709 982,700 1005,696 1034,699 1047,707 1052,719 1049,732 1039,739 1020,744 988,743 973,736 967,729">
+       <p>YAAAR!</p>
+     </text-area>
+     <text-area points="345,1288 348,1273 360,1261 385,1253 416,1250 458,1256 480,1270 485,1282 485,1297 479,1309 467,1317 450,1322 434,1324 394,1325 364,1317 349,1303 345,1291">
+       <p>SARGE, WHERE'D YOU <emphasis>RESPAWN?</emphasis></p>
+     </text-area>
+     <text-area points="74,1537 80,1514 94,1496 121,1482 150,1477 195,1477 229,1486 251,1504 262,1528 262,1555 248,1577 220,1595 189,1599 138,1598 110,1592 87,1575 76,1554">
+       <p>ALL THE WAY OVER AT <emphasis>BODY ELECTRIC.</emphasis> IT'LL TAKE ME <emphasis>HOURS</emphasis> TO GET THERE.</p>
+     </text-area>
+     <text-area points="277,1586 283,1560 299,1541 325,1528 378,1527 414,1535 435,1552 446,1584 442,1606 433,1625 420,1634 401,1644 372,1647 330,1645 307,1638 287,1621 279,1603">
+       <p>DO YOU THINK YOU CAN <emphasis>COMPLETE</emphasis> THE MISSION ON YOUR OWN?</p>
+     </text-area>
+     <text-area points="408,1762 411,1747 424,1738 441,1733 464,1732 483,1741 494,1753 493,1772 486,1783 467,1791 436,1790 420,1785 409,1772">
+       <p>UH, SURE.</p>
+     </text-area>
+     <text-area points="1000,1345 1003,1326 1019,1308 1046,1296 1074,1293 1118,1293 1145,1299 1172,1313 1182,1329 1184,1358 1176,1371 1162,1382 1141,1391 1114,1396 1061,1393 1027,1385 1007,1369 1002,1358">
+       <p>YOU'RE THE <emphasis>BEST,</emphasis> GIRL. KILL <emphasis>EVERYONE</emphasis> IN THE COTTAGE.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="133,180 137,168 153,159 180,156 212,160 225,170 228,180 224,191 211,200 188,203 159,201 141,194">
+       <p>MÁM HO!</p>
+     </text-area>
+     <text-area points="520,565 525,560 620,559 626,564 627,604 621,610 526,608 521,603" bgcolor="#000000" type="code" inverted="True">
+       <p>&gt;suka!</p>
+     </text-area>
+     <text-area points="99,707 102,694 117,686 134,682 164,684 184,689 193,699 194,713 187,724 169,731 137,733 110,727 101,719">
+       <p>SERŽANT!</p>
+     </text-area>
+     <text-area points="405,702 408,690 419,683 441,679 469,683 482,690 486,703 481,715 471,721 453,726 427,723 410,717 406,710">
+       <p>SAKRA!</p>
+     </text-area>
+     <text-area points="966,720 969,709 982,700 1005,696 1034,699 1047,707 1052,719 1049,732 1039,739 1020,744 988,743 973,736 967,729">
+       <p>ÁÁÁÁ!</p>
+     </text-area>
+     <text-area points="345,1288 348,1273 360,1261 385,1253 416,1250 458,1256 480,1270 485,1282 485,1297 479,1309 467,1317 450,1322 434,1324 394,1325 364,1317 349,1303 345,1291">
+       <p>SERŽANT, KDE ŤA <emphasis>OŽIVILO?</emphasis></p>
+     </text-area>
+     <text-area points="74,1537 80,1514 94,1496 121,1482 150,1477 195,1477 229,1486 251,1504 262,1528 262,1555 248,1577 220,1595 189,1599 138,1598 110,1592 87,1575 76,1554">
+       <p>CELÚ CESTU SPÄŤ AŽ K <emphasis>ELEKTRICKÉMU TELU.</emphasis> POTRVÁ MI TO <emphasis>VÄČNOSŤ</emphasis> DOSTAŤ SA SPÄŤ.</p>
+     </text-area>
+     <text-area points="277,1586 283,1560 299,1541 325,1528 378,1527 414,1535 435,1552 446,1584 442,1606 433,1625 420,1634 401,1644 372,1647 330,1645 307,1638 287,1621 279,1603">
+       <p>MYSLÍŠ, ŽE DOKÁŽEŠ <emphasis>DOKONČIŤ</emphasis> MISIU SAMA?</p>
+     </text-area>
+     <text-area points="408,1762 411,1747 424,1738 441,1733 464,1732 483,1741 494,1753 493,1772 486,1783 467,1791 436,1790 420,1785 409,1772">
+       <p>HMM, JASNE.</p>
+     </text-area>
+     <text-area points="1000,1345 1003,1326 1019,1308 1046,1296 1074,1293 1118,1293 1145,1299 1172,1313 1182,1329 1184,1358 1176,1371 1162,1382 1141,1391 1114,1396 1061,1393 1027,1385 1007,1369 1002,1358">
+       <p>SI <emphasis>NAJLEPŠIA,</emphasis> DIEVČA. VYZABÍJAJ <emphasis>VŠETKÝCH</emphasis> V CHATRČI.</p>
+     </text-area>
+   </text-layer>
+   <frame points="54,41 468,41 474,647 54,647"/>
+   <frame points="477,44 894,44 894,83 894,86 909,77 936,62 981,47 1014,44 1014,50 996,71 978,92 972,101 1014,95 1014,101 987,119 969,128 963,137 969,140 1011,140 1011,146 1002,158 987,173 969,185 936,203 912,215 897,215 897,647 480,647"/>
+   <frame points="909,215 912,215 969,185 987,173 1011,146 1017,47 1272,47 1272,650 1062,650 909,647"/>
+   <frame points="54,659 372,659 372,1211 60,1211"/>
+   <frame points="384,662 480,662 495,647 507,647 513,659 852,659 849,1211 603,1211 564,1235 558,1235 558,1226 567,1211 384,1211"/>
+   <frame points="867,659 1050,662 1062,650 1080,650 1089,653 1092,647 1101,641 1107,644 1116,644 1122,641 1134,641 1143,629 1149,626 1155,617 1158,605 1161,599 1167,602 1170,605 1188,596 1200,590 1197,575 1203,572 1212,578 1218,593 1230,602 1245,602 1248,611 1257,629 1260,647 1266,656 1267,1209 861,1209"/>
+   <frame points="37,1222 510,1220 513,1937 36,1937"/>
+   <frame points="528,1211 1293,1208 1299,1940 528,1937"/>
+  </page>
+  <page>
+   <image href="06.jpg"/>
+   <text-layer lang="en">
+     <text-area points="390,209 394,192 408,181 433,176 464,180 478,191 484,207 479,225 464,235 443,240 413,238 397,228 391,219">
+       <p>WHAT THE - ?</p>
+     </text-area>
+     <text-area points="548,543 553,517 566,502 591,491 625,487 664,491 691,505 705,527 706,552 700,574 685,588 662,598 629,601 593,598 568,588 551,568">
+       <p>SARGE, IT'S JUST A BUNCH OF <emphasis>NOOBS</emphasis> CRAFTING SHIRTS!</p>
+     </text-area>
+     <text-area points="931,190 936,177 950,166 972,160 1016,161 1042,171 1053,184 1053,201 1044,214 1024,223 974,224 953,221 937,210 930,196">
+       <p>GOOD, KILL THEM ALL.</p>
+     </text-area>
+     <text-area points="1095,240 1101,224 1120,214 1163,213 1184,220 1194,234 1192,249 1184,258 1158,265 1125,266 1106,259 1098,248">
+       <p>REALLY?</p>
+     </text-area>
+     <text-area points="237,733 240,714 251,701 270,692 307,692 335,699 349,714 351,740 344,756 325,768 298,770 274,770 251,762 239,746">
+       <p>YEAH, THAT'S THE ORDERS.</p>
+     </text-area>
+     <text-area points="1111,957 1114,950 1231,951 1238,958 1238,1027 1230,1035 1119,1035 1111,1028" bgcolor="#000000" type="formal" inverted="True">
+       <p>&gt;no porfa necesito mi plata</p>
+     </text-area>
+     <text-area points="73,1131 77,1112 93,1098 123,1089 163,1089 189,1096 206,1111 211,1133 204,1154 183,1166 154,1172 118,1171 91,1162 77,1148">
+       <p>HUH ... ITALIAN? NO, <emphasis>SPANISH</emphasis> ...</p>
+     </text-area>
+     <text-area points="628,1206 1076,1243 1083,1306 636,1272" text-rotation="356" type="code">
+       <p>&gt;no [colloquial] please, I need my [colloquial] [money - silver]</p>
+     </text-area>
+     <text-area points="52,1534 59,1507 83,1484 125,1472 186,1472 226,1483 250,1505 257,1524 255,1552 245,1571 223,1586 181,1597 128,1596 91,1588 66,1571 54,1550">
+       <p>CRAFTING SHIRTS FOR A FEW COPPER PIECES. <emphasis>PATHETIC.</emphasis> WHY NOT PLAYING MISSION FOR GOLD?</p>
+     </text-area>
+     <text-area points="117,1653 120,1636 134,1625 165,1616 203,1617 232,1627 243,1644 241,1666 223,1682 186,1688 150,1685 125,1675 117,1663">
+       <p>SARGE, THEY'RE ALL DEAD.</p>
+     </text-area>
+     <text-area points="716,1606 721,1577 740,1558 767,1546 821,1546 847,1552 871,1568 881,1592 881,1619 874,1637 855,1653 825,1663 771,1663 741,1654 721,1631">
+       <p>GOOD JOB. GET MY STUFF AND MEET ME AT <emphasis>MARIONETTE TAVERN.</emphasis> OK?</p>
+     </text-area>
+     <text-area points="1141,1638 1145,1626 1161,1620 1181,1621 1193,1628 1196,1639 1191,1649 1181,1655 1156,1655 1144,1647">
+       <p>OK.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="390,209 394,192 408,181 433,176 464,180 478,191 484,207 479,225 464,235 443,240 413,238 397,228 391,219">
+       <p>ČO DO - ?</p>
+     </text-area>
+     <text-area points="548,543 553,517 566,502 591,491 625,487 664,491 691,505 705,527 706,552 700,574 685,588 662,598 629,601 593,598 568,588 551,568">
+       <p>SERŽANT, JE TU LEN KOPA <emphasis>AMATÉROV</emphasis> VYRÁBAJÚCICH KOŠELE!</p>
+     </text-area>
+     <text-area points="931,190 936,177 950,166 972,160 1016,161 1042,171 1053,184 1053,201 1044,214 1024,223 974,224 953,221 937,210 930,196">
+       <p>DOBRE, ZABI ICH VŠETKÝCH.</p>
+     </text-area>
+     <text-area points="1095,240 1101,224 1120,214 1163,213 1184,220 1194,234 1192,249 1184,258 1158,265 1125,266 1106,259 1098,248">
+       <p>NAOZAJ?</p>
+     </text-area>
+     <text-area points="237,733 240,714 251,701 270,692 307,692 335,699 349,714 351,740 344,756 325,768 298,770 274,770 251,762 239,746">
+       <p>JASNE, TO JE ROZKAZ.</p>
+     </text-area>
+     <text-area points="1111,957 1114,950 1231,951 1238,958 1238,1027 1230,1035 1119,1035 1111,1028" bgcolor="#000000" type="formal" inverted="True">
+       <p>&gt;no porfa necesito mi plata</p>
+     </text-area>
+     <text-area points="73,1131 77,1112 93,1098 123,1089 163,1089 189,1096 206,1111 211,1133 204,1154 183,1166 154,1172 118,1171 91,1162 77,1148">
+       <p>HMM ... TALIANSKY? NIE, <emphasis>ŠPANIELSKY</emphasis> ...</p>
+     </text-area>
+     <text-area points="628,1206 1076,1243 1083,1306 636,1272" text-rotation="356" type="code">
+       <p>&gt;nie [hovorovo] prosím, potrebujem svoje [hovorovo] [peniaze - striebro]</p>
+     </text-area>
+     <text-area points="52,1534 59,1507 83,1484 125,1472 186,1472 226,1483 250,1505 257,1524 255,1552 245,1571 223,1586 181,1597 128,1596 91,1588 66,1571 54,1550">
+       <p>VYRÁBANIE KOŠIEL PRE PÁR KÚSKOV MEDI. <emphasis>SMIEŠNE.</emphasis> PREČO RADŠEJ NEHRAŤ PRE ZLATO?</p>
+     </text-area>
+     <text-area points="117,1653 120,1636 134,1625 165,1616 203,1617 232,1627 243,1644 241,1666 223,1682 186,1688 150,1685 125,1675 117,1663">
+       <p>SERŽANT, VŠETCI SÚ MŔTVI.</p>
+     </text-area>
+     <text-area points="716,1606 721,1577 740,1558 767,1546 821,1546 847,1552 871,1568 881,1592 881,1619 874,1637 855,1653 825,1663 771,1663 741,1654 721,1631">
+       <p>SKVELÁ PRÁCA. ZOBER MOJE VECI A STRETNEME SA PRI <emphasis>HOSTINCI MARIONET.</emphasis> OK?</p>
+     </text-area>
+     <text-area points="1141,1638 1145,1626 1161,1620 1181,1621 1193,1628 1196,1639 1191,1649 1181,1655 1156,1655 1144,1647">
+       <p>OK.</p>
+     </text-area>
+   </text-layer>
+   <frame points="36,39 953,39 921,226 959,346 958,667 40,667"/>
+   <frame points="964,229 949,228 942,222 920,229 921,224 934,214 925,200 927,180 939,165 957,158 951,136 957,137 970,153 976,149 981,154 1019,156 1029,159 1037,153 1041,162 1049,162 1064,157 1066,161 1211,164 1206,653 961,653"/>
+   <frame points="38,689 261,689 254,664 256,660 274,687 279,680 284,687 310,688 327,690 692,689 690,957 710,963 721,970 721,987 716,996 707,1000 690,1001 690,1059 37,1059"/>
+   <frame points="709,690 814,690 817,676 827,668 827,663 849,648 862,648 874,653 880,652 885,642 889,644 892,654 895,659 892,665 905,673 913,682 914,688 1294,690 1294,1061 707,1060"/>
+   <frame points="36,1206 71,1184 97,1171 76,1158 67,1139 69,1113 86,1094 116,1084 165,1084 186,1071 314,1073 333,1084 349,1100 364,1124 414,1122 412,1448 36,1445"/>
+   <frame points="427,1448 428,1414 518,1358 491,1115 493,1097 510,1071 533,1073 1031,1076 1100,1089 1119,1197 1295,1123 1295,1457 1004,1454"/>
+   <frame points="38,1458 490,1461 484,1962 31,1962 37,1817"/>
+   <frame points="495,1463 1007,1468 1011,1459 1026,1444 1039,1435 1055,1420 1066,1420 1074,1423 1083,1416 1096,1424 1113,1452 1109,1463 1114,1470 1295,1472 1297,1962 495,1963"/>
+  </page>
+  <page>
+   <image href="07.jpg"/>
+   <text-layer lang="en">
+     <text-area points="96,71 415,72 414,162 96,162" bgcolor="#f3ff9d" type="commentary">
+       <p>LUCY'S VOICE IN HER EAR WAS A CONSTANT COMPANION IN HER LIFE NOW, AS THEY RAN MISSION INTO THE WEE HOURS OF THE NIGHT.</p>
+     </text-area>
+     <text-area points="105,251 112,220 137,198 180,185 243,185 279,194 303,211 316,239 315,267 304,288 281,305 252,314 188,316 154,311 127,297 110,275 105,260">
+       <p>BUT, SARGE, I JUST CAN'T UNDERSTAND <emphasis>WHY</emphasis> ANYONE WOULD PAY US CASH FOR THESE MISSIONS.</p>
+     </text-area>
+     <text-area points="349,267 353,241 365,220 385,204 424,193 479,194 511,202 537,221 549,239 553,272 548,298 533,319 511,332 477,341 423,341 390,331 365,315 352,291">
+       <p>DUNNO, EITHER, HELL, IT'S PROBABLY TWO RICH GAMERS. ONE'S <emphasis>FUCKING</emphasis> WITH THE OTHER ONE AND PAYING US.</p>
+     </text-area>
+     <text-area points="452,681 456,669 470,659 496,653 535,652 570,656 589,668 594,682 587,698 564,707 525,711 485,710 463,701 453,690">
+       <p>YOU REALLY THINK THAT?</p>
+     </text-area>
+     <text-area points="445,964 449,934 460,909 485,887 515,874 554,866 616,866 656,873 689,887 712,908 724,933 729,954 729,981 718,1011 705,1031 678,1048 647,1058 607,1064 543,1061 509,1052 478,1037 454,1009 445,984">
+       <p>"SIGH" LOOK AT IT THIS WAY - MOST OF THE WORLD IS LIVING ON, LIKE, A DOLLAR A DAY. MY DAD SENDS MOM THREE THOUSAND A MONTH IN CHILD-SUPPORT, AND WE'RE NOT EVEN <emphasis>RICH!</emphasis> BUT TO AN <emphasis>AFRICAN</emphasis> OR WHATEVER, I <emphasis>AM.</emphasis></p>
+     </text-area>
+     <text-area points="539,1187 722,1188 723,1312 540,1314" bgcolor="#f3ff9d" type="commentary">
+       <p>"ANDA, IT'S  NOT <emphasis>HEALTHY</emphasis> FOR YOU TO SPEND SO MUCH TIME WITH YOUR GAME," HER DA WOULD SAY.</p>
+     </text-area>
+     <text-area points="1035,1068 1033,1019 1039,985 1057,948 1084,924 1126,912 1178,913 1216,928 1243,960 1255,990 1259,1022 1258,1067 1246,1107 1222,1138 1189,1156 1150,1161 1107,1156 1071,1138 1046,1107 1037,1078">
+       <p>SO THERE'S PROBABLY SOME <emphasis>SAUDI</emphasis> OR <emphasis>JAPANESE</emphasis> GUY OR <emphasis>RUSSIAN</emphasis> MAFIA KID OUT THERE WHO'S SO RICH THAT THIS IS JUST CHUMP CHANGE FOR HIM, AND HE'S PAYING US TO <emphasis>MESS</emphasis> AROUND WITH SOME OTHER RICH PERSON.</p></text-area>
+     <text-area points="782,1255 1087,1255 1087,1313 782,1313" bgcolor="#f3ff9d" type="commentary">
+       <p>"DAAAA!" SHE'D PROTEST. "I GO TO P.E. EVERY STINKING DAY."</p>
+     </text-area>
+     <text-area points="547,1459 552,1431 571,1410 603,1395 665,1393 701,1401 729,1418 741,1442 743,1467 737,1488 724,1507 700,1520 668,1527 618,1527 584,1519 560,1502 548,1477">
+       <p>TO THEM, WE'RE LIKE THE AFRICANS MAKING A DOLLAR A DAY TO CRAFT ... I MEAN, SEW T-SHIRTS.</p>
+     </text-area>
+     <text-area points="929,1507 1255,1507 1255,1564 929,1565" bgcolor="#f3ff9d" type="commentary">
+       <p>"OK, ANDA. BUT <emphasis>DO</emphasis> TRY TO GET A LITTLE MORE EXCERSICE, <emphasis>PLEASE".</emphasis></p>
+     </text-area>
+     <text-area points="115,1646 120,1626 138,1612 159,1607 199,1607 216,1612 234,1624 240,1640 239,1657 230,1671 212,1681 176,1685 145,1681 127,1673 118,1659">
+       <p><emphasis>GUESS</emphasis> THAT MAKES SENSE.</p>
+     </text-area>
+     <text-area points="662,1705 665,1689 682,1676 703,1673 734,1674 758,1679 771,1694 774,1710 762,1727 741,1735 692,1734 671,1725 664,1714">
+       <p><emphasis>NICE</emphasis> ONE, ANDA.</p>
+     </text-area>
+     <text-area points="701,1812 704,1796 718,1784 745,1779 772,1781 791,1789 800,1803 800,1821 795,1833 775,1844 749,1845 723,1842 709,1835 701,1821">
+       <p>THANKS, SARGE.</p>
+     </text-area>
+     <text-area points="1104,1840 1106,1820 1114,1802 1137,1790 1156,1785 1206,1785 1237,1796 1252,1817 1253,1844 1242,1862 1225,1874 1204,1879 1163,1880 1133,1874 1116,1862 1106,1850">
+       <p>NOW, LET'S GO FIND THAT NEW COTTAGE.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="96,71 415,72 414,162 96,162" bgcolor="#f3ff9d" type="commentary">
+       <p>LUCYIN HLAS V JEJ UCHU BOL TERAZ STÁLYM SPRIEVODCOM V JEJ ŽIVOTE, KEĎ PLNILI RÔZNE MISIE AŽ DO NESKORÝCH NOČNÝCH HODÍN.</p>
+     </text-area>
+     <text-area points="105,251 112,220 137,198 180,185 243,185 279,194 303,211 316,239 315,267 304,288 281,305 252,314 188,316 154,311 127,297 110,275 105,260">
+       <p>ALE, SERŽANT, NEDOKÁŽEM POROZUMIEŤ TOMU, <emphasis>PREČO</emphasis> BY NÁM NIEKTO MAL PLATIŤ PENIAZE ZA TIETO MISIE.</p>
+     </text-area>
+     <text-area points="349,267 353,241 365,220 385,204 424,193 479,194 511,202 537,221 549,239 553,272 548,298 533,319 511,332 477,341 423,341 390,331 365,315 352,291">
+       <p>NEVIEM ANI JA, DO PEKLA, PRAVDEPODOBNE NEJAKÍ BOHATÍ HRÁČI. JEDEN <emphasis>BOJUJE</emphasis> S DRUHÝM A PLATIA NÁM.</p>
+     </text-area>
+     <text-area points="452,681 456,669 470,659 496,653 535,652 570,656 589,668 594,682 587,698 564,707 525,711 485,710 463,701 453,690">
+       <p>NAOZAJ SI TO MYSLÍŠ?</p>
+     </text-area>
+     <text-area points="445,964 449,934 460,909 485,887 515,874 554,866 616,866 656,873 689,887 712,908 724,933 729,954 729,981 718,1011 705,1031 678,1048 647,1058 607,1064 543,1061 509,1052 478,1037 454,1009 445,984">
+       <p>"ACH" POZRI SA NA TO TAKTO - VÄČŠINA SVETA ŽIJE ASI Z JEDNÉHO DOLÁRA NA DEŇ. MÔJ OTEC POSIELA MAME KAŽDÝ MESIAC TRI TISÍC NA PODPORU DIEŤAŤA, A TO ANI NIE SME <emphasis>BOHATÍ!</emphasis> ALE PRE <emphasis>AFRIČANA</emphasis> ALEBO NIEKOHO INEÉHO, JA <emphasis>SOM</emphasis> BOHATÁ.</p>
+     </text-area>
+     <text-area points="539,1187 722,1188 723,1312 540,1314" bgcolor="#f3ff9d" type="commentary">
+       <p>"ANDA, NIE JE <emphasis>ZDRAVÉ,</emphasis> KEĎ TRÁVIŠ TAK VEĽA ČASU SO SVOJOU HROU," POVEDAL BY JEJ OTEC.</p>
+     </text-area>
+     <text-area points="1035,1068 1033,1019 1039,985 1057,948 1084,924 1126,912 1178,913 1216,928 1243,960 1255,990 1259,1022 1258,1067 1246,1107 1222,1138 1189,1156 1150,1161 1107,1156 1071,1138 1046,1107 1037,1078">
+       <p>TAKŽE EXISTUJE PRAVDEPODOBNE NEJAKÝ <emphasis>SAUDSKÝ</emphasis> ALEBO <emphasis>JAPONSKÝ</emphasis> CHALAN ALEBO DIEŤA <emphasis>RUSKEJ</emphasis> MAFIE, KTORÍ SÚ TAK BOHATÍ, ŽE TOTO JE PRE NICH LEN PÁR DROBNÝCH, A ONI NÁM PLATIA, ABY SME <emphasis>BOJOVALI</emphasis> PROTI NEJAKÝM INÝM BOHATÝM.</p></text-area>
+     <text-area points="782,1255 1087,1255 1087,1313 782,1313" bgcolor="#f3ff9d" type="commentary">
+       <p>"OCÓÓÓ!" PROTESTOVALA BY. "CHODÍM DO TELOCVIČNE KAŽDÝ PREKLIATY DEŇ."</p>
+     </text-area>
+     <text-area points="547,1459 552,1431 571,1410 603,1395 665,1393 701,1401 729,1418 741,1442 743,1467 737,1488 724,1507 700,1520 668,1527 618,1527 584,1519 560,1502 548,1477">
+       <p>PRE NICH SME LEN ROVNAKÍ AKO AFRIČANIA ZARÁBAJÚCI DOLÁR ZA DEŇ ZA VYRÁBANIE ... EHM, ŠITIE TRIČIEK.</p>
+     </text-area>
+     <text-area points="929,1507 1255,1507 1255,1564 929,1565" bgcolor="#f3ff9d" type="commentary">
+       <p>"DOBRE, ANDA. ALE <emphasis>POSNAŽ SA</emphasis> VIACEJ CVIČIŤ, <emphasis>PROSÍM".</emphasis></p>
+     </text-area>
+     <text-area points="115,1646 120,1626 138,1612 159,1607 199,1607 216,1612 234,1624 240,1640 239,1657 230,1671 212,1681 176,1685 145,1681 127,1673 118,1659">
+       <p><emphasis>TO</emphasis> ASI DÁVA ZMYSEL.</p>
+     </text-area>
+     <text-area points="662,1705 665,1689 682,1676 703,1673 734,1674 758,1679 771,1694 774,1710 762,1727 741,1735 692,1734 671,1725 664,1714">
+       <p><emphasis>PEKNE,</emphasis> ANDA.</p>
+     </text-area>
+     <text-area points="701,1812 704,1796 718,1784 745,1779 772,1781 791,1789 800,1803 800,1821 795,1833 775,1844 749,1845 723,1842 709,1835 701,1821">
+       <p>VĎAKA, SERŽANT.</p>
+     </text-area>
+     <text-area points="1104,1840 1106,1820 1114,1802 1137,1790 1156,1785 1206,1785 1237,1796 1252,1817 1253,1844 1242,1862 1225,1874 1204,1879 1163,1880 1133,1874 1116,1862 1106,1850">
+       <p>TERAZ POĎME NÁJSŤ TÚ NOVÚ CHATRČ.</p>
+     </text-area>
+   </text-layer>
+   <frame points="33,52 1294,51 1293,907 718,905 686,877 632,860 560,860 520,864 478,882 453,910 443,910 439,917 439,931 444,940 425,958 403,959 374,947 373,937 376,930 388,921 391,910 34,907"/>
+   <frame points="112,906 455,911 478,883 523,865 577,859 636,862 681,876 719,904 725,909 744,913 741,1328 471,1329 452,1344 423,1358 398,1375 385,1378 376,1388 356,1390 339,1396 314,1406 303,1398 308,1375 322,1370 334,1355 342,1350 348,1340 357,1338 361,1326 194,1327 187,1348 172,1348 159,1334 159,1327 114,1327 115,1264 100,1251 91,1227 89,1207 90,1155 96,1127 84,1114 83,1091 91,1077 115,1061"/>
+   <frame points="759,909 1101,911 1127,904 1173,906 1203,914 1231,930 1254,971 1263,1005 1266,1065 1253,1108 1237,1135 1247,1134 1247,1164 1236,1187 1220,1206 1203,1208 1202,1327 756,1330"/>
+   <frame points="60,1342 1264,1342 1268,1573 54,1579"/>
+   <frame points="54,1587 1266,1590 1266,1950 55,1949"/>
+  </page>
+  <page>
+   <image href="08.jpg"/>
+   <text-layer lang="en">
+     <text-area points="333,880 337,864 347,854 369,847 389,847 409,854 420,862 425,877 423,893 413,905 399,910 377,914 352,909 339,899 334,889">
+       <p>BLOODY <emphasis>HELL.</emphasis></p>
+     </text-area>
+     <text-area points="266,1184 269,1165 283,1148 309,1136 343,1134 374,1135 400,1143 417,1157 426,1174 423,1199 410,1218 377,1231 341,1233 304,1229 282,1219 268,1202">
+       <p>THIS IS NUTS! I'M <emphasis>CALLING</emphasis> THEM. THIS IS NUTS.</p>
+     </text-area>
+     <text-area points="586,836 593,812 620,790 657,778 717,775 780,784 813,805 824,823 825,853 813,873 780,892 741,899 681,901 633,892 600,873 588,852">
+       <p>OK, I JUST CALLED IN THREE <emphasis>SQUADS</emphasis> OF FAHRENHEIT VETERANS AND THEIR NOOB APPRENTICES FOR BACKUP.</p>
+     </text-area>
+     <text-area points="741,1153 746,1135 761,1123 785,1115 829,1117 854,1126 865,1137 870,1158 860,1178 837,1190 811,1192 781,1190 758,1184 743,1167">
+       <p>THEY'LL BE HERE IN AN HOUR.</p>
+     </text-area>
+     <text-area points="1080,1146 1083,1125 1098,1108 1126,1096 1180,1097 1209,1110 1223,1126 1227,1147 1220,1173 1203,1188 1166,1197 1125,1195 1098,1185 1082,1165">
+       <p>SARGE, THIS ISN'T A <emphasis>MISSION</emphasis> ANYMORE ...</p>
+     </text-area>
+     <text-area points="868,1298 1018,1297 1017,1334 868,1334" bgcolor="#fbe2e8" type="commentary">
+       <p>" ... IT'S <emphasis>WAR!"</emphasis></p>
+     </text-area>
+     <text-area points="925,1367 1234,1368 1235,1456 925,1455" bgcolor="#d3dbdd" type="commentary">
+       <p>"YEAH! AND I'VE NEGOTIATED A <emphasis>BONUS</emphasis> FOR US IF WE MAKE IT - A MILLION GOLD AND <emphasis>THREE</emphasis> MISSIONS' WORTH OF CASH!"</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="333,880 337,864 347,854 369,847 389,847 409,854 420,862 425,877 423,893 413,905 399,910 377,914 352,909 339,899 334,889">
+       <p>DO <emphasis>PEKLA.</emphasis></p>
+     </text-area>
+     <text-area points="266,1184 269,1165 283,1148 309,1136 343,1134 374,1135 400,1143 417,1157 426,1174 423,1199 410,1218 377,1231 341,1233 304,1229 282,1219 268,1202">
+       <p>TOTO JE V RITI! <emphasis>VOLÁM</emphasis> ICH. TOTO JE V RITI.</p>
+     </text-area>
+     <text-area points="586,836 593,812 620,790 657,778 717,775 780,784 813,805 824,823 825,853 813,873 780,892 741,899 681,901 633,892 600,873 588,852">
+       <p>OK, PRÁVE SOM PRIVOLALA TRI <emphasis>DRUŽSTVÁ</emphasis> VETERÁNOV FAHRENHEITU A ICH UČŇOV DO ZÁLOHY.</p>
+     </text-area>
+     <text-area points="741,1153 746,1135 761,1123 785,1115 829,1117 854,1126 865,1137 870,1158 860,1178 837,1190 811,1192 781,1190 758,1184 743,1167">
+       <p>BUDÚ TU ASI ZA HODINU.</p>
+     </text-area>
+     <text-area points="1080,1146 1083,1125 1098,1108 1126,1096 1180,1097 1209,1110 1223,1126 1227,1147 1220,1173 1203,1188 1166,1197 1125,1195 1098,1185 1082,1165">
+       <p>SERŽANT, TOTO UŽ NIE JE <emphasis>MISIA</emphasis> ...</p>
+     </text-area>
+     <text-area points="868,1298 1018,1297 1017,1334 868,1334" bgcolor="#fbe2e8" type="commentary">
+       <p>" ... JE TO <emphasis>VOJNA!"</emphasis></p>
+     </text-area>
+     <text-area points="925,1367 1234,1368 1235,1456 925,1455" bgcolor="#d3dbdd" type="commentary">
+       <p>"JASNE! A VYJEDNALA SOM PRE NÁS <emphasis>BONUS,</emphasis> AK SA NÁM TO PODARÍ - MILIÓN ZLATÝCH A PENIAZE V HODNOTE <emphasis>TROCH</emphasis> SPLNENÝCH MISIÍ!"</p>
+     </text-area>
+   </text-layer>
+   <frame points="43,56 1287,54 1293,827 833,826 814,800 799,789 779,779 754,774 728,772 666,771 622,783 600,799 585,814 582,827 39,826"/>
+   <frame points="116,829 562,830 563,1218 418,1218 406,1227 387,1234 368,1237 326,1238 298,1232 280,1224 272,1218 117,1218"/>
+   <frame points="574,829 584,829 585,816 591,806 609,790 637,778 644,776 628,732 633,733 665,772 674,759 681,771 713,770 747,772 779,780 794,769 795,784 800,790 853,769 854,772 816,800 825,814 831,827 875,828 876,1114 884,1112 876,1121 877,1217 857,1218 859,1228 855,1226 847,1219 575,1219 576,905 564,908 565,903 574,899"/>
+   <frame points="885,830 1209,831 1207,1101 1221,1114 1229,1129 1232,1150 1228,1169 1218,1183 1207,1191 1207,1217 887,1217"/>
+   <frame points="37,1224 273,1220 302,1235 329,1240 378,1238 408,1231 423,1219 1286,1219 1289,1967 40,1959"/>
+  </page>
+  <page>
+   <image href="09.jpg"/>
+   <text-layer lang="en">
+     <text-area points="488,329 493,315 506,303 524,299 553,297 580,305 593,321 594,334 587,350 573,358 542,362 509,358 495,349 488,339">
+       <p><strong>GO! GO! GO!</strong></p>
+     </text-area>
+     <text-area points="950,370 1209,370 1208,493 950,493" bgcolor="#f3ff9d" type="commentary">
+       <p>GAMEWAR. <emphasis>HUNDREDS</emphasis> OF FAHRENHEITS CONVERGING ON THIS SHARD, SQUARING OFF AGAINST THE RANKED <emphasis>MERCENARIES</emphasis> GUARDING THE COTTAGE.</p></text-area>
+     <text-area points="960,1012 1196,1011 1196,1099 960,1100" bgcolor="#f3ff9d" type="commentary">
+       <p>THE VOICE CHAT WAS LIKE A <emphasis>WIND-TUNNEL</emphasis> FROM ALL THE UNMUTED, BREATHING <emphasis>VOICES.</emphasis></p>
+     </text-area>
+     <text-area points="90,1451 418,1451 418,1521 91,1521" bgcolor="#f3ff9d" type="commentary">
+       <p>HUNDREDS OF <emphasis>GIRLS</emphasis> IN HUNDREDS OF BEDROOMS LIKE ANDA'S, ALL OVER THE <emphasis>WORLD.</emphasis></p></text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="488,329 493,315 506,303 524,299 553,297 580,305 593,321 594,334 587,350 573,358 542,362 509,358 495,349 488,339">
+       <p><strong>POME! POME! POME!</strong></p>
+     </text-area>
+     <text-area points="950,370 1209,370 1208,493 950,493" bgcolor="#f3ff9d" type="commentary">
+       <p>VOJNA. <emphasis>STOVKY</emphasis> Z KLANU FAHRENHEIT ZBIEHAJÚCICH SA NA TOMTO KÚSKU ZEME, STOJACICH OPROTI ZORADENÝM <emphasis>ŽOLDNIEROM</emphasis> BRÁNIACICH CHATRČ.</p></text-area>
+     <text-area points="960,1012 1196,1011 1196,1099 960,1100" bgcolor="#f3ff9d" type="commentary">
+       <p>HLASOVÝ HOVOR BOL AKO <emphasis>VETERNÝ TUNEL</emphasis> TVORENÝ VŠETKÝMI NEZTLMENÝMI DÝCHAJÚCIMI <emphasis>HLASMI.</emphasis></p>
+     </text-area>
+     <text-area points="90,1451 418,1451 418,1521 91,1521" bgcolor="#f3ff9d" type="commentary">
+       <p>STOVKY <emphasis>DIEVČAT</emphasis> V STOVKÁCH DETSKÝCH IZIEB AKO TÁ ANDINA, PO CELOM <emphasis>SVETE.</emphasis></p>
+     </text-area>
+   </text-layer>
+   <frame points="57,75 200,74 214,60 234,50 254,50 254,55 234,67 228,73 324,74 429,49 588,50 585,55 526,73 719,72 761,60 772,62 770,67 763,73 1265,73 1269,535 819,566 364,602 57,620 55,174 44,172 37,154 40,132 56,123"/>
+   <frame points="34,634 317,616 346,606 350,611 351,613 726,588 726,584 718,584 714,580 716,573 730,572 735,565 737,559 750,557 753,561 755,552 759,546 770,542 775,544 782,539 791,540 795,545 806,546 805,551 816,552 819,558 819,566 816,572 816,579 1292,547 1295,1177 863,1139 323,1089 60,1070 60,1057 68,1048 78,1043 57,1041 47,1045 40,1039 32,1020 54,999 66,999 77,995 61,977 49,976 39,963 53,950 37,950 33,942"/>
+   <frame points="56,1076 1267,1183 1269,1562 1199,1557 757,1558 53,1560"/>
+   <frame points="114,1560 1202,1557 1203,1946 115,1942"/>
+  </page>
+  <page>
+   <image href="10.jpg"/>
+   <text-layer lang="en">
+     <text-area points="138,179 315,179 315,285 138,287" bgcolor="#f3ff9d" type="commentary">
+       <p>THE FAHRENHEIT'S GREATER NUMBERS AND DISCIPLINE WERE OVERWHELMING.</p>
+     </text-area>
+     <text-area points="749,177 969,176 969,235 749,235" bgcolor="#f3ff9d" type="commentary">
+       <p>EVERY MERC WAS EVENTUALLY RUN OFF.</p>
+     </text-area>
+     <text-area points="142,741 313,741 313,779 143,780" bgcolor="#f3ff9d" type="commentary">
+       <p>OR <emphasis>BUTCHERED.</emphasis></p>
+     </text-area>
+     <text-area points="372,785 378,760 399,741 433,730 483,732 517,742 533,758 539,781 537,803 527,820 506,834 478,841 427,840 401,831 381,817 374,799">
+       <p>OK, I PAID OFF ALL THE SQUADS. THEY'RE HEADING BACK TO BASE.</p>
+     </text-area>
+     <text-area points="573,798 579,779 596,765 627,754 676,753 712,761 733,776 740,794 739,813 727,831 701,844 663,847 627,847 594,836 577,820">
+       <p>MAN, THAT WAS <emphasis>BUGFUCK</emphasis> NUTSO! BUT WE <emphasis>MADE IT!</emphasis></p>
+     </text-area>
+     <text-area points="421,1472 427,1451 444,1436 468,1431 497,1431 520,1439 535,1452 540,1472 536,1492 521,1506 498,1512 466,1515 438,1506 425,1491">
+       <p>NOW WE TAKE THE COTTAGE.</p>
+     </text-area>
+     <text-area points="295,1781 299,1760 319,1745 346,1738 393,1739 415,1745 432,1761 437,1781 430,1804 404,1821 363,1824 332,1822 308,1812 296,1796">
+       <p>RIGHT. BUT LET ME FIRST <emphasis>SCRY</emphasis> THE -</p>
+     </text-area>
+     <text-area points="749,1470 754,1446 775,1428 808,1422 851,1425 875,1436 887,1456 888,1481 879,1499 862,1511 837,1517 792,1517 764,1504 751,1487">
+       <p>I'LL BE GLAD WHEN WE'RE DONE WITH THIS.</p>
+     </text-area>
+     <text-area points="993,1774 998,1760 1019,1752 1043,1754 1058,1763 1061,1776 1054,1792 1034,1798 1010,1797 995,1785">
+       <p>HEY!</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="138,179 315,179 315,285 138,287" bgcolor="#f3ff9d" type="commentary">
+       <p>OBROVSKÉ POČTY KLANU FAHRENHEIT A ICH DISCIPLÍNA BOLI OHROMUJÚCE.</p>
+     </text-area>
+     <text-area points="749,177 969,176 969,235 749,235" bgcolor="#f3ff9d" type="commentary">
+       <p>KAŽDÝ ŽOLDNIER MUSEL NAPOKON UTIECŤ.</p>
+     </text-area>
+     <text-area points="142,741 313,741 313,779 143,780" bgcolor="#f3ff9d" type="commentary">
+       <p>ALEBO <emphasis>BOL ZABITÝ.</emphasis></p>
+     </text-area>
+     <text-area points="372,785 378,760 399,741 433,730 483,732 517,742 533,758 539,781 537,803 527,820 506,834 478,841 427,840 401,831 381,817 374,799">
+       <p>OK, ZAPLATILA SOM NAŠIM A UŽ SÚ NA CESTE SPÄŤ NA ZÁKLADŇU.</p>
+     </text-area>
+     <text-area points="573,798 579,779 596,765 627,754 676,753 712,761 733,776 740,794 739,813 727,831 701,844 663,847 627,847 594,836 577,820">
+       <p>ČLOVEČE, TO BOLO <emphasis>SAKRA</emphasis> BRUTÁLNE! ALE <emphasis>DOKÁZALI SME TO!</emphasis></p>
+     </text-area>
+     <text-area points="421,1472 427,1451 444,1436 468,1431 497,1431 520,1439 535,1452 540,1472 536,1492 521,1506 498,1512 466,1515 438,1506 425,1491">
+       <p>TERAZ MÔŽME DOBYŤ CHATRČ.</p>
+     </text-area>
+     <text-area points="295,1781 299,1760 319,1745 346,1738 393,1739 415,1745 432,1761 437,1781 430,1804 404,1821 363,1824 332,1822 308,1812 296,1796">
+       <p>JASNE. ALE NECHAJ MA NAJSKÔR <emphasis>PREHLIADNUŤ</emphasis> -</p>
+     </text-area>
+     <text-area points="749,1470 754,1446 775,1428 808,1422 851,1425 875,1436 887,1456 888,1481 879,1499 862,1511 837,1517 792,1517 764,1504 751,1487">
+       <p>BUDEM RADA, KEĎ TO UŽ BUDEME MAŤ ZA SEBOU.</p>
+     </text-area>
+     <text-area points="993,1774 998,1760 1019,1752 1043,1754 1058,1763 1061,1776 1054,1792 1034,1798 1010,1797 995,1785">
+       <p>HEJ!</p>
+     </text-area>
+   </text-layer>
+   <frame points="119,155 611,155 611,719 116,716"/>
+   <frame points="724,155 1213,157 1212,718 723,718"/>
+   <frame points="41,720 1293,721 1292,1399 43,1402"/>
+   <frame points="116,1404 652,1404 653,1839 114,1836"/>
+   <frame points="722,1406 1209,1403 1208,1839 720,1837"/>
+  </page>
+  <page>
+   <image href="11.jpg"/>
+   <text-layer lang="en">
+     <text-area points="499,793 506,774 528,763 559,761 586,768 600,781 600,803 591,817 571,826 536,826 516,821 502,809">
+       <p>SHIT! I'M <emphasis>DEAD.</emphasis></p>
+     </text-area>
+     <text-area points="425,1146 431,1117 446,1095 478,1077 530,1070 582,1073 621,1087 643,1111 652,1138 650,1167 638,1192 613,1211 580,1220 537,1223 497,1221 458,1208 433,1183 427,1163">
+       <p>TEACH YOU TO GO <emphasis>RUSHING</emphasis> INTO THINGS. IF YOU'D JUST LET ME SCRY THE COTTAGE, I WOULD HAVE DETECTED THE <emphasis>DOOR-CURSE.</emphasis></p></text-area>
+     <text-area points="712,808 717,780 737,758 768,745 802,739 844,740 891,749 920,772 928,792 930,818 920,845 898,864 854,876 818,877 773,873 741,862 719,839 712,815">
+       <p>WELL, LOOKS LIKE IT'S <emphasis>CLEAR</emphasis> NOW. JUST <emphasis>MILLIONS</emphasis> OF SHIRTS AND <emphasis>THOUSANDS</emphasis> OF NOOBS TO KILL.</p>
+     </text-area>
+     <text-area points="307,1317 313,1294 329,1279 356,1272 386,1273 410,1284 423,1304 422,1330 408,1350 384,1359 351,1360 327,1353 312,1338">
+       <p>HERE WE GO AGAIN. *YAWN*</p>
+     </text-area>
+     <text-area points="817,1280 826,1272 1001,1272 1012,1280 1012,1326 1000,1335 825,1334 816,1324" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; wait, please, don't -</p>
+     </text-area>
+     <text-area points="938,1774 948,1763 1177,1765 1187,1773 1187,1851 1177,1859 949,1860 937,1850" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; there are many here to kill, take me last. I need to talk to you.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="499,793 506,774 528,763 559,761 586,768 600,781 600,803 591,817 571,826 536,826 516,821 502,809">
+       <p>SAKRA! SOM <emphasis>MŔTVA.</emphasis></p>
+     </text-area>
+     <text-area points="425,1146 431,1117 446,1095 478,1077 530,1070 582,1073 621,1087 643,1111 652,1138 650,1167 638,1192 613,1211 580,1220 537,1223 497,1221 458,1208 433,1183 427,1163">
+       <p>TO ŤA ODNAUČÍ <emphasis>PONÁHĽAŤ SA.</emphasis> KEBY SI MA LEN NECHALA PREHLIADNUŤ TÚ CHATRČ, ZISTILA BY SOM <emphasis>KLIATBU NA DVERÁCH.</emphasis></p></text-area>
+     <text-area points="712,808 717,780 737,758 768,745 802,739 844,740 891,749 920,772 928,792 930,818 920,845 898,864 854,876 818,877 773,873 741,862 719,839 712,815">
+       <p>HMM, VYZERÁ TO UŽ <emphasis>BEZPEČNÉ.</emphasis> IBA <emphasis>MILIÓNY</emphasis> KOŠIEL A <emphasis>TISÍCKY</emphasis> AMATÉROV NA ZABITIE.</p>
+     </text-area>
+     <text-area points="307,1317 313,1294 329,1279 356,1272 386,1273 410,1284 423,1304 422,1330 408,1350 384,1359 351,1360 327,1353 312,1338">
+       <p>IDEME NA TO. *ÁÁCH*</p>
+     </text-area>
+     <text-area points="817,1280 826,1272 1001,1272 1012,1280 1012,1326 1000,1335 825,1334 816,1324" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; počkaj, prosím, nerob to -</p>
+     </text-area>
+     <text-area points="938,1774 948,1763 1177,1765 1187,1773 1187,1851 1177,1859 949,1860 937,1850" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; je tu veľa iných, ktorých môžeš zabiť, mňa zabi posledného. Potrebujem sa s tebou porozprávať.</p>
+     </text-area>
+   </text-layer>
+   <frame points="56,102 498,103 495,720 60,714"/>
+   <frame points="524,101 1270,101 1270,715 508,714 508,571 518,563 518,535 511,529 511,488 503,457 519,454 519,442 514,437 511,411 519,408 518,396 510,388 510,378 520,375 517,364 504,354 505,326 516,328 520,303 505,295 511,283 518,270 516,250 507,242 509,232 518,231 519,221 508,213 511,199 504,193 502,181 516,175 506,169 510,160 507,145 511,137 505,127 514,118 516,109"/>
+   <frame points="118,714 672,716 673,1237 116,1233"/>
+   <frame points="687,717 1208,717 1207,1237 688,1236"/>
+   <frame points="110,1244 778,1244 781,1881 105,1881"/>
+   <frame points="790,1252 1207,1250 1210,1885 784,1882"/>
+  </page>
+  <page>
+   <image href="12.jpg"/>
+   <text-layer lang="en" bgcolor="#11161a">
+     <text-area points="282,180 287,174 435,174 441,180 441,224 434,230 290,230 283,225" type="code" inverted="True">
+       <p>&gt; talk, then</p>
+     </text-area>
+     <text-area points="168,541 176,531 454,531 462,539 461,629 453,641 177,640 169,633" type="code" inverted="True">
+       <p>&gt; my name is raymond, and I live in tijuana. I am a labor organizer in the factories here.</p>
+     </text-area>
+     <text-area points="860,202 1156,202 1156,264 859,263" type="code" inverted="True">
+       <p>&gt; do you know who these people are that you're killing?</p>
+     </text-area>
+     <text-area points="826,277 897,276 897,315 827,315" type="code" inverted="True">
+       <p>&gt; no</p>
+     </text-area>
+     <text-area points="858,345 1156,345 1156,574 857,574" type="code" inverted="True">
+       <p>&gt; they're working for less then a dollar a day. the shirts they make are traded for gold and the gold is sold on ebay. they're mostly young girls supporting their families. they're the lucky ones: unlucky ones work as prostitutes.</p>
+     </text-area>
+     <text-area points="141,729 472,729 472,887 141,887" type="code" inverted="True">
+       <p>&gt; the bosses used to use bots, but the game has countermeasures against them. hiring children to click the mouse is cheaper than hiring programmers to circumvent the rules.</p>
+     </text-area>
+     <text-area points="142,892 470,892 470,1029 143,1029" type="code" inverted="True">
+       <p>&gt; I've been trying to unionize them because they've got a very high rate of injury. they have to play for 18-hour shifts with only one short toilet break.</p>
+     </text-area>
+     <text-area points="546,890 554,880 737,879 746,890 746,995 737,1003 556,1003 547,993" type="code" inverted="True">
+       <p>&gt; some of them can't hold it in and they soil themselves where they sit.</p>
+     </text-area>
+     <text-area points="631,1057 643,1046 874,1046 884,1060 883,1172 874,1185 643,1183 629,1175" type="code" inverted="True">
+       <p>&gt; look, it's none of my lookout, is it? the world's like that. I'm just a kid, there's nothing I can do about it.</p>
+     </text-area>
+     <text-area points="120,1266 130,1257 271,1257 281,1268 281,1408 270,1419 131,1419 121,1411" type="code" inverted="True">
+       <p>&gt; when you kill them, they don't get paid. they lose their day's wages.</p>
+     </text-area>
+     <text-area points="149,1734 156,1726 384,1726 392,1735 394,1804 386,1812 162,1813 149,1806" type="code" inverted="True">
+       <p>&gt; do you know who is paying you to do these killings?</p>
+     </text-area>
+     <text-area points="833,1273 1002,1274 1001,1313 834,1311" type="code" inverted="True">
+       <p>&gt; not a clue</p>
+     </text-area>
+     <text-area points="871,1339 1155,1339 1155,1388 871,1388" type="code" inverted="True">
+       <p>&gt; I've been trying to find that out myself.</p>
+     </text-area>
+     <text-area points="871,1415 933,1415 933,1445 871,1445" type="code" inverted="True">
+       <p>&gt; ...</p>
+     </text-area>
+     <text-area points="870,1477 1156,1477 1156,1525 871,1525" type="code" inverted="True">
+       <p>&gt; ah. I see. I am the only one remaining.</p>
+     </text-area>
+     <text-area points="870,1560 1156,1560 1156,1605 871,1605" type="code" inverted="True">
+       <p>&gt; go ahead. I will see you again, I'm sure.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk" bgcolor="#11161a">
+     <text-area points="282,180 287,174 435,174 441,180 441,224 434,230 290,230 283,225" type="code" inverted="True">
+       <p>&gt; hovor, teda</p>
+     </text-area>
+     <text-area points="168,541 176,531 454,531 462,539 461,629 453,641 177,640 169,633" type="code" inverted="True">
+       <p>&gt; moje meno je Raymond, a žijem v Tijuana. Som organizátor práce v tunajších továrňach.</p>
+     </text-area>
+     <text-area points="860,202 1156,202 1156,264 859,263" type="code" inverted="True">
+       <p>&gt; vieš, kto sú títo ľudia, ktorých zabíjaš?</p>
+     </text-area>
+     <text-area points="826,277 897,276 897,315 827,315" type="code" inverted="True">
+       <p>&gt; nie</p>
+     </text-area>
+     <text-area points="858,345 1156,345 1156,574 857,574" type="code" inverted="True">
+       <p>&gt; oni pracujú za menej ako jeden dolár na deň. Košele, ktoré vyrobia, sa predávajú za zlato a to sa potom predáva na ebay-i. Sú to vačšinou mladé dievčatá podporujúce svoje rodiny. To sú tie štastnejšie: tie menej štastné pracujú ako prostitútky.</p>
+     </text-area>
+     <text-area points="141,729 472,729 472,887 141,887" type="code" inverted="True">
+       <p>&gt; bosovia najskôr používali automatické skripty, ale hra má proti tomu protiopatrenia. Najímanie detí na klikanie myšou je lacnejšie než najímanie programátorov na obídenie pravidiel.</p>
+     </text-area>
+     <text-area points="142,892 470,892 470,1029 143,1029" type="code" inverted="True">
+       <p>&gt; pokúšam sa ich zjednotiť pretože majú veľkú mieru zranení. Musia hrať v 18-hodinových smenách len s jednou prestávkou na záchod.</p>
+     </text-area>
+     <text-area points="546,890 554,880 737,879 746,890 746,995 737,1003 556,1003 547,993" type="code" inverted="True">
+       <p>&gt; niektoré z nich to nevydržia a pustia to zo seba tam, kde práve sedia.</p>
+     </text-area>
+     <text-area points="631,1057 643,1046 874,1046 884,1060 883,1172 874,1185 643,1183 629,1175" type="code" inverted="True">
+       <p>&gt; pozri, to nie je moja vec, že? Svet je proste taký. Ja som len decko, nedokážem s tým nič spraviť.</p>
+     </text-area>
+     <text-area points="120,1266 130,1257 271,1257 281,1268 281,1408 270,1419 131,1419 121,1411" type="code" inverted="True">
+       <p>&gt; keď ich zabiješ, nedostanú zaplatené. Stratia plat za celý deň.</p>
+     </text-area>
+     <text-area points="149,1734 156,1726 384,1726 392,1735 394,1804 386,1812 162,1813 149,1806" type="code" inverted="True">
+       <p>&gt; vieš, kto ti platí za ich zabíjanie?</p>
+     </text-area>
+     <text-area points="833,1273 1002,1274 1001,1313 834,1311" type="code" inverted="True">
+       <p>&gt; nemám potuchy</p>
+     </text-area>
+     <text-area points="871,1339 1155,1339 1155,1388 871,1388" type="code" inverted="True">
+       <p>&gt; snažil som sa to zistiť aj ja sám.</p>
+     </text-area>
+     <text-area points="871,1415 933,1415 933,1445 871,1445" type="code" inverted="True">
+       <p>&gt; ...</p>
+     </text-area>
+     <text-area points="870,1477 1156,1477 1156,1525 871,1525" type="code" inverted="True">
+       <p>&gt; ach. Jasne. Zostal som už iba ja.</p>
+     </text-area>
+     <text-area points="870,1560 1156,1560 1156,1605 871,1605" type="code" inverted="True">
+       <p>&gt; pokračuj. Uvidíme sa znova, som si istý.</p>
+     </text-area>
+   </text-layer>
+   <frame points="107,156 760,157 763,665 166,665 110,659"/>
+   <frame points="810,192 824,180 1156,181 1172,193 1173,619 1166,632 1154,639 823,638 815,632 809,621"/>
+   <frame points="126,724 136,715 147,712 472,713 482,719 486,730 484,1171 480,1181 470,1186 139,1186 130,1180 126,1171"/>
+   <frame points="518,680 1201,681 1202,1211 521,1213"/>
+   <frame points="107,1225 769,1227 772,1845 107,1844"/>
+   <frame points="814,1278 818,1266 831,1259 1158,1260 1168,1266 1173,1280 1173,1793 1169,1809 1158,1818 828,1818 818,1810 812,1796"/>
+  </page>
+  <page>
+   <image href="13.jpg"/>
+   <text-layer lang="en">
+     <text-area points="820,164 824,151 842,142 870,142 890,148 899,163 894,177 880,185 851,187 830,182 822,173">
+       <p>LUCY?</p>
+     </text-area>
+     <text-area points="725,323 731,294 749,275 777,261 823,257 862,263 888,274 907,296 913,324 907,353 888,376 854,389 804,391 763,382 737,362 727,339">
+       <p>YEAH, HANG ON. I'M ALMOST BACK THERE. I <emphasis>RESPAWNED</emphasis> IN THE <emphasis>ASS END</emphasis> OF NOWHERE.</p>
+     </text-area>
+     <text-area points="771,530 775,503 787,486 813,471 848,466 889,469 912,479 929,495 938,522 936,549 925,571 907,586 875,595 832,595 800,586 780,568 771,545">
+       <p>LUCY, DO YOU KNOW WHO'S IN THE COTTAGE? THOSE NOOBS THAT WE KILL?</p>
+     </text-area>
+     <text-area points="141,741 147,713 169,692 200,682 241,683 270,693 286,710 295,731 293,760 285,776 269,792 237,802 200,802 166,792 147,769">
+       <p>WHAT? HELL, NO. NOOBS. SOMEONE'S <emphasis>BUTLER.</emphasis> I DUNNO.</p>
+     </text-area>
+     <text-area points="358,716 365,687 387,663 426,653 470,654 502,663 523,680 532,704 532,730 526,750 504,770 478,777 443,780 405,776 378,762 362,741">
+       <p><emphasis>GIRLS.</emphasis> LITTLE GIRLS IN MEXICO. GETTING PAID A DOLLAR A DAY TO CRAFT SHIRTS.</p>
+     </text-area>
+     <text-area points="500,818 508,796 520,783 549,773 586,770 632,774 662,785 676,806 678,828 669,847 652,860 616,867 565,868 532,861 509,844 501,829">
+       <p>EXCEPT THEY DON'T GET <emphasis>ANYTHING</emphasis> WHEN WE KILL THEM.</p>
+     </text-area>
+     <text-area points="568,1105 573,1081 590,1062 621,1048 668,1042 712,1046 744,1053 768,1068 780,1091 778,1123 765,1142 730,1160 690,1165 642,1163 602,1155 576,1134 569,1116">
+       <p>OH, FOR <emphasis>CHRISSAKES,</emphasis> IS THAT WHAT ONE OF THEM TOLD YOU? AND YOU <emphasis>BELIEVED</emphasis> IT?</p>
+     </text-area>
+     <text-area points="151,1392 156,1372 173,1358 200,1352 232,1353 256,1361 270,1375 274,1393 269,1412 251,1427 226,1432 189,1431 163,1421 151,1405">
+       <p>YOU DON'T THINK IT'S <emphasis>TRUE?</emphasis></p>
+     </text-area>
+     <text-area points="466,1444 474,1418 493,1402 521,1393 579,1393 607,1400 627,1413 637,1434 637,1457 627,1474 606,1488 585,1494 543,1497 513,1493 487,1483 473,1469 468,1455">
+       <p>NAW, I DON'T. NOW KEEP YOUR PANTIES ON, I'M ALMOST -</p>
+     </text-area>
+     <text-area points="468,1655 472,1637 490,1624 519,1618 552,1620 578,1631 586,1653 583,1671 571,1685 546,1691 502,1691 480,1681 469,1666">
+       <p>I'VE GOT TO GO, LUCY.</p>
+     </text-area>
+     <text-area points="710,1354 713,1336 727,1323 752,1312 796,1310 831,1317 849,1329 858,1351 853,1372 838,1385 816,1394 762,1396 737,1390 717,1375 710,1362">
+       <p>WHAT, <emphasis>NOW?</emphasis> SHIT, JUST HANG -</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="820,164 824,151 842,142 870,142 890,148 899,163 894,177 880,185 851,187 830,182 822,173">
+       <p>LUCY?</p>
+     </text-area>
+     <text-area points="725,323 731,294 749,275 777,261 823,257 862,263 888,274 907,296 913,324 907,353 888,376 854,389 804,391 763,382 737,362 727,339">
+       <p>ÁNO, POČKAJ. UŽ SOM SKORO SPÄŤ. <emphasis>OŽIVILO MA</emphasis> V PREKLIATEJ <emphasis>DIERE</emphasis> NIEKDE V RITI ĎALEKO.</p>
+     </text-area>
+     <text-area points="771,530 775,503 787,486 813,471 848,466 889,469 912,479 929,495 938,522 936,549 925,571 907,586 875,595 832,595 800,586 780,568 771,545">
+       <p>LUCY, VIEŠ KTO JE V TÝCH CHATRČIACH? TÍ AMATÉRI, KTORÝCH ZABÍJAME?</p>
+     </text-area>
+     <text-area points="141,741 147,713 169,692 200,682 241,683 270,693 286,710 295,731 293,760 285,776 269,792 237,802 200,802 166,792 147,769">
+       <p>ČO? DO PEKLA, NIE. AMATÉRI. NIEKOHO <emphasis>SLUHOVIA.</emphasis> NEVIEM.</p>
+     </text-area>
+     <text-area points="358,716 365,687 387,663 426,653 470,654 502,663 523,680 532,704 532,730 526,750 504,770 478,777 443,780 405,776 378,762 362,741">
+       <p><emphasis>DIEVČATÁ.</emphasis> MALÉ DIEVČATÁ V MEXIKU. DOSTÁVAJÚ JEDEN DOLÁR NA DEŇ ZA VYRÁBANIE KOŠIEL.</p>
+     </text-area>
+     <text-area points="500,818 508,796 520,783 549,773 586,770 632,774 662,785 676,806 678,828 669,847 652,860 616,867 565,868 532,861 509,844 501,829">
+       <p>AŽ NA TO, ŽE NEDOSTANÚ <emphasis>NIČ,</emphasis> KEĎ ICH ZABIJEME.</p>
+     </text-area>
+     <text-area points="568,1105 573,1081 590,1062 621,1048 668,1042 712,1046 744,1053 768,1068 780,1091 778,1123 765,1142 730,1160 690,1165 642,1163 602,1155 576,1134 569,1116">
+       <p>ÁCH, PRE <emphasis>KRISTAPÁNA,</emphasis> TO TI JEDEN Z NICH POVEDAL? A TY SI MU <emphasis>UVERILA?</emphasis></p>
+     </text-area>
+     <text-area points="151,1392 156,1372 173,1358 200,1352 232,1353 256,1361 270,1375 274,1393 269,1412 251,1427 226,1432 189,1431 163,1421 151,1405">
+       <p>NEMYSLÍŠ SI, ŽE JE TO <emphasis>PRAVDA?</emphasis></p>
+     </text-area>
+     <text-area points="466,1444 474,1418 493,1402 521,1393 579,1393 607,1400 627,1413 637,1434 637,1457 627,1474 606,1488 585,1494 543,1497 513,1493 487,1483 473,1469 468,1455">
+       <p>NIE, NEMYSLÍM. TERAZ SA PRIPRAV , UŽ SOM TAKMER -</p>
+     </text-area>
+     <text-area points="468,1655 472,1637 490,1624 519,1618 552,1620 578,1631 586,1653 583,1671 571,1685 546,1691 502,1691 480,1681 469,1666">
+       <p>MUSÍM UŽ ÍSŤ, LUCY.</p>
+     </text-area>
+     <text-area points="710,1354 713,1336 727,1323 752,1312 796,1310 831,1317 849,1329 858,1351 853,1372 838,1385 816,1394 762,1396 737,1390 717,1375 710,1362">
+       <p>ČO, <emphasis>TERAZ?</emphasis> SAKRA, POČKAJ -</p>
+     </text-area>
+   </text-layer>
+   <frame points="111,128 737,127 737,279 730,287 725,297 721,310 720,329 722,338 725,351 730,361 734,366 736,385 737,616 111,615"/>
+   <frame points="706,395 734,367 725,353 721,334 720,312 730,289 740,276 759,263 769,260 755,209 760,208 786,256 791,243 795,244 799,253 841,252 864,257 876,262 885,253 887,256 888,268 892,270 903,266 908,240 859,191 835,189 819,178 816,166 817,152 831,140 848,137 878,137 894,143 904,155 904,171 896,185 880,190 884,197 907,224 912,212 930,198 985,163 993,166 1023,151 1031,153 1039,158 1057,156 1079,151 1095,158 1109,166 1205,134 1204,617 756,616 752,381 744,377 710,398"/>
+   <frame points="32,615 1241,617 1293,616 1292,1296 36,1296"/>
+   <frame points="108,1434 147,1410 145,1396 146,1376 159,1359 188,1348 237,1347 263,1357 279,1372 279,1393 307,1354 462,1433 465,1421 477,1405 497,1393 504,1392 493,1354 502,1352 522,1384 528,1376 533,1380 536,1386 581,1388 604,1393 612,1386 617,1386 617,1398 620,1401 651,1387 655,1393 635,1412 642,1422 644,1442 643,1460 636,1475 623,1487 604,1494 612,1512 629,1521 630,1546 595,1545 566,1553 549,1568 529,1590 516,1611 545,1612 568,1616 582,1627 593,1644 592,1669 583,1683 567,1693 547,1699 505,1698 502,1812 108,1810"/>
+   <frame points="676,1300 739,1300 731,1272 736,1272 753,1299 1202,1300 1201,1813 861,1812 671,1813"/>
+  </page>
+  <page>
+   <image href="14.jpg"/>
+   <text-layer lang="en">
+     <text-area points="238,143 242,121 255,104 278,91 323,85 368,91 392,105 406,131 406,158 391,184 365,197 328,203 293,200 263,190 245,173">
+       <p>GOSH, YOU'RE <emphasis>DIRTY.</emphasis> HOW DID YOU GET TO BE SUCH A <emphasis>MUCKY PUPPY?</emphasis></p>
+     </text-area>
+     <text-area points="85,530 88,516 105,505 129,499 162,501 187,511 195,528 191,544 174,553 143,559 109,555 90,544">
+       <p>MUM, <strong>OWWWW</strong>!</p>
+     </text-area>
+     <text-area points="439,127 443,109 458,92 486,83 535,83 564,94 578,116 578,146 566,161 544,172 509,176 470,172 446,155 439,138">
+       <p>YOU ARE FILTHY. WHAT <emphasis>IS</emphasis> THIS MESS?</p>
+     </text-area>
+     <text-area points="654,141 662,114 680,95 715,84 748,82 799,89 825,103 837,122 840,151 831,175 808,191 769,201 718,200 682,189 660,169">
+       <p>LILLIAN, <emphasis>LEAVE OFF.</emphasis> IT'S A SKIN CONDITION. <emphasis>ACANTHOSIS NIGRICANS.</emphasis></p>
+     </text-area>
+     <text-area points="888,144 894,127 911,114 938,110 971,115 987,127 993,147 986,171 969,185 932,189 900,179 889,162">
+       <p>SAW IT IN A TV SPECIAL.</p>
+     </text-area>
+     <text-area points="1075,491 1081,462 1098,439 1127,426 1161,422 1205,425 1240,439 1259,468 1263,491 1256,526 1235,548 1203,560 1166,561 1119,555 1088,534 1077,509">
+       <p>OH, DARLING, I'M <emphasis>SORRY.</emphasis> WE'LL SEE THE <emphasis>DOCTOR</emphasis> ABOUT IT TOMORROW AFTER SCHOOL.</p>
+     </text-area>
+     <text-area points="504,668 510,646 530,633 555,629 583,636 597,649 601,668 597,689 582,704 556,709 530,706 511,693 505,679">
+       <p>ARE YOU ALL RIGHT?</p>
+     </text-area>
+     <text-area points="843,650 851,628 878,615 902,612 936,617 955,628 964,649 958,669 940,683 903,688 868,683 850,672 844,659">
+       <p>I'M <emphasis>FINE.</emphasis> GOING TO BED.</p>
+     </text-area>
+     <text-area points="107,1105 455,1032 465,1186 131,1265" text-rotation="12">
+       <p>"A condition involving darkened, thickened skin. Found in the folds of skin at the base of the back of the neck, under the arms, inside the elbow and at the waistline. Often precedes a diagnosis of type-2 diabetes, especially in children. If found in children, immediate steps must be taken to prevent diabetes, including exercise and nutrition as a means of lowering insulin levels and increasing insulin-sensitivity.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="238,143 242,121 255,104 278,91 323,85 368,91 392,105 406,131 406,158 391,184 365,197 328,203 293,200 263,190 245,173">
+       <p>JEŽIŠI, SI <emphasis>ŠPINAVÁ.</emphasis> AKO SI SA MOHLA TAKTO <emphasis>ZAPRASAČIŤ?</emphasis></p>
+     </text-area>
+     <text-area points="85,530 88,516 105,505 129,499 162,501 187,511 195,528 191,544 174,553 143,559 109,555 90,544">
+       <p>MAMI, <strong>AÚÚÚ</strong>!</p>
+     </text-area>
+     <text-area points="439,127 443,109 458,92 486,83 535,83 564,94 578,116 578,146 566,161 544,172 509,176 470,172 446,155 439,138">
+       <p>SI STRAŠNE ŠPINAVÁ. ČO TO <emphasis>JE?</emphasis></p>
+     </text-area>
+     <text-area points="654,141 662,114 680,95 715,84 748,82 799,89 825,103 837,122 840,151 831,175 808,191 769,201 718,200 682,189 660,169">
+       <p>LILLIAN, <emphasis>NECHAJ JU.</emphasis> JE TO KOŽNÝ PROBLÉM. <emphasis>ACANTHOSIS NIGRICANS.</emphasis></p>
+     </text-area>
+     <text-area points="888,144 894,127 911,114 938,110 971,115 987,127 993,147 986,171 969,185 932,189 900,179 889,162">
+       <p>VIDEL SOM TO V TV ŠPECIÁLI.</p>
+     </text-area>
+     <text-area points="1075,491 1081,462 1098,439 1127,426 1161,422 1205,425 1240,439 1259,468 1263,491 1256,526 1235,548 1203,560 1166,561 1119,555 1088,534 1077,509">
+       <p>ACH, ZLATO, JE MI TO <emphasis>ĽÚTO.</emphasis> POJDEME S TÝM K <emphasis>DOKTOROVI</emphasis> ZAJTRA PO ŠKOLE.</p>
+     </text-area>
+     <text-area points="504,668 510,646 530,633 555,629 583,636 597,649 601,668 597,689 582,704 556,709 530,706 511,693 505,679">
+       <p>SI V PORIADKU?</p>
+     </text-area>
+     <text-area points="843,650 851,628 878,615 902,612 936,617 955,628 964,649 958,669 940,683 903,688 868,683 850,672 844,659">
+       <p>JE MI <emphasis>FAJN.</emphasis> IDEM DO POSTELE.</p>
+     </text-area>
+     <text-area points="107,1105 455,1032 465,1186 131,1265" text-rotation="12">
+       <p>"Stav zahŕňajúci ztmavenú, zhrubnutú kožu. Nachádza sa v záhyboch kože na úpätí krku, pod ramenami, v lakti a v oblasti pása. Častokrát predchádza diagnóze diabetes typu 2, obzvlášť u detí. Ak objavené u detí, okamžité kroky musia byť podniknuté na zabránenie diabetes, vrátane cvičení a zmeny stravy za účelom zníženia hodnôt inzulínu a zvýšenia citlivosti na inzulín.</p>
+     </text-area>
+   </text-layer>
+   <frame points="63,75 416,75 419,581 72,579 63,420"/>
+   <frame points="416,68 638,67 641,602 419,601 419,580"/>
+   <frame points="638,75 1277,74 1277,587 640,582"/>
+   <frame points="65,597 419,597 419,601 640,602 641,598 1279,600 1281,849 64,845"/>
+   <frame points="64,978 251,945 320,856 520,858 519,1354 64,1354"/>
+   <frame points="535,858 1280,862 1283,1356 531,1356"/>
+   <frame points="62,1590 359,1367 1283,1372 1282,1930 66,1934"/>
+  </page>
+  <page>
+   <image href="15.jpg"/>
+   <text-layer lang="en">
+     <text-area points="150,423 451,423 451,498 151,499" bgcolor="#f3ff9d" type="commentary">
+       <p>THE <emphasis>PC BAANG</emphasis> WAS FILLED WITH STINKY, SPOTTY BOYS, BEING <emphasis>LOUD</emphasis> AND <emphasis>OBNOXIOUS.</emphasis></p>
+     </text-area>
+     <text-area points="293,531 506,531 507,563 293,563" bgcolor="#f3ff9d" type="commentary">
+       <p>BUT IT DIDN'T MATTER.</p>
+     </text-area>
+     <text-area points="571,119 737,120 737,174 571,175" bgcolor="#f3ff9d" type="commentary">
+       <p>ANDA WAS BACK IN THE <emphasis>GAME.</emphasis></p>
+     </text-area>
+     <text-area points="665,277 668,255 683,239 710,226 759,225 786,230 808,242 821,260 822,282 813,302 790,318 769,324 722,324 691,317 673,302 666,289">
+       <p><emphasis>JESUS</emphasis> ANDA, WHERE THE <emphasis>HELL</emphasis> HAVE YOU BEEN?</p>
+     </text-area>
+     <text-area points="884,174 889,156 904,140 933,131 977,127 1018,131 1051,141 1066,158 1069,179 1060,197 1041,208 1013,217 955,219 912,210 890,194">
+       <p>SORRY, SARGE, MY DA TOOK ... ER, MY PC'S BEEN BROKEN.</p>
+     </text-area>
+     <text-area points="278,693 282,666 301,647 338,637 369,638 397,645 416,662 425,690 418,720 397,738 368,747 331,747 300,738 282,719">
+       <p>WELL, I'VE GOT A <emphasis>BACKLOG</emphasis> OF MISSIONS, SO LET'S GO.</p>
+     </text-area>
+     <text-area points="451,747 455,719 477,695 507,682 548,679 589,687 613,701 626,721 630,743 627,772 610,796 584,809 549,813 511,812 480,801 455,776">
+       <p>LISTEN ... I MET A GUY AFTER THE LAST CAMPAIGN. HE SAID HE WAS A <emphasis>UNION ORGANIZER.</emphasis></p>
+     </text-area>
+     <text-area points="136,1004 140,984 156,967 183,954 217,949 259,947 297,951 334,962 356,982 360,1004 355,1024 324,1049 274,1057 218,1057 177,1050 146,1031 136,1013">
+       <p>OH, YOU MET <emphasis>RAYMOND,</emphasis> HUH? HE'S BEEN TURNING UP EVERYWHERE. WHAT A <emphasis>CREEP.</emphasis></p>
+     </text-area>
+     <text-area points="796,682 800,656 816,637 840,627 881,625 914,636 930,656 934,681 933,705 916,728 887,740 863,741 827,735 804,718 796,696">
+       <p>SO YOU <emphasis>KNEW</emphasis> ABOUT THE NOOBS IN THE COTTAGES?</p>
+     </text-area>
+     <text-area points="958,726 960,703 974,687 1001,674 1048,669 1093,675 1119,691 1131,714 1131,737 1118,761 1089,777 1042,782 1002,777 971,760 959,740">
+       <p>AND YOU'RE <emphasis>FINE</emphasis> WITH DEPRIVING LITTLE <emphasis>KIDS</emphasis> OF THEIR WAGES?</p>
+     </text-area>
+     <text-area points="1031,998 1034,977 1053,960 1090,950 1123,947 1162,952 1191,966 1204,985 1207,1005 1200,1025 1176,1044 1146,1052 1088,1052 1055,1043 1035,1026 1031,1010">
+       <p>ANDA, LISTEN. YOU LOVE <emphasis>GAMING,</emphasis> RIGHT? IT'S <emphasis>IMPORTANT</emphasis> TO YOU?</p>
+     </text-area>
+     <text-area points="545,1268 550,1248 568,1234 599,1231 625,1238 639,1255 640,1278 633,1292 616,1303 596,1308 567,1304 549,1289">
+       <p>YEAH, 'COURSE IT IS.</p>
+     </text-area>
+     <text-area points="701,1296 705,1268 725,1241 764,1225 811,1221 858,1225 894,1240 912,1261 921,1293 915,1325 897,1347 870,1360 830,1368 788,1368 755,1362 721,1345 703,1318">
+       <p>RIGHT. AND WE'RE <emphasis>BAD-ASS,</emphasis> YOU AND ME, AND WE GOT THAT WAY THROUGH <emphasis>DISCIPLINE</emphasis> AND <emphasis>HARD WORK,</emphasis> RIGHT?</p>
+     </text-area>
+     <text-area points="897,1388 1017,1388 1017,1436 897,1436" bgcolor="#eee5e8" type="commentary">
+       <p>YES, RIGHT, BUT -</p>
+     </text-area>
+     <text-area points="863,1557 865,1532 877,1514 896,1499 934,1488 976,1485 1021,1488 1057,1499 1081,1516 1093,1537 1094,1567 1086,1589 1068,1606 1035,1621 986,1627 935,1623 904,1616 878,1598 865,1576">
+       <p>THAT'S WHAT MAKES US ALL <emphasis>FAHRENHEITS</emphasis> - WE'RE COMMITED TO EACH OTHER, TO <emphasis>TEAMWORK,</emphasis> AND TO <emphasis>FAIR PLAY.</emphasis></p>
+     </text-area>
+     <text-area points="996,1739 1003,1711 1023,1690 1051,1678 1087,1671 1136,1673 1176,1682 1198,1698 1211,1719 1213,1752 1201,1777 1177,1793 1145,1803 1103,1805 1063,1803 1028,1790 1003,1767">
+       <p>BUT THESE PEOPLE IN MEXICO OR WHEREVER, THEY'RE EARNING THEIR LIVING BY <emphasis>EXPLOITING</emphasis> THE GAME.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="150,423 451,423 451,498 151,499" bgcolor="#f3ff9d" type="commentary">
+       <p><emphasis>PC BAANG</emphasis> BOL ZAPLNENÝ SMRADĽAVÝMI, UHROVITÝMI CHALANMI, <emphasis>HLUČNÝMI</emphasis> A <emphasis>PROTIVNÝMI.</emphasis></p>
+     </text-area>
+     <text-area points="293,531 506,531 507,563 293,563" bgcolor="#f3ff9d" type="commentary">
+       <p>ALE NA TOM NEZÁLEŽALO.</p>
+     </text-area>
+     <text-area points="571,119 737,120 737,174 571,175" bgcolor="#f3ff9d" type="commentary">
+       <p>ANDA BOLA SPÄŤ V <emphasis>HRE.</emphasis></p>
+     </text-area>
+     <text-area points="665,277 668,255 683,239 710,226 759,225 786,230 808,242 821,260 822,282 813,302 790,318 769,324 722,324 691,317 673,302 666,289">
+       <p><emphasis>JEŽIŠI</emphasis> ANDA, KDE SI <emphasis>DO PEKLA</emphasis> BOLA?</p>
+     </text-area>
+     <text-area points="884,174 889,156 904,140 933,131 977,127 1018,131 1051,141 1066,158 1069,179 1060,197 1041,208 1013,217 955,219 912,210 890,194">
+       <p>PREPÁČ, SERŽANT, MÔJ OCO MI VZAL ... EÉ, MÔJ POČITAČ SA POKAZIL.</p>
+     </text-area>
+     <text-area points="278,693 282,666 301,647 338,637 369,638 397,645 416,662 425,690 418,720 397,738 368,747 331,747 300,738 282,719">
+       <p>HMM, MÁM <emphasis>HROMADU</emphasis> MISIÍ, POĎME NA TO.</p>
+     </text-area>
+     <text-area points="451,747 455,719 477,695 507,682 548,679 589,687 613,701 626,721 630,743 627,772 610,796 584,809 549,813 511,812 480,801 455,776">
+       <p>POČUJ ... STRETLA SOM JEDNÉHO CHALANA PO POSLEDNEJ MISII. POVEDAL, ŽE JE <emphasis>ODBOROVÝ ORGANIZÁTOR.</emphasis></p>
+     </text-area>
+     <text-area points="136,1004 140,984 156,967 183,954 217,949 259,947 297,951 334,962 356,982 360,1004 355,1024 324,1049 274,1057 218,1057 177,1050 146,1031 136,1013">
+       <p>ÁCH, STRETLA SI <emphasis>RAYMONDA,</emphasis> ŽE? OBJAVUJE SA TERAZ VŠADE. STRAŠNÝ <emphasis>PODLIEZAVEC.</emphasis></p>
+     </text-area>
+     <text-area points="796,682 800,656 816,637 840,627 881,625 914,636 930,656 934,681 933,705 916,728 887,740 863,741 827,735 804,718 796,696">
+       <p>TAKŽE SI <emphasis>VEDELA</emphasis> O AMATÉROCH V CHATRČIACH?</p>
+     </text-area>
+     <text-area points="958,726 960,703 974,687 1001,674 1048,669 1093,675 1119,691 1131,714 1131,737 1118,761 1089,777 1042,782 1002,777 971,760 959,740">
+       <p>A <emphasis>NEVADÍ TI,</emphasis> ŽE PRIPRAVUJEŠ MALÉ <emphasis>DETI</emphasis> O ICH PLAT?</p>
+     </text-area>
+     <text-area points="1031,998 1034,977 1053,960 1090,950 1123,947 1162,952 1191,966 1204,985 1207,1005 1200,1025 1176,1044 1146,1052 1088,1052 1055,1043 1035,1026 1031,1010">
+       <p>ANDA, POČÚVAJ. MILUJEŠ <emphasis>HRANIE,</emphasis> ŽE? JE TO PRE TEBA <emphasis>DÔLEŽITÉ?</emphasis></p>
+     </text-area>
+     <text-area points="545,1268 550,1248 568,1234 599,1231 625,1238 639,1255 640,1278 633,1292 616,1303 596,1308 567,1304 549,1289">
+       <p>JASNE, URČITE, ŽE JE.</p>
+     </text-area>
+     <text-area points="701,1296 705,1268 725,1241 764,1225 811,1221 858,1225 894,1240 912,1261 921,1293 915,1325 897,1347 870,1360 830,1368 788,1368 755,1362 721,1345 703,1318">
+       <p>V PORIADKU. A MY SME <emphasis>SILNÝ TÍM,</emphasis> TY A JA, A DOPRACOVALI SME SA K TOMU <emphasis>DISCIPLÍNOU</emphasis> A <emphasis>TVRDOU PRÁCOU,</emphasis> ŽE?</p>
+     </text-area>
+     <text-area points="897,1388 1017,1388 1017,1436 897,1436" bgcolor="#eee5e8" type="commentary">
+       <p>ÁNO, ALE -</p>
+     </text-area>
+     <text-area points="863,1557 865,1532 877,1514 896,1499 934,1488 976,1485 1021,1488 1057,1499 1081,1516 1093,1537 1094,1567 1086,1589 1068,1606 1035,1621 986,1627 935,1623 904,1616 878,1598 865,1576">
+       <p>TO JE TO, ČO Z NÁS ROBÍ <emphasis>FAHRENHEITOV</emphasis> - SME ODDANÍ SAMI SEBE NAVZÁJOM, <emphasis>TÍMOVEJ PRÁCI,</emphasis> A <emphasis>FÉROVEJ HRE.</emphasis></p>
+     </text-area>
+     <text-area points="996,1739 1003,1711 1023,1690 1051,1678 1087,1671 1136,1673 1176,1682 1198,1698 1211,1719 1213,1752 1201,1777 1177,1793 1145,1803 1103,1805 1063,1803 1028,1790 1003,1767">
+       <p>A TÍTO ĽUDIA V MEXIKU ALEBO KDE, ZARÁBAJÚ PENIAZE NA <emphasis>ZNEUŽÍVANÍ</emphasis> PRAVIDIEL HRY.</p>
+     </text-area>
+   </text-layer>
+   <frame points="105,97 524,96 526,579 108,582"/>
+   <frame points="541,94 707,91 712,95 733,96 744,90 756,90 773,101 942,121 1011,123 1032,126 1047,132 1055,134 1090,135 1194,151 1198,575 542,580"/>
+   <frame points="45,594 639,590 642,1080 45,1085"/>
+   <frame points="653,589 1262,586 1263,1076 654,1080 654,589"/>
+   <frame points="30,1098 247,1094 1286,1087 1292,1886 35,1894"/>
+  </page>
+  <page>
+   <image href="16.jpg"/>
+   <text-layer lang="en">
+     <text-area points="137,243 144,213 165,193 196,181 238,177 285,182 317,195 335,217 339,244 334,271 313,293 283,303 244,308 205,306 171,297 146,276 139,261">
+       <p>THEY SPEND ALL DAY CRAFTING STUFF TO TURN INTO GOLD TO <emphasis>SELL OFF</emphasis> ON THE EXCHANGE.</p>
+     </text-area>
+     <text-area points="359,258 371,231 392,208 418,195 459,188 505,196 536,211 556,235 567,278 567,308 559,340 543,365 512,384 471,391 436,391 398,377 373,355 360,323 357,290">
+       <p>THAT'S WHERE THE <emphasis>CRAPPY</emphasis> PLAYERS GET THEIR GOLD FROM! THAT'S HOW RICH NOOBS CAN BUY THEIR WAY INTO THE GAME THAT <emphasis>WE</emphasis> HAD TO PLAY HARD TO GET INTO.</p>
+     </text-area>
+     <text-area points="934,270 938,241 952,217 978,196 1010,186 1057,181 1113,186 1152,202 1174,226 1186,266 1184,295 1174,320 1151,343 1122,357 1084,362 1028,362 990,353 957,334 938,303">
+       <p>IF WE KEEP BURNING THE FACTORIES DOWN, THEY'LL SHUT THEM DOWN AND THOSE KIDS'LL FIND SOMETHING <emphasis>ELSE</emphasis> TO DO FOR A LIVING AND THE GAME WILL BE <emphasis>BETTER.</emphasis></p>
+     </text-area>
+     <text-area points="872,598 875,575 889,553 918,540 950,534 988,534 1020,543 1042,558 1053,574 1058,598 1052,624 1035,643 1004,657 965,661 924,657 891,643 876,622">
+       <p>THESE PEOPLE DON'T <emphasis>CARE</emphasis> ABOUT THE GAME. THEY'RE NOT PLAYERS, THEY'RE <emphasis>LEECHES.</emphasis></p>
+     </text-area>
+     <text-area points="134,774 137,756 148,742 165,737 181,735 206,738 219,746 229,768 227,788 218,802 197,812 169,812 145,804 136,787">
+       <p>SO ARE YOU <emphasis>IN,</emphasis> ANDA?</p>
+     </text-area>
+     <text-area points="153,904 158,876 178,850 216,835 268,831 321,835 357,848 377,870 384,896 382,922 371,946 347,964 308,975 275,976 218,972 179,957 159,937">
+       <p>ARE YOU HERE TO <emphasis>PLAY,</emphasis> OR ARE YOU SO WORRIED ABOUT THESE <emphasis>LEECHES</emphasis> ON THE OTHER SIDE OF THE WORLD THAT YOU WANT OUT?</p>
+     </text-area>
+     <text-area points="932,772 937,755 953,744 974,741 1001,746 1017,756 1021,775 1012,793 996,802 961,803 941,794 933,784">
+       <p>I'M IN, SARGE.</p>
+     </text-area>
+     <text-area points="798,1104 801,1094 820,1083 848,1080 891,1082 913,1090 920,1104 915,1115 895,1125 857,1129 820,1125 801,1114">
+       <p><strong>BOO-YAH!</strong></p>
+     </text-area>
+     <text-area points="1074,1121 1173,1121 1174,1168 1076,1169" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; hello</p>
+     </text-area>
+     <text-area points="151,1503 158,1488 184,1477 230,1477 251,1485 261,1497 260,1511 244,1524 220,1529 186,1528 159,1520">
+       <p>RAYMOND!</p>
+     </text-area>
+     <text-area points="326,1530 334,1513 352,1501 388,1497 424,1500 444,1512 452,1531 445,1550 425,1562 385,1566 352,1562 334,1552">
+       <p>OH, CHRIST, HE'S BACK.</p>
+     </text-area>
+     <text-area points="932,1256 938,1251 1051,1252 1057,1258 1058,1306 1050,1312 939,1314 933,1306" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; look at these ...</p>
+     </text-area>
+     <text-area points="946,1433 950,1409 965,1392 994,1380 1032,1377 1074,1380 1105,1395 1118,1417 1119,1445 1111,1463 1091,1477 1063,1485 1016,1487 982,1481 958,1466 947,1448">
+       <p>COME ON, IT'S PROBABLY A BOOBY-TRAP. WE'VE GOT WORK TO DO.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="137,243 144,213 165,193 196,181 238,177 285,182 317,195 335,217 339,244 334,271 313,293 283,303 244,308 205,306 171,297 146,276 139,261">
+       <p>TRÁVIA CELÉ DNI VYRÁBANÍM VECÍ, ABY ICH ZAMENILI ZA ZLATO, KTORÉ <emphasis>PREDAJÚ</emphasis> V ZMENÁRNI.</p>
+     </text-area>
+     <text-area points="359,258 371,231 392,208 418,195 459,188 505,196 536,211 556,235 567,278 567,308 559,340 543,365 512,384 471,391 436,391 398,377 373,355 360,323 357,290">
+       <p>TO JE TAM, KDE <emphasis>SLABÍ</emphasis> HRÁČI ZÍSKAVAJÚ SVOJE ZLATO! TAKTO SI BOHATÍ HRÁČI KÚPIA SPÔSOB AKO SA DOSTAŤ DO HRY, KDE <emphasis>MY</emphasis> MUSÍME TVRDO PRACOVAŤ, ABY SME SA DOSTALI.</p>
+     </text-area>
+     <text-area points="934,270 938,241 952,217 978,196 1010,186 1057,181 1113,186 1152,202 1174,226 1186,266 1184,295 1174,320 1151,343 1122,357 1084,362 1028,362 990,353 957,334 938,303">
+       <p>KEĎ BUDEME POKRAČOVAŤ V NIČENÍ ICH TOVÁRNÍ, BUDÚ NÚTENÍ ICH ZAVRIEŤ A TIE DETI SI NÁJDU NIEČO <emphasis>INÉ</emphasis> NA PRÁCU A HRA BUDE <emphasis>LEPŠIA.</emphasis></p>
+     </text-area>
+     <text-area points="872,598 875,575 889,553 918,540 950,534 988,534 1020,543 1042,558 1053,574 1058,598 1052,624 1035,643 1004,657 965,661 924,657 891,643 876,622">
+       <p>TÍMTO ĽUĎOM <emphasis>NEZÁLEŽÍ</emphasis> NA HRE. ONI NIE SÚ HRÁČI, ONI SÚ <emphasis>PIJAVICE.</emphasis></p>
+     </text-area>
+     <text-area points="134,774 137,756 148,742 165,737 181,735 206,738 219,746 229,768 227,788 218,802 197,812 169,812 145,804 136,787">
+       <p>TAKŽE SI <emphasis>V HRE,</emphasis> ANDA?</p>
+     </text-area>
+     <text-area points="153,904 158,876 178,850 216,835 268,831 321,835 357,848 377,870 384,896 382,922 371,946 347,964 308,975 275,976 218,972 179,957 159,937">
+       <p>SI TU, ABY SI <emphasis>HRALA,</emphasis> ALEBO SI TAK ZNEPOKOJENÁ TÝMITO <emphasis>PIJAVICAMI</emphasis> Z DRUHEJ STRANY SVETA, ŽE UŽ NECHCEŠ HRAŤ?</p>
+     </text-area>
+     <text-area points="932,772 937,755 953,744 974,741 1001,746 1017,756 1021,775 1012,793 996,802 961,803 941,794 933,784">
+       <p>SOM V HRE, SERŽANT.</p>
+     </text-area>
+     <text-area points="798,1104 801,1094 820,1083 848,1080 891,1082 913,1090 920,1104 915,1115 895,1125 857,1129 820,1125 801,1114">
+       <p><strong>BÚÚ-JÁÁ!</strong></p>
+     </text-area>
+     <text-area points="1074,1121 1173,1121 1174,1168 1076,1169" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; ahojte</p>
+     </text-area>
+     <text-area points="151,1503 158,1488 184,1477 230,1477 251,1485 261,1497 260,1511 244,1524 220,1529 186,1528 159,1520">
+       <p>RAYMOND!</p>
+     </text-area>
+     <text-area points="326,1530 334,1513 352,1501 388,1497 424,1500 444,1512 452,1531 445,1550 425,1562 385,1566 352,1562 334,1552">
+       <p>OCH, BOŽE, JE SPÄŤ.</p>
+     </text-area>
+     <text-area points="932,1256 938,1251 1051,1252 1057,1258 1058,1306 1050,1312 939,1314 933,1306" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; pozrite si tieto ...</p>
+     </text-area>
+     <text-area points="946,1433 950,1409 965,1392 994,1380 1032,1377 1074,1380 1105,1395 1118,1417 1119,1445 1111,1463 1091,1477 1063,1485 1016,1487 982,1481 958,1466 947,1448">
+       <p>ALE CHOĎ, JE TO PRAVDEPODOBNE PASCA. MÁME PLNO PRÁCE.</p>
+     </text-area>
+   </text-layer>
+   <frame points="110,163 585,160 595,693 113,699"/>
+   <frame points="601,161 1203,156 1208,686 606,692"/>
+   <frame points="109,710 765,705 770,1205 113,1213"/>
+   <frame points="777,704 1209,699 1210,1201 783,1206"/>
+   <frame points="116,1222 536,1220 545,1844 120,1848"/>
+   <frame points="547,1218 1212,1213 1214,1841 555,1849"/>
+  </page>
+  <page>
+   <image href="17.jpg"/>
+   <text-layer lang="en">
+     <text-area points="143,184 153,174 377,174 387,183 388,255 380,263 153,264 143,258" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; that's who you're about to deprive of a day's wages.</p>
+     </text-area>
+     <text-area points="805,158 1036,158 1046,171 1051,183 1051,207 1036,231 1009,247 980,255 939,259 912,260 871,257 837,250 813,240 806,233">
+       <p>OH, <emphasis>HELL NO!</emphasis> I <emphasis>KILLED</emphasis> HIM LAST TIME AND I SAID I'D DO IT AGAIN IF HE <emphasis>EVER</emphasis> TRIED TO SHOW ME PHOTOS.</p>
+     </text-area>
+     <text-area points="1059,556 1061,538 1070,520 1086,509 1109,504 1131,504 1152,509 1167,518 1178,537 1180,556 1177,578 1167,594 1142,606 1118,609 1092,605 1071,592 1061,575">
+       <p>LUCY, <emphasis>DON'T.</emphasis> HE DESERVES TO HAVE A SAY.</p>
+     </text-area>
+     <text-area points="141,677 147,670 319,670 326,678 328,753 321,761 147,761 140,753" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; what do you want from me, raymond?</p>
+     </text-area>
+     <text-area points="428,697 437,686 617,686 626,697 625,796 617,808 439,808 428,801" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; don't kill them. let them have their wages. go play somewhere else.</p>
+     </text-area>
+     <text-area points="138,1113 150,1104 431,1106 444,1114 445,1181 435,1192 153,1193 138,1185" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; they're leeches. they don't care about the game and neither do you</p>
+     </text-area>
+     <text-area points="743,675 752,666 1176,666 1182,675 1184,757 1175,768 755,769 743,761" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; if they don't play the game, they don't eat. I think that means that they care about the game as much as you do.</p>
+     </text-area>
+     <text-area points="739,1092 750,1082 1175,1083 1188,1093 1190,1177 1176,1190 751,1192 737,1181" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; you're being paid cash to kill them, yes? so you need to play for your money, too. I think that makes you and them a little the same</p>
+     </text-area>
+     <text-area points="545,1296 552,1280 567,1270 592,1269 619,1271 633,1281 639,1295 634,1311 620,1320 594,1325 567,1321 550,1311">
+       <p>LUCY, <emphasis>DON'T!</emphasis></p>
+     </text-area>
+     <text-area points="701,1722 708,1711 824,1711 833,1717 833,1776 829,1784 707,1784 700,1777" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; go screw yourself</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="143,184 153,174 377,174 387,183 388,255 380,263 153,264 143,258" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; to sú dievčatá, ktoré hodláte zbaviť ich denných zárobkov.</p>
+     </text-area>
+     <text-area points="805,158 1036,158 1046,171 1051,183 1051,207 1036,231 1009,247 980,255 939,259 912,260 871,257 837,250 813,240 806,233">
+       <p>ACH, <emphasis>DO PEKLA!</emphasis> <emphasis>ZABILA</emphasis> SOM HO NAPOSLEDY A POVEDALA SOM, ŽE TO SPRAVÍM ZNOVA, KEĎ SA MI OPOVÁŽI <emphasis>NIEKEDY</emphasis> UKÁZAŤ TIE FOTKY.</p>
+     </text-area>
+     <text-area points="1059,556 1061,538 1070,520 1086,509 1109,504 1131,504 1152,509 1167,518 1178,537 1180,556 1177,578 1167,594 1142,606 1118,609 1092,605 1071,592 1061,575">
+       <p>LUCY, <emphasis>PRESTAŇ.</emphasis> ZASLÚŽI SI POVEDAŤ, ČO CHCE.</p>
+     </text-area>
+     <text-area points="141,677 147,670 319,670 326,678 328,753 321,761 147,761 140,753" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; čo odo mňa chceš, Raymond?</p>
+     </text-area>
+     <text-area points="428,697 437,686 617,686 626,697 625,796 617,808 439,808 428,801" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; nezabíjaj ich. nechaj ich mať svoje zárobky. choď hrať niekam inam.</p>
+     </text-area>
+     <text-area points="138,1113 150,1104 431,1106 444,1114 445,1181 435,1192 153,1193 138,1185" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; sú to pijavice. nezáleží im na hre a ani tebe nezáleží</p>
+     </text-area>
+     <text-area points="743,675 752,666 1176,666 1182,675 1184,757 1175,768 755,769 743,761" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; keď nebudú hrať hru, tak nebudú jesť. myslím, že im záleží na hre minimálne tak ako vám.</p>
+     </text-area>
+     <text-area points="739,1092 750,1082 1175,1083 1188,1093 1190,1177 1176,1190 751,1192 737,1181" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; dostávate zaplatené za to, že ich zabíjate, že? takže hráte takisto pre peniaze. myslím, že to máte s nimi spoločné</p>
+     </text-area>
+     <text-area points="545,1296 552,1280 567,1270 592,1269 619,1271 633,1281 639,1295 634,1311 620,1320 594,1325 567,1321 550,1311">
+       <p>LUCY, <emphasis>PRESTAŇ!</emphasis></p>
+     </text-area>
+     <text-area points="701,1722 708,1711 824,1711 833,1717 833,1776 829,1784 707,1784 700,1777" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; choď do pekla</p>
+     </text-area>
+   </text-layer>
+   <frame points="113,153 788,153 792,633 117,637"/>
+   <frame points="800,155 1212,156 1210,637 804,636"/>
+   <frame points="114,651 702,648 704,1214 113,1214"/>
+   <frame points="718,651 1211,651 1209,1216 718,1214"/>
+   <frame points="114,1226 887,1226 884,1826 115,1828"/>
+   <frame points="901,1227 1210,1229 1209,1826 901,1826"/>
+  </page>
+  <page>
+   <image href="18.jpg"/>
+   <text-layer lang="en">
+     <text-area points="347,132 350,120 364,109 389,104 414,107 430,117 436,134 431,152 408,163 390,165 361,161 349,148">
+       <p>YOU <emphasis>BITCH!</emphasis></p>
+     </text-area>
+     <text-area points="514,183 518,157 530,135 560,118 599,113 639,117 665,130 682,155 686,178 681,208 667,228 642,244 616,248 576,247 546,237 522,216 517,199">
+       <p>I'M SORRY, LUCY. BUT I DON'T WANT YOU TO <emphasis>HURT</emphasis> HIM. I WANT TO <emphasis>HEAR</emphasis> HIM OUT.</p>
+     </text-area>
+     <text-area points="1117,124 1123,105 1139,90 1168,83 1199,83 1225,89 1240,100 1250,125 1243,148 1229,158 1205,166 1163,167 1135,158 1120,140">
+       <p>LUCY? STAY ON <emphasis>VOICE,</emphasis> PLEASE?</p>
+     </text-area>
+     <text-area points="491,934 497,930 625,929 633,939 632,1005 627,1014 498,1014 491,1007" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; dont lucy come on talk2me</p>
+     </text-area>
+     <text-area points="915,662 922,643 941,633 960,631 984,634 999,644 1004,662 1000,678 988,689 961,695 932,690 918,678">
+       <p>BLOODY HELL.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="347,132 350,120 364,109 389,104 414,107 430,117 436,134 431,152 408,163 390,165 361,161 349,148">
+       <p>TY <emphasis>SUKA!</emphasis></p>
+     </text-area>
+     <text-area points="514,183 518,157 530,135 560,118 599,113 639,117 665,130 682,155 686,178 681,208 667,228 642,244 616,248 576,247 546,237 522,216 517,199">
+       <p>JE MI TO ĽÚTO, LUCY. ALE JA HO NECHCEM <emphasis>ZRANIŤ.</emphasis> CHCEM HO <emphasis>VYPOČUŤ.</emphasis></p>
+     </text-area>
+     <text-area points="1117,124 1123,105 1139,90 1168,83 1199,83 1225,89 1240,100 1250,125 1243,148 1229,158 1205,166 1163,167 1135,158 1120,140">
+       <p>LUCY? <emphasis>ROZPRÁVAJ</emphasis> SO MNOU, PROSÍM?</p>
+     </text-area>
+     <text-area points="491,934 497,930 625,929 633,939 632,1005 627,1014 498,1014 491,1007" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; prestaň lucy, rozprávaj so mnou</p>
+     </text-area>
+     <text-area points="915,662 922,643 941,633 960,631 984,634 999,644 1004,662 1000,678 988,689 961,695 932,690 918,678">
+       <p>DO PEKLA.</p>
+     </text-area>
+   </text-layer>
+   <frame points="62,71 62,62 56,39 66,39 98,69 206,70 234,61 705,57 709,227 724,205 728,209 724,225 708,265 709,569 59,570"/>
+   <frame points="722,59 1265,59 1268,569 723,570"/>
+   <frame points="59,584 174,584 174,576 172,566 174,557 191,547 199,547 210,540 219,540 218,546 210,556 211,567 222,565 236,563 242,565 261,577 266,584 653,584 655,1043 309,1045 299,1066 279,1095 250,1127 229,1141 224,1134 220,1108 223,1078 227,1062 238,1043 60,1045"/>
+   <frame points="667,584 1267,582 1266,1041 669,1046"/>
+   <frame points="38,1060 1292,1059 1296,1951 41,1951"/>
+  </page>
+  <page>
+   <image href="19.jpg"/>
+   <text-layer lang="en">
+     <text-area points="959,196 970,188 1182,188 1192,196 1192,267 1183,275 972,277 961,269" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; I'm very sorry you and your friend quarreled.</p>
+     </text-area>
+     <text-area points="77,617 87,609 524,608 534,618 533,759 525,769 86,770 79,762" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; the enemy isn't the players guarding the fabrica, and it's not the girls working there. the people who are working to destroy the game are the people who pay you and the girls in the fabrica. but they are the same people.</p>
+     </text-area>
+     <text-area points="451,1040 463,1031 730,1032 746,1044 744,1145 735,1157 466,1158 450,1147" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; you're being paid by rival factory owners, you know that? they are the ones who care nothing for the game.</p>
+     </text-area>
+     <text-area points="809,641 817,633 1007,634 1016,642 1017,857 1011,866 817,867 810,858" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; my girls care about the game. you care about the game. your common enemy is the people who want to destroy the game and who destroy the lives of these girls.</p>
+     </text-area>
+     <text-area points="919,985 923,973 933,964 957,961 983,964 997,974 998,985 994,997 974,1006 943,1007 926,1000 920,991">
+       <p>LUCY?</p>
+     </text-area>
+     <text-area points="103,1216 379,1215 379,1301 103,1301" bgcolor="#f3ff9d" type="commentary">
+       <p>THERE WERE LOTS OF <emphasis>RULES</emphasis> FOR FAHRENHEITS, AND THE <emphasis>PENALTIES</emphasis> FOR BREAKING THEM VARIED.</p>
+     </text-area>
+     <text-area points="914,1242 1197,1242 1197,1313 914,1313" bgcolor="#f3ff9d" type="commentary">
+       <p>BUT ANDA KNEW THE PENALTY FOR ATTACKING A FELLOW FAHRENHEIT: <emphasis>EXPULSION.</emphasis></p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="959,196 970,188 1182,188 1192,196 1192,267 1183,275 972,277 961,269" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; je mi to veľmi ľúto, že ste sa ty a tvoja kamarátka pohádali.</p>
+     </text-area>
+     <text-area points="77,617 87,609 524,608 534,618 533,759 525,769 86,770 79,762" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; nepriateľom nie sú hráči strážiaci továrne, a nie sú to dievčatá pracujúce v nich. ľudia, ktorí sa snažia zničiť hru, sú ľudia, ktorí platia vás a dievčatá v továrňach. sú to rovnakí ľudia.</p>
+     </text-area>
+     <text-area points="451,1040 463,1031 730,1032 746,1044 744,1145 735,1157 466,1158 450,1147" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; vy ste platené súperiacimi majiteľmi tovární, viete to? to sú tí, ktorým vôbec nezáleží na hre.</p>
+     </text-area>
+     <text-area points="809,641 817,633 1007,634 1016,642 1017,857 1011,866 817,867 810,858" bgcolor="#11161a" type="code" inverted="True">
+       <p>&gt; mojim dievčatám na hre záleží. tebe na hre záleží. vášim spoločným nepriateľom sú ľudia, ktorí sa snažia zničiť hru a životy týchto dievčat.</p>
+     </text-area>
+     <text-area points="919,985 923,973 933,964 957,961 983,964 997,974 998,985 994,997 974,1006 943,1007 926,1000 920,991">
+       <p>LUCY?</p>
+     </text-area>
+     <text-area points="103,1216 379,1215 379,1301 103,1301" bgcolor="#f3ff9d" type="commentary">
+       <p>EXISTOVALO VIACERO <emphasis>PRAVIDIEL</emphasis> V KLANE FAHRENHEIT, A <emphasis>TRESTY</emphasis> ZA ICH PORUŠENIE SA RÔZNILI.</p>
+     </text-area>
+     <text-area points="914,1242 1197,1242 1197,1313 914,1313" bgcolor="#f3ff9d" type="commentary">
+       <p>AVŠAK ANDA POZNALA TREST ZA ÚTOK NA ČLENA KLANU FAHRENHEIT: <emphasis>VYLÚČENIE.</emphasis></p>
+     </text-area>
+   </text-layer>
+   <frame points="41,54 1298,53 1298,354 1213,351 1209,174 943,173 944,352 42,351"/>
+   <frame points="41,363 945,365 944,549 1214,549 1214,367 1296,367 1298,616 540,616 532,604 528,602 83,605 71,614 43,614"/>
+   <frame points="943,172 1210,173 1213,549 947,551"/>
+   <frame points="64,615 72,614 76,608 83,603 530,602 536,608 540,616 773,616 775,1183 64,1188 64,620"/>
+   <frame points="784,616 1270,616 1273,1170 784,1188 788,1128"/>
+   <frame points="124,1491 97,1304 99,1210 384,1210 506,1368 508,1947 120,1946"/>
+   <frame points="521,1204 835,1203 1187,1203 1188,1235 1202,1235 1203,1320 1194,1320 1197,1534 1212,1523 1215,1945 518,1946"/>
+  </page>
+  <page>
+   <image href="20.jpg"/>
+   <text-layer lang="en">
+     <text-area points="877,520 882,499 899,483 921,475 934,473 973,473 992,477 1009,484 1022,499 1027,515 1025,536 1014,553 994,564 978,569 936,569 915,565 902,561 886,549 878,532">
+       <p>ANDA, DEAR, THERE'S A PHONE CALL FOR YOU.</p>
+     </text-area>
+     <text-area points="1004,610 1006,592 1016,577 1034,566 1051,562 1084,563 1102,567 1119,579 1128,591 1131,607 1127,628 1120,640 1106,651 1088,656 1054,657 1031,652 1016,642 1010,634 1005,620">
+       <p>SOMEONE FROM YOUR GAME, I THINK.</p>
+     </text-area>
+     <text-area points="168,735 172,724 184,716 201,713 229,713 247,717 257,723 261,734 259,745 249,753 233,757 210,759 186,755 174,748 170,741">
+       <p>HULLO?</p>
+     </text-area>
+     <text-area points="141,870 143,857 151,847 164,841 178,839 206,839 220,843 234,853 240,867 239,878 230,893 210,893 192,902 161,900 147,891 142,878">
+       <p>HULLO, CHICKEN.</p>
+     </text-area>
+     <text-area points="518,914 523,900 533,894 553,892 567,893 581,899 588,911 587,922 581,931 571,936 557,938 535,937 524,930 519,922">
+       <p>LIZA?</p>
+     </text-area>
+     <text-area points="422,1180 425,1165 434,1153 449,1143 468,1137 491,1135 525,1136 546,1139 564,1147 576,1157 583,1170 584,1192 575,1207 564,1215 548,1222 526,1226 486,1227 462,1223 434,1209 425,1196">
+       <p>YES, CAN YOU TELL ME WHAT HAPPENED TODAY?</p>
+     </text-area>
+     <text-area points="661,714 938,714 938,785 661,785" bgcolor="#f3ff9d" type="commentary">
+       <p>SHE DID STUMBLING OVER THE DETAILS, BACK-TRACKING AND STUTTERING.</p>
+     </text-area>
+     <text-area points="672,870 676,843 686,827 705,814 726,807 747,804 788,804 807,808 829,817 843,829 851,844 855,862 856,878 851,897 842,912 826,925 809,933 800,936 786,936 734,936 714,930 696,922 681,906 672,885">
+       <p>- AND I ... I DON'T THINK IT'S <emphasis>RIGHT</emphasis> TO KILL THEM, THOSE GIRLS. ALL RIGHT?</p>
+     </text-area>
+     <text-area points="671,1152 674,1127 684,1109 700,1096 719,1087 742,1079 782,1078 819,1079 844,1085 862,1093 880,1106 889,1121 894,1137 894,1167 888,1184 877,1200 860,1210 844,1217 828,1222 810,1224 762,1224 737,1221 720,1217 697,1205 684,1193 674,1173">
+       <p>WELL, I HAPPEN TO AGREE. THOSE GIRLS NEED OUR <emphasis>HELP</emphasis> MORE THAN ANY OF THE GIRLS ANYWHERE IN THE GAME.</p>
+     </text-area>
+     <text-area points="973,1192 978,1166 992,1145 1015,1130 1037,1123 1059,1119 1114,1121 1142,1127 1167,1140 1179,1151 1189,1173 1192,1191 1190,1215 1178,1237 1154,1253 1141,1259 1112,1266 1061,1267 1038,1263 1018,1257 998,1246 982,1229 974,1206">
+       <p>THE FAHRENHEITS' <emphasis>STRENGTH</emphasis> IS THAT WE <emphasis>CARE.</emphasis> IT'S ANOTHER WAY THAT WE'RE BETTER THAN THE BOYS.</p>
+     </text-area>
+     <text-area points="120,1373 125,1353 136,1340 154,1330 172,1325 221,1325 249,1331 265,1340 274,1352 280,1370 277,1392 270,1404 251,1415 233,1421 216,1422 182,1423 153,1417 137,1408 125,1395 121,1384">
+       <p>I'M <emphasis>PROUD</emphasis> THAT YOU TOOK A STAND WHEN YOU DID.</p>
+     </text-area>
+     <text-area points="87,1672 93,1651 111,1637 136,1631 160,1630 197,1632 218,1641 229,1652 233,1663 233,1680 226,1693 213,1703 196,1709 163,1712 134,1710 107,1702 94,1691 89,1681">
+       <p>YOU'RE NOT GOING TO <emphasis>EXPELL</emphasis> ME?</p>
+     </text-area>
+     <text-area points="222,1784 225,1767 235,1753 253,1742 272,1737 320,1737 340,1741 354,1747 369,1761 374,1778 375,1792 369,1808 355,1823 338,1830 324,1833 276,1833 254,1828 240,1820 229,1809 223,1793">
+       <p>NO, CHICKEN. I THINK YOU DID THE RIGHT THING?</p>
+     </text-area>
+     <text-area points="460,1362 465,1344 477,1332 493,1325 517,1321 549,1321 573,1327 588,1336 596,1347 600,1363 595,1382 582,1395 562,1402 541,1404 516,1405 488,1399 476,1392 465,1380 461,1368">
+       <p>IF YOU EXPELL LUCY, I'LL <emphasis>QUIT</emphasis> ...</p>
+     </text-area>
+     <text-area points="627,1411 631,1391 643,1375 660,1365 686,1359 723,1359 747,1365 765,1375 776,1389 781,1412 776,1435 766,1448 747,1460 734,1463 704,1466 676,1463 658,1458 638,1444 628,1426">
+       <p>OH, CHICKEN, YOU'RE <emphasis>BRAVE</emphasis> THING, AREN'T YOU?</p>
+     </text-area>
+     <text-area points="451,1776 455,1755 468,1738 484,1727 503,1720 533,1716 585,1715 617,1722 649,1741 659,1757 663,1777 659,1798 649,1813 629,1826 612,1833 582,1838 523,1837 494,1831 474,1820 461,1807 453,1791">
+       <p>NO ONE'S BEING EXPELLED, FEAR NOT. BUT I WANTA <emphasis>TALK</emphasis> TO THIS RAYMOND OF YOURS.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="877,520 882,499 899,483 921,475 934,473 973,473 992,477 1009,484 1022,499 1027,515 1025,536 1014,553 994,564 978,569 936,569 915,565 902,561 886,549 878,532">
+       <p>ANDA, MILÁČIK, MÁŠ TELEFÓN.</p>
+     </text-area>
+     <text-area points="1004,610 1006,592 1016,577 1034,566 1051,562 1084,563 1102,567 1119,579 1128,591 1131,607 1127,628 1120,640 1106,651 1088,656 1054,657 1031,652 1016,642 1010,634 1005,620">
+       <p>NIEKTO Z TVOJEJ HRY, MYSLÍM.</p>
+     </text-area>
+     <text-area points="168,735 172,724 184,716 201,713 229,713 247,717 257,723 261,734 259,745 249,753 233,757 210,759 186,755 174,748 170,741">
+       <p>HALÓ?</p>
+     </text-area>
+     <text-area points="141,870 143,857 151,847 164,841 178,839 206,839 220,843 234,853 240,867 239,878 230,893 210,893 192,902 161,900 147,891 142,878">
+       <p>HALÓ, MAČIATKO.</p>
+     </text-area>
+     <text-area points="518,914 523,900 533,894 553,892 567,893 581,899 588,911 587,922 581,931 571,936 557,938 535,937 524,930 519,922">
+       <p>LÍZA?</p>
+     </text-area>
+     <text-area points="422,1180 425,1165 434,1153 449,1143 468,1137 491,1135 525,1136 546,1139 564,1147 576,1157 583,1170 584,1192 575,1207 564,1215 548,1222 526,1226 486,1227 462,1223 434,1209 425,1196">
+       <p>ÁNO, MÔŽEŠ MI VYSVETLIŤ, ČO SA DNES STALO?</p>
+     </text-area>
+     <text-area points="661,714 938,714 938,785 661,785" bgcolor="#f3ff9d" type="commentary">
+       <p>ŤAŽKO SA JEJ VYSVETĽOVALI VŠETKY DETAILY NERVÓZNE A KOKTAJÚC.</p>
+     </text-area>
+     <text-area points="672,870 676,843 686,827 705,814 726,807 747,804 788,804 807,808 829,817 843,829 851,844 855,862 856,878 851,897 842,912 826,925 809,933 800,936 786,936 734,936 714,930 696,922 681,906 672,885">
+       <p>- A JA ... JA SI NEMYSLÍM, ŽE JE <emphasis>SPRÁVNE</emphasis> ICH ZABÍJAŤ, TIETO DIEVČATÁ. HMM?</p>
+     </text-area>
+     <text-area points="671,1152 674,1127 684,1109 700,1096 719,1087 742,1079 782,1078 819,1079 844,1085 862,1093 880,1106 889,1121 894,1137 894,1167 888,1184 877,1200 860,1210 844,1217 828,1222 810,1224 762,1224 737,1221 720,1217 697,1205 684,1193 674,1173">
+       <p>HMM, JA SÚHLASÍM. TIETO DIEVČATǍ POTREBUJÚ NAŠU <emphasis>POMOC</emphasis> VIAC AKO KTORÉKOĽVEK DIEVČATÁ V HRE.</p>
+     </text-area>
+     <text-area points="973,1192 978,1166 992,1145 1015,1130 1037,1123 1059,1119 1114,1121 1142,1127 1167,1140 1179,1151 1189,1173 1192,1191 1190,1215 1178,1237 1154,1253 1141,1259 1112,1266 1061,1267 1038,1263 1018,1257 998,1246 982,1229 974,1206">
+       <p><emphasis>SILA</emphasis> KLANU FAHRENHEIT JE? ŽE NÁM NA VECIACH <emphasis>ZÁLEŽÍ.</emphasis> JE TO ĎAĽŠIA VEC, V KTOREJ SME LEPŠIE AKO CHLAPCI.</p>
+     </text-area>
+     <text-area points="120,1373 125,1353 136,1340 154,1330 172,1325 221,1325 249,1331 265,1340 274,1352 280,1370 277,1392 270,1404 251,1415 233,1421 216,1422 182,1423 153,1417 137,1408 125,1395 121,1384">
+       <p>SOM <emphasis>PYŠNÁ,</emphasis> ŽE SI ZAUJALA SVOJ POSTOJ K VECI.</p>
+     </text-area>
+     <text-area points="87,1672 93,1651 111,1637 136,1631 160,1630 197,1632 218,1641 229,1652 233,1663 233,1680 226,1693 213,1703 196,1709 163,1712 134,1710 107,1702 94,1691 89,1681">
+       <p>NECHYSTÁŠ SA MA <emphasis>VYLÚČIŤ?</emphasis></p>
+     </text-area>
+     <text-area points="222,1784 225,1767 235,1753 253,1742 272,1737 320,1737 340,1741 354,1747 369,1761 374,1778 375,1792 369,1808 355,1823 338,1830 324,1833 276,1833 254,1828 240,1820 229,1809 223,1793">
+       <p>NIE, MAČIATKO. MYSLÍM SI, ŽE SI SPRAVILA SPRÁVNU VEC?</p>
+     </text-area>
+     <text-area points="460,1362 465,1344 477,1332 493,1325 517,1321 549,1321 573,1327 588,1336 596,1347 600,1363 595,1382 582,1395 562,1402 541,1404 516,1405 488,1399 476,1392 465,1380 461,1368">
+       <p>AK VYLÚČIŠ LUCY, JA <emphasis>KONČÍM</emphasis> ...</p>
+     </text-area>
+     <text-area points="627,1411 631,1391 643,1375 660,1365 686,1359 723,1359 747,1365 765,1375 776,1389 781,1412 776,1435 766,1448 747,1460 734,1463 704,1466 676,1463 658,1458 638,1444 628,1426">
+       <p>ACH, MAČIATKO, SI VEĽMI <emphasis>ODVÁŽNA,</emphasis> ŽE?</p>
+     </text-area>
+     <text-area points="451,1776 455,1755 468,1738 484,1727 503,1720 533,1716 585,1715 617,1722 649,1741 659,1757 663,1777 659,1798 649,1813 629,1826 612,1833 582,1838 523,1837 494,1831 474,1820 461,1807 453,1791">
+       <p>NIKTO NEBUDE VYLÚČENÝ, NEBOJ SA. ALE CHCEM SA <emphasis>POROZPRÁVAŤ</emphasis> S TÝM VAŠIM RAYMONDOM.</p>
+     </text-area>
+   </text-layer>
+   <frame points="109,294 192,180 436,182 438,682 111,683"/>
+   <frame points="448,182 612,180 796,264 798,682 450,683"/>
+   <frame points="807,177 1172,178 1174,681 809,681"/>
+   <frame points="113,876 136,859 144,847 153,839 162,838 156,816 163,816 173,831 175,827 145,764 140,757 138,749 142,742 150,741 155,747 157,755 157,761 185,818 220,787 206,764 184,760 171,751 163,736 167,722 178,712 193,706 243,708 260,716 267,728 268,740 265,749 257,757 238,762 231,763 232,776 337,699 624,841 623,1285 114,1288"/>
+   <frame points="635,868 654,787 655,708 920,707 953,692 1202,693 1202,1118 1213,1114 1216,1121 1204,1133 1203,1285 1155,1283 1169,1319 1166,1325 1132,1285 1122,1284 1116,1288 1111,1285 636,1286 635,866"/>
+   <frame points="115,1302 149,1302 147,1292 149,1289 153,1289 162,1302 438,1301 441,1864 359,1864 360,1870 356,1871 346,1865 89,1865 82,1676 82,1660 91,1643 104,1633 112,1628 113,1427 107,1426 114,1415"/>
+   <frame points="453,1746 453,1737 473,1713 474,1699 482,1698 485,1676 486,1665 494,1668 494,1658 490,1647 492,1638 502,1620 497,1592 503,1564 474,1434 471,1427 475,1420 484,1421 486,1438 514,1554 525,1551 527,1527 537,1511 541,1490 556,1471 556,1457 521,1410 491,1406 467,1395 455,1376 456,1349 467,1331 493,1318 527,1316 560,1317 590,1329 646,1307 659,1317 679,1351 684,1343 693,1352 730,1354 751,1361 757,1355 762,1357 762,1367 766,1369 793,1354 798,1360 777,1381 786,1396 787,1428 780,1445 765,1458 799,1503 800,1863 631,1864 638,1882 634,1886 612,1864 453,1865 453,1838 441,1843 440,1837 442,1831 452,1823 452,1805 448,1789 447,1766 450,1753"/>
+   <frame points="811,1304 842,1301 1127,1294 1205,1295 1205,1863 813,1863"/>
+  </page>
+  <page>
+   <image href="21.jpg"/>
+   <text-layer lang="en">
+     <text-area points="165,296 170,272 183,254 207,243 243,239 275,241 303,251 316,262 325,281 327,296 325,314 315,333 296,346 273,354 257,357 236,355 208,351 183,339 169,321 165,309">
+       <p>DID YOU HAVE A FUN AFTERNOON ON THE <emphasis>HOCKEY PITCH?</emphasis></p>
+     </text-area>
+     <text-area points="528,295 532,283 543,275 561,271 592,271 610,275 621,283 625,294 623,305 610,315 592,320 563,319 550,317 533,309 529,302">
+       <p>YES, DA.</p>
+     </text-area>
+     <text-area points="494,593 500,575 517,565 537,561 564,561 589,567 603,578 607,592 605,607 594,619 575,625 553,627 526,625 505,616 497,605">
+       <p>THAT'S MY GIRL.</p>
+     </text-area>
+     <text-area points="622,619 628,600 639,587 657,579 675,575 709,575 738,581 752,589 761,599 766,611 766,635 760,649 750,659 738,665 724,669 711,671 677,671 657,667 639,659 629,648 623,633">
+       <p>WELL, I JUST WANTED TO SAY ... THAT IS ...</p>
+     </text-area>
+     <text-area points="916,214 918,194 925,181 940,164 960,153 991,145 1033,142 1075,145 1106,153 1128,165 1143,182 1150,202 1150,229 1142,250 1125,265 1108,275 1065,285 1029,287 988,283 964,277 946,268 927,253 918,233">
+       <p>... YOUR MUM AND ME ARE QUITE <emphasis>PROUD</emphasis> OF YOU. AND WE'VE MOVED YOUR <emphasis>PC</emphasis> BACK INTO YOUR ROOM. YOU'VE <emphasis>EARNED</emphasis> IT.</p>
+     </text-area>
+     <text-area points="987,477 991,465 1001,459 1020,455 1050,455 1060,461 1069,470 1070,481 1065,491 1051,497 1037,499 1018,499 1000,495 990,489 988,485">
+       <p>OH, DA!</p>
+     </text-area>
+     <text-area points="869,580 874,553 886,538 908,529 931,525 952,525 975,529 990,535 1004,547 1012,563 1014,579 1010,602 999,619 978,629 960,633 925,633 903,629 887,621 876,609 870,595">
+       <p>IT'S ALL RIGHT, GIRL. WE'RE JUST <emphasis>PROUD</emphasis> OF YOU.</p>
+     </text-area>
+     <text-area points="849,767 854,753 863,745 874,741 912,741 925,745 934,753 938,763 938,774 934,782 927,790 920,793 902,797 886,797 873,795 859,789 852,780">
+       <p>HI, SARGE.</p>
+     </text-area>
+     <text-area points="1086,801 1089,785 1097,773 1110,765 1128,760 1156,761 1173,766 1190,775 1196,792 1196,810 1190,825 1179,834 1167,840 1153,841 1126,841 1111,837 1098,831 1090,820 1086,808">
+       <p>HI, ANDA. CALL ME LUCY.</p>
+     </text-area>
+     <text-area points="1049,1212 1051,1200 1060,1190 1074,1185 1091,1182 1116,1182 1132,1184 1147,1190 1156,1198 1161,1212 1158,1226 1148,1235 1137,1240 1126,1242 1084,1242 1066,1237 1055,1231 1050,1222">
+       <p>OK, SAR - LUCY.</p>
+     </text-area>
+     <text-area points="139,1380 141,1359 150,1342 162,1330 179,1321 195,1315 209,1311 223,1310 266,1310 296,1315 311,1319 326,1327 341,1340 350,1356 353,1372 353,1395 346,1413 333,1429 320,1437 305,1444 288,1448 273,1451 219,1450 196,1446 172,1437 153,1423 141,1398">
+       <p>SO, LISTEN ... I'VE BEEN TALKING TO RAYMOND A <emphasis>LOT</emphasis> ABOUT THE WORKING CONDITIONS IN THE <emphasis>FACTORY,</emphasis> AND, WELL ...</p>
+     </text-area>
+     <text-area points="357,1440 361,1423 373,1412 389,1406 420,1405 439,1410 454,1418 459,1433 459,1451 451,1465 438,1473 422,1476 399,1478 381,1474 364,1462 357,1450">
+       <p>... I'M <emphasis>SORRY,</emphasis> ANDA.</p>
+     </text-area>
+     <text-area points="165,1527 171,1509 183,1500 197,1496 233,1496 251,1503 261,1512 265,1526 262,1542 252,1552 240,1559 194,1558 177,1552 171,1545 167,1537">
+       <p>ME, TOO, LUCY.</p>
+     </text-area>
+     <text-area points="133,1705 139,1681 151,1670 167,1662 183,1657 238,1658 253,1663 271,1671 281,1683 285,1692 285,1716 278,1731 265,1741 251,1748 238,1752 192,1752 176,1749 154,1741 141,1730 135,1717">
+       <p>YOU DON'T HAVE ANYTHING TO BE SORRY ABOUT.</p>
+     </text-area>
+     <text-area points="306,1765 309,1743 320,1726 339,1713 362,1706 395,1704 427,1708 451,1718 465,1732 473,1752 473,1778 466,1799 450,1812 435,1820 414,1824 388,1826 358,1824 339,1818 320,1804 311,1793 307,1777">
+       <p>IT'S HORRIBLE, I KNOW, BUT I <emphasis>MISS</emphasis> THE BIG FIGHTS. THE BIG STAKES ...</p>
+     </text-area>
+     <text-area points="931,1412 934,1394 945,1379 963,1369 975,1364 995,1364 1018,1364 1042,1368 1060,1376 1073,1386 1078,1400 1080,1416 1075,1432 1066,1444 1050,1453 1034,1457 1008,1460 977,1457 953,1449 937,1435 932,1422">
+       <p>I <emphasis>KNOW,</emphasis> ME, TOO. WHAT'RE WE GONNA DO?</p>
+     </text-area>
+     <text-area points="925,1596 930,1575 940,1563 956,1554 973,1550 1008,1550 1031,1555 1048,1566 1056,1581 1059,1595 1056,1615 1047,1628 1034,1636 1018,1642 1003,1644 980,1644 947,1636 933,1623 926,1606">
+       <p>WE'LL ASK <emphasis>RAYMOND</emphasis> HOW WE CAN HELP.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="165,296 170,272 183,254 207,243 243,239 275,241 303,251 316,262 325,281 327,296 325,314 315,333 296,346 273,354 257,357 236,355 208,351 183,339 169,321 165,309">
+       <p>MALA SI VESELÉ POPOLUDNIE NA <emphasis>HOKEJOVOM IHRISKU?</emphasis></p>
+     </text-area>
+     <text-area points="528,295 532,283 543,275 561,271 592,271 610,275 621,283 625,294 623,305 610,315 592,320 563,319 550,317 533,309 529,302">
+       <p>ÁNO, OCO.</p>
+     </text-area>
+     <text-area points="494,593 500,575 517,565 537,561 564,561 589,567 603,578 607,592 605,607 594,619 575,625 553,627 526,625 505,616 497,605">
+       <p>TO JE MOJE DIEVČA.</p>
+     </text-area>
+     <text-area points="622,619 628,600 639,587 657,579 675,575 709,575 738,581 752,589 761,599 766,611 766,635 760,649 750,659 738,665 724,669 711,671 677,671 657,667 639,659 629,648 623,633">
+       <p>NO, LEN SOM TI CHCEL POVEDAŤ ... ŽE ...</p>
+     </text-area>
+     <text-area points="916,214 918,194 925,181 940,164 960,153 991,145 1033,142 1075,145 1106,153 1128,165 1143,182 1150,202 1150,229 1142,250 1125,265 1108,275 1065,285 1029,287 988,283 964,277 946,268 927,253 918,233">
+       <p>... TVOJA MAMA A JA SME NA TEBA VEĽMI <emphasis>PYŠNÍ.</emphasis> A VRÁTILI SME TI TVOJ <emphasis>POČÍTAČ</emphasis> SPÄŤ DO IZBY. <emphasis>ZASLÚŽILA</emphasis> SI SI TO.</p>
+     </text-area>
+     <text-area points="987,477 991,465 1001,459 1020,455 1050,455 1060,461 1069,470 1070,481 1065,491 1051,497 1037,499 1018,499 1000,495 990,489 988,485">
+       <p>ACH, OCO!</p>
+     </text-area>
+     <text-area points="869,580 874,553 886,538 908,529 931,525 952,525 975,529 990,535 1004,547 1012,563 1014,579 1010,602 999,619 978,629 960,633 925,633 903,629 887,621 876,609 870,595">
+       <p>TO JE V PORIADKU, ĎIEVČATKO. SME LEN NA TEBA <emphasis>PYŠNÍ.</emphasis></p>
+     </text-area>
+     <text-area points="849,767 854,753 863,745 874,741 912,741 925,745 934,753 938,763 938,774 934,782 927,790 920,793 902,797 886,797 873,795 859,789 852,780">
+       <p>AHOJ, SERŽANT.</p>
+     </text-area>
+     <text-area points="1086,801 1089,785 1097,773 1110,765 1128,760 1156,761 1173,766 1190,775 1196,792 1196,810 1190,825 1179,834 1167,840 1153,841 1126,841 1111,837 1098,831 1090,820 1086,808">
+       <p>AHOJ, ANDA. VOLAJ MA LUCY.</p>
+     </text-area>
+     <text-area points="1049,1212 1051,1200 1060,1190 1074,1185 1091,1182 1116,1182 1132,1184 1147,1190 1156,1198 1161,1212 1158,1226 1148,1235 1137,1240 1126,1242 1084,1242 1066,1237 1055,1231 1050,1222">
+       <p>OK, SER... LUCY.</p>
+     </text-area>
+     <text-area points="139,1380 141,1359 150,1342 162,1330 179,1321 195,1315 209,1311 223,1310 266,1310 296,1315 311,1319 326,1327 341,1340 350,1356 353,1372 353,1395 346,1413 333,1429 320,1437 305,1444 288,1448 273,1451 219,1450 196,1446 172,1437 153,1423 141,1398">
+       <p>TAK, POČÚVAJ ... ROZPRÁVALA SOM SA <emphasis>DLHO</emphasis> S RAYMONDOM O PRACOVNÝCH PODMIENKACH V <emphasis>TOVÁRŇACH,</emphasis> A, NO ...</p>
+     </text-area>
+     <text-area points="357,1440 361,1423 373,1412 389,1406 420,1405 439,1410 454,1418 459,1433 459,1451 451,1465 438,1473 422,1476 399,1478 381,1474 364,1462 357,1450">
+       <p>... JE MI TO <emphasis>ĽÚTO,</emphasis> ANDA.</p>
+     </text-area>
+     <text-area points="165,1527 171,1509 183,1500 197,1496 233,1496 251,1503 261,1512 265,1526 262,1542 252,1552 240,1559 194,1558 177,1552 171,1545 167,1537">
+       <p>MNE, TAKISTO, LUCY.</p>
+     </text-area>
+     <text-area points="133,1705 139,1681 151,1670 167,1662 183,1657 238,1658 253,1663 271,1671 281,1683 285,1692 285,1716 278,1731 265,1741 251,1748 238,1752 192,1752 176,1749 154,1741 141,1730 135,1717">
+       <p>TEBE NEMÁ ČO BYŤ ĽÚTO, ANDA.</p>
+     </text-area>
+     <text-area points="306,1765 309,1743 320,1726 339,1713 362,1706 395,1704 427,1708 451,1718 465,1732 473,1752 473,1778 466,1799 450,1812 435,1820 414,1824 388,1826 358,1824 339,1818 320,1804 311,1793 307,1777">
+       <p>JE TO STRAŠNÉ, VIEM, ALE <emphasis>CHÝBAJÚ</emphasis> MI VEĽKÉ BOJE. VEĽKÉ STÁVKY ...</p>
+     </text-area>
+     <text-area points="931,1412 934,1394 945,1379 963,1369 975,1364 995,1364 1018,1364 1042,1368 1060,1376 1073,1386 1078,1400 1080,1416 1075,1432 1066,1444 1050,1453 1034,1457 1008,1460 977,1457 953,1449 937,1435 932,1422">
+       <p>JA <emphasis>VIEM,</emphasis> MNE, TAKISTO. ČO BUDEME ROBIŤ?</p>
+     </text-area>
+     <text-area points="925,1596 930,1575 940,1563 956,1554 973,1550 1008,1550 1031,1555 1048,1566 1056,1581 1059,1595 1056,1615 1047,1628 1034,1636 1018,1642 1003,1644 980,1644 947,1636 933,1623 926,1606">
+       <p>SPÝTAME SA <emphasis>RAYMONDA</emphasis> AKO MÔŽME POMÔCŤ.</p>
+     </text-area>
+   </text-layer>
+   <frame points="129,153 829,155 833,700 128,704"/>
+   <frame points="843,156 947,155 970,144 1007,138 1067,138 1104,145 1122,155 1223,156 1221,697 843,700"/>
+   <frame points="456,714 130,714 129,1276 456,1276"/>
+   <frame points="467,855 559,846 577,861 578,879 657,834 734,808 806,790 809,1277 471,1276"/>
+   <frame points="820,712 1221,710 1219,1277 822,1277"/>
+   <frame points="129,1289 182,1290 174,1267 171,1250 178,1253 200,1289 483,1290 485,1834 129,1834 129,1755 124,1756 124,1751 129,1744 128,1455 122,1456 124,1452 129,1445"/>
+   <frame points="498,1491 578,1448 585,1428 623,1380 646,1352 685,1339 714,1342 726,1348 762,1352 791,1357 895,1312 994,1286 1218,1287 1218,1840 500,1838"/>
+  </page>
+  <page>
+   <image href="22.jpg"/>
+   <text-layer lang="en">
+     <text-area points="283,267 285,251 294,233 312,217 337,205 374,198 405,197 437,199 477,209 502,223 515,241 521,268 516,294 507,309 488,324 459,335 433,339 380,340 356,336 328,329 305,316 288,295 283,279">
+       <p>I WANT THEM TO WALK OUT ... TO GO ON <emphasis>STRIKE</emphasis> IN CIUDAD JUAREZ AND TIJUANA. IT'S THE ONLY WAY TO GET RESULTS.</p>
+     </text-area>
+     <text-area points="312,635 314,617 320,601 330,591 346,581 368,573 393,570 429,570 454,573 473,579 492,591 507,611 511,633 505,663 489,680 466,693 443,698 416,700 389,699 358,692 336,683 323,671 313,651">
+       <p>I'LL CALL THE <emphasis>PRESS</emphasis> IN. WE'LL MAKE A BIG DEAL OUT OF IT. WE CAN <emphasis>WIN,</emphasis> I <emphasis>KNOW</emphasis> WE CAN.</p>
+     </text-area>
+     <text-area points="779,329 781,316 791,304 807,296 829,291 860,291 880,295 896,302 907,314 909,329 907,342 899,353 889,361 866,367 848,369 826,367 809,364 792,355 783,345">
+       <p>SO WHAT'S THE PROBLEM?</p>
+     </text-area>
+     <text-area points="698,687 701,667 711,651 727,638 748,629 784,623 847,623 879,629 895,635 915,648 927,663 933,690 927,716 914,734 893,745 868,753 819,757 792,757 763,753 736,744 716,733 705,719 699,704">
+       <p>GETTING THEM ORGANIZED. WE'VE BEEN TRYING FOR <emphasis>YEARS,</emphasis> BUT THEY LOCK THE DOORS AND KEEP US OUT.</p>
+     </text-area>
+     <text-area points="981,723 983,705 993,687 1012,674 1035,667 1064,665 1097,667 1129,680 1145,699 1149,721 1142,749 1124,765 1091,775 1041,775 1011,767 993,754 983,737">
+       <p>BUT IN THE GAME, I THOUGHT I'D BE ABLE TO REACH THEM -</p>
+     </text-area>
+     <text-area points="170,892 173,875 179,862 193,852 215,846 229,845 250,848 269,857 279,869 283,882 283,905 277,921 268,931 256,937 239,941 215,941 197,937 183,928 172,913">
+       <p>BUT THE <emphasis>BOSSES</emphasis> KEEP YOU AWAY?</p>
+     </text-area>
+     <text-area points="391,900 393,883 403,865 425,849 449,841 500,837 543,839 578,849 599,865 609,884 611,899 605,925 591,941 567,953 540,958 497,961 463,959 431,951 412,940 397,923 393,913">
+       <p>I KEEP GETTING <emphasis>KILLED.</emphasis> I'VE BEEN PRACTISING MY <emphasis>SWORDFIGHTING,</emphasis> BUT IT'S SO HARD ...</p>
+     </text-area>
+     <text-area points="249,1247 626,1247 625,1304 249,1305" bgcolor="#f3ff9d" type="commentary">
+       <p>THE BOSSES HIRED SOME PRETTY <emphasis>MEAN</emphasis> MERCS, ANDA KNEW. SHE'D BEEN ONE.</p>
+     </text-area>
+     <text-area points="787,886 791,867 805,851 828,843 846,842 873,845 893,855 903,869 906,888 901,911 891,922 869,931 840,933 825,931 807,925 794,913 788,899">
+       <p>THIS WILL BE <emphasis>FUN!</emphasis> LET'S GO.</p>
+     </text-area>
+     <text-area points="945,875 951,861 965,853 993,851 1011,851 1031,857 1039,864 1041,875 1035,889 1023,895 1001,898 973,897 957,893 947,884">
+       <p>WHERE?</p>
+     </text-area>
+     <text-area points="752,1225 757,1201 771,1184 797,1171 830,1166 868,1166 901,1177 923,1198 929,1224 923,1253 906,1270 882,1281 841,1285 800,1281 783,1275 761,1257 755,1245">
+       <p>TO AN IN-GAME FACTORY. WE'RE RAYMOND'S NEW <emphasis>BODYGUARDS!</emphasis></p>
+     </text-area>
+     <text-area points="231,1365 234,1353 239,1347 247,1343 259,1343 275,1345 282,1353 285,1365 283,1379 271,1386 255,1389 243,1385 235,1378">
+       <p>OH!</p>
+     </text-area>
+     <text-area points="449,1390 453,1376 463,1367 482,1361 505,1361 523,1367 535,1378 537,1391 533,1407 523,1415 512,1419 498,1421 473,1419 459,1413 451,1402">
+       <p>HEY, LUCY -</p>
+     </text-area>
+     <text-area points="845,1788 849,1769 861,1755 881,1745 905,1741 934,1741 961,1747 979,1757 988,1772 991,1787 987,1810 974,1823 953,1833 918,1835 895,1835 869,1827 855,1817 847,1801">
+       <p>- LET'S GO GET US A COUPLE <emphasis>BFGs,</emphasis> OK?</p>
+     </text-area>
+     <text-area points="1059,1799 1156,1800 1160,1806 1160,1831 1157,1837 1061,1837 1057,1830 1057,1803" bgcolor="#f8ffc9">
+       <p>THE END.</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="283,267 285,251 294,233 312,217 337,205 374,198 405,197 437,199 477,209 502,223 515,241 521,268 516,294 507,309 488,324 459,335 433,339 380,340 356,336 328,329 305,316 288,295 283,279">
+       <p>CHCEM, ABY VYŠLI VON ... ABY ŠLI DO <emphasis>ŠTRAJKU</emphasis> V CIUDAD JUAREZ A V TIJUANA. JE TO JEDINÝ SPÔSOB, AKO DOSIAHNUŤ NEJAKÉ VÝSLEDKY.</p>
+     </text-area>
+     <text-area points="312,635 314,617 320,601 330,591 346,581 368,573 393,570 429,570 454,573 473,579 492,591 507,611 511,633 505,663 489,680 466,693 443,698 416,700 389,699 358,692 336,683 323,671 313,651">
+       <p>ZAVOLÁM <emphasis>TLAČ.</emphasis> UROBÍME Z TOHO VEĽKÚ VEC. MÔŽME <emphasis>VYHRAŤ,</emphasis> <emphasis>VIEM,</emphasis> ŽE TO DOKÁŽEME.</p>
+     </text-area>
+     <text-area points="779,329 781,316 791,304 807,296 829,291 860,291 880,295 896,302 907,314 909,329 907,342 899,353 889,361 866,367 848,369 826,367 809,364 792,355 783,345">
+       <p>TAK V ČOM JE PROBLÉM?</p>
+     </text-area>
+     <text-area points="698,687 701,667 711,651 727,638 748,629 784,623 847,623 879,629 895,635 915,648 927,663 933,690 927,716 914,734 893,745 868,753 819,757 792,757 763,753 736,744 716,733 705,719 699,704">
+       <p>ZORGANIZOVAŤ ICH. SNAŽÍME SA O TO UŽ <emphasis>ROKY,</emphasis> ALE ZAMKNÚ DVERE A DRŽIA NÁS MIMO.</p>
+     </text-area>
+     <text-area points="981,723 983,705 993,687 1012,674 1035,667 1064,665 1097,667 1129,680 1145,699 1149,721 1142,749 1124,765 1091,775 1041,775 1011,767 993,754 983,737">
+       <p>ALE V HRE SOM SI MYSLEL, ŽE SA K NIM DOSTANEM -</p>
+     </text-area>
+     <text-area points="170,892 173,875 179,862 193,852 215,846 229,845 250,848 269,857 279,869 283,882 283,905 277,921 268,931 256,937 239,941 215,941 197,937 183,928 172,913">
+       <p>ALE <emphasis>ŠÉFOVIA</emphasis> ŤA DRŽIA MIMO?</p>
+     </text-area>
+     <text-area points="391,900 393,883 403,865 425,849 449,841 500,837 543,839 578,849 599,865 609,884 611,899 605,925 591,941 567,953 540,958 497,961 463,959 431,951 412,940 397,923 393,913">
+       <p>NEUSTÁLE MA <emphasis>ZABIJÚ.</emphasis> SNAŽIL SOM SA CVIČIŤ <emphasis>BOJ S MEČOM,</emphasis> ALE JE TO PRÍLIŠ ŤAŽKÉ ...</p>
+     </text-area>
+     <text-area points="249,1247 626,1247 625,1304 249,1305" bgcolor="#f3ff9d" type="commentary">
+       <p>ŠÉFOVIA NAJALI NIEKOĽKO VEĽMI <emphasis>SILNÝCH</emphasis> ŽOLDNIEROV, ANDA TO VEDELA. BOLA JEDNÝM Z NICH.</p>
+     </text-area>
+     <text-area points="787,886 791,867 805,851 828,843 846,842 873,845 893,855 903,869 906,888 901,911 891,922 869,931 840,933 825,931 807,925 794,913 788,899">
+       <p>TOTO BUDE <emphasis>ZÁBAVNÉ!</emphasis> POĎME.</p>
+     </text-area>
+     <text-area points="945,875 951,861 965,853 993,851 1011,851 1031,857 1039,864 1041,875 1035,889 1023,895 1001,898 973,897 957,893 947,884">
+       <p>KAM?</p>
+     </text-area>
+     <text-area points="752,1225 757,1201 771,1184 797,1171 830,1166 868,1166 901,1177 923,1198 929,1224 923,1253 906,1270 882,1281 841,1285 800,1281 783,1275 761,1257 755,1245">
+       <p>DO TOVÁRNE. SME RAYMONDOVI NOVÍ <emphasis>BODYGUARDI!</emphasis></p>
+     </text-area>
+     <text-area points="231,1365 234,1353 239,1347 247,1343 259,1343 275,1345 282,1353 285,1365 283,1379 271,1386 255,1389 243,1385 235,1378">
+       <p>ÓÓ!</p>
+     </text-area>
+     <text-area points="449,1390 453,1376 463,1367 482,1361 505,1361 523,1367 535,1378 537,1391 533,1407 523,1415 512,1419 498,1421 473,1419 459,1413 451,1402">
+       <p>HEJ, LUCY -</p>
+     </text-area>
+     <text-area points="845,1788 849,1769 861,1755 881,1745 905,1741 934,1741 961,1747 979,1757 988,1772 991,1787 987,1810 974,1823 953,1833 918,1835 895,1835 869,1827 855,1817 847,1801">
+       <p>- POĎME VZIAŤ NIEKOĽKO <emphasis>VPZtiek,</emphasis> OK?</p>
+     </text-area>
+     <text-area points="1059,1799 1156,1800 1160,1806 1160,1831 1157,1837 1061,1837 1057,1830 1057,1803" bgcolor="#f8ffc9">
+       <p>KONIEC.</p>
+     </text-area>
+   </text-layer>
+   <frame points="147,252 280,250 286,235 299,218 320,207 346,197 370,195 437,195 465,200 492,210 507,222 520,239 526,252 540,252 540,742 148,741"/>
+   <frame points="541,165 1237,165 1249,805 543,805"/>
+   <frame points="146,824 643,824 643,1318 142,1314"/>
+   <frame points="656,824 1193,825 1186,1320 656,1319"/>
+   <frame points="141,1331 342,1332 343,1858 142,1858 141,1634"/>
+   <frame points="355,1332 823,1334 821,1859 352,1859"/>
+   <frame points="834,1333 1185,1334 1184,1860 833,1859"/>
+  </page>
+  <page bgcolor="#ffffff">
+   <image href="23.jpg"/>
+   <text-layer lang="en">
+     <text-area points="101,717 865,717 865,769 100,769" type="heading">
+       <p>DOCTOROW ON: "ANDA'S GAME"</p>
+     </text-area>
+     <text-area points="100,774 670,774 670,833 102,833" type="formal">
+       <p><strong>Editor Tom Waltz:</strong> Cory, let's start with the obvious question - what sparked the idea for "Anda's Game"?</p>
+     </text-area>
+     <text-area points="100,860 670,860 671,1281 98,1281" type="formal">
+       <p><strong>Cory Doctorow:</strong> Two things; one was my idea of writing a bunch of stories that riffed on the titles of famous SF - <emphasis>I, Robot, Anda's Game (Ender's Game), I, Row-Boat</emphasis> and soon, <emphasis>True Names</emphasis> - after hearing Ray Bradbury disparage this practice, calling it rude and immoral. Bradbury was pissed off at Michael Moore for calling his movie Fahrenheit 9/11. Bradbury supports Bush's plan to go to Mars - but I thought that this was just goofy. Titles are - and have always been - fair game. What's more, <emphasis>Fahrenheit 451,</emphasis> Bradbury's classic novel, is all about free expression (Bradbury denies this - he says it's about television, which is why you should never ask writers what their work is about). (Should we end the interview now?)</p>
+       <p>The other thing was the early reports of gold farming in games, something that really sparked my imagination.</p>
+     </text-area>
+     <text-area points="101,1301 670,1301 676,1668 99,1670" type="formal">
+       <p><strong>TW:</strong> I consider myself a semi-avid video gamer, and when I first read "Anda's Game," I thought it was a bizzare vision of a possible future, only to read an article recently about how China is taking over in the gaming "sweat shop" market from other devloping nations like Mexico. For me, personally, it's sad and pathetic reality that videogames have become so important to some people that they are willing to go to great lengths to cheat at the games, even so far as purchasing in-game characters that were earned through what truly amounts to industrial slavery. Do you feel that gaming has become too important, and, if so, is the technology to blame ... or the gamers themselves?</p>
+     </text-area>
+     <text-area points="101,1693 673,1693 671,1917 100,1919" type="formal">
+       <p><strong>CD:</strong> No, gaming hasn't become too important! MMORPGS and other MMOs are social constructs, agoras where we meet, socialize, make friends, cooperate, and play together. It's where we undertake the business of civilization. It's a goddamned shame that (so far) all of these civilizations-in-bottles are owned by giant media companies (worse still, that Universal/Blizzard, a really abusive bully, owns <emphasis>World of Warcraft,</emphasis> the most</p>
+     </text-area>
+     <text-area points="689,773 1261,773 1263,858 688,863" type="formal">
+       <p>popular), but asking if play has become too important is as silly as asking if art has become too important, or thought, or scholarship.</p>
+     </text-area>
+     <text-area points="691,886 1261,886 1261,1080 692,1085" type="formal">
+       <p><strong>TW:</strong> When I sent you the artwork for "Anda's Game," penciled by the fantastic Esteve Polls, your reaction to seeing it for the first time was ... and I quote ... "Holy crap, this is EERILY COOL!" I was hoping you could expand on that and describe the different feelings you are having as you see your short prose stories coming to life in illustrated sequential form.</p>
+     </text-area>
+     <text-area points="695,1109 1261,1109 1260,1282 692,1282" type="formal">
+       <p><strong>CD:</strong> Well, I'd never really had my work adapted before. When a talented artist like Polls turns my work into something that isn't what I saw in my mind's eye, but IS a plausible thing for a reader to see, it's like being able to stick a reader in MRI while she reads one of my stories and see what it's doing to her head.</p>
+     </text-area>
+     <text-area points="694,1301 1260,1301 1263,1469 690,1474" type="formal">
+       <p><strong>TW:</strong> Taking the last question a step further, we have various comic book writers adapting your short stories in script form for this project - specifically for "Anda's Game," writer Dara Naraghi. What things do you look for in a script based on your work before you approve it for publication?</p>
+     </text-area>
+     <text-area points="693,1497 1259,1497 1259,1622 691,1615" type="formal">
+       <p><strong>CD:</strong> Well, it has to suit the work - it doesn't have to be accurate (in the sense of portraying all the events that took place in the work), but it DOES have to be faithful to the artistic intent and mood that inspired the work.</p>
+     </text-area>
+     <text-area points="694,1635 1260,1635 1259,1693 693,1697" type="formal">
+       <p><strong>TW:</strong> Have you ever considered scripting your own comic book series or graphic novel?</p>
+     </text-area>
+     <text-area points="693,1715 1260,1715 1261,1909 692,1920" type="formal">
+       <p><strong>CD:</strong> Every now and again. I have a million projects on my plate right now - BoingBoing and upmty boinglets, little blog projects that we're playing with; a movie I'm coproducing; a TV show I'm consulting on; two nonfiction books; a zillion short story ideas; my podcast; travel; speaking (and I'm moving home to London from LA in two weeks!).</p>
+     </text-area>
+   </text-layer>
+   <text-layer lang="sk">
+     <text-area points="101,717 865,717 865,769 100,769" type="heading">
+       <p>DOCTOROW O "ANDINEJ HRE"</p>
+     </text-area>
+     <text-area points="100,774 670,774 670,833 102,833" type="formal">
+       <p><strong>Editor Tom Waltz:</strong> Cory, začnime so zjavnou otázkou - čo zažehlo nápad na napísanie "Andinej hry"?</p>
+     </text-area>
+     <text-area points="100,860 670,860 671,1281 98,1281" type="formal">
+       <p><strong>Cory Doctorow:</strong> Dve veci; prvá bol môj nápad nápísať niekoľko príbehov, ktoré by vychádzali z názvov známych science fiction titulov - <emphasis>Ja, Robot, Andina hra (Enderova hra), I, Row-Boat</emphasis> a čoskoro vychádzajúce, <emphasis>Pravdivé mená</emphasis> - potom ako som počul Raya Bradburyho odsudzovať túto prax, nazývať to neslušným a nemorálnym. Bradbury bol naštvaný na Michaela Moorea, ktorý svoj film nazval Fahrenheit 9/11. Bradbury podporuje Bushov plán na cestu na Mars - ale myslel som, že toto je už smiešne. Názvy kníh sú - a vždy boli - férová hra. Navyše, <emphasis>Fahrenheit 451,</emphasis> Bradburyho klasický román, je hlavne o slobodnom vyjadrovaní sa (Bradbury toto popiera - tvrdí, že je o televízii, čo znamená, že by ste sa nikdy nemali pýtať autorov, o čom ich knihy sú). (Mali by sme skončiť teraz náš rozhovor?)</p>
+       <p>Ďalšia vec boli prvotné správy o ryžovaní zlata v počítačových hrách, niečo, čo skutočne zažehlo moju predstavivosť.</p>
+     </text-area>
+     <text-area points="101,1301 670,1301 676,1668 99,1670" type="formal">
+       <p><strong>TW:</strong> Považujem sa za celkom zanieteného hráča videohier, a keď som prvýkrát čítal "Andinu hru," považoval som to za bizarnú víziu možnej budúcnosti, až kým som nedávno nenarazil na článok ako sa Čína stáva lídrom v práci v herných "továrňach" a preberá líderstvo od rozvíjajúcich sa krajín ako Mexiko. Pre mňa osobne je to smutná a zároveň smiešna realita, že videohry sa stali tak dôležité pre niektorých ľudí, že sú ochotní ísť až za hranice fair play a podvádzať v hrách a nakupovať hráčske postavy, ktoré boli vytvorené spôsobom pripomínajúcim industriálne otroctvo. Myslíš si, že hranie videohier sa stalo príliš dôležité, a ak áno, sú na vine technológie ... alebo sami hráči?</p>
+     </text-area>
+     <text-area points="101,1693 673,1693 671,1917 100,1919" type="formal">
+       <p><strong>CD:</strong> Nie, hranie videohier sa nestalo príliš dôležitým! MMORPGS a ďalšie multiplayerové hry sú sociálne konštrukcie, agory, kde sa stretávame, socializujeme, utvárame priateľstvá, spolupracujeme, a hráme sa. Je to miesto, kde vytvárame civilizáciu. Je obrovská škoda, že (zatiaľ) všetky tieto "civilizácie vo fľaši" sú vlastnené mediálnymi gigantami (najhoršie je, že Universal/Blizzard, skutočne nepríjemný surovec, vlastní najpopulárnejší <emphasis>World of Warcraft,</emphasis></p>
+     </text-area>
+     <text-area points="689,773 1261,773 1263,858 688,863" type="formal">
+       <p>ale pýtať sa, či sa hranie stalo príliš dôležitým je rovnako hlúpe ako sa pýtať, či sa umenie stalo príliš dôležitým, alebo myslenie, škola.</p>
+     </text-area>
+     <text-area points="691,886 1261,886 1261,1080 692,1085" type="formal">
+       <p><strong>TW:</strong> Keď som ti poslal prvé kresby pre komix "Andina hra," kreslené fantastickým Esteveom Pollsom, tvoja reakcia, keď si to prvý-krát uvidel bola  ... citujem ... "Ó môj bože, toto je neskutočné COOL!" Dúfal som, že by si to mohol trochu rozviesť a opísať rozličné pocity, ktoré máš, keď tvoje príbehy ožívajú vo forme ilustrovaného sekvenčného umenia.</p>
+     </text-area>
+     <text-area points="695,1109 1261,1109 1260,1282 692,1282" type="formal">
+       <p><strong>CD:</strong> No, nikto ešte moju prácu predtým neadaptoval. Keď talentovaný umelec, akým je Polls, vytvorí na základe mojej práce niečo, čo nie je to, čo som videl ja v mojej mysli, aje JE veľmi pravdepodobne to, čo môže vidieť môj čitateľ, je to niečo ako byť schopný strčiť môjho čitateľa do magnetickej rezonančnej komory, keď číta niektorý z mojich príbehov, a vidieť, čo sa práve odohráva v jeho hlave.</p>
+     </text-area>
+     <text-area points="694,1301 1260,1301 1263,1469 690,1474" type="formal">
+       <p><strong>TW:</strong> Ohľadom poslednej otázky, máme rôznych komixových autorov, ktorí adaptujú tvoje krátke príbehy do krátkeho skriptu pre tento náš projekt - špecificky pre "Andinu hru," spisovateľka Dara Naraghi. Na ktoré veci pozeráš v skripte vychádzajúcom z tvojej práce predtým, než ho odsúhlasíš k vydaniu?</p>
+     </text-area>
+     <text-area points="693,1497 1259,1497 1259,1622 691,1615" type="formal">
+       <p><strong>CD:</strong> No, musí byť v súlade s mojou prácou - nemusí byť úplne presný (v zmysle, aby zobrazoval všetky udalosti, ktoré sa v príbehu odohrali), ale MUSÍ byť verný umeleckému zámeru a nálade, ktorá inšpirovala prácu.</p>
+     </text-area>
+     <text-area points="694,1635 1260,1635 1259,1693 693,1697" type="formal">
+       <p><strong>TW:</strong> Rozmýšľal si niekedy nad napísaním svojej vlastnej komixovej série alebo grafickej novely?</p>
+     </text-area>
+     <text-area points="693,1715 1260,1715 1261,1909 692,1920" type="formal">
+       <p><strong>CD:</strong> Myslím nato stále. Mám milión rôznych projektov na pláne - BoingBoing, malé blogové projekty, s ktorými sa hráme; film, ktorý koprodukujem; televíznu šou, kde som konzultantom; dve knihy z literatúry faktu; a milióny nápadov na krátke príbehy; môj podcast; cestovanie; prednášky (a to sa ešte sťahujem z Los Angeles do Londýna o dva týždne!).</p>
+     </text-area>
+   </text-layer>
+   <frame points="7,9 1329,9 1329,775 8,775"/>
+   <frame points="101,773 669,775 669,1284 96,1284"/>
+   <frame points="96,1300 668,1300 668,1916 100,1919"/>
+   <frame points="693,776 1263,776 1263,1284 690,1284"/>
+   <frame points="692,1301 1261,1301 1263,1915 691,1917"/>
+  </page>
+ </body>
+</ACBF>
