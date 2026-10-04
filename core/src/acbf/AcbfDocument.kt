@@ -69,25 +69,60 @@ class AcbfDocument(val xml: XmlDocument) {
     companion object {
         fun parse(bytes: ByteArray): AcbfDocument = AcbfDocument(XmlParser.parse(bytes))
 
+        /** A new document for a comic that has only images, with nothing but its title. */
+        fun create(title: String, images: List<String>): AcbfDocument = create(NewBook(title = title), images)
+
         /**
-         * A new document for a comic that has only images: the first image is the cover, the
-         * others are pages. Laid out the way lxml's pretty printer (ACBF Editor) writes it.
+         * A new document for a comic that has only images: the first image is the cover, the others
+         * are pages. Only what [book] gives is written, so nothing is invented; the result is valid
+         * against the ACBF 1.1 schema. Laid out the way lxml's pretty printer (ACBF Editor) writes it.
          */
-        fun create(title: String, images: List<String>): AcbfDocument {
+        @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
+        fun create(book: NewBook, images: List<String>): AcbfDocument {
             fun attr(s: String) = tessera.xml.escapeAttribute(s, '"')
             fun text(s: String) = tessera.xml.escapeText(s)
+            fun StringBuilder.author(a: Person, indent: String) {
+                append(indent).append("<author")
+                a.activity?.let { append(" activity=\"${attr(it)}\"") }
+                append(">\n")
+                if (a.firstName.isNotBlank() && a.lastName.isNotBlank()) {
+                    append("$indent  <first-name>${text(a.firstName)}</first-name>\n")
+                    append("$indent  <last-name>${text(a.lastName)}</last-name>\n")
+                } else {
+                    append("$indent  <nickname>${text(a.nickname.ifBlank { a.firstName + a.lastName })}</nickname>\n")
+                }
+                append(indent).append("</author>\n")
+            }
+            val lang = book.language.takeIf { it.isNotBlank() }?.let { " lang=\"${attr(it)}\"" }.orEmpty()
             val xml = buildString {
                 append("<?xml version='1.0' encoding='UTF-8'?>\n")
                 append("<ACBF xmlns=\"${AcbfNamespaces.DEFAULT}\">\n")
                 append("  <meta-data>\n")
                 append("    <book-info>\n")
-                append("      <book-title>${text(title)}</book-title>\n")
+                book.authors.filter { !it.isEmpty }.forEach { author(it, "      ") }
+                append("      <book-title$lang>${text(book.title)}</book-title>\n")
+                append("      <genre>${text(book.genre)}</genre>\n")
+                if (book.annotation.isNotBlank()) {
+                    append("      <annotation$lang>\n")
+                    book.annotation.split('\n').filter { it.isNotBlank() }.forEach { append("        <p>${text(it.trim())}</p>\n") }
+                    append("      </annotation>\n")
+                }
                 append("      <coverpage>\n")
                 images.firstOrNull()?.let { append("        <image href=\"${attr(it)}\"/>\n") }
                 append("      </coverpage>\n")
                 append("    </book-info>\n")
-                append("    <publish-info/>\n")
-                append("    <document-info/>\n")
+                if (book.publisher.isNotBlank() || book.publishDate.isNotBlank()) {
+                    append("    <publish-info>\n")
+                    if (book.publisher.isNotBlank()) append("      <publisher>${text(book.publisher)}</publisher>\n")
+                    if (book.publishDate.isNotBlank()) append("      <publish-date value=\"${attr(book.publishDate)}\">${text(book.publishDate)}</publish-date>\n")
+                    append("    </publish-info>\n")
+                }
+                append("    <document-info>\n")
+                book.documentAuthor?.takeIf { !it.isEmpty }?.let { author(it, "      ") }
+                if (book.creationDate.isNotBlank()) append("      <creation-date value=\"${attr(book.creationDate)}\">${text(book.creationDate)}</creation-date>\n")
+                append("      <id>${kotlin.uuid.Uuid.random()}</id>\n")
+                append("      <version>1.0</version>\n")
+                append("    </document-info>\n")
                 append("  </meta-data>\n")
                 append("  <body>\n")
                 for (img in images.drop(1)) {
@@ -104,6 +139,56 @@ class AcbfDocument(val xml: XmlDocument) {
 }
 
 data class LanguageLayer(val lang: String, val show: Boolean)
+
+/** A person in book-info or document-info: first and last name, or a nickname alone. */
+data class Person(
+    val firstName: String = "",
+    val lastName: String = "",
+    val nickname: String = "",
+    /** One of ACBF's activities (Writer, Artist, …), or null. */
+    val activity: String? = null,
+) {
+    val isEmpty: Boolean get() = firstName.isBlank() && lastName.isBlank() && nickname.isBlank()
+
+    companion object {
+        /** "Ali Almossawi" gives first and last name; a single word is kept as a nickname. */
+        fun fromName(name: String, activity: String? = null): Person {
+            val n = name.trim().replace(Regex("\\s+"), " ")
+            val cut = n.lastIndexOf(' ')
+            return if (cut > 0) Person(n.substring(0, cut), n.substring(cut + 1), activity = activity) else Person(nickname = n, activity = activity)
+        }
+    }
+}
+
+/** What the user tells about a comic that had no ACBF document. Blank fields are left out. */
+data class NewBook(
+    val title: String,
+    val authors: List<Person> = emptyList(),
+    /** One of [GENRES]. */
+    val genre: String = "other",
+    val annotation: String = "",
+    /**
+     * ISO 639-1 code of the book's language, or blank: set on the title and annotation. No
+     * `languages` block is written before there are text layers; ACBF Viewer requires `show`.
+     */
+    val language: String = "",
+    val publisher: String = "",
+    /** YYYY-MM-DD, or blank. */
+    val publishDate: String = "",
+    /** Whoever made this ACBF document. */
+    val documentAuthor: Person? = null,
+    /** YYYY-MM-DD: today, given by the caller. */
+    val creationDate: String = "",
+) {
+    companion object {
+        /** The genres of the ACBF 1.1 schema. */
+        val GENRES = listOf(
+            "science_fiction", "fantasy", "adventure", "horror", "mystery", "crime", "military", "real_life", "superhero",
+            "humor", "western", "manga", "politics", "caricature", "sports", "history", "biography", "education", "computer",
+            "religion", "romance", "children", "non-fiction", "adult", "alternative", "other",
+        )
+    }
+}
 
 /** A frame element and its `points` text, as remembered for undo. */
 class FrameState(val element: XmlElement, val points: String?)

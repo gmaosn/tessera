@@ -124,6 +124,54 @@ object Strings {
         Tool.Order -> t("Reading order (O)", "Ordre de lecture (O)")
     }
 
+    // ----- Book information dialog -----
+
+    val bookInfoTitle get() = t("About this comic", "À propos de cette bande dessinée")
+    val bookInfoIntro get() = t(
+        "This comic has no ACBF document yet. Tessera will add one when you save; tell it what to write in it.",
+        "Cette bande dessinée n’a pas encore de document ACBF. Tessera en ajoutera un à l’enregistrement ; dites-lui quoi y écrire.",
+    )
+    val fieldTitle get() = t("Title", "Titre")
+    val fieldAuthors get() = t("Authors", "Auteur·rices")
+    val fieldAuthorsHint get() = t("First and last name, or a pen name; separate several with commas", "Prénom et nom, ou pseudonyme ; plusieurs séparés par des virgules")
+    val fieldGenre get() = t("Genre", "Genre")
+    val fieldLanguage get() = t("Language of the book", "Langue du livre")
+    val fieldSummary get() = t("Summary", "Résumé")
+    val optional get() = t("optional", "facultatif")
+    val fieldCreator get() = t("Your name", "Votre nom")
+    val fieldCreatorHint get() = t("as the maker of this ACBF document; remembered", "comme auteur·rice de ce document ACBF ; retenu")
+    val bookInfoLaterNote get() = t("Blank fields are left out of the file.", "Les champs vides ne sont pas écrits dans le fichier.")
+    val later get() = t("Later", "Plus tard")
+
+    fun genre(key: String): String = when (key) {
+        "science_fiction" -> t("Science fiction", "Science-fiction")
+        "fantasy" -> t("Fantasy", "Fantasy")
+        "adventure" -> t("Adventure", "Aventure")
+        "horror" -> t("Horror", "Horreur")
+        "mystery" -> t("Mystery", "Mystère")
+        "crime" -> t("Crime", "Policier")
+        "military" -> t("War", "Guerre")
+        "real_life" -> t("Real life", "Vie réelle")
+        "superhero" -> t("Superhero", "Super-héros")
+        "humor" -> t("Humour", "Humour")
+        "western" -> t("Western", "Western")
+        "manga" -> t("Manga", "Manga")
+        "politics" -> t("Politics", "Politique")
+        "caricature" -> t("Caricature", "Caricature")
+        "sports" -> t("Sports", "Sport")
+        "history" -> t("History", "Histoire")
+        "biography" -> t("Biography", "Biographie")
+        "education" -> t("Education", "Éducation")
+        "computer" -> t("Computers", "Informatique")
+        "religion" -> t("Religion", "Religion")
+        "romance" -> t("Romance", "Romance")
+        "children" -> t("Children", "Jeunesse")
+        "non-fiction" -> t("Non-fiction", "Documentaire")
+        "adult" -> t("Adult", "Adulte")
+        "alternative" -> t("Alternative", "Alternatif")
+        else -> t("Other", "Autre")
+    }
+
     // ----- Application -----
 
     val menuFile get() = t("File", "Fichier")

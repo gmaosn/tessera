@@ -78,11 +78,14 @@ fun EditorScreen(
     saveRequest: Int = 0,
     /** A message from the host (after « Save as »), shown once per instance. */
     notice: Notice? = null,
+    /** Ask for the book's title and authors when the comic had no ACBF document. */
+    askBookInfo: Boolean = true,
 ) {
     val c = LocalPalette.current
     val view = remember(session) { CanvasView() }
     val focus = remember { FocusRequester() }
     var previewing by remember { mutableStateOf(startPreviewing) }
+    var askingBookInfo by remember(session) { mutableStateOf(askBookInfo && session.comic.generated) }
     var toast by remember { mutableStateOf<String?>(null) }
     val pageImage by rememberPageImage(images, session.page.imageHref)
     val image = pageImage.bitmap
@@ -180,6 +183,16 @@ fun EditorScreen(
             Hints(tool)
         }
         toast?.let { Toast(it, Modifier.align(Alignment.BottomCenter).padding(bottom = 52.dp)) }
+        if (askingBookInfo) {
+            BookInfoDialog(session.fileName.substringBeforeLast('.')) { book ->
+                if (book != null) {
+                    session.replaceGenerated(tessera.acbf.AcbfDocument.create(book, session.pages.mapNotNull { it.imageHref }))
+                    tool.pageChanged()
+                }
+                askingBookInfo = false
+                focus.requestFocus()
+            }
+        }
         if (previewing) ReaderPreview(session, images) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
     }
 }

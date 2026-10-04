@@ -34,6 +34,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import tessera.acbf.ComicFiles
 import tessera.acbf.OutsideImageFolder
+import tessera.editor.EditorPrefs
 import tessera.editor.EditorScreen
 import tessera.editor.ImageCache
 import tessera.editor.Label
@@ -69,6 +70,8 @@ fun main(args: Array<String>) {
     if (!isMac) {
         Strings.cmd = "Ctrl+"; Strings.alt = "Alt"
     }
+    EditorPrefs.creator = prefs.get("creator", "")
+    EditorPrefs.onChange = { prefs.put("creator", EditorPrefs.creator) }
     application {
         var opened by remember { mutableStateOf(args.firstOrNull()?.let { runCatching { open(File(it)) }.getOrNull() }) }
         var error by remember { mutableStateOf<String?>(null) }

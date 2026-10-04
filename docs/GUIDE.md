@@ -15,8 +15,12 @@ inside, and standalone `.acbf` files.
 
 Supported: `.cbz` and `.zip` archives, `.acbf` documents (images beside them, inside the
 document in base64, or in sub-folders). A CBZ without an ACBF document is opened too: Tessera
-lists its images in natural order (page2 before page10), the first one as the cover. Saving
-adds an ACBF document to the archive.
+lists its images in natural order (page2 before page10), the first one as the cover, and asks
+**About this comic**: title (from the file name), authors (first and last name, or a pen name;
+several separated by commas), genre, the book's language, an optional summary, and your name as
+the maker of the ACBF document (remembered). Blank fields are left out of the file; **Later**
+keeps just the title. Saving adds the ACBF document to the archive; it is valid against the
+official ACBF 1.1 schema.
 
 CBR (RAR) archives are not supported yet.
 

@@ -125,6 +125,19 @@ class Session(comic: Comic, fileName: String) {
     /** True when this frame's points differ from the saved file. */
     fun isChanged(frame: XmlElement): Boolean = !savedPoints.containsKey(frame) || savedPoints[frame] != frame["points"]
 
+    /**
+     * Replaces a generated document (a comic that had no ACBF file) by a fuller one, such as the
+     * one made from the book information dialog. Undo starts afresh.
+     */
+    fun replaceGenerated(document: tessera.acbf.AcbfDocument) {
+        check(comic.generated) { "only a generated document can be replaced" }
+        comic = Comic(document, comic.container, comic.acbfPath, generated = true)
+        undoStack.clear(); redoStack.clear()
+        pageIndex = pageIndex.coerceAtMost(pages.size - 1)
+        rememberSaved()
+        revision++
+    }
+
     /** Call after a successful save, with the comic reopened on the saved file. */
     fun saved(reopened: Comic) {
         comic = reopened

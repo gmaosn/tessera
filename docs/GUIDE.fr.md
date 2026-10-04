@@ -16,7 +16,11 @@ avec ou sans document ACBF à l’intérieur, et les fichiers `.acbf` seuls.
 Formats pris en charge : archives `.cbz` et `.zip`, documents `.acbf` (images à côté, intégrées
 au document en base64, ou dans des sous-dossiers). Un CBZ sans document ACBF s’ouvre aussi :
 Tessera prend ses images dans l’ordre naturel (page2 avant page10), la première comme
-couverture. L’enregistrement ajoute alors un document ACBF à l’archive.
+couverture, et demande **À propos de cette bande dessinée** : titre (d’après le nom du fichier),
+auteur·rices (prénom et nom, ou pseudonyme ; plusieurs séparés par des virgules), genre, langue
+du livre, résumé facultatif, et votre nom comme auteur·rice du document ACBF (retenu). Les champs
+vides ne sont pas écrits ; **Plus tard** ne garde que le titre. L’enregistrement ajoute le
+document ACBF à l’archive ; il est valide selon le schéma officiel ACBF 1.1.
 
 Les archives CBR (RAR) ne sont pas encore prises en charge.
 
