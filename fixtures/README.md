@@ -11,3 +11,7 @@ when they are missing.
 The books keep their own licences (Creative Commons, see each document's `<license>`):
 Craphound and Anda's Game (Cory Doctorow), NYC2123, Pepper & Carrot (David Revoy),
 The Purple Claw, Vision Machine, The Illustrated Book of Bad Arguments (Ali Almossawi).
+
+`schema/` holds the official ACBF 1.0 and 1.1 XML schemas, unchanged, from the ACBF project
+(github.com/ACBF-Advanced-Comic-Book-Format/ACBF, GPL-3.0). Tests validate the documents Tessera
+creates against them.
