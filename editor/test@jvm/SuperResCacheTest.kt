@@ -105,4 +105,23 @@ class SuperResCacheTest {
         assertEquals(2, order.size)
         assertTrue(order[0].endsWith("-${pngB.size}"), "the page shown was computed first: $order")
     }
+
+    @Test
+    fun framesOfHighDefinitionPagesAreEnhancedOneByOne() = runBlocking {
+        val big = ByteArrayOutputStream().also { ImageIO.write(BufferedImage(2200, 2200, BufferedImage.TYPE_INT_RGB), "png", it) }.toByteArray()
+        val container = object : Container {
+            override val paths = listOf("a.png", "b.png")
+            override fun read(path: String) = big
+        }
+        val store = MemoryStore()
+        val cache = ImageCache(Comic(AcbfDocument.create("T", listOf("a.png", "b.png")), container, "t.acbf", generated = false), store)
+        val frame = tessera.editor.Region(100, 200, 120, 80)
+        cache.wanted = listOf(frame.id("a.png"))
+        val restored = assertNotNull(cache.enhancedRegion("a.png", frame, Enhancement(EnhanceMode.Restore)))
+        assertEquals(240 to 160, restored.width to restored.height)
+        val sr = assertNotNull(cache.enhancedRegion("a.png", frame, Enhancement(EnhanceMode.SuperRes)))
+        assertEquals(240 to 160, sr.width to sr.height)
+        assertEquals(1, store.saved.size)
+        assertTrue(store.saved.keys.single().endsWith("-r100_200_120_80"), "${store.saved.keys}")
+    }
 }

@@ -81,7 +81,6 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val enhanced by rememberEnhanced(images, page.imageHref, EnhancePrefs.reader)
     var enhanceOpen by remember { mutableStateOf(false) }
     var comparing by remember { mutableStateOf(false) }
-    LaunchedEffect(stop.page) { images.wanted = listOfNotNull(page.imageHref, pages.getOrNull(stop.page + 1)?.imageHref) }
     // The next page is enhanced ahead too.
     LaunchedEffect(stop.page, EnhancePrefs.reader) { pages.getOrNull(stop.page + 1)?.let { images.enhanced(it.imageHref, EnhancePrefs.reader) } }
     val focus = remember { FocusRequester() }
@@ -109,6 +108,27 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     // This page's frames; a page without any reads as one frame covering the whole image.
     val frames: List<Pair<Polygon, String?>> = page.frames.mapNotNull { f -> f.polygon?.let { it to f.bgcolor } }.ifEmpty {
         if (image == null) emptyList() else listOf(Polygon.rectangle(0, 0, image.width, image.height) to null)
+    }
+    // A high-definition page is enhanced frame by frame: the frame read fills the screen, and a
+    // frame costs a fraction of the page. Frames done stay enhanced while the page is read.
+    val settings = EnhancePrefs.reader
+    val byFrame = image != null && images.isHighDefinition(page.imageHref) &&
+        (settings.mode == tessera.editor.enhance.EnhanceMode.Restore || settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes)
+    val frameRegions = if (byFrame && image != null) frames.map { Region.around(it.first, image.width, image.height) } else emptyList()
+    val readyRegions = remember(page.imageHref, settings) { androidx.compose.runtime.mutableStateMapOf<Region, ImageBitmap>() }
+    val currentRegion = frameRegions.getOrNull(stop.frame)
+    LaunchedEffect(stop, byFrame, frameRegions.size) {
+        images.wanted = if (byFrame) {
+            listOfNotNull(currentRegion, frameRegions.getOrNull(stop.frame + 1)).mapNotNull { r -> page.imageHref?.let { r.id(it) } }
+        } else {
+            listOfNotNull(page.imageHref, pages.getOrNull(stop.page + 1)?.imageHref)
+        }
+    }
+    LaunchedEffect(currentRegion, settings) {
+        val r = currentRegion ?: return@LaunchedEffect
+        images.enhancedRegion(page.imageHref, r, settings)?.let { readyRegions[r] = it }
+        // Then the next frame, ahead.
+        frameRegions.getOrNull(stop.frame + 1)?.let { n -> images.enhancedRegion(page.imageHref, n, settings)?.let { readyRegions[n] = it } }
     }
 
     Column(
@@ -171,6 +191,13 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                     } else {
                         drawImage(image, filterQuality = FilterQuality.High, alpha = fade.value)
                     }
+                    // Enhanced frames, each exactly over its own pixels.
+                    if (!comparing) for ((r, bmp) in readyRegions) {
+                        drawImage(
+                            bmp, dstOffset = androidx.compose.ui.unit.IntOffset(r.x, r.y),
+                            dstSize = androidx.compose.ui.unit.IntSize(r.width, r.height), filterQuality = FilterQuality.High, alpha = fade.value,
+                        )
+                    }
                 }
                 val outside = Path().apply {
                     fillType = PathFillType.EvenOdd
@@ -187,14 +214,17 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                 Label(Strings.loading, Modifier.align(Alignment.Center), color = PreviewText)
             }
             if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
-            if ((EnhancePrefs.reader.mode == tessera.editor.enhance.EnhanceMode.SuperRes || (EnhancePrefs.reader.mode == tessera.editor.enhance.EnhanceMode.Restore && images.isHighDefinition(page.imageHref))) && enhanced == null && image != null) {
-                Toast(if (images.isHighDefinition(page.imageHref)) Strings.alreadyHighDefinition else Strings.superResPill(images.superResProgress[page.imageHref]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
+            val href = page.imageHref
+            if (byFrame && currentRegion != null && currentRegion !in readyRegions && href != null && !comparing) {
+                Toast(Strings.framePill(settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes, images.superResProgress[currentRegion.id(href)]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
+            } else if (!byFrame && settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes && enhanced == null && image != null) {
+                Toast(Strings.superResPill(images.superResProgress[href]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
             }
             if (enhanceOpen) {
                 EnhancePanel(
-                    EnhancePrefs.reader, busy = EnhancePrefs.reader.active && enhanced == null && image != null && !(EnhancePrefs.reader.mode != tessera.editor.enhance.EnhanceMode.Sharpen && images.isHighDefinition(page.imageHref)),
+                    EnhancePrefs.reader, busy = if (byFrame) currentRegion != null && currentRegion !in readyRegions else EnhancePrefs.reader.active && enhanced == null && image != null,
                     onChange = { EnhancePrefs.reader = it; EnhancePrefs.onChange?.invoke() },
-                    progress = images.superResProgress[page.imageHref], storePlace = images.store?.place,
+                    progress = images.superResProgress[if (byFrame && currentRegion != null && page.imageHref != null) currentRegion.id(page.imageHref!!) else page.imageHref], storePlace = images.store?.place,
                     modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp).zIndex(2f),
                 )
             }

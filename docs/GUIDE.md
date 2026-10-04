@@ -120,6 +120,12 @@ display settings, remembered separately for editing and reading:
   the book plus `.tessera` (for example `Book.cbz.tessera`), and shows at once afterwards, also
   in later sessions. While reading, the next page is computed ahead.
 
+Pages already in high definition (above about 4 megapixels, such as 300 dpi scans) are not
+enlarged as a whole: that would take many minutes for little. When reading frame by frame,
+Restore and Super-res improve the frame you read instead (about a minute per frame with
+Super-res, kept beside the book too), then the next one; frames done stay enhanced while you
+read the page.
+
 **Sharpness** and, for Restore and Super-res, **Strength** adjust the effect from 0 to
 100 %; once a page is computed, changing them is instant. To compare,
 hold **◐ Compare** (beside the display button, in the editor and in the reading bar) or hold

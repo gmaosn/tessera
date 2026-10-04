@@ -269,12 +269,17 @@ object Strings {
     fun enhanceProgress(f: Float) = t("Computing… ${(f * 100).toInt()} %", "Calcul… ${(f * 100).toInt()} %")
     fun superResPill(f: Float?) = if (f == null) t("Super-resolution: waiting…", "Super-résolution : en attente…") else t("Super-resolution: ${(f * 100).toInt()} %", "Super-résolution : ${(f * 100).toInt()} %")
     fun enhanceSuperResNote(place: String?) = t(
-        "Real-ESRGAN: the best quality, but slow: about two minutes per page the first time on a laptop; you can keep reading meanwhile. " +
+        "Real-ESRGAN: the best quality, but slow: about two minutes per page the first time on a laptop, or about a minute per frame for high-definition pages, which are enhanced frame by frame when reading; you can keep reading meanwhile. " +
             (if (place != null) "Results are kept in “$place”, beside the book, and show at once afterwards." else "Results are kept in memory for this session."),
-        "Real-ESRGAN : la meilleure qualité, mais lente : environ deux minutes par planche la première fois sur un portable ; vous pouvez continuer à lire en attendant. " +
+        "Real-ESRGAN : la meilleure qualité, mais lente : environ deux minutes par planche la première fois sur un portable, ou environ une minute par case pour les planches en haute définition, améliorées case par case en lecture ; vous pouvez continuer à lire en attendant. " +
             (if (place != null) "Les résultats sont gardés dans « $place », à côté du livre, puis s’affichent aussitôt." else "Les résultats sont gardés en mémoire pour cette session."),
     )
-    val alreadyHighDefinition get() = t("This page is already in high definition: shown as it is", "Planche déjà en haute définition : affichée telle quelle")
+    fun framePill(superRes: Boolean, f: Float?) = when {
+        !superRes -> t("Enhancing this frame…", "Amélioration de la case…")
+        f == null -> t("Super-resolution of this frame: waiting…", "Super-résolution de la case : en attente…")
+        else -> t("Super-resolution of this frame: ${(f * 100).toInt()} %", "Super-résolution de la case : ${(f * 100).toInt()} %")
+    }
+    val alreadyHighDefinition get() = t("High-definition page: enhanced frame by frame when reading", "Planche en haute définition : améliorée case par case en lecture")
     val enhanceSharpness get() = t("Sharpness", "Netteté")
     val enhanceStrength get() = t("Strength", "Force")
     val enhanceOffNote get() = t("Pages are shown exactly as they are.", "Les planches s’affichent telles quelles.")

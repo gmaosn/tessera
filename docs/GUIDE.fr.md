@@ -123,6 +123,12 @@ l’édition et pour la lecture :
   suivi de `.tessera` (par exemple `Livre.cbz.tessera`), et s’affiche aussitôt ensuite, même lors
   des sessions suivantes. En lecture, la planche suivante est calculée à l’avance.
 
+Les planches déjà en haute définition (au-delà d’environ 4 mégapixels, comme les numérisations
+à 300 dpi) ne sont pas agrandies en entier : cela prendrait de longues minutes pour peu de chose.
+En lecture case par case, la restauration et la super-résolution améliorent plutôt la case que
+vous lisez (environ une minute par case en super-résolution, gardée elle aussi à côté du livre),
+puis la suivante ; les cases déjà faites restent améliorées pendant la lecture de la planche.
+
 **Netteté** et, pour la restauration et la super-résolution, **Force** règlent l’effet de 0
 à 100 % ; une fois une planche calculée, les changer est instantané. Pour comparer,
 maintenez **◐ Comparer** (à côté du bouton d’affichage, dans l’éditeur et dans la barre de

@@ -21,7 +21,13 @@ data class Enhancement(val mode: EnhanceMode = EnhanceMode.Off, val sharpness: F
 }
 
 /** An ARGB image, as pixels move between bitmaps and the enhancer. */
-class Argb(val width: Int, val height: Int, val pixels: IntArray)
+class Argb(val width: Int, val height: Int, val pixels: IntArray) {
+    fun crop(r: tessera.editor.Region): Argb {
+        val out = IntArray(r.width * r.height)
+        for (y in 0 until r.height) pixels.copyInto(out, y * r.width, (r.y + y) * width + r.x, (r.y + y) * width + r.x + r.width)
+        return Argb(r.width, r.height, out)
+    }
+}
 
 /**
  * Improves a page for display only; files are never touched. Sharpen applies AMD's
