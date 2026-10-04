@@ -91,4 +91,5 @@ release reaching the editor, thumbnail clicks, page changes, image loading, file
 written to `build/control`, one per line, are run by the window: `shot NAME` (its own rendering
 to `build/screens/NAME.png`), `click X Y` (window points), `load PATH`, and `dialog PATH` (shows
 the Open dialog, closes it, then opens PATH). Run a single instance at a time: they share the
-files. Off by default; `Trace` costs nothing when no sink is set.
+files. Start windows with `tools/run.sh` (own build directory, so builds and tests never pull
+classes from under an open window) and stop them with `tools/stop.sh`. Off by default; `Trace` costs nothing when no sink is set.

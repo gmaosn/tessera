@@ -29,7 +29,7 @@ The repository carries the `./kotlin` launcher (Kotlin Toolchain 0.12, JDK 25), 
 everything on first use.
 
 ```sh
-./kotlin run -m app -- path/to/comic.cbz    # the editor
+tools/run.sh path/to/comic.cbz              # the editor, in a build directory of its own
 ./kotlin test -p jvm                        # every test
 tools/fetch-fixtures.sh                     # the sample books (about 120 MB) for tests and screenshots
 ```

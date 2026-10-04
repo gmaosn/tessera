@@ -30,7 +30,7 @@ Le dépôt contient le lanceur `./kotlin` (Kotlin Toolchain 0.12, JDK 25), qui i
 premier usage.
 
 ```sh
-./kotlin run -m app -- chemin/vers/livre.cbz   # l’éditeur
+tools/run.sh chemin/vers/livre.cbz            # l’éditeur, dans son propre dossier de compilation
 ./kotlin test -p jvm                           # tous les tests
 tools/fetch-fixtures.sh                        # les livres d’exemple (environ 120 Mo) pour tests et captures
 ```
