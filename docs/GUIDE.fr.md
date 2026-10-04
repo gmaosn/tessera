@@ -94,7 +94,7 @@ l’éditeur se place sur la planche atteinte.
 ## Affichage amélioré
 
 Les numérisations en basse résolution paraissent floues ou pixellisées une fois agrandies,
-surtout en lecture case par case. **✧** dans la pastille de zoom (éditeur) et **✧ Affichage
+surtout en lecture case par case. **✧ Affichage** au bout de la pastille de zoom (éditeur) et **✧ Affichage
 amélioré** dans la barre de lecture ouvrent les réglages d’affichage, retenus séparément pour
 l’édition et pour la lecture :
 

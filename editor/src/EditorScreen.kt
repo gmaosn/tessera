@@ -361,7 +361,7 @@ private fun ZoomPill(view: CanvasView, enhancing: Boolean, onEnhance: () -> Unit
         Label("${(view.shownScale * 100).roundToInt()} %", Modifier.width(52.dp).padding(horizontal = 2.dp), color = c.muted, maxLines = 1)
         ZoomButton("+") { view.zoomBy(1.25f) }
         ZoomButton(Strings.fit) { view.fit() }
-        ZoomButton(if (enhancing) "✦" else "✧", onEnhance)
+        ZoomButton((if (enhancing) "✦ " else "✧ ") + Strings.enhanceShort, onEnhance)
     }
 }
 

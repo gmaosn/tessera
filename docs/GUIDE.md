@@ -94,7 +94,7 @@ page you reached.
 ## Enhanced display
 
 Low-resolution scans look blurry or blocky once enlarged, especially when reading frame by
-frame. **✧** in the zoom pill (editor) and **✧ Enhanced display** in the reading bar open the
+frame. **✧ Display** at the right end of the zoom pill (editor) and **✧ Enhanced display** in the reading bar open the
 display settings, remembered separately for editing and reading:
 
 - **Off**: pages as they are.

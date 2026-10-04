@@ -257,6 +257,7 @@ object Strings {
 
     val enhanceTitle get() = t("Enhanced display", "Affichage amélioré")
     val enhanceButton get() = t("Enhanced display", "Affichage amélioré")
+    val enhanceShort get() = t("Display", "Affichage")
     val enhanceBusy get() = t("Computing…", "Calcul…")
     val enhanceOff get() = t("Off", "Désactivé")
     val enhanceSharpen get() = t("Sharpen", "Netteté")
