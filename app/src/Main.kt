@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,7 +33,12 @@ import androidx.compose.ui.window.MenuBar
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 import tessera.acbf.ComicFiles
+import tessera.acbf.NewBook
+import tessera.acbf.Person
 import tessera.acbf.OutsideImageFolder
 import tessera.editor.EditorPrefs
 import tessera.editor.EditorScreen
@@ -61,6 +67,16 @@ private fun open(file: File): Opened {
     return Opened(file, Session(comic, file.name), ImageCache(comic))
 }
 
+/**
+ * The editor for one comic. A new comic gets a wholly new editor: nothing composed for the
+ * previous one survives (thumbnails kept the previous comic's click actions otherwise, since
+ * references to the same local function compare equal and Compose skipped them).
+ */
+@Composable
+fun EditorFor(session: Session, images: ImageCache, onSave: () -> String, saveRequest: Int = 0, notice: Notice? = null) {
+    key(session) { EditorScreen(session, images, onSave = onSave, saveRequest = saveRequest, notice = notice) }
+}
+
 private val isMac = System.getProperty("os.name").lowercase().contains("mac")
 private val prefs: Preferences = Preferences.userRoot().node("tessera")
 
@@ -86,6 +102,13 @@ fun main(args: Array<String>) {
         val title = opened?.let { "${it.file.name}${if (it.session.dirty) " •" else ""} — Tessera" } ?: "Tessera"
 
         var saveRequest by remember { mutableStateOf(0) }
+        // PDF import: the file being set up, its options and destination, then the progress.
+        var plan by remember { mutableStateOf<Pair<File, PdfInfo>?>(null) }
+        var importOptions by remember { mutableStateOf(PdfImportOptions()) }
+        var importTarget by remember { mutableStateOf(File("")) }
+        var importProgress by remember { mutableStateOf<Pair<Int, Int>?>(null) }
+        var importJob by remember { mutableStateOf<Job?>(null) }
+        val scope = rememberCoroutineScope()
         var notice by remember { mutableStateOf<Notice?>(null) }
 
         fun save(o: Opened): String = runCatching {
@@ -97,7 +120,41 @@ fun main(args: Array<String>) {
         }.getOrElse { Strings.saveFailed(it.message) }
 
         Window(onCloseRequest = { if (mayDiscard(opened, ::save)) exitApplication() }, state = state, title = title) {
+            fun planImport(pdf: File) {
+                if (!mayDiscard(opened, ::save)) return
+                runCatching { PdfImport.inspect(pdf) }
+                    .onSuccess { plan = pdf to it; importTarget = freeName(pdf) }
+                    .onFailure { e -> Strings.importFailed(e.message).let { error = it; notice = Notice(it) } }
+            }
+
+            fun runImport() {
+                val (pdf, info) = plan ?: return
+                val target = importTarget
+                importProgress = 0 to info.pages
+                importJob = scope.launch {
+                    try {
+                        val result = PdfImport.import(pdf, target, importOptions) { done, total -> importProgress = done to total }
+                        val o = open(target)
+                        o.session.suggested = NewBook(
+                            title = info.title.ifBlank { pdf.nameWithoutExtension },
+                            authors = info.author.split(Regex("\\s*(?:[,;&]|\\bet\\b|\\band\\b)\\s*")).map { Person.fromName(it) }.filter { !it.isEmpty },
+                            annotation = info.subject,
+                        )
+                        opened = o
+                        error = null
+                        notice = Notice(Strings.importDone(result.pages, result.originals))
+                    } catch (e: kotlinx.coroutines.CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Strings.importFailed(e.message).let { error = it; notice = Notice(it) }
+                    } finally {
+                        importProgress = null; plan = null; importJob = null
+                    }
+                }
+            }
+
             fun load(f: File) {
+                if (f.extension.equals("pdf", ignoreCase = true)) return planImport(f)
                 if (!mayDiscard(opened, ::save)) return
                 runCatching { open(f) }.onSuccess { opened = it; error = null }.onFailure { error = "${f.name} : ${it.message}" }
                 tessera.editor.Trace.log { "load ${f.name}: ${error ?: "ok"}" }
@@ -122,13 +179,27 @@ fun main(args: Array<String>) {
             val current = opened
             Menus(
                 onOpen = { pickFile(window)?.let(::load) },
+                onImport = { pickPdf(window)?.let(::planImport) },
                 onSave = current?.let { { saveRequest++ } },
                 onSaveAs = current?.let { o -> { saveAs(o) } },
             )
             TesseraTheme {
                 Box(Modifier.fillMaxSize().fileDrop(::load)) {
                     if (current == null) Welcome(error) { pickFile(window)?.let(::load) }
-                    else EditorScreen(current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice)
+                    else EditorFor(current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice)
+                    val p = plan
+                    val progress = importProgress
+                    if (p != null && progress != null) {
+                        ImportProgress(p.first, progress.first, progress.second) { importJob?.cancel() }
+                    } else if (p != null) {
+                        ImportDialog(
+                            p.first, p.second, importOptions, importTarget,
+                            onOptions = { importOptions = it },
+                            onChangeTarget = { pickSaveFile(window, importTarget)?.let { importTarget = it } },
+                            onCancel = { plan = null },
+                            onImport = ::runImport,
+                        )
+                    }
                 }
             }
         }
@@ -158,10 +229,11 @@ private fun mayDiscard(o: Opened?, save: (Opened) -> String): Boolean {
 }
 
 @Composable
-private fun FrameWindowScope.Menus(onOpen: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?) {
+private fun FrameWindowScope.Menus(onOpen: () -> Unit, onImport: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?) {
     MenuBar {
         Menu(Strings.menuFile) {
             Item(Strings.menuOpen, shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
+            Item(Strings.menuImportPdf, shortcut = KeyShortcut(Key.I, meta = isMac, ctrl = !isMac), onClick = onImport)
             Item(Strings.save, enabled = onSave != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac), onClick = { onSave?.invoke() })
             Item(Strings.menuSaveAs, enabled = onSaveAs != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac, shift = true), onClick = { onSaveAs?.invoke() })
         }
@@ -194,9 +266,25 @@ private fun Welcome(error: String?, onOpen: () -> Unit) {
 
 private fun pickFile(window: java.awt.Frame): File? {
     val dialog = FileDialog(window, Strings.openDialog, FileDialog.LOAD)
-    dialog.setFilenameFilter { _, name -> name.substringAfterLast('.').lowercase() in setOf("cbz", "zip", "acbf") }
+    dialog.setFilenameFilter { _, name -> name.substringAfterLast('.').lowercase() in setOf("cbz", "zip", "acbf", "pdf") }
     dialog.isVisible = true
     return dialog.file?.let { File(dialog.directory, it) }
+}
+
+private fun pickPdf(window: java.awt.Frame): File? {
+    val dialog = FileDialog(window, Strings.importPdfDialog, FileDialog.LOAD)
+    dialog.setFilenameFilter { _, name -> name.endsWith(".pdf", ignoreCase = true) }
+    dialog.isVisible = true
+    return dialog.file?.let { File(dialog.directory, it) }
+}
+
+/** "Book.cbz" beside the PDF, or "Book (2).cbz" and so on when taken. */
+private fun freeName(pdf: File): File {
+    val dir = pdf.absoluteFile.parentFile
+    var candidate = File(dir, pdf.nameWithoutExtension + ".cbz")
+    var n = 2
+    while (candidate.exists()) candidate = File(dir, "${pdf.nameWithoutExtension} (${n++}).cbz")
+    return candidate
 }
 
 private fun pickSaveFile(window: java.awt.Frame, current: File): File? {

@@ -63,13 +63,13 @@ object EditorPrefs {
  * the document Tessera writes says so. [onDone] gets the information, or null for « Later ».
  */
 @Composable
-fun BookInfoDialog(suggestedTitle: String, onDone: (NewBook?) -> Unit) {
+fun BookInfoDialog(suggestedTitle: String, onDone: (NewBook?) -> Unit, suggestion: NewBook? = null) {
     val c = LocalPalette.current
-    var title by remember { mutableStateOf(suggestedTitle) }
-    var authors by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(suggestion?.title?.ifBlank { null } ?: suggestedTitle) }
+    var authors by remember { mutableStateOf(suggestion?.authors.orEmpty().joinToString(", ") { a -> listOf(a.firstName, a.lastName).filter { it.isNotBlank() }.joinToString(" ").ifBlank { a.nickname } }) }
     var genre by remember { mutableStateOf("other") }
     var language by remember { mutableStateOf(Strings.language.code) }
-    var summary by remember { mutableStateOf("") }
+    var summary by remember { mutableStateOf(suggestion?.annotation.orEmpty()) }
     var creator by remember { mutableStateOf(EditorPrefs.creator) }
     val first = remember { FocusRequester() }
     LaunchedEffect(Unit) { first.requestFocus() }

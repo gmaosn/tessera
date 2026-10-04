@@ -207,14 +207,14 @@ fun EditorScreen(
         }
         toast?.let { Toast(it, Modifier.align(Alignment.BottomCenter).padding(bottom = 52.dp)) }
         if (askingBookInfo) {
-            BookInfoDialog(session.fileName.substringBeforeLast('.')) { book ->
+            BookInfoDialog(session.fileName.substringBeforeLast('.'), suggestion = session.suggested, onDone = { book ->
                 if (book != null) {
                     session.replaceGenerated(tessera.acbf.AcbfDocument.create(book, session.pages.mapNotNull { it.imageHref }))
                     tool.pageChanged()
                 }
                 askingBookInfo = false
                 focus.requestFocus()
-            }
+            })
         }
         if (previewing) ReaderPreview(session, images) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
     }

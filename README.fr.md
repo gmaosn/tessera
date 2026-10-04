@@ -17,6 +17,7 @@ l’octet près, sauf ce que vous avez modifié.
 
 - **Éditeur de cases** (ordinateur) : tracé, retouche et ordre des cases, lecture case par case,
   annulation, enregistrement, en anglais et en français.
+- **Import de PDF** : pages numérisées gardées telles quelles, les autres rendues ; devient un CBZ.
 - **Affichage amélioré** : netteté facultative, ou restauration Anime4K en double résolution,
   seulement à l’écran.
 - **Informations du livre** : tous les champs de métadonnées (auteur·rices, titres par langue,
@@ -53,6 +54,8 @@ ACBF Viewer et ACBF Editor d’origine.
 L’affichage « Restauration » utilise les poids des réseaux d’[Anime4K](https://github.com/bloc97/Anime4K)
 (licence MIT, © bloc97), exécutés par le moteur Kotlin de Tessera ; voir
 `editor/src/enhance/Anime4KModels.kt`, produit par `tools/anime4k_weights.py`.
+
+L’import de PDF utilise [Apache PDFBox](https://pdfbox.apache.org/) (licence Apache 2.0).
 
 ## Licence des livres d’exemple
 

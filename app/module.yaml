@@ -3,6 +3,8 @@ product: jvm/app
 dependencies:
   - //editor
   - $compose.desktop.currentOs
+  # PDF import: pure Java, Apache 2.0.
+  - org.apache.pdfbox:pdfbox:3.0.7
 
 settings:
   compose:

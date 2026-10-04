@@ -24,6 +24,16 @@ document ACBF à l’archive ; il est valide selon le schéma officiel ACBF 1.1.
 
 Les archives CBR (RAR) ne sont pas encore prises en charge.
 
+### Importer un PDF
+
+**Fichier → Importer un PDF…** (⌘I), ou un PDF déposé sur la fenêtre, le transforme en CBZ à
+côté de lui (« Livre.cbz », ou « Livre (2).cbz » si le nom est pris ; **Changer…** choisit un
+autre endroit). Une page qui n’est qu’un JPEG (une BD numérisée) garde ce JPEG tel quel, sans
+perte ; les autres pages sont rendues à 150, 200 ou 300 dpi, en JPEG (léger, pour la couleur) ou
+en PNG (sans perte, pour le dessin au trait). Une barre montre la progression, avec **Annuler**.
+La bande dessinée s’ouvre ensuite avec **À propos de cette bande dessinée** prérempli d’après le
+titre, l’auteur et le sujet du PDF.
+
 ## La fenêtre
 
 | Zone | Contenu |

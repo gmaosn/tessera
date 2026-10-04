@@ -24,6 +24,15 @@ official ACBF 1.1 schema.
 
 CBR (RAR) archives are not supported yet.
 
+### Importing a PDF
+
+**File → Import a PDF…** (⌘I), or drop a PDF on the window, turns it into a CBZ beside it
+("Book.cbz", or "Book (2).cbz" when the name is taken; **Change…** picks another place). A page
+that is nothing but one JPEG (a scanned comic) keeps that JPEG unchanged, with no loss; other
+pages are rendered at 150, 200 or 300 dpi, in JPEG (light, for colour) or PNG (lossless, for
+line art). A bar shows the progress, with **Cancel**. The comic then opens with **About this
+comic** filled in from the PDF's title, author and subject.
+
 ## The window
 
 | Area | What it holds |

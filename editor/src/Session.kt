@@ -16,6 +16,9 @@ import tessera.xml.XmlElement
  * something to save. Every change goes through [edit] so that it can be undone.
  */
 class Session(comic: Comic, fileName: String) {
+    /** Information to suggest in the book dialog (from an imported PDF), if any. */
+    var suggested: tessera.acbf.NewBook? = null
+
     /** Changes after « Save as ». */
     var fileName by mutableStateOf(fileName)
 
