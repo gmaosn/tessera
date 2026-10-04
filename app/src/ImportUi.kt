@@ -51,9 +51,7 @@ private fun Modal(content: @Composable () -> Unit) {
     }
 }
 
-private val RESOLUTIONS = listOf(150, 200, 300)
-
-/** The PDF import options: resolution, format, keeping scanned pages, destination. */
+/** The PDF import: what will happen (always lossless) and where the CBZ goes. */
 @Composable
 fun ImportDialog(
     pdf: File,
@@ -68,28 +66,9 @@ fun ImportDialog(
     val c = LocalPalette.current
     Label(Strings.importTitle(pdf.name), size = 18.sp, weight = FontWeight.SemiBold, maxLines = 2)
     Label(Strings.importPages(info.pages), color = c.muted)
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Label(Strings.importResolution, weight = FontWeight.Medium, size = 12.5.sp)
-        Segmented(RESOLUTIONS.map { "$it dpi" }, RESOLUTIONS.indexOf(options.dpi), enabled = { true }) { onOptions(options.copy(dpi = RESOLUTIONS[it])) }
-    }
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Label(Strings.importFormat, weight = FontWeight.Medium, size = 12.5.sp)
-        Segmented(listOf("JPEG", "PNG"), options.format.ordinal, enabled = { true }) { onOptions(options.copy(format = PageFormat.entries[it])) }
-        Label(if (options.format == PageFormat.Jpeg) Strings.importJpegNote else Strings.importPngNote, color = c.muted, size = 12.sp)
-    }
-    Row(
-        Modifier.clip(RoundedCornerShape(8.dp)).clickable { onOptions(options.copy(keepOriginals = !options.keepOriginals)) }.padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.Top,
-    ) {
-        Box(
-            Modifier.padding(top = 2.dp).size(16.dp).clip(RoundedCornerShape(4.dp))
-                .background(if (options.keepOriginals) c.accent else c.paper).border(1.dp, if (options.keepOriginals) c.accent else c.line, RoundedCornerShape(4.dp)),
-            contentAlignment = Alignment.Center,
-        ) { if (options.keepOriginals) Label("✓", color = c.onAccent, size = 11.sp, weight = FontWeight.Bold) }
-        Column {
-            Label(Strings.importKeep)
-            Label(Strings.importKeepNote, color = c.muted, size = 12.sp)
-        }
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.Top) {
+        Label("✓", color = c.ok, weight = FontWeight.Bold)
+        Label(Strings.importLossless, color = c.ink)
     }
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Label(Strings.importTarget, weight = FontWeight.Medium, size = 12.5.sp)

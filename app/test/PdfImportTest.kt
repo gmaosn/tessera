@@ -8,7 +8,6 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts
 import org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory
 import tessera.acbf.Comic
 import tessera.acbf.ComicFiles
-import tessera.app.PageFormat
 import tessera.app.PdfImport
 import tessera.app.PdfImportOptions
 import java.awt.Color
@@ -29,7 +28,11 @@ class PdfImportTest {
         ByteArrayOutputStream().also { ImageIO.write(img, "jpg", it) }.toByteArray()
     }
 
-    /** Page 1: a scanned page (one JPEG filling it). Page 2: text, so it must be rendered. */
+    private val lossless = BufferedImage(500, 750, BufferedImage.TYPE_INT_RGB).also { img ->
+        for (y in 0 until 750) for (x in 0 until 500) img.setRGB(x, y, (x * 255 / 500 shl 16) or (y * 255 / 750 shl 8) or 0x40)
+    }
+
+    /** Page 1: a scanned JPEG page. Page 2: a lossless image page. Page 3: text, rendered. */
     private fun samplePdf(): File {
         val file = File.createTempFile("tessera", ".pdf").apply { deleteOnExit() }
         PDDocument().use { doc ->
@@ -39,6 +42,9 @@ class PdfImportTest {
             val scan = PDPage(PDRectangle(600f, 900f))
             doc.addPage(scan)
             PDPageContentStream(doc, scan).use { it.drawImage(JPEGFactory.createFromByteArray(doc, jpeg), 0f, 0f, 600f, 900f) }
+            val flat = PDPage(PDRectangle(500f, 750f))
+            doc.addPage(flat)
+            PDPageContentStream(doc, flat).use { it.drawImage(org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory.createFromImage(doc, lossless), 0f, 0f, 500f, 750f) }
             val text = PDPage(PDRectangle.A5)
             doc.addPage(text)
             PDPageContentStream(doc, text).use {
@@ -52,7 +58,7 @@ class PdfImportTest {
     @Test
     fun readsTheDocumentInformation() {
         val info = PdfImport.inspect(samplePdf())
-        assertEquals(2, info.pages)
+        assertEquals(3, info.pages)
         assertEquals("Mon livre", info.title)
         assertEquals("Ana Lima", info.author)
     }
@@ -62,29 +68,27 @@ class PdfImportTest {
         val target = File.createTempFile("tessera", ".cbz").apply { deleteOnExit() }
         val steps = mutableListOf<Int>()
         val result = PdfImport.import(samplePdf(), target, PdfImportOptions(dpi = 100)) { done, _ -> steps += done }
-        assertEquals(2, result.pages)
+        assertEquals(3, result.pages)
         assertEquals(1, result.originals)
-        assertEquals(listOf(1, 2), steps)
+        assertEquals(1, result.extracted)
+        assertEquals(1, result.rendered)
+        assertEquals(listOf(1, 2, 3), steps)
         ZipFile(target).use { z ->
-            assertEquals(listOf("page-001.jpg", "page-002.jpg"), z.entries().toList().map { it.name })
+            assertEquals(listOf("page-001.jpg", "page-002.png", "page-003.png"), z.entries().toList().map { it.name })
             // The scanned page is the very JPEG that was in the PDF.
             assertContentEquals(jpeg, z.getInputStream(z.getEntry("page-001.jpg")).readBytes())
-            val rendered = ImageIO.read(z.getInputStream(z.getEntry("page-002.jpg")))
-            // A5 at 100 dpi.
+            // The lossless image keeps its exact pixels, at its own size.
+            val extracted = ImageIO.read(z.getInputStream(z.getEntry("page-002.png")))
+            assertEquals(lossless.width, extracted.width)
+            assertEquals(lossless.getRGB(123, 456), extracted.getRGB(123, 456))
+            // The text page: A5 at 100 dpi.
+            val rendered = ImageIO.read(z.getInputStream(z.getEntry("page-003.png")))
             assertEquals(583, rendered.width, 2)
         }
         val comic = ComicFiles.open(target)
         assertTrue(comic.generated)
-        assertEquals(2, comic.document.pages.size)
-    }
-
-    @Test
-    fun rendersEverythingInPngWhenAsked() = runBlocking {
-        val target = File.createTempFile("tessera", ".cbz").apply { deleteOnExit() }
-        val result = PdfImport.import(samplePdf(), target, PdfImportOptions(dpi = 72, format = PageFormat.Png, keepOriginals = false))
-        assertEquals(0, result.originals)
-        ZipFile(target).use { z -> assertEquals(listOf("page-001.png", "page-002.png"), z.entries().toList().map { it.name }) }
-        assertEquals(2, Comic.imagePaths(ComicFiles.open(target).container.paths).size)
+        assertEquals(3, comic.document.pages.size)
+        assertEquals(3, Comic.imagePaths(comic.container.paths).size)
     }
 }
 

@@ -17,7 +17,7 @@ l’octet près, sauf ce que vous avez modifié.
 
 - **Éditeur de cases** (ordinateur) : tracé, retouche et ordre des cases, lecture case par case,
   annulation, enregistrement, en anglais et en français.
-- **Import de PDF** : pages numérisées gardées telles quelles, les autres rendues ; devient un CBZ.
+- **Import de PDF** : toujours sans perte, à la meilleure qualité que contient le PDF ; devient un CBZ.
 - **Affichage amélioré** : netteté facultative, ou restauration Anime4K en double résolution,
   seulement à l’écran.
 - **Informations du livre** : tous les champs de métadonnées (auteur·rices, titres par langue,

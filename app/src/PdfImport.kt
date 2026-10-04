@@ -8,6 +8,7 @@ import org.apache.pdfbox.cos.COSName
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB
+import org.apache.pdfbox.pdmodel.graphics.color.PDICCBased
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 import org.apache.pdfbox.rendering.ImageType
 import org.apache.pdfbox.rendering.PDFRenderer
@@ -20,26 +21,30 @@ import java.nio.file.StandardCopyOption
 import java.util.zip.CRC32
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
-import javax.imageio.IIOImage
 import javax.imageio.ImageIO
-import javax.imageio.ImageWriteParam
 import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 
 /** What the PDF says about itself, to fill the book information dialog. */
 data class PdfInfo(val pages: Int, val title: String, val author: String, val subject: String, val keywords: String)
 
-enum class PageFormat(val extension: String) { Jpeg("jpg"), Png("png") }
+/**
+ * The resolution for pages that must be rendered (text, vector drawings), which have no resolution
+ * of their own: print quality. Pages that are images keep theirs, and a rendered page never goes
+ * below the resolution of its own images.
+ */
+data class PdfImportOptions(val dpi: Int = 300)
 
-/** How pages that are not a single embedded image get rendered. */
-data class PdfImportOptions(val dpi: Int = 200, val format: PageFormat = PageFormat.Jpeg, val keepOriginals: Boolean = true)
-
-data class PdfImportResult(val pages: Int, val originals: Int)
+/** How each page came out: copied as is, extracted losslessly, or rendered. */
+data class PdfImportResult(val pages: Int, val originals: Int, val extracted: Int, val rendered: Int)
 
 /**
- * Turns a PDF into a CBZ of page images, ready to get frames and an ACBF document in Tessera.
- * A page that is just one JPEG covering it (a scanned comic) keeps that JPEG as is: no quality
- * lost, nothing to compute. Other pages are rendered at the chosen resolution.
+ * Turns a PDF into a CBZ of page images, ready to get frames and an ACBF document in Tessera,
+ * always at the best quality the PDF holds and without loss:
+ *
+ * - a page that is one JPEG covering it (a scanned comic) keeps that JPEG byte for byte;
+ * - a page that is one other image keeps its pixels, at their own resolution, as PNG;
+ * - any other page is rendered as PNG at [PdfImportOptions.dpi], or higher if its images need it.
  */
 object PdfImport {
     fun inspect(pdf: File): PdfInfo = Loader.loadPDF(pdf).use { doc ->
@@ -53,80 +58,95 @@ object PdfImport {
             val temp = File.createTempFile(".${target.name}.", ".tmp", target.absoluteFile.parentFile)
             try {
                 var originals = 0
+                var extracted = 0
+                var rendered = 0
                 val total: Int
                 Loader.loadPDF(pdf).use { doc ->
                     total = doc.numberOfPages
-                    val renderer = PDFRenderer(doc)
+                    // Images enlarged during rendering get bicubic interpolation, the best Java2D has.
+                    val renderer = PDFRenderer(doc).apply {
+                        renderingHints = java.awt.RenderingHints(mapOf(
+                            java.awt.RenderingHints.KEY_INTERPOLATION to java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC,
+                            java.awt.RenderingHints.KEY_RENDERING to java.awt.RenderingHints.VALUE_RENDER_QUALITY,
+                            java.awt.RenderingHints.KEY_ANTIALIASING to java.awt.RenderingHints.VALUE_ANTIALIAS_ON,
+                            java.awt.RenderingHints.KEY_TEXT_ANTIALIASING to java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON,
+                        ))
+                    }
                     val digits = maxOf(3, total.toString().length)
                     ZipOutputStream(temp.outputStream().buffered(1 shl 20)).use { zip ->
                         for (i in 0 until total) {
                             coroutineContext.ensureActive()
-                            val number = (i + 1).toString().padStart(digits, '0')
-                            val original = if (options.keepOriginals) originalJpeg(doc, i) else null
-                            if (original != null) {
-                                originals++
-                                zip.stored("page-$number.jpg", original)
-                            } else {
-                                val image = renderer.renderImageWithDPI(i, options.dpi.toFloat(), ImageType.RGB)
-                                val bytes = encode(image, options.format)
-                                if (options.format == PageFormat.Jpeg) zip.stored("page-$number.jpg", bytes)
-                                else zip.deflated("page-$number.png", bytes)
+                            val name = "page-" + (i + 1).toString().padStart(digits, '0')
+                            val image = fullPageImage(doc, i)
+                            val jpeg = image?.let(::rawJpeg)
+                            val pixels = if (image != null && jpeg == null) runCatching { image.image }.getOrNull() else null
+                            when {
+                                jpeg != null -> { originals++; zip.stored("$name.jpg", jpeg) }
+                                pixels != null -> { extracted++; zip.deflated("$name.png", png(pixels)) }
+                                else -> {
+                                    rendered++
+                                    val dpi = maxOf(options.dpi, imageDpi(doc, i)).coerceAtMost(MAX_DPI)
+                                    zip.deflated("$name.png", png(renderer.renderImageWithDPI(i, dpi.toFloat(), ImageType.RGB)))
+                                }
                             }
                             progress(i + 1, total)
                         }
                     }
                 }
                 Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
-                PdfImportResult(total, originals)
+                PdfImportResult(total, originals, extracted, rendered)
             } finally {
                 temp.delete()
             }
         }
 
-    /**
-     * The page's JPEG, when the page is nothing but one RGB or grey JPEG with the page's
-     * proportions and no text; null otherwise (the page is then rendered).
-     */
-    internal fun originalJpeg(doc: PDDocument, index: Int): ByteArray? {
+    private const val MAX_DPI = 600
+
+    /** The page's only image when it covers the page alone: same proportions, no text, upright. */
+    internal fun fullPageImage(doc: PDDocument, index: Int): PDImageXObject? {
         val page = doc.getPage(index)
         if (page.rotation % 360 != 0) return null
         val resources = page.resources ?: return null
-        val images = resources.xObjectNames.mapNotNull { resources.getXObject(it) as? PDImageXObject }
-        val image = images.singleOrNull() ?: return null
-        if (resources.xObjectNames.count() != 1) return null
-        val stream = image.cosObject
-        val filters = stream.filters
-        val onlyDct = when (filters) {
-            is COSName -> filters == COSName.DCT_DECODE
-            is org.apache.pdfbox.cos.COSArray -> filters.size() == 1 && filters.getObject(0) == COSName.DCT_DECODE
-            else -> false
-        }
-        if (!onlyDct) return null
-        if (image.colorSpace !is PDDeviceRGB && image.colorSpace !is PDDeviceGray) return null
+        val names = resources.xObjectNames.toList()
+        if (names.size != 1) return null
+        val image = resources.getXObject(names[0]) as? PDImageXObject ?: return null
+        if (image.cosObject.containsKey(COSName.SMASK) || image.isStencil) return null
         val box = page.cropBox
         val pageRatio = box.width / box.height
         val imageRatio = image.width.toFloat() / image.height
         if (abs(pageRatio - imageRatio) / pageRatio > 0.02f) return null
         val text = PDFTextStripper().apply { startPage = index + 1; endPage = index + 1 }.getText(doc)
-        if (text.isNotBlank()) return null
+        return image.takeIf { text.isBlank() }
+    }
+
+    /**
+     * The image's JPEG bytes when they can be used unchanged: JPEG alone, grey or colour (an ICC
+     * profile is fine), no decode array that would change its colours.
+     */
+    internal fun rawJpeg(image: PDImageXObject): ByteArray? {
+        val stream = image.cosObject
+        val onlyDct = when (val filters = stream.filters) {
+            is COSName -> filters == COSName.DCT_DECODE
+            is org.apache.pdfbox.cos.COSArray -> filters.size() == 1 && filters.getObject(0) == COSName.DCT_DECODE
+            else -> false
+        }
+        if (!onlyDct || image.decode != null) return null
+        val cs = runCatching { image.colorSpace }.getOrNull() ?: return null
+        val simple = cs is PDDeviceRGB || cs is PDDeviceGray || (cs is PDICCBased && cs.numberOfComponents in setOf(1, 3))
+        if (!simple) return null
         return stream.createRawInputStream().use { it.readBytes() }
     }
 
-    private fun encode(image: BufferedImage, format: PageFormat): ByteArray {
-        val out = ByteArrayOutputStream()
-        if (format == PageFormat.Png) {
-            ImageIO.write(image, "png", out)
-        } else {
-            val writer = ImageIO.getImageWritersByFormatName("jpeg").next()
-            val param = writer.defaultWriteParam.apply { compressionMode = ImageWriteParam.MODE_EXPLICIT; compressionQuality = 0.9f }
-            ImageIO.createImageOutputStream(out).use { ios ->
-                writer.output = ios
-                writer.write(null, IIOImage(image, null, null), param)
-            }
-            writer.dispose()
-        }
-        return out.toByteArray()
+    /** The resolution at which the page's sharpest image is drawn, so rendering loses none of it. */
+    private fun imageDpi(doc: PDDocument, index: Int): Int {
+        val page = doc.getPage(index)
+        val resources = page.resources ?: return 0
+        val widthInches = page.cropBox.width / 72f
+        return resources.xObjectNames.mapNotNull { resources.getXObject(it) as? PDImageXObject }
+            .maxOfOrNull { (it.width / widthInches).toInt() } ?: 0
     }
+
+    private fun png(image: BufferedImage): ByteArray = ByteArrayOutputStream().also { ImageIO.write(image, "png", it) }.toByteArray()
 
     private fun ZipOutputStream.stored(name: String, bytes: ByteArray) {
         val entry = ZipEntry(name).apply {

@@ -17,7 +17,7 @@ byte for byte, except what you changed.
 
 - **Frame editor** (desktop): drawing, adjusting and ordering frames, reading preview, undo,
   saving, English and French.
-- **PDF import**: scanned pages kept as they are, other pages rendered; becomes a CBZ.
+- **PDF import**: always lossless, at the best quality the PDF holds; becomes a CBZ.
 - **Enhanced display**: optional sharpening, or Anime4K restoration at twice the resolution,
   on screen only.
 - **Book information**: every metadata field (authors, titles per language, series, publishing,

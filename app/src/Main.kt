@@ -142,7 +142,7 @@ fun main(args: Array<String>) {
                         )
                         opened = o
                         error = null
-                        notice = Notice(Strings.importDone(result.pages, result.originals))
+                        notice = Notice(Strings.importDone(result.pages, result.originals + result.extracted, result.rendered))
                     } catch (e: kotlinx.coroutines.CancellationException) {
                         throw e
                     } catch (e: Exception) {
