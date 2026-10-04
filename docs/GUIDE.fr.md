@@ -132,6 +132,12 @@ l’autre (une planche en définition plus basse en entier) ; la barre de lectur
 sont prêtes. La case affichée passe toujours en premier. Les cases faites restent améliorées, et
 celles calculées auparavant s’affichent aussitôt quand vous revenez sur une planche.
 
+Cette préparation continue après la fermeture de la lecture. **Affichage → Préparer tout le
+livre** (ou **Préparer tout le livre** dans le panneau d’affichage, en super-résolution) calcule
+toutes les cases en arrière-plan : des heures pour un gros livre, après quoi la lecture est
+instantanée partout. La barre du haut montre ce qui est en préparation (« ✦ Préparation du livre :
+12 / 152 cases · 40 % ») ; son × l’arrête.
+
 **Netteté** et, pour la restauration et la super-résolution, **Force** règlent l’effet de 0
 à 100 % ; une fois une planche calculée, les changer est instantané. Pour comparer,
 maintenez **◐ Comparer** (à côté du bouton d’affichage, dans l’éditeur et dans la barre de

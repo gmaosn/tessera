@@ -20,6 +20,8 @@ class SuperResSidecar(book: File) : SuperResStore {
     override fun load(key: String): ByteArray? =
         listOf(beside, cache).map { File(it, "$key.jpg") }.firstOrNull { it.isFile }?.readBytes()
 
+    override fun exists(key: String): Boolean = listOf(beside, cache).any { File(it, "$key.jpg").isFile }
+
     override fun save(key: String, bytes: ByteArray) {
         for (dir in listOf(beside, cache)) {
             val ok = runCatching {

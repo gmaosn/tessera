@@ -73,8 +73,8 @@ private fun open(file: File): Opened {
  * references to the same local function compare equal and Compose skipped them).
  */
 @Composable
-fun EditorFor(session: Session, images: ImageCache, onSave: () -> String, saveRequest: Int = 0, notice: Notice? = null) {
-    key(session) { EditorScreen(session, images, onSave = onSave, saveRequest = saveRequest, notice = notice) }
+fun EditorFor(session: Session, images: ImageCache, onSave: () -> String, saveRequest: Int = 0, notice: Notice? = null, prepareRequest: Int = 0) {
+    key(session) { EditorScreen(session, images, onSave = onSave, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest) }
 }
 
 private val isMac = System.getProperty("os.name").lowercase().contains("mac")
@@ -102,6 +102,7 @@ fun main(args: Array<String>) {
         val title = opened?.let { "${it.file.name}${if (it.session.dirty) " •" else ""} — Tessera" } ?: "Tessera"
 
         var saveRequest by remember { mutableStateOf(0) }
+        var prepareRequest by remember { mutableStateOf(0) }
         // PDF import: the file being set up, its options and destination, then the progress.
         var plan by remember { mutableStateOf<Pair<File, PdfInfo>?>(null) }
         var importOptions by remember { mutableStateOf(PdfImportOptions()) }
@@ -183,11 +184,12 @@ fun main(args: Array<String>) {
                 onImport = { pickPdf(window)?.let(::planImport) },
                 onSave = current?.let { { saveRequest++ } },
                 onSaveAs = current?.let { o -> { saveAs(o) } },
+                onPrepareBook = current?.let { { prepareRequest++ } },
             )
             TesseraTheme {
                 Box(Modifier.fillMaxSize().fileDrop(::load)) {
                     if (current == null) Welcome(error) { pickFile(window)?.let(::load) }
-                    else EditorFor(current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice)
+                    else EditorFor(current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest)
                     val p = plan
                     val progress = importProgress
                     if (p != null && progress != null) {
@@ -230,13 +232,16 @@ private fun mayDiscard(o: Opened?, save: (Opened) -> String): Boolean {
 }
 
 @Composable
-private fun FrameWindowScope.Menus(onOpen: () -> Unit, onImport: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?) {
+private fun FrameWindowScope.Menus(onOpen: () -> Unit, onImport: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?, onPrepareBook: (() -> Unit)?) {
     MenuBar {
         Menu(Strings.menuFile) {
             Item(Strings.menuOpen, shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
             Item(Strings.menuImportPdf, shortcut = KeyShortcut(Key.I, meta = isMac, ctrl = !isMac), onClick = onImport)
             Item(Strings.save, enabled = onSave != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac), onClick = { onSave?.invoke() })
             Item(Strings.menuSaveAs, enabled = onSaveAs != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac, shift = true), onClick = { onSaveAs?.invoke() })
+        }
+        Menu(Strings.menuView) {
+            Item(Strings.menuPrepareBook, enabled = onPrepareBook != null, onClick = { onPrepareBook?.invoke() })
         }
         Menu(Strings.menuLanguage) {
             for (l in Language.entries) {

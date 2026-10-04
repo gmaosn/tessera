@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -83,6 +84,8 @@ fun EditorScreen(
     askBookInfo: Boolean = true,
     /** 0: frames, 2: book info. */
     startMode: Int = 0,
+    /** Incremented by the host (menu View → Prepare the whole book). */
+    prepareRequest: Int = 0,
 ) {
     val c = LocalPalette.current
     val view = remember(session) { CanvasView() }
@@ -97,6 +100,13 @@ fun EditorScreen(
     LaunchedEffect(session.page.imageHref) { images.wanted = listOfNotNull(session.page.imageHref) }
     val enhanced by rememberEnhanced(images, session.page.imageHref, EnhancePrefs.editor)
     var enhanceOpen by remember { mutableStateOf(false) }
+    // The preparer runs on the composition's own (UI) thread, which owns the image cache.
+    val uiScope = rememberCoroutineScope()
+    val preparer = remember(session) {
+        Preparer(images, session, uiScope.coroutineContext[kotlin.coroutines.ContinuationInterceptor] as? kotlinx.coroutines.CoroutineDispatcher ?: kotlinx.coroutines.Dispatchers.Default)
+    }
+    DisposableEffect(preparer) { onDispose { preparer.close() } }
+    LaunchedEffect(prepareRequest) { if (prepareRequest > 0) preparer.book() }
     /** Held: show the page without enhancement, to compare. */
     var comparing by remember { mutableStateOf(false) }
 
@@ -176,7 +186,7 @@ fun EditorScreen(
             Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent { Trace.log { "key ${it.key} ${it.type}" }; onKey(it) }
                 .then(if (Trace.sink != null) Modifier.traceClicks() else Modifier),
         ) {
-            TopBar(session, mode, { mode = it; focus.requestFocus() }, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
+            TopBar(session, preparer, images, mode, { mode = it; focus.requestFocus() }, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
             Rule()
             if (mode == 2) InfoScreen(session, Modifier.weight(1f).fillMaxWidth())
             else Row(Modifier.weight(1f).fillMaxWidth()) {
@@ -200,6 +210,7 @@ fun EditorScreen(
                             EnhancePrefs.editor, busy = EnhancePrefs.editor.active && enhanced == null && image != null && !(EnhancePrefs.editor.mode != EnhanceMode.Sharpen && images.isHighDefinition(session.page.imageHref)),
                             onChange = { EnhancePrefs.editor = it; EnhancePrefs.onChange?.invoke() },
                             progress = images.superResProgress[session.page.imageHref], storePlace = images.store?.place,
+                            onPrepareBook = images.store?.let { { preparer.book() } },
                             modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 60.dp),
                         )
                     }
@@ -222,7 +233,7 @@ fun EditorScreen(
                 focus.requestFocus()
             })
         }
-        if (previewing) ReaderPreview(session, images) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
+        if (previewing) ReaderPreview(session, images, preparer) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
     }
 }
 
@@ -251,7 +262,7 @@ private fun Rule() = Box(Modifier.fillMaxWidth().height(1.dp).background(LocalPa
 private fun VRule() = Box(Modifier.width(1.dp).fillMaxHeight().background(LocalPalette.current.line))
 
 @Composable
-private fun TopBar(session: Session, mode: Int, onMode: (Int) -> Unit, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
+private fun TopBar(session: Session, preparer: Preparer, images: ImageCache, mode: Int, onMode: (Int) -> Unit, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
     val c = LocalPalette.current
     Row(
         Modifier.fillMaxWidth().background(c.paper).padding(horizontal = 16.dp, vertical = 8.dp),
@@ -271,9 +282,25 @@ private fun TopBar(session: Session, mode: Int, onMode: (Int) -> Unit, onPreviou
             Label(where + version, color = c.muted, size = 11.5.sp, maxLines = 1)
         }
         Segmented(listOf(Strings.modeFrames, Strings.modeTexts, Strings.modeInfo), mode, enabled = { it != 1 }, onSelect = onMode)
-        Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End)) {
+        Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End), verticalAlignment = Alignment.CenterVertically) {
+            if (preparer.active) PreparingPill(preparer, images)
             Pill("▶  " + Strings.read, onPreview)
             Pill(Strings.save, onSave, primary = true)
+        }
+    }
+}
+
+/** What the preparer is doing, and a way to stop it. */
+@Composable
+private fun PreparingPill(preparer: Preparer, images: ImageCache) {
+    val c = LocalPalette.current
+    Row(
+        Modifier.clip(CircleShape).background(c.accentSoft).padding(start = 12.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Label(Strings.preparing(preparer.done, preparer.total, preparer.wholeBook, preparer.current?.let { images.superResProgress[it] }), color = c.accentDeep, size = 12.sp, maxLines = 1)
+        Box(Modifier.size(20.dp).clip(CircleShape).clickable { preparer.stop() }.pointerHoverIcon(PointerIcon.Hand), contentAlignment = Alignment.Center) {
+            Label("×", color = c.accentDeep, size = 14.sp)
         }
     }
 }

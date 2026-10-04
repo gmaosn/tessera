@@ -47,7 +47,7 @@ object EnhancePrefs {
  * strength. [busy] shows that the page is being computed.
  */
 @Composable
-fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -> Unit, modifier: Modifier = Modifier, progress: Float? = null, storePlace: String? = null) {
+fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -> Unit, modifier: Modifier = Modifier, progress: Float? = null, storePlace: String? = null, onPrepareBook: (() -> Unit)? = null) {
     val c = LocalPalette.current
     val shape = RoundedCornerShape(14.dp)
     Column(
@@ -78,6 +78,12 @@ fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -
             },
             color = c.muted, size = 12.sp,
         )
+        if (settings.mode == EnhanceMode.SuperRes && onPrepareBook != null) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Pill(Strings.prepareBook, onPrepareBook)
+                Label(Strings.prepareBookNote, Modifier.weight(1f), color = c.muted, size = 11.5.sp)
+            }
+        }
         if (settings.active) Label("◐ " + Strings.compareHint, color = c.muted, size = 12.sp)
         Label(Strings.enhanceScreenOnly, color = c.muted, size = 12.sp)
     }

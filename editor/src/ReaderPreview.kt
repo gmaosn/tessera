@@ -56,8 +56,6 @@ import kotlin.math.min
 /** Durations of the reading transitions, in milliseconds: brisk, as in a reader app. */
 private const val FRAME_MOVE_MS = 350
 
-/** How many frames ahead are enhanced while reading (Restore and Super-res). */
-private const val FRAMES_AHEAD = 15
 private const val PAGE_FADE_MS = 200
 
 private val PreviewBar = Color(0xFF111111)
@@ -75,7 +73,7 @@ private data class Stop(val page: Int, val frame: Int)
  * first one, with a fade; a page without frames is shown whole. [onClose] gets the page reached.
  */
 @Composable
-fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> Unit) {
+fun ReaderPreview(session: Session, images: ImageCache, preparer: Preparer? = null, onClose: (page: Int) -> Unit) {
     val pages = session.pages
     var stop by remember { mutableStateOf(Stop(session.pageIndex, 0)) }
     val page = pages[stop.page]
@@ -118,54 +116,21 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val frameRegions = if (byFrame && image != null) frames.map { Region.around(it.first, image.width, image.height) } else emptyList()
     val readyRegions = remember(page.imageHref, settings) { androidx.compose.runtime.mutableStateMapOf<Region, ImageBitmap>() }
     val currentRegion = frameRegions.getOrNull(stop.frame)
-    // How many of the frames ahead are ready, for the reading bar.
-    var aheadReady by remember { mutableIntStateOf(0) }
-    var aheadTotal by remember { mutableIntStateOf(0) }
-    // Frames of this page computed earlier show at once, without waiting their turn.
-    LaunchedEffect(page.imageHref, settings, frameRegions.size) {
+    // Frames of this page computed earlier (or by the preparer meanwhile) show at once.
+    LaunchedEffect(page.imageHref, settings, frameRegions.size, preparer?.done) {
         for (r in frameRegions) if (r !in readyRegions) images.enhancedRegion(page.imageHref, r, settings, computeIfMissing = false)?.let { readyRegions[r] = it }
     }
     LaunchedEffect(currentRegion, settings) {
         val r = currentRegion ?: return@LaunchedEffect
         images.enhancedRegion(page.imageHref, r, settings)?.let { readyRegions[r] = it }
     }
-    // Then the frames ahead, in reading order, across pages: a high-definition page frame by
-    // frame, another page as a whole. The frame shown always goes first (see ImageCache.wanted).
-    LaunchedEffect(stop, settings) {
-        val enhancing = settings.mode == tessera.editor.enhance.EnhanceMode.Restore || settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes
-        if (!enhancing) { images.wanted = emptyList(); aheadTotal = 0; return@LaunchedEffect }
-        class Job(val id: String, val run: suspend () -> Boolean)
-        val jobs = mutableListOf<Job>()
-        var p = stop.page
-        var f = stop.frame + 1
-        var counted = 0
-        while (counted < FRAMES_AHEAD && p < pages.size) {
-            val pg = pages[p]
-            val href = pg.imageHref
-            val polys = pg.frames.mapNotNull { it.polygon }
-            val count = maxOf(1, polys.size)
-            if (href != null && f < count) {
-                val img = images.page(href)
-                if (img != null && images.isHighDefinition(href)) {
-                    for (k in f until count) {
-                        if (counted >= FRAMES_AHEAD) break
-                        val poly = polys.getOrNull(k) ?: break
-                        val r = Region.around(poly, img.width, img.height)
-                        jobs += Job(r.id(href)) { images.enhancedRegion(href, r, settings) != null }
-                        counted++
-                    }
-                } else if (img != null) {
-                    if (p != stop.page) jobs += Job(href) { images.enhanced(href, settings) != null }
-                    counted += count - f
-                }
-            }
-            p++; f = 0
-        }
-        val shown = currentRegion?.let { r -> page.imageHref?.let { r.id(it) } } ?: page.imageHref
-        images.wanted = listOfNotNull(shown) + jobs.map { it.id }
-        aheadTotal = jobs.size
-        aheadReady = 0
-        for (job in jobs) if (job.run()) aheadReady++
+    LaunchedEffect(stop, byFrame, currentRegion) {
+        images.shown = listOfNotNull(currentRegion?.let { r -> page.imageHref?.let { r.id(it) } } ?: page.imageHref)
+    }
+    // The frames ahead, in reading order, across pages: the preparer goes on after the reader
+    // is closed, behind whatever is shown.
+    LaunchedEffect(stop, settings.mode) {
+        if (settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes) preparer?.ahead(stop.page, stop.frame)
     }
 
     Column(
@@ -262,6 +227,7 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                     EnhancePrefs.reader, busy = if (byFrame) currentRegion != null && currentRegion !in readyRegions else EnhancePrefs.reader.active && enhanced == null && image != null,
                     onChange = { EnhancePrefs.reader = it; EnhancePrefs.onChange?.invoke() },
                     progress = images.superResProgress[if (byFrame && currentRegion != null && page.imageHref != null) currentRegion.id(page.imageHref!!) else page.imageHref], storePlace = images.store?.place,
+                    onPrepareBook = if (preparer != null && images.store != null) ({ preparer.book() }) else null,
                     modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp).zIndex(2f),
                 )
             }
@@ -285,7 +251,9 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                 (0 until framesOf(stop.page)).forEach { k -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (k == stop.frame) PreviewDotOn else PreviewDot)) }
             }
             Spacer(Modifier.weight(1f))
-            if (aheadTotal > 0) Label(Strings.aheadReady(aheadReady, aheadTotal), color = if (aheadReady == aheadTotal) PreviewDotOn else PreviewText, size = 12.5.sp)
+            if (preparer != null && preparer.active) {
+                Label(Strings.preparing(preparer.done, preparer.total, preparer.wholeBook, preparer.current?.let { images.superResProgress[it] }), color = PreviewDotOn, size = 12.5.sp, maxLines = 1)
+            }
             Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)
             Box(Modifier.clip(CircleShape).border(1.dp, if (EnhancePrefs.reader.active) PreviewDotOn else Color(0xFF444444), CircleShape).clickable { enhanceOpen = !enhanceOpen }.padding(horizontal = 12.dp, vertical = 4.dp)) {
                 Label((if (EnhancePrefs.reader.active) "✦ " else "✧ ") + Strings.enhanceButton, color = PreviewText, size = 12.5.sp)

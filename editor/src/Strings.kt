@@ -279,7 +279,14 @@ object Strings {
         f == null -> t("Super-resolution of this frame: waiting…", "Super-résolution de la case : en attente…")
         else -> t("Super-resolution of this frame: ${(f * 100).toInt()} %", "Super-résolution de la case : ${(f * 100).toInt()} %")
     }
-    fun aheadReady(ready: Int, total: Int) = t("✦ $ready / $total ahead ready", "✦ $ready / $total à venir prêtes")
+    fun preparing(done: Int, total: Int, wholeBook: Boolean, progress: Float?) =
+        (if (wholeBook) t("✦ Preparing the book: $done / $total frames", "✦ Préparation du livre : $done / $total cases") else t("✦ Preparing: $done / $total frames", "✦ Préparation : $done / $total cases")) +
+            (progress?.let { " · ${(it * 100).toInt()} %" } ?: "")
+    val stopPreparing get() = t("Stop preparing", "Arrêter la préparation")
+    val prepareBook get() = t("Prepare the whole book", "Préparer tout le livre")
+    val prepareBookNote get() = t("Computes every frame in the background (hours for a large book); reading is then instant everywhere.", "Calcule toutes les cases en arrière-plan (des heures pour un gros livre) ; la lecture est ensuite instantanée partout.")
+    val menuView get() = t("View", "Affichage")
+    val menuPrepareBook get() = t("Prepare the Whole Book (Super-res)", "Préparer tout le livre (super-résolution)")
     val alreadyHighDefinition get() = t("High-definition page: enhanced frame by frame when reading", "Planche en haute définition : améliorée case par case en lecture")
     val enhanceSharpness get() = t("Sharpness", "Netteté")
     val enhanceStrength get() = t("Strength", "Force")

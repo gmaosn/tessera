@@ -44,11 +44,19 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
     /** Real-ESRGAN's progress (0–1) for each page image being computed. */
     val superResProgress = mutableStateMapOf<String, Float>()
 
+    /** What the UI shows now (a page or a frame), most urgent first. */
+    var shown: List<String> = emptyList()
+
+    /** What the [Preparer] is computing ahead. */
+    var preparing: List<String> = emptyList()
+
     /**
-     * Images the UI shows or is about to, most urgent first (the page shown, then the next one).
-     * Computations run in this order; a queued one for anything else is dropped.
+     * Everything wanted, most urgent first: what is shown, then what is prepared. Computations
+     * run in this order; a queued one for anything else is dropped. Setting it sets [shown].
      */
-    var wanted: List<String> = emptyList()
+    var wanted: List<String>
+        get() = shown + preparing
+        set(value) { shown = value }
 
     /** Pages waiting for their turn at Real-ESRGAN. */
     private val waiting = kotlinx.coroutines.flow.MutableStateFlow<Set<String>>(emptySet())
@@ -136,6 +144,20 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
     }
 
     /**
+     * Makes sure Real-ESRGAN's result for a page (or one of its regions) is in the store,
+     * computing it if needed; for the [Preparer]. True when it is there.
+     */
+    suspend fun ensureSuperRes(href: String, region: Region? = null): Boolean {
+        val bytes = comic.image(href) ?: return false
+        val store = store
+        if (store != null && store.exists(storeKey(bytes, region))) return true
+        return superRes(href, region) != null
+    }
+
+    private fun storeKey(bytes: ByteArray, region: Region?) =
+        "${crc32(bytes).toString(16).padStart(8, '0')}-${bytes.size}" + (region?.let { "-r${it.x}_${it.y}_${it.width}_${it.height}" } ?: "")
+
+    /**
      * Real-ESRGAN's ×2 result for a page image: from the store when it was computed before,
      * otherwise computed (minutes) and saved there. A computation, once started, finishes even
      * if the page is left, so that coming back is instant.
@@ -145,7 +167,7 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         val id = region?.id(href) ?: href
         superResJobs[id]?.let { return it.await() }
         val bytes = comic.image(href) ?: return null
-        val key = "${crc32(bytes).toString(16).padStart(8, '0')}-${bytes.size}" + (region?.let { "-r${it.x}_${it.y}_${it.width}_${it.height}" } ?: "")
+        val key = storeKey(bytes, region)
         val store = store
         if (!computeIfMissing) {
             return store?.runCatching { load(key) }?.getOrNull()?.let { withContext(Dispatchers.Default) { decodeArgb(it) } }

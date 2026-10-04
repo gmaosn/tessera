@@ -128,6 +128,11 @@ reading order, across pages (a lower-definition page as a whole); the reading ba
 many are ready. The frame shown always goes first. Frames done stay enhanced, and frames
 computed earlier show at once when you come back to a page.
 
+This preparation goes on after you close the reader. **View → Prepare the Whole Book** (or
+**Prepare the whole book** in the display panel, in Super-res) computes every frame in the
+background: hours for a large book, after which reading is instant everywhere. The top bar
+shows what is being prepared ("✦ Preparing the book: 12 / 152 frames · 40 %"); its × stops it.
+
 **Sharpness** and, for Restore and Super-res, **Strength** adjust the effect from 0 to
 100 %; once a page is computed, changing them is instant. To compare,
 hold **◐ Compare** (beside the display button, in the editor and in the reading bar) or hold
