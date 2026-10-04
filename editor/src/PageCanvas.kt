@@ -170,14 +170,18 @@ fun PageCanvas(
                             PointerEventType.Scroll -> {
                                 val d = change.scrollDelta
                                 val mods = event.keyboardModifiers
-                                if (mods.isCtrlPressed || mods.isMetaPressed) view.zoomBy(kotlin.math.exp(-d.y * 0.12f), change.position)
+                                // The wheel zooms around the pointer; with a modifier it scrolls.
+                                if (mods.isCtrlPressed || mods.isMetaPressed) view.scrollBy(Offset(d.x * 40f * density, d.y * 40f * density))
                                 else if (mods.isShiftPressed) view.scrollBy(Offset(d.y * 40f * density, 0f))
-                                else view.scrollBy(Offset(d.x * 40f * density, d.y * 40f * density))
+                                else view.zoomBy(kotlin.math.exp(-d.y.coerceIn(-6f, 6f) * 0.12f), change.position)
                                 change.consume()
                             }
                             PointerEventType.Press -> {
                                 focus.requestFocus()
-                                if (!event.buttons.isPrimaryPressed) {
+                                val onNothing = tool.tool == Tool.Select && !tool.wantsPress(toImage(change.position), scaleDp)
+                                if (!event.buttons.isPrimaryPressed || onNothing) {
+                                    // Other buttons, or a drag on no frame, scroll the page.
+                                    if (onNothing) tool.selected = -1
                                     panFrom = change.position; panning = true
                                 } else {
                                     drawing = true

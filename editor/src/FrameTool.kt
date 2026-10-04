@@ -170,6 +170,14 @@ class FrameTool(private val session: Session) {
         if (i >= 0) drag = MoveDrag(i, p, polygons[i]!!, session.beginGesture())
     }
 
+    /** True when a press at [p] would act on a frame or a handle of the selected one. */
+    fun wantsPress(p: Offset, scale: Float): Boolean {
+        if (frameAt(p) >= 0) return true
+        val sel = polygons.getOrNull(selected) ?: return false
+        return sel.points.any { distance(it, p) * scale <= HANDLE_RADIUS } ||
+            sel.points.indices.any { k -> distance(midpoint(sel, k), p) * scale <= MID_RADIUS }
+    }
+
     /** The frame under [p]: the smallest one containing it, so nested frames stay reachable. */
     fun frameAt(p: Offset): Int =
         polygons.withIndex().filter { (_, poly) -> poly != null && poly.contains(p.x.toDouble(), p.y.toDouble()) }

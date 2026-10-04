@@ -104,9 +104,9 @@ l’éditeur se place sur la planche atteinte.
 | Action | Touches |
 |---|---|
 | Planche suivante / précédente | **‹ ›** dans la barre du haut, une miniature, Page suiv. / Page préc., ⌥ et une flèche, ou une flèche seule quand aucune case n’est sélectionnée |
-| Zoomer | ⌘ et la molette, ⌘+ / ⌘−, ou les boutons de zoom |
+| Zoomer | La molette (autour du pointeur), ⌘+ / ⌘−, ou les boutons de zoom |
 | Ajuster la planche | ⌘0 ou **Ajuster** |
-| Faire défiler | Molette (⇧ pour l’horizontale), ou glisser avec le bouton droit ou du milieu |
+| Faire défiler | Glisser là où il n’y a pas de case (outil Sélection), glisser avec le bouton droit ou du milieu, ⌘ et la molette, ou ⇧ et la molette pour l’horizontale |
 | Annuler / rétablir | ⌘Z / ⇧⌘Z |
 | Enregistrer | ⌘S |
 | Enregistrer sous | ⇧⌘S |

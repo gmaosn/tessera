@@ -103,9 +103,9 @@ page you reached.
 | Action | Keys |
 |---|---|
 | Next / previous page | **‹ ›** in the top bar, a thumbnail, Page Down / Page Up, ⌥ and an arrow, or an arrow alone when no frame is selected |
-| Zoom | ⌘ and the mouse wheel, ⌘+ / ⌘−, or the zoom buttons |
+| Zoom | The mouse wheel (around the pointer), ⌘+ / ⌘−, or the zoom buttons |
 | Fit the page | ⌘0 or **Fit** |
-| Scroll | Mouse wheel (⇧ for sideways), or drag with the right or middle button |
+| Scroll | Drag where there is no frame (Select tool), drag with the right or middle button, ⌘ and the wheel, or ⇧ and the wheel sideways |
 | Undo / redo | ⌘Z / ⇧⌘Z |
 | Save | ⌘S |
 | Save as | ⇧⌘S |

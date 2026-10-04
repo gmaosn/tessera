@@ -96,6 +96,7 @@ object Strings {
             Hint(listOf("←↑→↓"), t("1 px · ⇧ 10 px", "1 px · ⇧ 10 px")),
             Hint(listOf("⌫"), t("delete", "supprimer")),
             Hint(listOf("${cmd}Z"), t("undo", "annuler")),
+            Hint(text = t("Wheel:", "Molette :"), strong = t("zoom", "zoom")),
         )
         Tool.Rectangle -> listOf(
             Hint(text = t("Drag:", "Glisser :"), strong = t("draw a frame", "tracer une case")),
