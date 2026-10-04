@@ -126,8 +126,11 @@ l’édition et pour la lecture :
 Les planches déjà en haute définition (au-delà d’environ 4 mégapixels, comme les numérisations
 à 300 dpi) ne sont pas agrandies en entier : cela prendrait de longues minutes pour peu de chose.
 En lecture case par case, la restauration et la super-résolution améliorent plutôt la case que
-vous lisez (environ une minute par case en super-résolution, gardée elle aussi à côté du livre),
-puis la suivante ; les cases déjà faites restent améliorées pendant la lecture de la planche.
+vous lisez (environ une minute par case en super-résolution, gardée elle aussi à côté du livre).
+Pendant la lecture, les 15 cases suivantes sont préparées dans l’ordre de lecture, d’une planche à
+l’autre (une planche en définition plus basse en entier) ; la barre de lecture compte celles qui
+sont prêtes. La case affichée passe toujours en premier. Les cases faites restent améliorées, et
+celles calculées auparavant s’affichent aussitôt quand vous revenez sur une planche.
 
 **Netteté** et, pour la restauration et la super-résolution, **Force** règlent l’effet de 0
 à 100 % ; une fois une planche calculée, les changer est instantané. Pour comparer,

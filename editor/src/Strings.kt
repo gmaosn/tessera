@@ -279,6 +279,7 @@ object Strings {
         f == null -> t("Super-resolution of this frame: waiting…", "Super-résolution de la case : en attente…")
         else -> t("Super-resolution of this frame: ${(f * 100).toInt()} %", "Super-résolution de la case : ${(f * 100).toInt()} %")
     }
+    fun aheadReady(ready: Int, total: Int) = t("✦ $ready / $total ahead ready", "✦ $ready / $total à venir prêtes")
     val alreadyHighDefinition get() = t("High-definition page: enhanced frame by frame when reading", "Planche en haute définition : améliorée case par case en lecture")
     val enhanceSharpness get() = t("Sharpness", "Netteté")
     val enhanceStrength get() = t("Strength", "Force")

@@ -116,13 +116,13 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
      * page still gains when a frame fills the screen, at a fraction of the page's cost. Null when
      * off, for sharpening (done on the whole page), or while computing.
      */
-    suspend fun enhancedRegion(href: String?, region: Region, settings: Enhancement): ImageBitmap? {
+    suspend fun enhancedRegion(href: String?, region: Region, settings: Enhancement, computeIfMissing: Boolean = true): ImageBitmap? {
         if (href == null || settings.mode != EnhanceMode.Restore && settings.mode != EnhanceMode.SuperRes) return null
         if (region.width.toLong() * region.height > MAX_ENHANCED_PIXELS) return null
         val key = region.id(href) to settings
         if (enhancedRegions.containsKey(key)) return enhancedRegions.remove(key).also { enhancedRegions[key] = it }
         val page = page(href) ?: return null
-        val sr = if (settings.mode == EnhanceMode.SuperRes) superRes(href, region) ?: return null else null
+        val sr = if (settings.mode == EnhanceMode.SuperRes) superRes(href, region, computeIfMissing) ?: return null else null
         val result = withContext(Dispatchers.Default) {
             val px = IntArray(region.width * region.height)
             page.readPixels(px, region.x, region.y, region.width, region.height)
@@ -131,7 +131,7 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
             imageFromArgb(out.pixels, out.width, out.height)
         }
         enhancedRegions[key] = result
-        while (enhancedRegions.size > 6) enhancedRegions.remove(enhancedRegions.keys.first())
+        while (enhancedRegions.size > 24) enhancedRegions.remove(enhancedRegions.keys.first())
         return result
     }
 
@@ -140,13 +140,16 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
      * otherwise computed (minutes) and saved there. A computation, once started, finishes even
      * if the page is left, so that coming back is instant.
      */
-    private suspend fun superRes(href: String, region: Region? = null): Argb? {
+    private suspend fun superRes(href: String, region: Region? = null, computeIfMissing: Boolean = true): Argb? {
         if (!RealEsrgan.available) return null
         val id = region?.id(href) ?: href
         superResJobs[id]?.let { return it.await() }
         val bytes = comic.image(href) ?: return null
         val key = "${crc32(bytes).toString(16).padStart(8, '0')}-${bytes.size}" + (region?.let { "-r${it.x}_${it.y}_${it.width}_${it.height}" } ?: "")
         val store = store
+        if (!computeIfMissing) {
+            return store?.runCatching { load(key) }?.getOrNull()?.let { withContext(Dispatchers.Default) { decodeArgb(it) } }
+        }
         val job = superResScope.async {
             store?.runCatching { load(key) }?.getOrNull()?.let { decodeArgb(it) }?.let { return@async it }
             // Give way to a more urgent page between tiles, then take the turn again.

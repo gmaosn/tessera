@@ -55,6 +55,9 @@ import kotlin.math.min
 
 /** Durations of the reading transitions, in milliseconds: brisk, as in a reader app. */
 private const val FRAME_MOVE_MS = 350
+
+/** How many frames ahead are enhanced while reading (Restore and Super-res). */
+private const val FRAMES_AHEAD = 15
 private const val PAGE_FADE_MS = 200
 
 private val PreviewBar = Color(0xFF111111)
@@ -81,8 +84,6 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val enhanced by rememberEnhanced(images, page.imageHref, EnhancePrefs.reader)
     var enhanceOpen by remember { mutableStateOf(false) }
     var comparing by remember { mutableStateOf(false) }
-    // The next page is enhanced ahead too.
-    LaunchedEffect(stop.page, EnhancePrefs.reader) { pages.getOrNull(stop.page + 1)?.let { images.enhanced(it.imageHref, EnhancePrefs.reader) } }
     val focus = remember { FocusRequester() }
     LaunchedEffect(Unit) { focus.requestFocus() }
     // The next page is decoded while this one is read.
@@ -117,18 +118,54 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val frameRegions = if (byFrame && image != null) frames.map { Region.around(it.first, image.width, image.height) } else emptyList()
     val readyRegions = remember(page.imageHref, settings) { androidx.compose.runtime.mutableStateMapOf<Region, ImageBitmap>() }
     val currentRegion = frameRegions.getOrNull(stop.frame)
-    LaunchedEffect(stop, byFrame, frameRegions.size) {
-        images.wanted = if (byFrame) {
-            listOfNotNull(currentRegion, frameRegions.getOrNull(stop.frame + 1)).mapNotNull { r -> page.imageHref?.let { r.id(it) } }
-        } else {
-            listOfNotNull(page.imageHref, pages.getOrNull(stop.page + 1)?.imageHref)
-        }
+    // How many of the frames ahead are ready, for the reading bar.
+    var aheadReady by remember { mutableIntStateOf(0) }
+    var aheadTotal by remember { mutableIntStateOf(0) }
+    // Frames of this page computed earlier show at once, without waiting their turn.
+    LaunchedEffect(page.imageHref, settings, frameRegions.size) {
+        for (r in frameRegions) if (r !in readyRegions) images.enhancedRegion(page.imageHref, r, settings, computeIfMissing = false)?.let { readyRegions[r] = it }
     }
     LaunchedEffect(currentRegion, settings) {
         val r = currentRegion ?: return@LaunchedEffect
         images.enhancedRegion(page.imageHref, r, settings)?.let { readyRegions[r] = it }
-        // Then the next frame, ahead.
-        frameRegions.getOrNull(stop.frame + 1)?.let { n -> images.enhancedRegion(page.imageHref, n, settings)?.let { readyRegions[n] = it } }
+    }
+    // Then the frames ahead, in reading order, across pages: a high-definition page frame by
+    // frame, another page as a whole. The frame shown always goes first (see ImageCache.wanted).
+    LaunchedEffect(stop, settings) {
+        val enhancing = settings.mode == tessera.editor.enhance.EnhanceMode.Restore || settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes
+        if (!enhancing) { images.wanted = emptyList(); aheadTotal = 0; return@LaunchedEffect }
+        class Job(val id: String, val run: suspend () -> Boolean)
+        val jobs = mutableListOf<Job>()
+        var p = stop.page
+        var f = stop.frame + 1
+        var counted = 0
+        while (counted < FRAMES_AHEAD && p < pages.size) {
+            val pg = pages[p]
+            val href = pg.imageHref
+            val polys = pg.frames.mapNotNull { it.polygon }
+            val count = maxOf(1, polys.size)
+            if (href != null && f < count) {
+                val img = images.page(href)
+                if (img != null && images.isHighDefinition(href)) {
+                    for (k in f until count) {
+                        if (counted >= FRAMES_AHEAD) break
+                        val poly = polys.getOrNull(k) ?: break
+                        val r = Region.around(poly, img.width, img.height)
+                        jobs += Job(r.id(href)) { images.enhancedRegion(href, r, settings) != null }
+                        counted++
+                    }
+                } else if (img != null) {
+                    if (p != stop.page) jobs += Job(href) { images.enhanced(href, settings) != null }
+                    counted += count - f
+                }
+            }
+            p++; f = 0
+        }
+        val shown = currentRegion?.let { r -> page.imageHref?.let { r.id(it) } } ?: page.imageHref
+        images.wanted = listOfNotNull(shown) + jobs.map { it.id }
+        aheadTotal = jobs.size
+        aheadReady = 0
+        for (job in jobs) if (job.run()) aheadReady++
     }
 
     Column(
@@ -248,6 +285,7 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                 (0 until framesOf(stop.page)).forEach { k -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (k == stop.frame) PreviewDotOn else PreviewDot)) }
             }
             Spacer(Modifier.weight(1f))
+            if (aheadTotal > 0) Label(Strings.aheadReady(aheadReady, aheadTotal), color = if (aheadReady == aheadTotal) PreviewDotOn else PreviewText, size = 12.5.sp)
             Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)
             Box(Modifier.clip(CircleShape).border(1.dp, if (EnhancePrefs.reader.active) PreviewDotOn else Color(0xFF444444), CircleShape).clickable { enhanceOpen = !enhanceOpen }.padding(horizontal = 12.dp, vertical = 4.dp)) {
                 Label((if (EnhancePrefs.reader.active) "✦ " else "✧ ") + Strings.enhanceButton, color = PreviewText, size = 12.5.sp)
