@@ -54,7 +54,7 @@ per page, and the next and previous pages are prepared in advance.
 |---|---|---|
 | Select | V | Click a frame to select it |
 | Rectangle | R | Drag out a rectangle |
-| Polygon | P | Click each corner; click the first point again, or press ↵, to close. ⌫ removes the last point |
+| Polygon | P | Click each corner; double-click, click the first point again, or press ↵, to close. ⌫ removes the last point, Esc gives up |
 | Reading order | O | Click the frames in the order they are read |
 
 Edges **snap** to the image border and to the corners of the other frames, so neighbouring

@@ -105,7 +105,7 @@ object Strings {
         )
         Tool.Polygon -> listOf(
             Hint(text = t("Click:", "Clic :"), strong = t("add a point", "ajouter un point")),
-            Hint(listOf("↵"), t("or click the first point:", "ou clic sur le premier point :"), t("close", "fermer")),
+            Hint(listOf("↵"), t("double-click or the first point:", "double-clic ou premier point :"), t("close", "fermer")),
             Hint(listOf("⌫"), t("last point", "dernier point")),
             Hint(listOf(escKey), t("cancel", "annuler")),
         )

@@ -150,18 +150,27 @@ fun PageCanvas(
             else -> PointerIcon.Default
         }
 
-        // The page's shadow, under the canvas drawing.
-        Box(
-            Modifier.offset { IntOffset(layout.origin.x.roundToInt(), layout.origin.y.roundToInt()) }
-                .size(with(LocalDensity.current) { (imageSize.width * layout.scale).toDp() }, with(LocalDensity.current) { (imageSize.height * layout.scale).toDp() })
-                .shadow(14.dp, RoundedCornerShape(2.dp)),
-        )
+        // The page's shadow, under the canvas drawing: only its visible part (plus room for the
+        // blur), since a deeply zoomed page is far larger than any layout may be.
+        val page = Rect(layout.origin, Size(imageSize.width * layout.scale, imageSize.height * layout.scale))
+        val room = 64f * density
+        val shown = page.intersect(Rect(-room, -room, view.viewport.width + room, view.viewport.height + room))
+        if (shown.width > 0f && shown.height > 0f) {
+            Box(
+                Modifier.offset { IntOffset(shown.left.roundToInt(), shown.top.roundToInt()) }
+                    .size(with(LocalDensity.current) { shown.width.toDp() }, with(LocalDensity.current) { shown.height.toDp() })
+                    .shadow(14.dp, RoundedCornerShape(2.dp)),
+            )
+        }
 
         Canvas(
             Modifier.fillMaxSize().pointerHoverIcon(icon).pointerInput(tool, view) {
                 awaitPointerEventScope {
                     var panFrom: Offset? = null
                     var drawing = false
+                    // A second press close by and soon after closes a polygon (double-click).
+                    var lastPressTime = 0L
+                    var lastPressAt = Offset.Zero
                     while (true) {
                         val event = awaitPointerEvent()
                         val change = event.changes.firstOrNull() ?: continue
@@ -186,8 +195,14 @@ fun PageCanvas(
                                     if (onNothing) tool.selected = -1
                                     panFrom = change.position; panning = true
                                 } else {
-                                    drawing = true
-                                    tool.press(toImage(change.position), scaleDp, event.keyboardModifiers.isAltPressed)
+                                    val double = change.uptimeMillis - lastPressTime < 400 && (change.position - lastPressAt).getDistance() < 8f * density
+                                    lastPressTime = change.uptimeMillis; lastPressAt = change.position
+                                    if (double && tool.tool == Tool.Polygon && tool.draft != null) {
+                                        tool.confirm()
+                                    } else {
+                                        drawing = true
+                                        tool.press(toImage(change.position), scaleDp, event.keyboardModifiers.isAltPressed)
+                                    }
                                 }
                                 change.consume()
                             }

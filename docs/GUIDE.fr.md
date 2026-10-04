@@ -55,7 +55,7 @@ peut prendre un instant par planche, et les planches voisines sont préparées �
 |---|---|---|
 | Sélection | V | Cliquez une case pour la sélectionner |
 | Rectangle | R | Tracez un rectangle en glissant |
-| Polygone | P | Cliquez chaque coin ; recliquez le premier point, ou appuyez sur ↵, pour fermer. ⌫ retire le dernier point |
+| Polygone | P | Cliquez chaque coin ; double-cliquez, recliquez le premier point, ou appuyez sur ↵, pour fermer. ⌫ retire le dernier point, Échap abandonne |
 | Ordre de lecture | O | Cliquez les cases dans l’ordre où on les lit |
 
 Les bords **s’aimantent** au bord de l’image et aux coins des autres cases : des cases voisines
