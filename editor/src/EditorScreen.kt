@@ -94,7 +94,7 @@ fun EditorScreen(
     var toast by remember { mutableStateOf<String?>(null) }
     val pageImage by rememberPageImage(images, session.page.imageHref)
     val image = pageImage.bitmap
-    LaunchedEffect(session.page.imageHref) { images.wanted = setOfNotNull(session.page.imageHref) }
+    LaunchedEffect(session.page.imageHref) { images.wanted = listOfNotNull(session.page.imageHref) }
     val enhanced by rememberEnhanced(images, session.page.imageHref, EnhancePrefs.editor)
     var enhanceOpen by remember { mutableStateOf(false) }
     /** Held: show the page without enhancement, to compare. */
@@ -185,8 +185,8 @@ fun EditorScreen(
                 Box(Modifier.weight(1f).fillMaxHeight()) {
                     PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize(), display = if (comparing) null else enhanced)
                     if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
-                    if (EnhancePrefs.editor.mode == EnhanceMode.SuperRes && enhanced == null && image != null) {
-                        Toast(Strings.superResPill(images.superResProgress[session.page.imageHref]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
+                    if ((EnhancePrefs.editor.mode == EnhanceMode.SuperRes || (EnhancePrefs.editor.mode == EnhanceMode.Restore && images.isHighDefinition(session.page.imageHref))) && enhanced == null && image != null) {
+                        Toast(if (images.isHighDefinition(session.page.imageHref)) Strings.alreadyHighDefinition else Strings.superResPill(images.superResProgress[session.page.imageHref]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
                     }
                     if (pageImage.loading || image == null) {
                         Box(Modifier.align(Alignment.Center).shadow(4.dp, CircleShape).clip(CircleShape).background(c.paper).padding(horizontal = 14.dp, vertical = 6.dp)) {
@@ -197,7 +197,7 @@ fun EditorScreen(
                     ZoomPill(view, EnhancePrefs.editor.active, { enhanceOpen = !enhanceOpen }, { comparing = it }, Modifier.align(Alignment.BottomEnd).padding(12.dp))
                     if (enhanceOpen) {
                         EnhancePanel(
-                            EnhancePrefs.editor, busy = EnhancePrefs.editor.active && enhanced == null && image != null,
+                            EnhancePrefs.editor, busy = EnhancePrefs.editor.active && enhanced == null && image != null && !(EnhancePrefs.editor.mode != EnhanceMode.Sharpen && images.isHighDefinition(session.page.imageHref)),
                             onChange = { EnhancePrefs.editor = it; EnhancePrefs.onChange?.invoke() },
                             progress = images.superResProgress[session.page.imageHref], storePlace = images.store?.place,
                             modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 60.dp),

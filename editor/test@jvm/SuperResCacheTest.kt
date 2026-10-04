@@ -1,3 +1,4 @@
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import tessera.acbf.AcbfDocument
 import tessera.acbf.Comic
@@ -42,12 +43,12 @@ class SuperResCacheTest {
     fun computedOnceThenTakenFromTheStore() = runBlocking {
         val store = MemoryStore()
         val sr = Enhancement(EnhanceMode.SuperRes, 0f, 1f)
-        val first = ImageCache(comic(), store).apply { wanted = setOf("a.png") }
+        val first = ImageCache(comic(), store).apply { wanted = listOf("a.png") }
         val image = assertNotNull(first.enhanced("a.png", sr))
         assertEquals(120 to 80, image.width to image.height)
         assertEquals(1, store.saved.size)
         // A new session on the same book: no computation, the store answers.
-        val second = ImageCache(comic(), store).apply { wanted = emptySet() }
+        val second = ImageCache(comic(), store).apply { wanted = emptyList() }
         assertNotNull(second.enhanced("a.png", sr), "taken from the store even when not wanted")
         assertEquals(1, store.saved.size)
         assertTrue(store.loads >= 2)
@@ -56,8 +57,52 @@ class SuperResCacheTest {
     @Test
     fun aPageNoLongerShownIsNotComputed() = runBlocking {
         val store = MemoryStore()
-        val cache = ImageCache(comic(), store).apply { wanted = setOf("b.png") }
+        val cache = ImageCache(comic(), store).apply { wanted = listOf("b.png") }
         assertNull(cache.enhanced("a.png", Enhancement(EnhanceMode.SuperRes)))
         assertTrue(store.saved.isEmpty())
+    }
+
+    @Test
+    fun highDefinitionPagesAreLeftAsTheyAre() = runBlocking {
+        val big = ByteArrayOutputStream().also { ImageIO.write(BufferedImage(2200, 2200, BufferedImage.TYPE_INT_RGB), "png", it) }.toByteArray()
+        val container = object : Container {
+            override val paths = listOf("a.png", "b.png")
+            override fun read(path: String) = big
+        }
+        val store = MemoryStore()
+        val cache = ImageCache(Comic(AcbfDocument.create("T", listOf("a.png", "b.png")), container, "t.acbf", generated = false), store)
+            .apply { wanted = listOf("a.png") }
+        assertNull(cache.enhanced("a.png", Enhancement(EnhanceMode.SuperRes)))
+        assertNull(cache.enhanced("a.png", Enhancement(EnhanceMode.Restore)))
+        assertTrue(cache.isHighDefinition("a.png"))
+        assertTrue(store.saved.isEmpty(), "nothing computed")
+        // Sharpening stays available: it keeps the size and is quick.
+        assertNotNull(cache.enhanced("a.png", Enhancement(EnhanceMode.Sharpen, 0.5f)))
+    }
+
+    @Test
+    fun thePageShownGoesFirst() = runBlocking {
+        val store = MemoryStore()
+        val order = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val logging = object : SuperResStore by store {
+            override fun save(key: String, bytes: ByteArray) { order += key; store.save(key, bytes) }
+        }
+        // "a" has more tiles than there are cores, so it can give way between them.
+        val pngA = ByteArrayOutputStream().also { ImageIO.write(BufferedImage(1300, 130, BufferedImage.TYPE_INT_RGB), "png", it) }.toByteArray()
+        val pngB = ByteArrayOutputStream().also { ImageIO.write(BufferedImage(50, 30, BufferedImage.TYPE_INT_RGB), "png", it) }.toByteArray()
+        val container = object : Container {
+            override val paths = listOf("a.png", "b.png")
+            override fun read(path: String) = if (path == "a.png") pngA else pngB
+        }
+        val cache = ImageCache(Comic(AcbfDocument.create("T", listOf("a.png", "b.png")), container, "t.acbf", generated = false), logging)
+        cache.wanted = listOf("b.png", "a.png")
+        val sr = Enhancement(EnhanceMode.SuperRes)
+        // The page prepared ahead ("a") starts first; the page shown ("b") asks while it runs.
+        val a = async { cache.enhanced("a.png", sr) }
+        kotlinx.coroutines.delay(300)
+        val b = async { cache.enhanced("b.png", sr) }
+        a.await(); b.await()
+        assertEquals(2, order.size)
+        assertTrue(order[0].endsWith("-${pngB.size}"), "the page shown was computed first: $order")
     }
 }

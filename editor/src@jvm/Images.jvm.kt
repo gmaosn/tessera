@@ -10,10 +10,17 @@ import org.jetbrains.skia.MipmapMode
 import org.jetbrains.skia.Rect
 import org.jetbrains.skia.Surface
 
-actual fun decodeImage(bytes: ByteArray): ImageBitmap? =
-    runCatching { Image.makeFromEncoded(bytes).use { it.toComposeImageBitmap() } }.getOrNull()
+/** Beyond this, decoding would take seconds and hundreds of megabytes: such an image is refused. */
+private const val MAX_PIXELS = 80_000_000L
 
-actual fun decodeThumbnail(bytes: ByteArray, width: Int): ImageBitmap? = runCatching {
+private fun tooLarge(bytes: ByteArray): Boolean = runCatching {
+    org.jetbrains.skia.Codec.makeFromData(org.jetbrains.skia.Data.makeFromBytes(bytes)).use { it.width.toLong() * it.height > MAX_PIXELS }
+}.getOrDefault(false)
+
+actual fun decodeImage(bytes: ByteArray): ImageBitmap? =
+    if (tooLarge(bytes)) null else runCatching { Image.makeFromEncoded(bytes).use { it.toComposeImageBitmap() } }.getOrNull()
+
+actual fun decodeThumbnail(bytes: ByteArray, width: Int): ImageBitmap? = if (tooLarge(bytes)) null else runCatching {
     Image.makeFromEncoded(bytes).use { image ->
         if (image.width <= width) return@use image.toComposeImageBitmap()
         val height = maxOf(1, image.height * width / image.width)

@@ -23,7 +23,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.flow.update
 import tessera.editor.enhance.Enhancement
 import tessera.editor.enhance.Enhancer
 
@@ -44,8 +44,14 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
     /** Real-ESRGAN's progress (0–1) for each page image being computed. */
     val superResProgress = mutableStateMapOf<String, Float>()
 
-    /** Images the UI shows or is about to: a queued computation for anything else is dropped. */
-    var wanted: Set<String> = emptySet()
+    /**
+     * Images the UI shows or is about to, most urgent first (the page shown, then the next one).
+     * Computations run in this order; a queued one for anything else is dropped.
+     */
+    var wanted: List<String> = emptyList()
+
+    /** Pages waiting for their turn at Real-ESRGAN. */
+    private val waiting = kotlinx.coroutines.flow.MutableStateFlow<Set<String>>(emptySet())
 
     private val superResJobs = HashMap<String, Deferred<Argb?>>()
     private val superResScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -84,9 +90,11 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
     /** The page at [href] improved for display with [settings], or null when off or missing. */
     suspend fun enhanced(href: String?, settings: Enhancement): ImageBitmap? {
         if (href == null || !settings.active) return null
+        if (settings.mode != EnhanceMode.Sharpen && isHighDefinition(href)) return null
         val key = href to settings
         if (enhanced.containsKey(key)) return enhanced.remove(key).also { enhanced[key] = it }
         val page = page(href) ?: return null
+        if (settings.mode != EnhanceMode.Sharpen && page.width.toLong() * page.height > MAX_ENHANCED_PIXELS) return null
         val sr = if (settings.mode == EnhanceMode.SuperRes) superRes(href) ?: return null else null
         val result = withContext(Dispatchers.Default) {
             val px = IntArray(page.width * page.height)
@@ -113,24 +121,67 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         val store = store
         val job = superResScope.async {
             store?.runCatching { load(key) }?.getOrNull()?.let { decodeArgb(it) }?.let { return@async it }
-            superResLock.withLock {
-                if (href !in wanted) return@withLock null
-                val page = decodeArgb(bytes) ?: return@withLock null
-                superResProgress[href] = 0f
+            // Give way to a more urgent page between tiles, then take the turn again.
+            while (true) {
+                takeTurn(href)
                 try {
-                    val sr = RealEsrgan.upscale2x(page) { superResProgress[href] = it }
+                    if (href !in wanted) return@async null
+                    val page = decodeArgb(bytes) ?: return@async null
+                    superResProgress[href] = 0f
+                    val sr = RealEsrgan.upscale2x(page, { superResProgress[href] = it }, shouldYield = { moreUrgentWaiting(href) })
                     store?.runCatching { save(key, encodeJpeg(sr, 92)) }
-                    sr
+                    return@async sr
+                } catch (e: RealEsrgan.Yielded) {
+                    continue
                 } finally {
                     superResProgress.remove(href)
+                    superResLock.unlock()
                 }
             }
+            @Suppress("UNREACHABLE_CODE") null
         }
         superResJobs[href] = job
         return try { job.await() } finally { superResJobs.remove(href) }
     }
 
+    /**
+     * Waits until no computation runs and no more urgent page (earlier in [wanted]) is waiting,
+     * then holds the lock: the page shown always goes before the one prepared ahead.
+     */
+    private suspend fun takeTurn(href: String) {
+        waiting.update { it + href }
+        try {
+            while (true) {
+                superResLock.lock()
+                val first = wanted.firstOrNull { it in waiting.value }
+                if (first == null || first == href || href !in wanted) return
+                superResLock.unlock()
+                kotlinx.coroutines.delay(150)
+            }
+        } finally {
+            waiting.update { it - href }
+        }
+    }
+
+    /** True when a page ahead of [href] in [wanted] is waiting, or [href] is no longer wanted. */
+    private fun moreUrgentWaiting(href: String): Boolean {
+        val at = wanted.indexOf(href)
+        if (at < 0) return true
+        val queued = waiting.value
+        return wanted.subList(0, at).any { it in queued }
+    }
+
+    /**
+     * True for a page already in high definition: enlarging it would take many minutes and lots
+     * of memory for nothing visible, so Restore and Super-res leave it as it is.
+     */
+    fun isHighDefinition(href: String?): Boolean =
+        cachedPage(href)?.let { it.width.toLong() * it.height > MAX_ENHANCED_PIXELS } ?: false
+
     companion object {
+        /** About 1700 × 2500 pixels: beyond, a page is already sharp at any useful zoom. */
+        const val MAX_ENHANCED_PIXELS = 4_300_000L
+
         /** Twice the strip's width, for sharp thumbnails on high-density screens. */
         const val THUMB_WIDTH = 168
     }

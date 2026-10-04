@@ -1,12 +1,16 @@
 package tessera.editor.enhance
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.updateAndGet
 import kotlin.coroutines.coroutineContext
+
+/** How many processors this machine has. */
+expect val processorCount: Int
 
 /** The bytes of a bundled resource (the network's weights), or null where there is none. */
 expect fun loadResource(name: String): ByteArray?
@@ -30,6 +34,13 @@ object RealEsrgan {
 
     val available: Boolean get() = layers != null
 
+    /**
+     * Where tiles run: not the shared default threads, which the UI needs to decode pages and
+     * thumbnails meanwhile, and one core left free so the window stays responsive.
+     */
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    private val computeDispatcher = Dispatchers.IO.limitedParallelism(maxOf(1, processorCount - 1))
+
     /** Where the result of each tile goes: its 4×4 blocks, one per source pixel. */
     private fun interface Sink {
         /** [block] holds 48 values: colour c, row dy, column dx at c * 16 + dy * 4 + dx. */
@@ -40,10 +51,13 @@ object RealEsrgan {
      * The page enlarged ×4 by the network and brought back to ×2 (each 2×2 block averaged), as
      * ARGB. [progress] gets the fraction done. Cancellable between tiles.
      */
-    suspend fun upscale2x(page: Argb, progress: (Float) -> Unit = {}): Argb {
+    /** Thrown when a computation gives way to a more urgent one (see [upscale2x]). */
+    class Yielded : Exception("gave way to a more urgent page")
+
+    suspend fun upscale2x(page: Argb, progress: (Float) -> Unit = {}, shouldYield: () -> Boolean = { false }): Argb {
         val w2 = page.width * 2
         val out = IntArray(w2 * page.height * 2)
-        run(page, progress) { x, y, block, o, _, _ ->
+        run(page, progress, shouldYield) { x, y, block, o, _, _ ->
             for (j in 0..1) for (i in 0..1) {
                 var px = 0xFF shl 24
                 for (c in 0 until 3) {
@@ -61,7 +75,7 @@ object RealEsrgan {
     suspend fun upscale4x(page: Argb): Argb {
         val w4 = page.width * SCALE
         val out = IntArray(w4 * page.height * SCALE)
-        run(page, {}) { x, y, block, o, _, _ ->
+        run(page, {}, { false }) { x, y, block, o, _, _ ->
             for (dy in 0 until 4) for (dx in 0 until 4) {
                 var px = 0xFF shl 24
                 for (c in 0 until 3) px = px or (channel(block[o + c * 16 + dy * 4 + dx]) shl (16 - 8 * c))
@@ -73,14 +87,15 @@ object RealEsrgan {
 
     private fun channel(v: Float) = (v.coerceIn(0f, 1f) * 255f + 0.5f).toInt()
 
-    private suspend fun run(page: Argb, progress: (Float) -> Unit, sink: Sink) = coroutineScope {
+    /** [shouldYield] is asked before each tile: true stops the computation with [Yielded]. */
+    private suspend fun run(page: Argb, progress: (Float) -> Unit, shouldYield: () -> Boolean, sink: Sink) = coroutineScope {
         val net = layers ?: error("Real-ESRGAN weights missing")
         val tiles = buildList { for (y in 0 until page.height step TILE) for (x in 0 until page.width step TILE) add(x to y) }
         val done = kotlinx.coroutines.flow.MutableStateFlow(0)
-        // The default dispatcher runs as many tiles at once as there are cores.
         tiles.map { (x, y) ->
-            async(Dispatchers.Default) {
+            async(computeDispatcher) {
                 coroutineContext.ensureActive()
+                if (shouldYield()) throw Yielded()
                 tile(net, page, x, y, minOf(TILE, page.width - x), minOf(TILE, page.height - y), sink)
                 val n = done.updateAndGet { it + 1 }
                 progress(n.toFloat() / tiles.size)

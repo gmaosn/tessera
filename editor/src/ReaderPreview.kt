@@ -81,7 +81,7 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val enhanced by rememberEnhanced(images, page.imageHref, EnhancePrefs.reader)
     var enhanceOpen by remember { mutableStateOf(false) }
     var comparing by remember { mutableStateOf(false) }
-    LaunchedEffect(stop.page) { images.wanted = setOfNotNull(page.imageHref, pages.getOrNull(stop.page + 1)?.imageHref) }
+    LaunchedEffect(stop.page) { images.wanted = listOfNotNull(page.imageHref, pages.getOrNull(stop.page + 1)?.imageHref) }
     // The next page is enhanced ahead too.
     LaunchedEffect(stop.page, EnhancePrefs.reader) { pages.getOrNull(stop.page + 1)?.let { images.enhanced(it.imageHref, EnhancePrefs.reader) } }
     val focus = remember { FocusRequester() }
@@ -187,12 +187,12 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                 Label(Strings.loading, Modifier.align(Alignment.Center), color = PreviewText)
             }
             if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
-            if (EnhancePrefs.reader.mode == tessera.editor.enhance.EnhanceMode.SuperRes && enhanced == null && image != null) {
-                Toast(Strings.superResPill(images.superResProgress[page.imageHref]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
+            if ((EnhancePrefs.reader.mode == tessera.editor.enhance.EnhanceMode.SuperRes || (EnhancePrefs.reader.mode == tessera.editor.enhance.EnhanceMode.Restore && images.isHighDefinition(page.imageHref))) && enhanced == null && image != null) {
+                Toast(if (images.isHighDefinition(page.imageHref)) Strings.alreadyHighDefinition else Strings.superResPill(images.superResProgress[page.imageHref]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
             }
             if (enhanceOpen) {
                 EnhancePanel(
-                    EnhancePrefs.reader, busy = EnhancePrefs.reader.active && enhanced == null && image != null,
+                    EnhancePrefs.reader, busy = EnhancePrefs.reader.active && enhanced == null && image != null && !(EnhancePrefs.reader.mode != tessera.editor.enhance.EnhanceMode.Sharpen && images.isHighDefinition(page.imageHref)),
                     onChange = { EnhancePrefs.reader = it; EnhancePrefs.onChange?.invoke() },
                     progress = images.superResProgress[page.imageHref], storePlace = images.store?.place,
                     modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp).zIndex(2f),

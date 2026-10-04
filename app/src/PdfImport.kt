@@ -85,7 +85,7 @@ object PdfImport {
                                 pixels != null -> { extracted++; zip.deflated("$name.png", png(pixels)) }
                                 else -> {
                                     rendered++
-                                    val dpi = maxOf(options.dpi, imageDpi(doc, i)).coerceAtMost(MAX_DPI)
+                                    val dpi = renderDpi(doc, i, options.dpi)
                                     zip.deflated("$name.png", png(renderer.renderImageWithDPI(i, dpi.toFloat(), ImageType.RGB)))
                                 }
                             }
@@ -101,6 +101,17 @@ object PdfImport {
         }
 
     private const val MAX_DPI = 600
+
+    /** No rendered page larger than this on its long side, whatever size the PDF declares. */
+    private const val MAX_SIDE = 5000
+
+    /** 300 dpi, or the resolution of the page's sharpest image, but never past [MAX_SIDE] pixels. */
+    private fun renderDpi(doc: PDDocument, index: Int, base: Int): Int {
+        val box = doc.getPage(index).cropBox
+        val longSideInches = maxOf(box.width, box.height) / 72f
+        val cap = (MAX_SIDE / longSideInches).toInt()
+        return minOf(maxOf(base, imageDpi(doc, index)), MAX_DPI, cap).coerceAtLeast(36)
+    }
 
     /** The page's only image when it covers the page alone: same proportions, no text, upright. */
     internal fun fullPageImage(doc: PDDocument, index: Int): PDImageXObject? {

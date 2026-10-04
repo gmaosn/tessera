@@ -274,6 +274,7 @@ object Strings {
         "Real-ESRGAN : la meilleure qualité, mais lente : environ deux minutes par planche la première fois sur un portable ; vous pouvez continuer à lire en attendant. " +
             (if (place != null) "Les résultats sont gardés dans « $place », à côté du livre, puis s’affichent aussitôt." else "Les résultats sont gardés en mémoire pour cette session."),
     )
+    val alreadyHighDefinition get() = t("This page is already in high definition: shown as it is", "Planche déjà en haute définition : affichée telle quelle")
     val enhanceSharpness get() = t("Sharpness", "Netteté")
     val enhanceStrength get() = t("Strength", "Force")
     val enhanceOffNote get() = t("Pages are shown exactly as they are.", "Les planches s’affichent telles quelles.")
