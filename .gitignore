@@ -9,3 +9,6 @@ ref/
 
 # Documentation screenshots
 !/docs/images/*.jpg
+
+# The owner's private working notes (French)
+NOTES.md

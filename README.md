@@ -36,7 +36,11 @@ tools/fetch-fixtures.sh                     # the sample books (about 120 MB) fo
 - [Architecture](docs/ARCHITECTURE.md): modules, the lossless XML layer, how saving works.
 - [ACBF compatibility notes](docs/COMPATIBILITY.md): what the specification, the original tools
   and real files taught us.
-- `NOTES.md` (French): the owner's decisions and progress.
+
+## Licence
+
+Tessera is free software under the [GNU General Public License v3.0](LICENSE), like the
+original ACBF Viewer and ACBF Editor.
 
 ## Licence of the sample books
 

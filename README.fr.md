@@ -38,6 +38,11 @@ tools/fetch-fixtures.sh                        # les livres d’exemple (environ
 - [Notes de compatibilité ACBF](docs/COMPATIBILITY.md) (en anglais) : ce que la spécification,
   les outils d’origine et les vrais fichiers nous ont appris.
 
+## Licence
+
+Tessera est un logiciel libre sous [licence publique générale GNU v3.0](LICENSE), comme
+ACBF Viewer et ACBF Editor d’origine.
+
 ## Licence des livres d’exemple
 
 Les livres de `fixtures/` gardent leurs licences Creative Commons ou domaine public ; voir
