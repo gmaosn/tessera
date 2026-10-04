@@ -18,7 +18,8 @@ import javax.swing.SwingUtilities
 /*
  * Diagnostics, only with TESSERA_TRACE=1: the trace goes to build/trace.log, and commands written
  * to build/control (one per line) are run: "shot NAME", "click X Y" (window points),
- * "dialog PATH" (shows the Open dialog, closes it, then opens PATH, as a user would).
+ * "dialog PATH" (shows the Open dialog, closes it, then opens PATH, as a user would), "prepare"
+ * and "stopprepare" (the open comic's whole-book preparation).
  */
 
 internal val diagnostics = System.getenv("TESSERA_TRACE") != null
@@ -33,7 +34,7 @@ internal fun startTrace() {
 }
 
 @Composable
-internal fun FrameWindowScope.ControlLoop(load: (File) -> Unit, pageInfo: () -> String) {
+internal fun FrameWindowScope.ControlLoop(load: (File) -> Unit, pageInfo: () -> String, prepare: (Boolean) -> Unit = {}) {
     if (!diagnostics) return
     LaunchedEffect(Unit) {
         controlFile.delete()
@@ -61,6 +62,8 @@ internal fun FrameWindowScope.ControlLoop(load: (File) -> Unit, pageInfo: () -> 
                         delay(1500)
                     }
                     "load" -> { load(File(words[1])); delay(1500) }
+                    "prepare" -> prepare(true)
+                    "stopprepare" -> prepare(false)
                 }
                 Trace.log { "after $command: ${pageInfo()}" }
             }

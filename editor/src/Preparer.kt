@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -22,7 +21,7 @@ class Preparer(
     private val images: ImageCache,
     private val session: Session,
     /** The UI thread: [ImageCache] is used from there only (its heavy work runs elsewhere). */
-    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    dispatcher: CoroutineDispatcher,
 ) {
     var active by mutableStateOf(false)
         private set

@@ -34,6 +34,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 import tessera.acbf.ComicFiles
@@ -67,8 +68,14 @@ private class Opened(
     val session: Session,
     val images: ImageCache,
     /** Lives as long as the comic, which may go on being prepared after another one is opened. */
-    val preparer: Preparer = Preparer(images, session, kotlinx.coroutines.Dispatchers.Main),
+    val preparer: Preparer = Preparer(images, session, Edt),
 )
+
+/**
+ * The Swing event thread, where Compose draws the window and the image cache lives. (There is no
+ * Dispatchers.Main on the desktop without an extra library.)
+ */
+private val Edt = java.util.concurrent.Executor { javax.swing.SwingUtilities.invokeLater(it) }.asCoroutineDispatcher()
 
 private fun open(file: File): Opened {
     val comic = ComicFiles.open(file)
@@ -200,7 +207,10 @@ fun main(args: Array<String>) {
                 tessera.editor.Trace.log { "load ${f.name}: ${error ?: "ok"}" }
             }
 
-            ControlLoop(::load) { opened?.let { "${it.file.name} page ${it.session.pageIndex + 1}/${it.session.pages.size}" } ?: "welcome" }
+            ControlLoop(::load, pageInfo = {
+                (opened?.let { "${it.file.name} page ${it.session.pageIndex + 1}/${it.session.pages.size}, preparing ${it.preparer.done}/${it.preparer.total} active=${it.preparer.active}" } ?: "welcome") +
+                    background.joinToString("") { "; background ${it.file.name} ${it.preparer.done}/${it.preparer.total}" }
+            }, prepare = { on -> opened?.preparer?.let { if (on) it.book() else it.stop() } })
 
             fun saveAs(o: Opened) {
                 val target = pickSaveFile(window, o.file) ?: return
