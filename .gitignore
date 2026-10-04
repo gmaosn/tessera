@@ -12,3 +12,5 @@ ref/
 
 # The owner's private working notes (French)
 NOTES.md
+# Reference images for the Real-ESRGAN test
+!/fixtures/sr/*.png

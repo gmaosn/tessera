@@ -47,26 +47,26 @@ object EnhancePrefs {
  * strength. [busy] shows that the page is being computed.
  */
 @Composable
-fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -> Unit, modifier: Modifier = Modifier) {
+fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -> Unit, modifier: Modifier = Modifier, progress: Float? = null, storePlace: String? = null) {
     val c = LocalPalette.current
     val shape = RoundedCornerShape(14.dp)
     Column(
-        modifier.width(320.dp).shadow(10.dp, shape).clip(shape).background(c.paper).border(1.dp, c.line, shape)
+        modifier.width(480.dp).shadow(10.dp, shape).clip(shape).background(c.paper).border(1.dp, c.line, shape)
             .clickable(remember { MutableInteractionSource() }, null) { }.padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Label(Strings.enhanceTitle, Modifier.weight(1f), weight = FontWeight.SemiBold)
-            if (busy) Label(Strings.enhanceBusy, color = c.accent, size = 12.sp)
+            if (busy) Label(progress?.let { Strings.enhanceProgress(it) } ?: Strings.enhanceBusy, color = c.accent, size = 12.sp)
         }
         Segmented(
-            listOf(Strings.enhanceOff, Strings.enhanceSharpen, Strings.enhanceRestore),
+            listOf(Strings.enhanceOff, Strings.enhanceSharpen, Strings.enhanceRestore, Strings.enhanceSuperRes),
             settings.mode.ordinal, enabled = { true },
         ) { onChange(settings.copy(mode = EnhanceMode.entries[it])) }
         if (settings.mode != EnhanceMode.Off) {
             SliderRow(Strings.enhanceSharpness, settings.sharpness) { onChange(settings.copy(sharpness = it)) }
         }
-        if (settings.mode == EnhanceMode.Restore) {
+        if (settings.mode == EnhanceMode.Restore || settings.mode == EnhanceMode.SuperRes) {
             SliderRow(Strings.enhanceStrength, settings.strength) { onChange(settings.copy(strength = it)) }
         }
         Label(
@@ -74,6 +74,7 @@ fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -
                 EnhanceMode.Off -> Strings.enhanceOffNote
                 EnhanceMode.Sharpen -> Strings.enhanceSharpenNote
                 EnhanceMode.Restore -> Strings.enhanceRestoreNote
+                EnhanceMode.SuperRes -> Strings.enhanceSuperResNote(storePlace)
             },
             color = c.muted, size = 12.sp,
         )

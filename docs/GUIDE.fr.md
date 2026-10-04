@@ -115,8 +115,16 @@ l’édition et pour la lecture :
   les blocs de compression et redessine des traits propres en double résolution. Environ une
   seconde par planche, calculée en arrière-plan (la planche ordinaire s’affiche en attendant,
   puis est remplacée) ; en lecture, la planche suivante est préparée à l’avance.
+- **Super-résolution** : Real-ESRGAN, un réseau plus grand, donne de loin le meilleur
+  résultat, surtout sur les numérisations et PDF en basse résolution : traits propres et
+  continus, plus de blocs de compression. Il est lent : environ deux minutes par planche la
+  première fois sur un portable (une pastille sur la planche montre la progression ; vous pouvez
+  continuer à lire). Chaque résultat est gardé à côté du livre, dans un dossier au nom du livre
+  suivi de `.tessera` (par exemple `Livre.cbz.tessera`), et s’affiche aussitôt ensuite, même lors
+  des sessions suivantes. En lecture, la planche suivante est calculée à l’avance.
 
-**Netteté** et, pour la restauration, **Force** règlent l’effet de 0 à 100 %. Pour comparer,
+**Netteté** et, pour la restauration et la super-résolution, **Force** règlent l’effet de 0
+à 100 % ; une fois une planche calculée, les changer est instantané. Pour comparer,
 maintenez **◐ Comparer** (à côté du bouton d’affichage, dans l’éditeur et dans la barre de
 lecture) ou maintenez **C** : la planche s’affiche sans amélioration jusqu’à ce que vous lâchiez. L’étoile devient
 pleine (✦) quand une amélioration est active. Seul l’affichage change : les fichiers ne sont

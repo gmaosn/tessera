@@ -18,8 +18,8 @@ l’octet près, sauf ce que vous avez modifié.
 - **Éditeur de cases** (ordinateur) : tracé, retouche et ordre des cases, lecture case par case,
   annulation, enregistrement, en anglais et en français.
 - **Import de PDF** : toujours sans perte, à la meilleure qualité que contient le PDF ; devient un CBZ.
-- **Affichage amélioré** : netteté facultative, ou restauration Anime4K en double résolution,
-  seulement à l’écran.
+- **Affichage amélioré** : netteté, restauration Anime4K (instantanée) ou super-résolution
+  Real-ESRGAN (lente, gardée à côté du livre), en double résolution, seulement à l’écran.
 - **Informations du livre** : tous les champs de métadonnées (auteur·rices, titres par langue,
   séries, publication, historique du document…), modifiés sur place. Voir le
   [guide d’utilisation](docs/GUIDE.fr.md).
@@ -51,9 +51,9 @@ ACBF Viewer et ACBF Editor d’origine.
 
 ## Travaux de tiers
 
-L’affichage « Restauration » utilise les poids des réseaux d’[Anime4K](https://github.com/bloc97/Anime4K)
-(licence MIT, © bloc97), exécutés par le moteur Kotlin de Tessera ; voir
-`editor/src/enhance/Anime4KModels.kt`, produit par `tools/anime4k_weights.py`.
+L’affichage amélioré utilise les poids de [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)
+(BSD-3) et d’[Anime4K](https://github.com/bloc97/Anime4K) (MIT), exécutés par le moteur Kotlin
+de Tessera. Licences et détails : [docs/THIRD_PARTY.md](docs/THIRD_PARTY.md).
 
 L’import de PDF utilise [Apache PDFBox](https://pdfbox.apache.org/) (licence Apache 2.0).
 

@@ -64,7 +64,7 @@ private class Opened(val file: File, val session: Session, val images: ImageCach
 
 private fun open(file: File): Opened {
     val comic = ComicFiles.open(file)
-    return Opened(file, Session(comic, file.name), ImageCache(comic))
+    return Opened(file, Session(comic, file.name), ImageCache(comic, SuperResSidecar(file)))
 }
 
 /**
@@ -168,6 +168,7 @@ fun main(args: Array<String>) {
                     runCatching {
                         val reopened = ComicFiles.saveAs(o.session.comic, o.file, target)
                         o.images.comic = reopened
+                        o.images.store = SuperResSidecar(target)
                         o.session.saved(reopened)
                         o.session.fileName = target.name
                         opened = Opened(target, o.session, o.images)

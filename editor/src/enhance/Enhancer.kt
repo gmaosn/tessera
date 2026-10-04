@@ -6,15 +6,18 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
-/** How pages are shown: as they are, sharpened, or restored and enlarged by Anime4K. */
-enum class EnhanceMode { Off, Sharpen, Restore }
+/**
+ * How pages are shown: as they are, sharpened, restored and enlarged by Anime4K (instant), or
+ * enlarged by Real-ESRGAN (slow, best; kept beside the book once computed).
+ */
+enum class EnhanceMode { Off, Sharpen, Restore, SuperRes }
 
 /**
  * Display enhancement settings. [sharpness] (0–1) drives contrast-adaptive sharpening, 0 turning
  * it off; [strength] (0–1) scales what Anime4K adds in [EnhanceMode.Restore].
  */
 data class Enhancement(val mode: EnhanceMode = EnhanceMode.Off, val sharpness: Float = 0.5f, val strength: Float = 1f) {
-    val active: Boolean get() = mode == EnhanceMode.Restore || (mode == EnhanceMode.Sharpen && sharpness > 0f)
+    val active: Boolean get() = mode == EnhanceMode.Restore || mode == EnhanceMode.SuperRes || (mode == EnhanceMode.Sharpen && sharpness > 0f)
 }
 
 /** An ARGB image, as pixels move between bitmaps and the enhancer. */
@@ -30,6 +33,7 @@ object Enhancer {
         when (settings.mode) {
             EnhanceMode.Off -> page
             EnhanceMode.Sharpen -> if (settings.sharpness > 0f) sharpen(page, settings.sharpness) else page
+            EnhanceMode.SuperRes -> error("super-resolution goes through finish(), with the network's result")
             EnhanceMode.Restore -> {
                 val restored = Cnn.run(Anime4KModels.RESTORE_M, toImage(page), settings.strength)
                 val enlarged = Cnn.run(Anime4KModels.UPSCALE_X2_M, restored, settings.strength)
@@ -37,6 +41,54 @@ object Enhancer {
                 if (settings.sharpness > 0f) sharpen(out, settings.sharpness) else out
             }
         }
+    }
+
+    /**
+     * The page from Real-ESRGAN's ×2 result [sr]: [Enhancement.strength] blends it with a plain
+     * bilinear enlargement, then sharpening applies if asked.
+     */
+    suspend fun finish(page: Argb, sr: Argb, settings: Enhancement): Argb = withContext(Dispatchers.Default) {
+        val blended = if (settings.strength >= 0.999f) sr else blend(enlarge2x(page), sr, settings.strength)
+        if (settings.sharpness > 0f) sharpen(blended, settings.sharpness) else blended
+    }
+
+    private fun blend(base: Argb, top: Argb, t: Float): Argb {
+        val out = IntArray(base.pixels.size) { i ->
+            val a = base.pixels[i]; val b = top.pixels[i]
+            var px = 0xFF shl 24
+            for (shift in intArrayOf(16, 8, 0)) {
+                val ca = (a shr shift) and 0xFF; val cb = (b shr shift) and 0xFF
+                px = px or (((ca + (cb - ca) * t) + 0.5f).toInt().coerceIn(0, 255) shl shift)
+            }
+            px
+        }
+        return Argb(base.width, base.height, out)
+    }
+
+    /** Bilinear ×2, sampling at the new pixel centres. */
+    fun enlarge2x(a: Argb): Argb {
+        val w = a.width * 2
+        val h = a.height * 2
+        val out = IntArray(w * h)
+        for (y in 0 until h) {
+            val sy = (y + 0.5f) / 2f - 0.5f
+            val y0 = kotlin.math.floor(sy).toInt(); val ty = sy - y0
+            val r0 = y0.coerceIn(0, a.height - 1) * a.width; val r1 = (y0 + 1).coerceIn(0, a.height - 1) * a.width
+            for (x in 0 until w) {
+                val sx = (x + 0.5f) / 2f - 0.5f
+                val x0 = kotlin.math.floor(sx).toInt(); val tx = sx - x0
+                val c0 = x0.coerceIn(0, a.width - 1); val c1 = (x0 + 1).coerceIn(0, a.width - 1)
+                var px = 0xFF shl 24
+                for (shift in intArrayOf(16, 8, 0)) {
+                    fun ch(p: Int) = ((p shr shift) and 0xFF).toFloat()
+                    val top = ch(a.pixels[r0 + c0]) + (ch(a.pixels[r0 + c1]) - ch(a.pixels[r0 + c0])) * tx
+                    val bottom = ch(a.pixels[r1 + c0]) + (ch(a.pixels[r1 + c1]) - ch(a.pixels[r1 + c0])) * tx
+                    px = px or ((top + (bottom - top) * ty + 0.5f).toInt().coerceIn(0, 255) shl shift)
+                }
+                out[y * w + x] = px
+            }
+        }
+        return Argb(w, h, out)
     }
 
     fun toImage(a: Argb): Image4 {

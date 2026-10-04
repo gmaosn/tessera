@@ -40,3 +40,4 @@ actual fun imageFromArgb(pixels: IntArray, width: Int, height: Int): ImageBitmap
     bitmap.setImmutable()
     return bitmap.asComposeImageBitmap()
 }
+

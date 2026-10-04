@@ -265,6 +265,15 @@ object Strings {
     val enhanceOff get() = t("Off", "Désactivé")
     val enhanceSharpen get() = t("Sharpen", "Netteté")
     val enhanceRestore get() = t("Restore", "Restauration")
+    val enhanceSuperRes get() = t("Super-res", "Super-résolution")
+    fun enhanceProgress(f: Float) = t("Computing… ${(f * 100).toInt()} %", "Calcul… ${(f * 100).toInt()} %")
+    fun superResPill(f: Float?) = if (f == null) t("Super-resolution: waiting…", "Super-résolution : en attente…") else t("Super-resolution: ${(f * 100).toInt()} %", "Super-résolution : ${(f * 100).toInt()} %")
+    fun enhanceSuperResNote(place: String?) = t(
+        "Real-ESRGAN: the best quality, but slow: about two minutes per page the first time on a laptop; you can keep reading meanwhile. " +
+            (if (place != null) "Results are kept in “$place”, beside the book, and show at once afterwards." else "Results are kept in memory for this session."),
+        "Real-ESRGAN : la meilleure qualité, mais lente : environ deux minutes par planche la première fois sur un portable ; vous pouvez continuer à lire en attendant. " +
+            (if (place != null) "Les résultats sont gardés dans « $place », à côté du livre, puis s’affichent aussitôt." else "Les résultats sont gardés en mémoire pour cette session."),
+    )
     val enhanceSharpness get() = t("Sharpness", "Netteté")
     val enhanceStrength get() = t("Strength", "Force")
     val enhanceOffNote get() = t("Pages are shown exactly as they are.", "Les planches s’affichent telles quelles.")

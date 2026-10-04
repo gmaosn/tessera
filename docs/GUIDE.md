@@ -113,8 +113,15 @@ display settings, remembered separately for editing and reading:
   redraws clean lines at twice the resolution. About a second per page, computed in the
   background (the plain page shows meanwhile, then is replaced); while reading, the next page
   is prepared ahead.
+- **Super-res**: Real-ESRGAN, a larger network, gives the best result by far, especially on
+  low-resolution scans and PDFs: clean continuous lines, no compression blocks. It is slow:
+  about two minutes per page the first time on a laptop (a pill on the page shows the
+  progress; you can keep reading). Each result is kept beside the book, in a folder named like
+  the book plus `.tessera` (for example `Book.cbz.tessera`), and shows at once afterwards, also
+  in later sessions. While reading, the next page is computed ahead.
 
-**Sharpness** and, for Restore, **Strength** adjust the effect from 0 to 100 %. To compare,
+**Sharpness** and, for Restore and Super-res, **Strength** adjust the effect from 0 to
+100 %; once a page is computed, changing them is instant. To compare,
 hold **◐ Compare** (beside the display button, in the editor and in the reading bar) or hold
 **C**: the page shows without enhancement until you let go. The star turns
 solid (✦) when an enhancement is on. This changes only what you see: files are never touched,

@@ -11,6 +11,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tessera.acbf.Comic
 import tessera.editor.enhance.Argb
+import tessera.editor.enhance.EnhanceMode
+import tessera.editor.enhance.RealEsrgan
+import tessera.editor.enhance.SuperResStore
+import tessera.editor.enhance.decodeArgb
+import tessera.editor.enhance.encodeJpeg
+import tessera.zip.crc32
+import androidx.compose.runtime.mutableStateMapOf
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import tessera.editor.enhance.Enhancement
 import tessera.editor.enhance.Enhancer
 
@@ -27,7 +40,18 @@ expect fun imageFromArgb(pixels: IntArray, width: Int, height: Int): ImageBitmap
  * Page images, decoded off the main thread and cached: a few full pages (the current one and its
  * neighbours) and every thumbnail. Used from the UI thread only; decoding runs elsewhere.
  */
-class ImageCache(var comic: Comic) {
+class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
+    /** Real-ESRGAN's progress (0–1) for each page image being computed. */
+    val superResProgress = mutableStateMapOf<String, Float>()
+
+    /** Images the UI shows or is about to: a queued computation for anything else is dropped. */
+    var wanted: Set<String> = emptySet()
+
+    private val superResJobs = HashMap<String, Deferred<Argb?>>()
+    private val superResScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    // One page at a time: the network already uses every core.
+    private val superResLock = Mutex()
+
     /** Least recently used first. */
     private val full = LinkedHashMap<String, ImageBitmap?>()
     private val thumbs = HashMap<String, ImageBitmap?>()
@@ -63,15 +87,47 @@ class ImageCache(var comic: Comic) {
         val key = href to settings
         if (enhanced.containsKey(key)) return enhanced.remove(key).also { enhanced[key] = it }
         val page = page(href) ?: return null
+        val sr = if (settings.mode == EnhanceMode.SuperRes) superRes(href) ?: return null else null
         val result = withContext(Dispatchers.Default) {
             val px = IntArray(page.width * page.height)
             page.readPixels(px)
-            val out = Enhancer.enhance(Argb(page.width, page.height, px), settings)
+            val argb = Argb(page.width, page.height, px)
+            val out = if (sr != null) Enhancer.finish(argb, sr, settings) else Enhancer.enhance(argb, settings)
             imageFromArgb(out.pixels, out.width, out.height)
         }
         enhanced[key] = result
         while (enhanced.size > 4) enhanced.remove(enhanced.keys.first())
         return result
+    }
+
+    /**
+     * Real-ESRGAN's ×2 result for a page image: from the store when it was computed before,
+     * otherwise computed (minutes) and saved there. A computation, once started, finishes even
+     * if the page is left, so that coming back is instant.
+     */
+    private suspend fun superRes(href: String): Argb? {
+        if (!RealEsrgan.available) return null
+        superResJobs[href]?.let { return it.await() }
+        val bytes = comic.image(href) ?: return null
+        val key = "${crc32(bytes).toString(16).padStart(8, '0')}-${bytes.size}"
+        val store = store
+        val job = superResScope.async {
+            store?.runCatching { load(key) }?.getOrNull()?.let { decodeArgb(it) }?.let { return@async it }
+            superResLock.withLock {
+                if (href !in wanted) return@withLock null
+                val page = decodeArgb(bytes) ?: return@withLock null
+                superResProgress[href] = 0f
+                try {
+                    val sr = RealEsrgan.upscale2x(page) { superResProgress[href] = it }
+                    store?.runCatching { save(key, encodeJpeg(sr, 92)) }
+                    sr
+                } finally {
+                    superResProgress.remove(href)
+                }
+            }
+        }
+        superResJobs[href] = job
+        return try { job.await() } finally { superResJobs.remove(href) }
     }
 
     companion object {

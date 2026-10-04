@@ -75,6 +75,18 @@ a second for a 1000×1500 page on a laptop. `tools/anime4k_weights.py` extracts 
 Anime4K's GLSL into base64 float strings. `ImageCache.enhanced` caches results by page and
 settings; the canvas and the reader draw them in place of the page at the page's own size.
 
+### Real-ESRGAN
+
+`RealEsrgan` re-implements Real-ESRGAN's compact network (`realesr-animevideov3`: 17 3×3
+convolutions of 64 channels with PReLU, one to 48, a ×4 pixel shuffle plus the input) with the
+reference's zero padding, so it matches PyTorch to one level out of 255 (`RealEsrganTest`
+compares it with a PyTorch output in `fixtures/sr`). Tiles of 128 px plus an 18 px margin run on
+every core; four neighbouring pixels share each weight load; about two minutes for a 1000×1500
+page on an M1. The ×4 result is averaged down to ×2 as it is produced. `ImageCache` runs one page
+at a time, drops queued pages no longer shown, keeps started ones going, and saves results
+through a `SuperResStore` (the app's `SuperResSidecar`: `Book.cbz.tessera/real-esrgan-x2/`,
+keyed by the image's CRC and size; the user cache folder when the book's folder is read-only).
+
 ## Tests
 
 - `core/test`, `core/test@jvm`: XML round trips and edits, geometry, the corpus (byte-for-byte
