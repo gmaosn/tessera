@@ -104,7 +104,9 @@ display settings, remembered separately for editing and reading:
   background (the plain page shows meanwhile, then is replaced); while reading, the next page
   is prepared ahead.
 
-**Sharpness** and, for Restore, **Strength** adjust the effect from 0 to 100 %. The star turns
+**Sharpness** and, for Restore, **Strength** adjust the effect from 0 to 100 %. To compare,
+hold **◐ Compare** (beside the display button, in the editor and in the reading bar) or hold
+**C**: the page shows without enhancement until you let go. The star turns
 solid (✦) when an enhancement is on. This changes only what you see: files are never touched,
 and frames are always drawn on the page's real pixels. For frame work at the pixel, leave the
 editor on Off.

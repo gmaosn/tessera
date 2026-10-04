@@ -80,6 +80,7 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val image = pageImage.bitmap
     val enhanced by rememberEnhanced(images, page.imageHref, EnhancePrefs.reader)
     var enhanceOpen by remember { mutableStateOf(false) }
+    var comparing by remember { mutableStateOf(false) }
     // The next page is enhanced ahead too.
     LaunchedEffect(stop.page, EnhancePrefs.reader) { pages.getOrNull(stop.page + 1)?.let { images.enhanced(it.imageHref, EnhancePrefs.reader) } }
     val focus = remember { FocusRequester() }
@@ -111,6 +112,10 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
 
     Column(
         Modifier.fillMaxSize().background(Color.Black).focusRequester(focus).focusable().onPreviewKeyEvent { e ->
+            if (e.key == Key.C) {
+                comparing = e.type == KeyEventType.KeyDown && EnhancePrefs.reader.active
+                return@onPreviewKeyEvent true
+            }
             if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
             when (e.key) {
                 Key.Escape, Key.Spacebar -> { onClose(stop.page); true }
@@ -159,7 +164,7 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                 val origin = Offset(vw / 2 - shot.cx * s, vh / 2 - shot.cy * s)
                 // Sub-pixel placement: rounding to whole pixels makes the page tremble in motion.
                 withTransform({ translate(origin.x, origin.y); scale(s, s, Offset.Zero) }) {
-                    val shown = enhanced
+                    val shown = if (comparing) null else enhanced
                     if (shown != null) {
                         drawImage(shown, dstSize = androidx.compose.ui.unit.IntSize(image.width, image.height), filterQuality = FilterQuality.High, alpha = fade.value)
                     } else {
@@ -180,6 +185,7 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
             if (pageImage.loading) {
                 Label(Strings.loading, Modifier.align(Alignment.Center), color = PreviewText)
             }
+            if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
             if (enhanceOpen) {
                 EnhancePanel(
                     EnhancePrefs.reader, busy = EnhancePrefs.reader.active && enhanced == null && image != null,
@@ -210,6 +216,11 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
             Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)
             Box(Modifier.clip(CircleShape).border(1.dp, if (EnhancePrefs.reader.active) PreviewDotOn else Color(0xFF444444), CircleShape).clickable { enhanceOpen = !enhanceOpen }.padding(horizontal = 12.dp, vertical = 4.dp)) {
                 Label((if (EnhancePrefs.reader.active) "✦ " else "✧ ") + Strings.enhanceButton, color = PreviewText, size = 12.5.sp)
+            }
+            if (EnhancePrefs.reader.active) {
+                Box(Modifier.clip(CircleShape).background(Color(0xFF332C42)).holdToShow { comparing = it }.padding(horizontal = 12.dp, vertical = 4.dp)) {
+                    Label("◐ " + Strings.compare, color = PreviewDotOn, size = 12.5.sp)
+                }
             }
         }
     }

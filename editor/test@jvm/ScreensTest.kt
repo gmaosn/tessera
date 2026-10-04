@@ -164,6 +164,12 @@ class ScreensTest {
                 onRoot().performKeyInput { withKeyDown(Key.MetaLeft) { repeat(6) { pressKey(Key.Equals) } } }
                 waitForIdle()
                 javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("$name.png"))
+                if (settings.active) {
+                    onRoot().performKeyInput { keyDown(Key.C) }
+                    waitForIdle()
+                    javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("16b-comparing.png"))
+                    onRoot().performKeyInput { keyUp(Key.C) }
+                }
             }
         }
         val session = Session(comic, file.name).apply { goToPage(1) }

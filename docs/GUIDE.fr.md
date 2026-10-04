@@ -105,7 +105,9 @@ l’édition et pour la lecture :
   seconde par planche, calculée en arrière-plan (la planche ordinaire s’affiche en attendant,
   puis est remplacée) ; en lecture, la planche suivante est préparée à l’avance.
 
-**Netteté** et, pour la restauration, **Force** règlent l’effet de 0 à 100 %. L’étoile devient
+**Netteté** et, pour la restauration, **Force** règlent l’effet de 0 à 100 %. Pour comparer,
+maintenez **◐ Comparer** (à côté du bouton d’affichage, dans l’éditeur et dans la barre de
+lecture) ou maintenez **C** : la planche s’affiche sans amélioration jusqu’à ce que vous lâchiez. L’étoile devient
 pleine (✦) quand une amélioration est active. Seul l’affichage change : les fichiers ne sont
 jamais modifiés, et les cases sont toujours tracées sur les vrais pixels de la planche. Pour un
 travail au pixel près sur les cases, laissez l’éditeur sur Désactivé.

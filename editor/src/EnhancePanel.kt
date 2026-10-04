@@ -77,6 +77,7 @@ fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -
             },
             color = c.muted, size = 12.sp,
         )
+        if (settings.active) Label("◐ " + Strings.compareHint, color = c.muted, size = 12.sp)
         Label(Strings.enhanceScreenOnly, color = c.muted, size = 12.sp)
     }
 }

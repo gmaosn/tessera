@@ -95,6 +95,8 @@ fun EditorScreen(
     val image = pageImage.bitmap
     val enhanced by rememberEnhanced(images, session.page.imageHref, EnhancePrefs.editor)
     var enhanceOpen by remember { mutableStateOf(false) }
+    /** Held: show the page without enhancement, to compare. */
+    var comparing by remember { mutableStateOf(false) }
 
     fun say(text: String) {
         toast = text
@@ -125,6 +127,10 @@ fun EditorScreen(
     }
 
     fun onKey(e: KeyEvent): Boolean {
+        if (e.key == Key.C && !(e.isMetaPressed || e.isCtrlPressed) && mode == 0) {
+            comparing = e.type == KeyEventType.KeyDown && EnhancePrefs.editor.active
+            return true
+        }
         if (e.type != KeyEventType.KeyDown) return false
         val mod = e.isMetaPressed || e.isCtrlPressed
         when {
@@ -175,14 +181,15 @@ fun EditorScreen(
                 PageStrip(session, images, onSelect = ::goTo, modifier = Modifier.width(118.dp).fillMaxHeight())
                 VRule()
                 Box(Modifier.weight(1f).fillMaxHeight()) {
-                    PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize(), display = enhanced)
+                    PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize(), display = if (comparing) null else enhanced)
+                    if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
                     if (pageImage.loading || image == null) {
                         Box(Modifier.align(Alignment.Center).shadow(4.dp, CircleShape).clip(CircleShape).background(c.paper).padding(horizontal = 14.dp, vertical = 6.dp)) {
                             Label(if (pageImage.loading) Strings.loading else Strings.imageMissing, color = c.muted)
                         }
                     }
                     Toolbar(tool, Modifier.align(Alignment.TopStart).padding(12.dp))
-                    ZoomPill(view, EnhancePrefs.editor.active, { enhanceOpen = !enhanceOpen }, Modifier.align(Alignment.BottomEnd).padding(12.dp))
+                    ZoomPill(view, EnhancePrefs.editor.active, { enhanceOpen = !enhanceOpen }, { comparing = it }, Modifier.align(Alignment.BottomEnd).padding(12.dp))
                     if (enhanceOpen) {
                         EnhancePanel(
                             EnhancePrefs.editor, busy = EnhancePrefs.editor.active && enhanced == null && image != null,
@@ -351,7 +358,7 @@ private fun orderIcon(d: DrawScope, color: Color) = with(d) {
 }
 
 @Composable
-private fun ZoomPill(view: CanvasView, enhancing: Boolean, onEnhance: () -> Unit, modifier: Modifier) {
+private fun ZoomPill(view: CanvasView, enhancing: Boolean, onEnhance: () -> Unit, onCompare: (Boolean) -> Unit, modifier: Modifier) {
     val c = LocalPalette.current
     Row(
         modifier.shadow(6.dp, CircleShape).clip(CircleShape).background(c.paper).border(1.dp, c.line, CircleShape).padding(2.dp),
@@ -362,6 +369,13 @@ private fun ZoomPill(view: CanvasView, enhancing: Boolean, onEnhance: () -> Unit
         ZoomButton("+") { view.zoomBy(1.25f) }
         ZoomButton(Strings.fit) { view.fit() }
         ZoomButton((if (enhancing) "✦ " else "✧ ") + Strings.enhanceShort, onEnhance)
+        if (enhancing) {
+            val c = LocalPalette.current
+            Box(
+                Modifier.clip(CircleShape).background(c.accentSoft).holdToShow(onCompare).pointerHoverIcon(PointerIcon.Hand)
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+            ) { Label("◐ " + Strings.compare, color = c.accentDeep, maxLines = 1) }
+        }
     }
 }
 

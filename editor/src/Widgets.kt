@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -154,5 +155,32 @@ fun Toast(text: String, modifier: Modifier = Modifier) {
     val c = LocalPalette.current
     Box(modifier.shadow(6.dp, CircleShape).clip(CircleShape).background(c.ink).padding(horizontal = 16.dp, vertical = 8.dp)) {
         Label(text, color = c.paper, maxLines = 2)
+    }
+}
+
+/**
+ * Detects a press held on this element: [onHold] gets true on press and false on release (or
+ * when the pointer is lost), for "hold to compare".
+ */
+fun Modifier.holdToShow(onHold: (Boolean) -> Unit): Modifier = this.then(
+    Modifier.pointerInput(Unit) {
+        awaitPointerEventScope {
+            while (true) {
+                val e = awaitPointerEvent()
+                when (e.type) {
+                    androidx.compose.ui.input.pointer.PointerEventType.Press -> { onHold(true); e.changes.forEach { it.consume() } }
+                    androidx.compose.ui.input.pointer.PointerEventType.Release, androidx.compose.ui.input.pointer.PointerEventType.Exit -> onHold(false)
+                }
+            }
+        }
+    },
+)
+
+/** The badge shown over the page while comparing. */
+@Composable
+fun ComparingBadge(modifier: Modifier = Modifier) {
+    val c = LocalPalette.current
+    Box(modifier.shadow(4.dp, CircleShape).clip(CircleShape).background(c.ink).padding(horizontal = 14.dp, vertical = 5.dp)) {
+        Label(Strings.withoutEnhancement, color = c.paper, size = 12.sp, maxLines = 1)
     }
 }
