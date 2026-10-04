@@ -34,8 +34,7 @@ Les archives CBR (RAR) ne sont pas encore prises en charge.
 | Inspecteur | La liste des cases, les réglages de la planche, et ses cases telles qu’elles sont écrites dans le fichier |
 | Barre d’aide | Ce que fait l’outil en cours, et ses touches |
 
-**Textes** et **Informations** sont les prochaines étapes du projet ; ils sont grisés pour
-l’instant.
+**Textes** est la prochaine étape du projet ; il est grisé pour l’instant.
 
 Pendant le décodage d’une image, le canevas affiche **Chargement…** ; sur les gros livres, cela
 peut prendre un instant par planche, et les planches voisines sont préparées à l’avance.
@@ -98,6 +97,31 @@ l’éditeur se place sur la planche atteinte.
   elle est propre à la planche ou héritée du livre.
 - **Transition** est l’animation depuis la planche précédente : fondu, mélange, défilement vers
   la droite, vers le bas, ou aucune.
+
+## Informations du livre
+
+**Informations**, dans la barre du haut, montre tous les champs de métadonnées du document, en
+quatre cartes :
+
+- **Livre** : titre, auteur·rices (prénom, nom ou pseudonyme, et rôle : scénario, dessin,
+  couleurs, traduction…), genres, résumé, mots-clés, personnages, séries (titre, tome, numéro).
+  Le titre, le résumé et les mots-clés existent par langue : choisissez la langue dans les
+  pastilles du haut, ou ajoutez-en une avec **+ Langue**.
+- **Publication** : éditeur, ville, date de publication, ISBN, licence.
+- **Document ACBF** : qui a fait ce fichier ACBF, date de création, identifiant (**Générer** en
+  crée un unique), version, source et historique (un paragraphe par ligne).
+- **Références** : fiches de bases de données de BD (comme GCD, la Grand Comics Database) et
+  classifications par âge.
+
+![Informations du livre](images/book-info-fr.jpg)
+
+Les dates ont deux champs : le texte montré aux lecteurs (« Printemps 1953 ») et la date lisible
+par les programmes, sous la forme AAAA-MM-JJ. Les modifications s’appliquent pendant la saisie ;
+⌘Z annule un champ entier à la fois. Comme pour les cases, seul ce que vous changez est réécrit ;
+un champ vidé garde son élément (vide), si bien qu’une valeur retapée revient à sa place. Un
+paragraphe du résumé que vous ne touchez pas garde son italique et ses liens. Le sens de lecture
+n’apparaît que pour les documents qui utilisent déjà la proposition ACBF 1.2, car un fichier
+ACBF 1.1 ne peut pas le contenir.
 
 ## Se déplacer
 

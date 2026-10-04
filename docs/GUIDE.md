@@ -34,7 +34,7 @@ CBR (RAR) archives are not supported yet.
 | Inspector | The frame list, the page settings, and the page's frames as they are written in the file |
 | Hint bar | What the current tool does, and its keys |
 
-**Texts** and **Book info** are the next steps of the project; they are greyed for now.
+**Texts** is the next step of the project; it is greyed for now.
 
 While a page image is being decoded, the canvas says **Loading…**; large books can take a moment
 per page, and the next and previous pages are prepared in advance.
@@ -97,6 +97,29 @@ page you reached.
   page's own or inherited from the book.
 - **Transition** is the animation from the previous page: fade, blend, scroll right, scroll
   down, or none.
+
+## Book information
+
+**Book info** in the top bar shows every metadata field of the document, in four cards:
+
+- **Book**: title, authors (first name, last name or pen name, and role: writer, artist,
+  colourist, translator…), genres, summary, keywords, characters, series (title, volume,
+  number). Title, summary and keywords exist per language: pick the language in the chips at
+  the top, or add one with **+ Language**.
+- **Publishing**: publisher, city, publication date, ISBN, licence.
+- **ACBF document**: who made this ACBF file, creation date, identifier (**Generate** makes a
+  unique one), version, source and history (one paragraph per line).
+- **References**: comic database entries (such as GCD, the Grand Comics Database) and content
+  ratings.
+
+![Book information](images/book-info-en.jpg)
+
+Dates have two fields: the text shown to readers ("Spring 1953") and the machine-readable date
+as YYYY-MM-DD. Changes apply as you type; ⌘Z undoes a whole field at a time. As with frames,
+only what you change is rewritten; a field you empty keeps its (empty) element, so retyping a
+value puts it back where it was. A summary paragraph you do not touch keeps its emphasis and
+links. The reading direction appears only for documents that already use the ACBF 1.2
+proposal, since ACBF 1.1 files may not contain it.
 
 ## Moving around
 

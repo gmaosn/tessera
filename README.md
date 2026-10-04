@@ -16,8 +16,10 @@ byte for byte, except what you changed.
 ## Status
 
 - **Frame editor** (desktop): drawing, adjusting and ordering frames, reading preview, undo,
-  saving, English and French. See the [user guide](docs/GUIDE.md).
-- Next: text layers and translations, book information, then the Android reader.
+  saving, English and French.
+- **Book information**: every metadata field (authors, titles per language, series, publishing,
+  document history…), edited in place. See the [user guide](docs/GUIDE.md).
+- Next: text layers and translations, then the Android reader.
 
 ## Building and running
 

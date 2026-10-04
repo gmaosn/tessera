@@ -121,4 +121,24 @@ class ScreensTest {
             }
         }
     }
+
+    private fun infoShot(name: String, prefix: String) {
+        val file = book(prefix) ?: return
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name)
+        runDesktopComposeUiTest(1440, 2300) {
+            setContent { TesseraTheme { EditorScreen(session, ImageCache(comic), onSave = { "" }, startMode = 2) } }
+            waitForIdle()
+            javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("$name.png"))
+        }
+    }
+
+    @Test
+    fun bookInfoPurpleClaw() = infoShot("13-info-purple", "Purple Claw")
+
+    @Test
+    fun bookInfoFrench() {
+        Strings.language = Language.French
+        try { infoShot("14-info-craphound-fr", "Doctorow, Cory - Craphound") } finally { Strings.language = Language.English }
+    }
 }

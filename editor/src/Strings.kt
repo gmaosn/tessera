@@ -125,6 +125,8 @@ object Strings {
         Tool.Order -> t("Reading order (O)", "Ordre de lecture (O)")
     }
 
+    val noLanguage get() = t("No language", "Sans langue")
+
     // ----- Book information dialog -----
 
     val bookInfoTitle get() = t("About this comic", "À propos de cette bande dessinée")
@@ -171,6 +173,84 @@ object Strings {
         "adult" -> t("Adult", "Adulte")
         "alternative" -> t("Alternative", "Alternatif")
         else -> t("Other", "Autre")
+    }
+
+    // ----- Book info tab -----
+
+    val infoBook get() = t("Book", "Livre")
+    val infoPublishing get() = t("Publishing", "Publication")
+    val infoDocument get() = t("ACBF document", "Document ACBF")
+    val infoReferences get() = t("References", "Références")
+    val textsLanguage get() = t("Language of the title, summary and keywords", "Langue du titre, du résumé et des mots-clés")
+    val addLanguage get() = t("Language", "Langue")
+    val fieldGenres get() = t("Genres", "Genres")
+    val addGenre get() = t("Genre", "Genre")
+    val fieldKeywords get() = t("Keywords", "Mots-clés")
+    val fieldCharacters get() = t("Characters", "Personnages")
+    val fieldSeries get() = t("Series", "Séries")
+    val seriesColumns get() = t("Series title · volume · number", "Titre de la série · tome · numéro")
+    val addSeries get() = t("+ Add a series", "+ Ajouter une série")
+    val readingDirection get() = t("Reading direction", "Sens de lecture")
+    val authorColumns get() = t("First name · last name · pen name · role", "Prénom · nom · pseudonyme · rôle")
+    val authorColumnsNoRole get() = t("First name · last name · pen name", "Prénom · nom · pseudonyme")
+    val addAuthor get() = t("+ Add an author", "+ Ajouter un·e auteur·rice")
+    val fieldPublisher get() = t("Publisher", "Éditeur")
+    val fieldCity get() = t("City", "Ville")
+    val fieldPublishDate get() = t("Publication date", "Date de publication")
+    val fieldIsbn get() = t("ISBN", "ISBN")
+    val fieldLicense get() = t("Licence", "Licence")
+    val dateShown get() = t("as shown", "telle qu’affichée")
+    val dateIso get() = t("YYYY-MM-DD", "AAAA-MM-JJ")
+    val dateFormat get() = t("Write the date as YYYY-MM-DD, for example 2026-10-04.", "Écrivez la date sous la forme AAAA-MM-JJ, par exemple 2026-10-04.")
+    val fieldDocumentAuthors get() = t("Authors of the document", "Auteur·rices du document")
+    val fieldDocumentAuthorsNote get() = t("who made this ACBF file", "qui ont fait ce fichier ACBF")
+    val fieldCreationDate get() = t("Creation date", "Date de création")
+    val fieldId get() = t("Identifier", "Identifiant")
+    val generateId get() = t("Generate", "Générer")
+    val fieldVersion get() = t("Version", "Version")
+    val fieldSource get() = t("Source", "Source")
+    val fieldHistory get() = t("History", "Historique")
+    val onePerLine get() = t("one paragraph per line", "un paragraphe par ligne")
+    val fieldDatabases get() = t("Comic databases", "Bases de données de BD")
+    val fieldDatabasesNote get() = t("for example GCD, the Grand Comics Database", "par exemple GCD, la Grand Comics Database")
+    val databaseColumns get() = t("Database · reference type · value", "Base · type de référence · valeur")
+    val addDatabase get() = t("+ Add a reference", "+ Ajouter une référence")
+    val fieldRatings get() = t("Content ratings", "Classifications par âge")
+    val ratingColumns get() = t("Rating system · rating", "Système · classification")
+    val addRating get() = t("+ Add a rating", "+ Ajouter une classification")
+    val phFirstName get() = t("First name", "Prénom")
+    val phLastName get() = t("Last name", "Nom")
+    val phNickname get() = t("Pen name", "Pseudonyme")
+    val phSeriesTitle get() = t("Series title", "Titre de la série")
+    val phVolume get() = t("Volume", "Tome")
+    val phNumber get() = t("Number", "Numéro")
+    val phDatabase get() = t("Database", "Base")
+    val phRefType get() = t("Type (IssueID…)", "Type (IssueID…)")
+    val phRefValue get() = t("Value or URL", "Valeur ou URL")
+    val phRatingSystem get() = t("Rating system", "Système")
+    val phRating get() = t("Rating", "Classification")
+    val infoMode get() = t("Book info", "Informations")
+    val infoHints get() = listOf(
+        Hint(text = t("Changes apply at once;", "Les modifications s’appliquent aussitôt ;"), strong = t("untouched fields stay as they were", "les champs non touchés restent tels quels")),
+        Hint(listOf("${cmd}Z"), t("undo", "annuler")),
+        Hint(listOf("${cmd}S"), t("save", "enregistrer")),
+    )
+
+    fun activity(key: String): String = when (key) {
+        "Writer" -> t("Writer", "Scénariste")
+        "Adapter" -> t("Adapter", "Adaptation")
+        "Artist" -> t("Artist", "Dessin")
+        "Penciller" -> t("Penciller", "Crayonné")
+        "Inker" -> t("Inker", "Encrage")
+        "Colorist" -> t("Colorist", "Couleurs")
+        "Letterer" -> t("Letterer", "Lettrage")
+        "CoverArtist" -> t("Cover artist", "Couverture")
+        "Photographer" -> t("Photographer", "Photographie")
+        "Editor" -> t("Editor", "Direction éditoriale")
+        "AssistantEditor" -> t("Assistant editor", "Assistanat éditorial")
+        "Translator" -> t("Translator", "Traduction")
+        "Other" -> t("Other", "Autre")
+        else -> key
     }
 
     // ----- Application -----

@@ -57,8 +57,6 @@ object EditorPrefs {
     var onChange: (() -> Unit)? = null
 }
 
-/** The languages offered for a book; others can be added later in Book info. */
-private val BOOK_LANGUAGES = listOf("" to "—", "en" to "English", "fr" to "Français", "de" to "Deutsch", "es" to "Español", "it" to "Italiano", "nl" to "Nederlands", "pt" to "Português", "sk" to "Slovenčina", "ja" to "日本語")
 
 /**
  * Asked when a comic without ACBF document is opened: who made it and what it is called, so that
@@ -113,18 +111,18 @@ fun BookInfoDialog(suggestedTitle: String, onDone: (NewBook?) -> Unit) {
         ) {
             Label(Strings.bookInfoTitle, size = 18.sp, weight = FontWeight.SemiBold)
             Label(Strings.bookInfoIntro, color = c.muted)
-            Field(Strings.fieldTitle) { TextInput(title, { title = it }, Modifier.focusRequester(first), onEnter = ::confirm) }
-            Field(Strings.fieldAuthors, Strings.fieldAuthorsHint) { TextInput(authors, { authors = it }, onEnter = ::confirm) }
+            FormField(Strings.fieldTitle) { FormInput(title, { title = it }, Modifier.focusRequester(first), onEnter = ::confirm) }
+            FormField(Strings.fieldAuthors, Strings.fieldAuthorsHint) { FormInput(authors, { authors = it }, onEnter = ::confirm) }
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Box(Modifier.weight(1f)) {
-                    Field(Strings.fieldGenre) { Choose(Strings.genre(genre), NewBook.GENRES.map { it to Strings.genre(it) }.sortedBy { if (it.first == "other") "~" else it.second.lowercase() }) { genre = it } }
+                    FormField(Strings.fieldGenre) { FormChoice(Strings.genre(genre), NewBook.GENRES.map { it to Strings.genre(it) }.sortedBy { if (it.first == "other") "~" else it.second.lowercase() }) { genre = it } }
                 }
                 Box(Modifier.weight(1f)) {
-                    Field(Strings.fieldLanguage) { Choose(BOOK_LANGUAGES.first { it.first == language }.second, BOOK_LANGUAGES) { language = it } }
+                    FormField(Strings.fieldLanguage) { FormChoice(BookLanguages.first { it.first == language }.second, BookLanguages) { language = it } }
                 }
             }
-            Field(Strings.fieldSummary, Strings.optional) { TextInput(summary, { summary = it }, minLines = 3) }
-            Field(Strings.fieldCreator, Strings.fieldCreatorHint) { TextInput(creator, { creator = it }, onEnter = ::confirm) }
+            FormField(Strings.fieldSummary, Strings.optional) { FormInput(summary, { summary = it }, minLines = 3) }
+            FormField(Strings.fieldCreator, Strings.fieldCreatorHint) { FormInput(creator, { creator = it }, onEnter = ::confirm) }
             Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                 Label(Strings.bookInfoLaterNote, Modifier.weight(1f), color = c.muted, size = 12.sp)
                 Pill(Strings.later, { onDone(null) })
@@ -134,60 +132,3 @@ fun BookInfoDialog(suggestedTitle: String, onDone: (NewBook?) -> Unit) {
     }
 }
 
-@Composable
-private fun Field(label: String, note: String? = null, content: @Composable () -> Unit) {
-    val c = LocalPalette.current
-    Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            Label(label, weight = FontWeight.Medium, size = 12.5.sp)
-            if (note != null) Label(note, color = c.muted, size = 12.sp)
-        }
-        content()
-    }
-}
-
-@Composable
-private fun TextInput(value: String, onChange: (String) -> Unit, modifier: Modifier = Modifier, minLines: Int = 1, onEnter: (() -> Unit)? = null) {
-    val c = LocalPalette.current
-    val interaction = remember { MutableInteractionSource() }
-    val focused by interaction.collectIsFocusedAsState()
-    val shape = RoundedCornerShape(8.dp)
-    BasicTextField(
-        value, onChange,
-        modifier.fillMaxWidth().clip(shape).background(c.panel).border(if (focused) 1.5.dp else 1.dp, if (focused) c.accent else c.line, shape)
-            .padding(horizontal = 10.dp, vertical = 8.dp)
-            .onPreviewKeyEvent { e ->
-                if (onEnter != null && minLines == 1 && e.type == KeyEventType.KeyDown && (e.key == Key.Enter || e.key == Key.NumPadEnter)) {
-                    onEnter(); true
-                } else false
-            },
-        textStyle = TextStyle(color = c.ink, fontSize = 13.sp, lineHeight = 18.sp),
-        singleLine = minLines == 1,
-        minLines = minLines,
-        cursorBrush = SolidColor(c.accent),
-        interactionSource = interaction,
-    )
-}
-
-@Composable
-private fun Choose(shown: String, options: List<Pair<String, String>>, onPick: (String) -> Unit) {
-    val c = LocalPalette.current
-    var open by remember { mutableStateOf(false) }
-    val shape = RoundedCornerShape(8.dp)
-    Box {
-        Row(
-            Modifier.fillMaxWidth().clip(shape).background(c.panel).border(1.dp, c.line, shape).clickable { open = true }
-                .padding(horizontal = 10.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Label(shown, Modifier.weight(1f), maxLines = 1)
-            Spacer(Modifier.width(6.dp))
-            Label("▾", color = c.muted, size = 11.sp)
-        }
-        DropdownMenu(open, onDismissRequest = { open = false }, modifier = Modifier.heightIn(max = 360.dp)) {
-            options.forEach { (key, label) ->
-                DropdownMenuItem(onClick = { open = false; onPick(key) }) { Label(label) }
-            }
-        }
-    }
-}

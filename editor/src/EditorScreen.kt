@@ -80,11 +80,15 @@ fun EditorScreen(
     notice: Notice? = null,
     /** Ask for the book's title and authors when the comic had no ACBF document. */
     askBookInfo: Boolean = true,
+    /** 0: frames, 2: book info. */
+    startMode: Int = 0,
 ) {
     val c = LocalPalette.current
     val view = remember(session) { CanvasView() }
     val focus = remember { FocusRequester() }
     var previewing by remember { mutableStateOf(startPreviewing) }
+    /** 0: frames, 2: book info (1, texts, comes later). */
+    var mode by remember(session) { mutableStateOf(startMode) }
     var askingBookInfo by remember(session) { mutableStateOf(askBookInfo && session.comic.generated) }
     var toast by remember { mutableStateOf<String?>(null) }
     val pageImage by rememberPageImage(images, session.page.imageHref)
@@ -129,6 +133,8 @@ fun EditorScreen(
             mod && e.key == Key.Minus -> view.zoomBy(1 / 1.25f)
             mod && e.key == Key.Zero -> view.fit()
             mod -> return false
+            // In Book info, plain keys belong to the text fields.
+            mode != 0 -> return false
             e.key == Key.Spacebar -> preview()
             e.key == Key.V -> tool.select(Tool.Select)
             e.key == Key.R -> tool.select(Tool.Rectangle)
@@ -160,9 +166,10 @@ fun EditorScreen(
             Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent { Trace.log { "key ${it.key} ${it.type}" }; onKey(it) }
                 .then(if (Trace.sink != null) Modifier.traceClicks() else Modifier),
         ) {
-            TopBar(session, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
+            TopBar(session, mode, { mode = it; focus.requestFocus() }, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
             Rule()
-            Row(Modifier.weight(1f).fillMaxWidth()) {
+            if (mode == 2) InfoScreen(session, Modifier.weight(1f).fillMaxWidth())
+            else Row(Modifier.weight(1f).fillMaxWidth()) {
                 PageStrip(session, images, onSelect = ::goTo, modifier = Modifier.width(118.dp).fillMaxHeight())
                 VRule()
                 Box(Modifier.weight(1f).fillMaxHeight()) {
@@ -180,7 +187,7 @@ fun EditorScreen(
                 Inspector(session, tool, Modifier.width(300.dp).fillMaxHeight())
             }
             Rule()
-            Hints(tool)
+            if (mode == 2) HintBar(Strings.infoMode, Strings.infoHints, null) else Hints(tool)
         }
         toast?.let { Toast(it, Modifier.align(Alignment.BottomCenter).padding(bottom = 52.dp)) }
         if (askingBookInfo) {
@@ -222,7 +229,7 @@ private fun Rule() = Box(Modifier.fillMaxWidth().height(1.dp).background(LocalPa
 private fun VRule() = Box(Modifier.width(1.dp).fillMaxHeight().background(LocalPalette.current.line))
 
 @Composable
-private fun TopBar(session: Session, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
+private fun TopBar(session: Session, mode: Int, onMode: (Int) -> Unit, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
     val c = LocalPalette.current
     Row(
         Modifier.fillMaxWidth().background(c.paper).padding(horizontal = 16.dp, vertical = 8.dp),
@@ -241,7 +248,7 @@ private fun TopBar(session: Session, onPrevious: () -> Unit, onNext: () -> Unit,
             val where = if (session.page.isCover) Strings.coverPage else Strings.pageOf(session.pageIndex + 1, session.pages.size)
             Label(where + version, color = c.muted, size = 11.5.sp, maxLines = 1)
         }
-        Segmented(listOf(Strings.modeFrames, Strings.modeTexts, Strings.modeInfo), 0, enabled = { it == 0 }, onSelect = {})
+        Segmented(listOf(Strings.modeFrames, Strings.modeTexts, Strings.modeInfo), mode, enabled = { it != 1 }, onSelect = onMode)
         Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End)) {
             Pill("▶  " + Strings.read, onPreview)
             Pill(Strings.save, onSave, primary = true)

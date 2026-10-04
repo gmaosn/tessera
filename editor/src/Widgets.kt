@@ -9,6 +9,7 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -124,7 +125,7 @@ data class Hint(val keys: List<String> = emptyList(), val text: String = "", val
 fun HintBar(mode: String, hints: List<Hint>, trailing: Hint?) {
     val c = LocalPalette.current
     Row(
-        Modifier.background(c.panel).padding(horizontal = 16.dp, vertical = 7.dp),
+        Modifier.fillMaxWidth().background(c.panel).padding(horizontal = 16.dp, vertical = 7.dp),
         horizontalArrangement = Arrangement.spacedBy(18.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

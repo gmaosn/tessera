@@ -16,8 +16,11 @@ l’octet près, sauf ce que vous avez modifié.
 ## État
 
 - **Éditeur de cases** (ordinateur) : tracé, retouche et ordre des cases, lecture case par case,
-  annulation, enregistrement. Voir le [guide d’utilisation](docs/GUIDE.fr.md).
-- Ensuite : calques de texte et traductions, informations du livre, puis la liseuse Android.
+  annulation, enregistrement, en anglais et en français.
+- **Informations du livre** : tous les champs de métadonnées (auteur·rices, titres par langue,
+  séries, publication, historique du document…), modifiés sur place. Voir le
+  [guide d’utilisation](docs/GUIDE.fr.md).
+- Ensuite : calques de texte et traductions, puis la liseuse Android.
 
 ## Compiler et lancer
 

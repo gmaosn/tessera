@@ -7,6 +7,8 @@ import androidx.compose.runtime.setValue
 import tessera.acbf.AcbfPage
 import tessera.acbf.Comic
 import tessera.acbf.FrameState
+import tessera.acbf.Metadata
+import tessera.acbf.Section
 import tessera.xml.XmlElement
 
 /**
@@ -40,6 +42,26 @@ class Session(comic: Comic, fileName: String) {
 
     private class FramesStep(override val pageIndex: Int, val state: List<FrameState>) : Step
     private class AttributeStep(override val pageIndex: Int, val element: XmlElement, val name: String, val value: String?) : Step
+    private class MetaStep(override val pageIndex: Int, val section: Section, val snapshot: String?, val key: String) : Step
+
+    /** The field being typed into: its successive changes make one undo step. */
+    private var typing: String? = null
+
+    /**
+     * Changes the book's metadata in [section], undoably. Consecutive changes with the same
+     * [key] (one text field being typed into) are a single undo step.
+     */
+    fun editMeta(section: Section, key: String, change: (Metadata) -> Unit) {
+        val m = Metadata(document)
+        val before = m.snapshot(section)
+        change(m)
+        if (m.snapshot(section) == before) return
+        val top = undoStack.lastOrNull()
+        if (typing == key && top is MetaStep && top.key == key) redoStack.clear()
+        else push(MetaStep(pageIndex, section, before, key))
+        typing = key
+        changed()
+    }
 
     private val undoStack = ArrayDeque<Step>()
     private val redoStack = ArrayDeque<Step>()
@@ -96,11 +118,13 @@ class Session(comic: Comic, fileName: String) {
 
     private fun travel(from: ArrayDeque<Step>, to: ArrayDeque<Step>) {
         val step = from.removeLastOrNull() ?: return
-        pageIndex = step.pageIndex
+        typing = null
+        if (step !is MetaStep) pageIndex = step.pageIndex
         to.addLast(capture(step))
         when (step) {
             is FramesStep -> pages[step.pageIndex].restoreFrames(step.state)
             is AttributeStep -> step.element[step.name] = step.value
+            is MetaStep -> Metadata(document).restore(step.section, step.snapshot)
         }
         changed()
     }
@@ -109,9 +133,11 @@ class Session(comic: Comic, fileName: String) {
     private fun capture(step: Step): Step = when (step) {
         is FramesStep -> FramesStep(step.pageIndex, pages[step.pageIndex].frameState())
         is AttributeStep -> AttributeStep(step.pageIndex, step.element, step.name, step.element[step.name])
+        is MetaStep -> MetaStep(step.pageIndex, step.section, Metadata(document).snapshot(step.section), step.key)
     }
 
     private fun push(step: Step) {
+        typing = null
         undoStack.addLast(step)
         if (undoStack.size > 500) undoStack.removeFirst()
         redoStack.clear()
