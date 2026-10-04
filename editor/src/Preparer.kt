@@ -86,6 +86,7 @@ class Preparer(
 
     private fun start(steps: List<Step>, whole: Boolean) {
         job?.cancel()
+        images.preparingPriority = if (whole) 2 else 1
         total = steps.sumOf { it.units }
         done = 0
         wholeBook = whole
@@ -139,3 +140,6 @@ class Preparer(
         const val AHEAD = 15
     }
 }
+
+/** A comic whose whole-book preparation goes on while another one is open. */
+class BackgroundBook(val name: String, val preparer: Preparer)

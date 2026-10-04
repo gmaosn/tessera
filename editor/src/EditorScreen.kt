@@ -86,6 +86,10 @@ fun EditorScreen(
     startMode: Int = 0,
     /** Incremented by the host (menu View → Prepare the whole book). */
     prepareRequest: Int = 0,
+    /** The host's preparer for this comic, which may outlive this screen; one is made otherwise. */
+    hostPreparer: Preparer? = null,
+    /** Other comics being prepared in the background, shown in the top bar. */
+    background: List<BackgroundBook> = emptyList(),
 ) {
     val c = LocalPalette.current
     val view = remember(session) { CanvasView() }
@@ -102,10 +106,10 @@ fun EditorScreen(
     var enhanceOpen by remember { mutableStateOf(false) }
     // The preparer runs on the composition's own (UI) thread, which owns the image cache.
     val uiScope = rememberCoroutineScope()
-    val preparer = remember(session) {
+    val preparer = hostPreparer ?: remember(session) {
         Preparer(images, session, uiScope.coroutineContext[kotlin.coroutines.ContinuationInterceptor] as? kotlinx.coroutines.CoroutineDispatcher ?: kotlinx.coroutines.Dispatchers.Default)
     }
-    DisposableEffect(preparer) { onDispose { preparer.close() } }
+    if (hostPreparer == null) DisposableEffect(preparer) { onDispose { preparer.close() } }
     LaunchedEffect(prepareRequest) { if (prepareRequest > 0) preparer.book() }
     /** Held: show the page without enhancement, to compare. */
     var comparing by remember { mutableStateOf(false) }
@@ -186,7 +190,7 @@ fun EditorScreen(
             Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent { Trace.log { "key ${it.key} ${it.type}" }; onKey(it) }
                 .then(if (Trace.sink != null) Modifier.traceClicks() else Modifier),
         ) {
-            TopBar(session, preparer, images, mode, { mode = it; focus.requestFocus() }, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
+            TopBar(session, preparer, images, background, mode, { mode = it; focus.requestFocus() }, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
             Rule()
             if (mode == 2) InfoScreen(session, Modifier.weight(1f).fillMaxWidth())
             else Row(Modifier.weight(1f).fillMaxWidth()) {
@@ -262,7 +266,7 @@ private fun Rule() = Box(Modifier.fillMaxWidth().height(1.dp).background(LocalPa
 private fun VRule() = Box(Modifier.width(1.dp).fillMaxHeight().background(LocalPalette.current.line))
 
 @Composable
-private fun TopBar(session: Session, preparer: Preparer, images: ImageCache, mode: Int, onMode: (Int) -> Unit, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
+private fun TopBar(session: Session, preparer: Preparer, images: ImageCache, background: List<BackgroundBook>, mode: Int, onMode: (Int) -> Unit, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
     val c = LocalPalette.current
     Row(
         Modifier.fillMaxWidth().background(c.paper).padding(horizontal = 16.dp, vertical = 8.dp),
@@ -283,6 +287,7 @@ private fun TopBar(session: Session, preparer: Preparer, images: ImageCache, mod
         }
         Segmented(listOf(Strings.modeFrames, Strings.modeTexts, Strings.modeInfo), mode, enabled = { it != 1 }, onSelect = onMode)
         Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End), verticalAlignment = Alignment.CenterVertically) {
+            for (b in background) if (b.preparer.active) BackgroundPill(b)
             if (preparer.active) PreparingPill(preparer, images)
             Pill("▶  " + Strings.read, onPreview)
             Pill(Strings.save, onSave, primary = true)
@@ -301,6 +306,21 @@ private fun PreparingPill(preparer: Preparer, images: ImageCache) {
         Label(Strings.preparing(preparer.done, preparer.total, preparer.wholeBook, preparer.current?.let { images.superResProgress[it] }), color = c.accentDeep, size = 12.sp, maxLines = 1)
         Box(Modifier.size(20.dp).clip(CircleShape).clickable { preparer.stop() }.pointerHoverIcon(PointerIcon.Hand), contentAlignment = Alignment.Center) {
             Label("×", color = c.accentDeep, size = 14.sp)
+        }
+    }
+}
+
+/** Another comic prepared in the background: its name, progress and a way to stop it. */
+@Composable
+private fun BackgroundPill(book: BackgroundBook) {
+    val c = LocalPalette.current
+    Row(
+        Modifier.clip(CircleShape).background(c.panel).border(1.dp, c.line, CircleShape).padding(start = 12.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Label(Strings.backgroundBook(book.name.take(28), book.preparer.done, book.preparer.total), color = c.muted, size = 12.sp, maxLines = 1)
+        Box(Modifier.size(20.dp).clip(CircleShape).clickable { book.preparer.stop() }.pointerHoverIcon(PointerIcon.Hand), contentAlignment = Alignment.Center) {
+            Label("×", color = c.muted, size = 14.sp)
         }
     }
 }

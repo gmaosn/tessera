@@ -132,6 +132,9 @@ This preparation goes on after you close the reader. **View → Prepare the Whol
 **Prepare the whole book** in the display panel, in Super-res) computes every frame in the
 background: hours for a large book, after which reading is instant everywhere. The top bar
 shows what is being prepared ("✦ Preparing the book: 12 / 152 frames · 40 %"); its × stops it.
+Opening another comic does not stop a whole-book preparation: it goes on in the background
+(the top bar names that book, with its own ×), behind anything shown in the comic you work on;
+reopening the book picks it up where it is.
 
 **Sharpness** and, for Restore and Super-res, **Strength** adjust the effect from 0 to
 100 %; once a page is computed, changing them is instant. To compare,

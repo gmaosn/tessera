@@ -43,6 +43,8 @@ import tessera.acbf.OutsideImageFolder
 import tessera.editor.EditorPrefs
 import tessera.editor.EditorScreen
 import tessera.editor.EnhancePrefs
+import tessera.editor.BackgroundBook
+import tessera.editor.Preparer
 import tessera.editor.ImageCache
 import tessera.editor.Label
 import tessera.editor.Language
@@ -59,8 +61,14 @@ import java.util.Locale
 import java.util.prefs.Preferences
 import javax.swing.JOptionPane
 
-/** One open comic: the file on disk, the editing session and its images. */
-private class Opened(val file: File, val session: Session, val images: ImageCache)
+/** One open comic: the file on disk, the editing session, its images and its preparer. */
+private class Opened(
+    val file: File,
+    val session: Session,
+    val images: ImageCache,
+    /** Lives as long as the comic, which may go on being prepared after another one is opened. */
+    val preparer: Preparer = Preparer(images, session, kotlinx.coroutines.Dispatchers.Main),
+)
 
 private fun open(file: File): Opened {
     val comic = ComicFiles.open(file)
@@ -73,8 +81,13 @@ private fun open(file: File): Opened {
  * references to the same local function compare equal and Compose skipped them).
  */
 @Composable
-fun EditorFor(session: Session, images: ImageCache, onSave: () -> String, saveRequest: Int = 0, notice: Notice? = null, prepareRequest: Int = 0) {
-    key(session) { EditorScreen(session, images, onSave = onSave, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest) }
+fun EditorFor(
+    session: Session, images: ImageCache, onSave: () -> String, saveRequest: Int = 0, notice: Notice? = null, prepareRequest: Int = 0,
+    preparer: Preparer? = null, background: List<BackgroundBook> = emptyList(),
+) {
+    key(session) {
+        EditorScreen(session, images, onSave = onSave, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest, hostPreparer = preparer, background = background)
+    }
 }
 
 private val isMac = System.getProperty("os.name").lowercase().contains("mac")
@@ -103,6 +116,8 @@ fun main(args: Array<String>) {
 
         var saveRequest by remember { mutableStateOf(0) }
         var prepareRequest by remember { mutableStateOf(0) }
+        // Comics whose whole-book preparation goes on while another one is open.
+        val background = remember { androidx.compose.runtime.mutableStateListOf<Opened>() }
         // PDF import: the file being set up, its options and destination, then the progress.
         var plan by remember { mutableStateOf<Pair<File, PdfInfo>?>(null) }
         var importOptions by remember { mutableStateOf(PdfImportOptions()) }
@@ -120,7 +135,29 @@ fun main(args: Array<String>) {
             Strings.saved(addedAcbf)
         }.getOrElse { Strings.saveFailed(it.message) }
 
-        Window(onCloseRequest = { if (mayDiscard(opened, ::save)) exitApplication() }, state = state, title = title) {
+        // Finished background preparations let go of their comic.
+        androidx.compose.runtime.LaunchedEffect(Unit) {
+            androidx.compose.runtime.snapshotFlow { background.filter { !it.preparer.active } }.collect { done ->
+                for (b in done) { b.preparer.close(); background.remove(b) }
+            }
+        }
+
+        /** Makes [next] the open comic; the previous one goes on preparing if it was doing the whole book. */
+        fun switchTo(next: Opened) {
+            val previous = opened
+            if (previous != null && previous !== next) {
+                if (previous.preparer.wholeBook && previous.preparer.active) {
+                    previous.images.shown = emptyList()
+                    background += previous
+                } else {
+                    previous.preparer.close()
+                }
+            }
+            background.remove(next)
+            opened = next
+        }
+
+        Window(onCloseRequest = { if (mayDiscard(opened, ::save)) { background.forEach { it.preparer.close() }; opened?.preparer?.close(); exitApplication() } }, state = state, title = title) {
             fun planImport(pdf: File) {
                 if (!mayDiscard(opened, ::save)) return
                 runCatching { PdfImport.inspect(pdf) }
@@ -141,7 +178,7 @@ fun main(args: Array<String>) {
                             authors = info.author.split(Regex("\\s*(?:[,;&]|\\bet\\b|\\band\\b)\\s*")).map { Person.fromName(it) }.filter { !it.isEmpty },
                             annotation = info.subject,
                         )
-                        opened = o
+                        switchTo(o)
                         error = null
                         notice = Notice(Strings.importDone(result.pages, result.originals + result.extracted, result.rendered))
                     } catch (e: kotlinx.coroutines.CancellationException) {
@@ -157,7 +194,9 @@ fun main(args: Array<String>) {
             fun load(f: File) {
                 if (f.extension.equals("pdf", ignoreCase = true)) return planImport(f)
                 if (!mayDiscard(opened, ::save)) return
-                runCatching { open(f) }.onSuccess { opened = it; error = null }.onFailure { error = "${f.name} : ${it.message}" }
+                // A comic still being prepared in the background is taken back as it is.
+                val again = background.firstOrNull { it.file.canonicalPath == f.canonicalPath }
+                runCatching { again ?: open(f) }.onSuccess { switchTo(it); error = null }.onFailure { error = "${f.name} : ${it.message}" }
                 tessera.editor.Trace.log { "load ${f.name}: ${error ?: "ok"}" }
             }
 
@@ -172,7 +211,7 @@ fun main(args: Array<String>) {
                         o.images.store = SuperResSidecar(target)
                         o.session.saved(reopened)
                         o.session.fileName = target.name
-                        opened = Opened(target, o.session, o.images)
+                        opened = Opened(target, o.session, o.images, o.preparer)
                         Strings.savedAs(target.name)
                     }.getOrElse { if (it is OutsideImageFolder) Strings.mustStayBesideImages else Strings.saveFailed(it.message) },
                 )
@@ -189,7 +228,10 @@ fun main(args: Array<String>) {
             TesseraTheme {
                 Box(Modifier.fillMaxSize().fileDrop(::load)) {
                     if (current == null) Welcome(error) { pickFile(window)?.let(::load) }
-                    else EditorFor(current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest)
+                    else EditorFor(
+                        current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest,
+                        preparer = current.preparer, background = background.map { BackgroundBook(it.file.nameWithoutExtension, it.preparer) },
+                    )
                     val p = plan
                     val progress = importProgress
                     if (p != null && progress != null) {

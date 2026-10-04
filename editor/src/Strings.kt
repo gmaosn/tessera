@@ -282,6 +282,7 @@ object Strings {
     fun preparing(done: Int, total: Int, wholeBook: Boolean, progress: Float?) =
         (if (wholeBook) t("✦ Preparing the book: $done / $total frames", "✦ Préparation du livre : $done / $total cases") else t("✦ Preparing: $done / $total frames", "✦ Préparation : $done / $total cases")) +
             (progress?.let { " · ${(it * 100).toInt()} %" } ?: "")
+    fun backgroundBook(name: String, done: Int, total: Int) = t("✦ $name: $done / $total", "✦ $name : $done / $total")
     val stopPreparing get() = t("Stop preparing", "Arrêter la préparation")
     val prepareBook get() = t("Prepare the whole book", "Préparer tout le livre")
     val prepareBookNote get() = t("Computes every frame in the background (hours for a large book); reading is then instant everywhere.", "Calcule toutes les cases en arrière-plan (des heures pour un gros livre) ; la lecture est ensuite instantanée partout.")

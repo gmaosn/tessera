@@ -22,8 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.flow.update
+import tessera.editor.enhance.SuperResScheduler
 import tessera.editor.enhance.Enhancement
 import tessera.editor.enhance.Enhancer
 
@@ -50,6 +49,15 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
     /** What the [Preparer] is computing ahead. */
     var preparing: List<String> = emptyList()
 
+    /** The priority of [preparing] in [SuperResScheduler]: 1 frames ahead, 2 a whole book in the background. */
+    var preparingPriority: Int = 1
+
+    private fun priorityOf(id: String): Double = when (id) {
+        in shown -> shown.indexOf(id) / 1000.0
+        in preparing -> preparingPriority + preparing.indexOf(id) / 1000.0
+        else -> 3.0
+    }
+
     /**
      * Everything wanted, most urgent first: what is shown, then what is prepared. Computations
      * run in this order; a queued one for anything else is dropped. Setting it sets [shown].
@@ -58,13 +66,9 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         get() = shown + preparing
         set(value) { shown = value }
 
-    /** Pages waiting for their turn at Real-ESRGAN. */
-    private val waiting = kotlinx.coroutines.flow.MutableStateFlow<Set<String>>(emptySet())
 
     private val superResJobs = HashMap<String, Deferred<Argb?>>()
     private val superResScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    // One page at a time: the network already uses every core.
-    private val superResLock = Mutex()
 
     /** Least recently used first. */
     private val full = LinkedHashMap<String, ImageBitmap?>()
@@ -175,54 +179,28 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         val job = superResScope.async {
             store?.runCatching { load(key) }?.getOrNull()?.let { decodeArgb(it) }?.let { return@async it }
             // Give way to a more urgent page between tiles, then take the turn again.
+            val ticket = Any()
             while (true) {
-                takeTurn(id)
+                SuperResScheduler.takeTurn(ticket) { priorityOf(id) }
                 try {
                     if (id !in wanted) return@async null
                     val decoded = decodeArgb(bytes) ?: return@async null
                     val page = region?.let { decoded.crop(it) } ?: decoded
                     superResProgress[id] = 0f
-                    val sr = RealEsrgan.upscale2x(page, { superResProgress[id] = it }, shouldYield = { moreUrgentWaiting(id) })
+                    val sr = RealEsrgan.upscale2x(page, { superResProgress[id] = it }, shouldYield = { id !in wanted || SuperResScheduler.moreUrgentWaiting(priorityOf(id)) })
                     store?.runCatching { save(key, encodeJpeg(sr, 92)) }
                     return@async sr
                 } catch (e: RealEsrgan.Yielded) {
                     continue
                 } finally {
                     superResProgress.remove(id)
-                    superResLock.unlock()
+                    SuperResScheduler.release()
                 }
             }
             @Suppress("UNREACHABLE_CODE") null
         }
         superResJobs[id] = job
         return try { job.await() } finally { superResJobs.remove(id) }
-    }
-
-    /**
-     * Waits until no computation runs and no more urgent page (earlier in [wanted]) is waiting,
-     * then holds the lock: the page shown always goes before the one prepared ahead.
-     */
-    private suspend fun takeTurn(href: String) {
-        waiting.update { it + href }
-        try {
-            while (true) {
-                superResLock.lock()
-                val first = wanted.firstOrNull { it in waiting.value }
-                if (first == null || first == href || href !in wanted) return
-                superResLock.unlock()
-                kotlinx.coroutines.delay(150)
-            }
-        } finally {
-            waiting.update { it - href }
-        }
-    }
-
-    /** True when a page ahead of [href] in [wanted] is waiting, or [href] is no longer wanted. */
-    private fun moreUrgentWaiting(href: String): Boolean {
-        val at = wanted.indexOf(href)
-        if (at < 0) return true
-        val queued = waiting.value
-        return wanted.subList(0, at).any { it in queued }
     }
 
     /**

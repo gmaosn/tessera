@@ -136,7 +136,10 @@ Cette préparation continue après la fermeture de la lecture. **Affichage → P
 livre** (ou **Préparer tout le livre** dans le panneau d’affichage, en super-résolution) calcule
 toutes les cases en arrière-plan : des heures pour un gros livre, après quoi la lecture est
 instantanée partout. La barre du haut montre ce qui est en préparation (« ✦ Préparation du livre :
-12 / 152 cases · 40 % ») ; son × l’arrête.
+12 / 152 cases · 40 % ») ; son × l’arrête. Ouvrir une autre bande dessinée n’arrête pas la
+préparation d’un livre entier : elle continue en arrière-plan (la barre du haut nomme ce livre,
+avec son propre ×), derrière tout ce qui s’affiche dans la bande dessinée sur laquelle vous
+travaillez ; rouvrir le livre la reprend là où elle en est.
 
 **Netteté** et, pour la restauration et la super-résolution, **Force** règlent l’effet de 0
 à 100 % ; une fois une planche calculée, les changer est instantané. Pour comparer,
