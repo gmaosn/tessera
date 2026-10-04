@@ -63,6 +63,7 @@ private val isMac = System.getProperty("os.name").lowercase().contains("mac")
 private val prefs: Preferences = Preferences.userRoot().node("tessera")
 
 fun main(args: Array<String>) {
+    startTrace()
     // The language chosen in the menu, else the system's.
     Strings.language = Language.of(prefs.get("language", null) ?: Locale.getDefault().language)
     if (!isMac) {
@@ -89,7 +90,10 @@ fun main(args: Array<String>) {
             fun load(f: File) {
                 if (!mayDiscard(opened, ::save)) return
                 runCatching { open(f) }.onSuccess { opened = it; error = null }.onFailure { error = "${f.name} : ${it.message}" }
+                tessera.editor.Trace.log { "load ${f.name}: ${error ?: "ok"}" }
             }
+
+            ControlLoop(::load) { opened?.let { "${it.file.name} page ${it.session.pageIndex + 1}/${it.session.pages.size}" } ?: "welcome" }
 
             fun saveAs(o: Opened) {
                 val target = pickSaveFile(window, o.file) ?: return

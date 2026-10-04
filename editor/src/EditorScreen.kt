@@ -55,6 +55,7 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,6 +99,7 @@ fun EditorScreen(
     }
 
     fun goTo(index: Int) {
+        Trace.log { "goTo($index) from ${session.pageIndex} of ${session.pages.size}" }
         if (index == session.pageIndex || index !in session.pages.indices) return
         session.goToPage(index); tool.pageChanged(); view.fit()
     }
@@ -151,7 +153,10 @@ fun EditorScreen(
     }
 
     Box(modifier.fillMaxSize().background(c.paper)) {
-        Column(Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent(::onKey)) {
+        Column(
+            Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent { Trace.log { "key ${it.key} ${it.type}" }; onKey(it) }
+                .then(if (Trace.sink != null) Modifier.traceClicks() else Modifier),
+        ) {
             TopBar(session, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
             Rule()
             Row(Modifier.weight(1f).fillMaxWidth()) {
@@ -176,6 +181,19 @@ fun EditorScreen(
         }
         toast?.let { Toast(it, Modifier.align(Alignment.BottomCenter).padding(bottom = 52.dp)) }
         if (previewing) ReaderPreview(session, image) { previewing = false; focus.requestFocus() }
+    }
+}
+
+/** Logs every press and release that reaches the editor, before anything handles it. */
+private fun Modifier.traceClicks() = pointerInput(Unit) {
+    awaitPointerEventScope {
+        while (true) {
+            val e = awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial)
+            if (e.type == androidx.compose.ui.input.pointer.PointerEventType.Press || e.type == androidx.compose.ui.input.pointer.PointerEventType.Release) {
+                val p = e.changes.first().position
+                Trace.log { "pointer ${e.type} at ${p.x.toInt()},${p.y.toInt()} px" }
+            }
+        }
     }
 }
 

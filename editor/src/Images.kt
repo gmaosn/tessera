@@ -67,7 +67,11 @@ fun rememberPageImage(cache: ImageCache, href: String?): State<PageImage> {
         val cached = cache.cachedPage(href)
         mutableStateOf(PageImage(cached, loading = cached == null && href != null && !cache.isKnown(href)))
     }
-    LaunchedEffect(cache, href) { state.value = PageImage(cache.page(href), loading = false) }
+    LaunchedEffect(cache, href) {
+        Trace.log { "image $href loading=${state.value.loading}" }
+        state.value = PageImage(cache.page(href), loading = false)
+        Trace.log { "image $href ready=${state.value.bitmap != null}" }
+    }
     return state
 }
 

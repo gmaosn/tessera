@@ -52,7 +52,7 @@ fun PageStrip(session: Session, images: ImageCache, onSelect: (Int) -> Unit, mod
             val current = i == session.pageIndex
             val thumb by rememberThumbnail(images, page.imageHref)
             Column(
-                Modifier.clickable { onSelect(i) }.pointerHoverIcon(PointerIcon.Hand),
+                Modifier.clickable { Trace.log { "thumbnail click $i" }; onSelect(i) }.pointerHoverIcon(PointerIcon.Hand),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {

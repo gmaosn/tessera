@@ -72,3 +72,12 @@ archive while keeping the same in-memory document, so undo history survives savi
 - `editor/test`: the frame tool (drawing, snapping, handles, order, undo).
 - `editor/test@jvm/ScreensTest.kt`: renders every screen state on real books into
   `build/screens/` for a visual check, including the reading preview mid-transition.
+
+## Diagnostics
+
+`TESSERA_TRACE=1 ./kotlin run -m app` writes a trace to `build/trace.log`: every press and
+release reaching the editor, thumbnail clicks, page changes, image loading, file loads. Commands
+written to `build/control`, one per line, are run by the window: `shot NAME` (its own rendering
+to `build/screens/NAME.png`), `click X Y` (window points), `load PATH`, and `dialog PATH` (shows
+the Open dialog, closes it, then opens PATH). Run a single instance at a time: they share the
+files. Off by default; `Trace` costs nothing when no sink is set.
