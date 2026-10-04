@@ -61,7 +61,20 @@ object ComicFiles {
      * and moved over it only once complete. Returns the comic with the same document, reading its
      * images from the saved file from now on.
      */
-    fun save(comic: Comic, file: File): Comic {
+    fun save(comic: Comic, file: File): Comic = saveAs(comic, file, file)
+
+    /**
+     * Saves [comic], read from [source], as [destination]; returns the comic reading from the new
+     * file. A CBZ can go anywhere. An ACBF document whose images lie beside it must stay in their
+     * folder, or its image paths would break: [OutsideImageFolder] is thrown otherwise.
+     */
+    fun saveAs(comic: Comic, source: File, destination: File): Comic {
+        val file = destination
+        val container = comic.container
+        if (container is DirectoryContainer && !source.isDirectory) {
+            val folder = container.dir.canonicalFile
+            if (destination.absoluteFile.parentFile.canonicalFile != folder) throw OutsideImageFolder(folder)
+        }
         val target = if (file.isDirectory) File(file, comic.acbfPath) else file
         val temp = File.createTempFile(".${target.name}.", ".tmp", target.absoluteFile.parentFile)
         try {
@@ -75,20 +88,24 @@ object ComicFiles {
             } else {
                 temp.writeBytes(comic.document.write())
             }
-            val source = zip?.archive?.source as? Closeable
+            val opened = zip?.archive?.source as? Closeable
             try {
                 Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
             } catch (e: java.io.IOException) {
                 // Windows will not replace a file that is still open: close it and try again.
-                if (source == null) throw e
-                source.close()
+                if (opened == null) throw e
+                opened.close()
                 Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
             }
-            if (zip == null) return Comic(comic.document, comic.container, comic.acbfPath, generated = false)
-            source?.close()
+            val acbfPath = if (zip == null && !file.isDirectory) file.name else comic.acbfPath
+            if (zip == null) return Comic(comic.document, comic.container, acbfPath, generated = false)
+            opened?.close()
             return Comic(comic.document, ZipContainer(ZipArchive(FileSource(file))), comic.acbfPath, generated = false)
         } finally {
             temp.delete()
         }
     }
 }
+
+/** An ACBF document with external images cannot be saved away from them. */
+class OutsideImageFolder(val folder: File) : Exception("The ACBF file must stay in ${folder.path}, beside its images")

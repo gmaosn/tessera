@@ -73,13 +73,18 @@ fun EditorScreen(
     modifier: Modifier = Modifier,
     tool: FrameTool = remember(session) { FrameTool(session) },
     startPreviewing: Boolean = false,
+    /** Incremented by the host (the menu's Save) to save with the usual message. */
+    saveRequest: Int = 0,
+    /** A message from the host (after « Save as »), shown once per instance. */
+    notice: Notice? = null,
 ) {
     val c = LocalPalette.current
     val view = remember(session) { CanvasView() }
     val focus = remember { FocusRequester() }
     var previewing by remember { mutableStateOf(startPreviewing) }
     var toast by remember { mutableStateOf<String?>(null) }
-    val image by rememberPageImage(images, session.page.imageHref)
+    val pageImage by rememberPageImage(images, session.page.imageHref)
+    val image = pageImage.bitmap
 
     fun say(text: String) {
         toast = text
@@ -100,6 +105,9 @@ fun EditorScreen(
     fun save() {
         if (!session.dirty) say(Strings.nothingToSave) else say(onSave())
     }
+
+    LaunchedEffect(saveRequest) { if (saveRequest > 0) save() }
+    LaunchedEffect(notice) { notice?.let { say(it.text) } }
 
     fun preview() {
         if (tool.polygons.none { it != null }) say(Strings.noFramesToRead) else previewing = true
@@ -124,6 +132,8 @@ fun EditorScreen(
             e.key == Key.Escape -> tool.cancel()
             e.key == Key.Enter || e.key == Key.NumPadEnter -> tool.confirm()
             e.key == Key.Backspace || e.key == Key.Delete -> tool.delete()
+            e.isAltPressed && (e.key == Key.DirectionRight || e.key == Key.DirectionDown) -> goTo(session.pageIndex + 1)
+            e.isAltPressed && (e.key == Key.DirectionLeft || e.key == Key.DirectionUp) -> goTo(session.pageIndex - 1)
             e.key == Key.PageDown -> goTo(session.pageIndex + 1)
             e.key == Key.PageUp -> goTo(session.pageIndex - 1)
             e.key in ARROWS && tool.selected >= 0 && tool.tool == Tool.Select -> {
@@ -142,13 +152,18 @@ fun EditorScreen(
 
     Box(modifier.fillMaxSize().background(c.paper)) {
         Column(Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent(::onKey)) {
-            TopBar(session, onPreview = ::preview, onSave = ::save)
+            TopBar(session, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
             Rule()
             Row(Modifier.weight(1f).fillMaxWidth()) {
                 PageStrip(session, images, onSelect = ::goTo, modifier = Modifier.width(118.dp).fillMaxHeight())
                 VRule()
                 Box(Modifier.weight(1f).fillMaxHeight()) {
                     PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize())
+                    if (pageImage.loading || image == null) {
+                        Box(Modifier.align(Alignment.Center).shadow(4.dp, CircleShape).clip(CircleShape).background(c.paper).padding(horizontal = 14.dp, vertical = 6.dp)) {
+                            Label(if (pageImage.loading) Strings.loading else Strings.imageMissing, color = c.muted)
+                        }
+                    }
                     Toolbar(tool, Modifier.align(Alignment.TopStart).padding(12.dp))
                     ZoomPill(view, Modifier.align(Alignment.BottomEnd).padding(12.dp))
                     if (tool.tool == Tool.Order) OrderBanner(tool, session, Modifier.align(Alignment.TopCenter).padding(top = 12.dp))
@@ -164,6 +179,9 @@ fun EditorScreen(
     }
 }
 
+/** A message for the editor's toast; each instance is shown once. */
+class Notice(val text: String)
+
 private val ARROWS = setOf(Key.DirectionLeft, Key.DirectionRight, Key.DirectionUp, Key.DirectionDown)
 
 @Composable
@@ -173,12 +191,16 @@ private fun Rule() = Box(Modifier.fillMaxWidth().height(1.dp).background(LocalPa
 private fun VRule() = Box(Modifier.width(1.dp).fillMaxHeight().background(LocalPalette.current.line))
 
 @Composable
-private fun TopBar(session: Session, onPreview: () -> Unit, onSave: () -> Unit) {
+private fun TopBar(session: Session, onPrevious: () -> Unit, onNext: () -> Unit, onPreview: () -> Unit, onSave: () -> Unit) {
     val c = LocalPalette.current
     Row(
         Modifier.fillMaxWidth().background(c.paper).padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp),
     ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            RoundButton("‹", session.pageIndex > 0, onPrevious)
+            RoundButton("›", session.pageIndex < session.pages.size - 1, onNext)
+        }
         Column(Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 Label(session.fileName, weight = FontWeight.SemiBold, maxLines = 1)
@@ -194,6 +216,19 @@ private fun TopBar(session: Session, onPreview: () -> Unit, onSave: () -> Unit) 
             Pill(Strings.save, onSave, primary = true)
         }
     }
+}
+
+/** A small round button with a single glyph (page arrows). */
+@Composable
+private fun RoundButton(glyph: String, enabled: Boolean, onClick: () -> Unit) {
+    val c = LocalPalette.current
+    val hover = remember { MutableInteractionSource() }
+    val hovered by hover.collectIsHoveredAsState()
+    Box(
+        Modifier.size(28.dp).clip(CircleShape).background(if (hovered && enabled) c.panel else c.paper).border(1.dp, c.line, CircleShape)
+            .hoverable(hover).clickable(enabled = enabled, onClick = onClick).pointerHoverIcon(if (enabled) PointerIcon.Hand else PointerIcon.Default),
+        contentAlignment = Alignment.Center,
+    ) { Label(glyph, color = if (enabled) c.ink else c.muted.copy(alpha = 0.5f), size = 16.sp, weight = FontWeight.SemiBold) }
 }
 
 @Composable

@@ -12,3 +12,6 @@ settings:
       version: 25
     release: 25
     mainClass: tessera.app.MainKt
+
+test-dependencies:
+  - $compose.uiTest

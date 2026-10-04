@@ -13,7 +13,10 @@ import tessera.xml.XmlElement
  * An open comic in the editor: the current page, undo and redo, and whether there is
  * something to save. Every change goes through [edit] so that it can be undone.
  */
-class Session(comic: Comic, val fileName: String) {
+class Session(comic: Comic, fileName: String) {
+    /** Changes after « Save as ». */
+    var fileName by mutableStateOf(fileName)
+
     var comic: Comic by mutableStateOf(comic)
         private set
 

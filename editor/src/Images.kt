@@ -1,6 +1,9 @@
 package tessera.editor
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.ImageBitmap
@@ -25,6 +28,9 @@ class ImageCache(var comic: Comic) {
 
     fun cachedPage(href: String?): ImageBitmap? = href?.let { full[it] }
 
+    /** True when [href] was already looked up, found or not. */
+    fun isKnown(href: String): Boolean = full.containsKey(href)
+
     suspend fun page(href: String?): ImageBitmap? {
         if (href == null) return null
         if (full.containsKey(href)) return full.remove(href).also { full[href] = it }
@@ -48,9 +54,22 @@ class ImageCache(var comic: Comic) {
     }
 }
 
+/** A page image as the canvas sees it: still loading, decoded, or missing (null once loaded). */
+data class PageImage(val bitmap: ImageBitmap?, val loading: Boolean)
+
+/**
+ * The image of the page at [href]. Changing page never shows the previous page's image under the
+ * new page's frames: until the new one is decoded, it reports [PageImage.loading].
+ */
 @Composable
-fun rememberPageImage(cache: ImageCache, href: String?): State<ImageBitmap?> =
-    produceState(cache.cachedPage(href), cache, href) { value = cache.page(href) }
+fun rememberPageImage(cache: ImageCache, href: String?): State<PageImage> {
+    val state = remember(cache, href) {
+        val cached = cache.cachedPage(href)
+        mutableStateOf(PageImage(cached, loading = cached == null && href != null && !cache.isKnown(href)))
+    }
+    LaunchedEffect(cache, href) { state.value = PageImage(cache.page(href), loading = false) }
+    return state
+}
 
 @Composable
 fun rememberThumbnail(cache: ImageCache, href: String?): State<ImageBitmap?> =

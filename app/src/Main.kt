@@ -33,11 +33,13 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import tessera.acbf.ComicFiles
+import tessera.acbf.OutsideImageFolder
 import tessera.editor.EditorScreen
 import tessera.editor.ImageCache
 import tessera.editor.Label
 import tessera.editor.Language
 import tessera.editor.LocalPalette
+import tessera.editor.Notice
 import tessera.editor.Pill
 import tessera.editor.Session
 import tessera.editor.Strings
@@ -72,6 +74,9 @@ fun main(args: Array<String>) {
         val state = rememberWindowState(size = DpSize(1440.dp, 920.dp))
         val title = opened?.let { "${it.file.name}${if (it.session.dirty) " •" else ""} — Tessera" } ?: "Tessera"
 
+        var saveRequest by remember { mutableStateOf(0) }
+        var notice by remember { mutableStateOf<Notice?>(null) }
+
         fun save(o: Opened): String = runCatching {
             val addedAcbf = o.session.comic.generated
             val reopened = ComicFiles.save(o.session.comic, o.file)
@@ -86,12 +91,30 @@ fun main(args: Array<String>) {
                 runCatching { open(f) }.onSuccess { opened = it; error = null }.onFailure { error = "${f.name} : ${it.message}" }
             }
 
+            fun saveAs(o: Opened) {
+                val target = pickSaveFile(window, o.file) ?: return
+                notice = Notice(
+                    runCatching {
+                        val reopened = ComicFiles.saveAs(o.session.comic, o.file, target)
+                        o.images.comic = reopened
+                        o.session.saved(reopened)
+                        o.session.fileName = target.name
+                        opened = Opened(target, o.session, o.images)
+                        Strings.savedAs(target.name)
+                    }.getOrElse { if (it is OutsideImageFolder) Strings.mustStayBesideImages else Strings.saveFailed(it.message) },
+                )
+            }
+
             val current = opened
-            Menus(onOpen = { pickFile(window)?.let(::load) }, onSave = current?.let { o -> { save(o); Unit } })
+            Menus(
+                onOpen = { pickFile(window)?.let(::load) },
+                onSave = current?.let { { saveRequest++ } },
+                onSaveAs = current?.let { o -> { saveAs(o) } },
+            )
             TesseraTheme {
                 Box(Modifier.fillMaxSize().fileDrop(::load)) {
                     if (current == null) Welcome(error) { pickFile(window)?.let(::load) }
-                    else EditorScreen(current.session, current.images, onSave = { save(current) })
+                    else EditorScreen(current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice)
                 }
             }
         }
@@ -121,11 +144,12 @@ private fun mayDiscard(o: Opened?, save: (Opened) -> String): Boolean {
 }
 
 @Composable
-private fun FrameWindowScope.Menus(onOpen: () -> Unit, onSave: (() -> Unit)?) {
+private fun FrameWindowScope.Menus(onOpen: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?) {
     MenuBar {
         Menu(Strings.menuFile) {
             Item(Strings.menuOpen, shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
             Item(Strings.save, enabled = onSave != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac), onClick = { onSave?.invoke() })
+            Item(Strings.menuSaveAs, enabled = onSaveAs != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac, shift = true), onClick = { onSaveAs?.invoke() })
         }
         Menu(Strings.menuLanguage) {
             for (l in Language.entries) {
@@ -161,9 +185,21 @@ private fun pickFile(window: java.awt.Frame): File? {
     return dialog.file?.let { File(dialog.directory, it) }
 }
 
+private fun pickSaveFile(window: java.awt.Frame, current: File): File? {
+    val dialog = FileDialog(window, Strings.saveAsDialog, FileDialog.SAVE)
+    dialog.directory = current.absoluteFile.parent
+    dialog.file = current.name
+    dialog.isVisible = true
+    val name = dialog.file ?: return null
+    // Keep the comic's kind: a CBZ stays a CBZ, an ACBF document stays one.
+    val ext = current.extension.lowercase()
+    val fixed = if (name.substringAfterLast('.', "").lowercase() == ext || ext.isEmpty()) name else "$name.$ext"
+    return File(dialog.directory, fixed)
+}
+
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-private fun Modifier.fileDrop(onFile: (File) -> Unit): Modifier {
+internal fun Modifier.fileDrop(onFile: (File) -> Unit): Modifier {
     val target = remember(onFile) {
         object : DragAndDropTarget {
             override fun onDrop(event: DragAndDropEvent): Boolean {

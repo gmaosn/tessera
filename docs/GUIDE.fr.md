@@ -24,7 +24,7 @@ Les archives CBR (RAR) ne sont pas encore prises en charge.
 
 | Zone | Contenu |
 |---|---|
-| Barre du haut | Nom du fichier (un point s’il y a des modifications non enregistrées), numéro de planche et version ACBF, **Lire** et **Enregistrer** |
+| Barre du haut | **‹ ›** planche précédente et suivante, nom du fichier (un point s’il y a des modifications non enregistrées), numéro de planche et version ACBF, **Lire** et **Enregistrer** |
 | Bandeau de gauche | Toutes les planches avec leur nombre de cases ; un **0** en pointillé signale une planche sans case |
 | Canevas | La planche et ses cases, numérotées dans l’ordre de lecture ; les outils à gauche, le zoom en bas à droite |
 | Inspecteur | La liste des cases, les réglages de la planche, et ses cases telles qu’elles sont écrites dans le fichier |
@@ -32,6 +32,9 @@ Les archives CBR (RAR) ne sont pas encore prises en charge.
 
 **Textes** et **Informations** sont les prochaines étapes du projet ; ils sont grisés pour
 l’instant.
+
+Pendant le décodage d’une image, le canevas affiche **Chargement…** ; sur les gros livres, cela
+peut prendre un instant par planche, et les planches voisines sont préparées à l’avance.
 
 ## Tracer des cases
 
@@ -94,19 +97,22 @@ dans le tiers gauche revient en arrière). Échap ou Espace ferme.
 
 | Action | Touches |
 |---|---|
-| Planche suivante / précédente | Page suiv. / Page préc., ou les flèches quand aucune case n’est sélectionnée |
+| Planche suivante / précédente | **‹ ›** dans la barre du haut, une miniature, Page suiv. / Page préc., ⌥ et une flèche, ou une flèche seule quand aucune case n’est sélectionnée |
 | Zoomer | ⌘ et la molette, ⌘+ / ⌘−, ou les boutons de zoom |
 | Ajuster la planche | ⌘0 ou **Ajuster** |
 | Faire défiler | Molette (⇧ pour l’horizontale), ou glisser avec le bouton droit ou du milieu |
 | Annuler / rétablir | ⌘Z / ⇧⌘Z |
 | Enregistrer | ⌘S |
+| Enregistrer sous | ⇧⌘S |
 
 Sous Windows et Linux, Ctrl remplace ⌘.
 
 ## Enregistrement et compatibilité
 
-L’enregistrement réécrit la bande dessinée sur place, par un fichier temporaire qui ne remplace
-l’original qu’une fois complet. Dans un CBZ, seul le document ACBF est réécrit ; images et
+**Enregistrer** (⌘S) réécrit la bande dessinée sur place, par un fichier temporaire qui ne
+remplace l’original qu’une fois complet. **Fichier → Enregistrer sous…** (⇧⌘S) écrit une copie
+sous un autre nom et continue sur cette copie ; un CBZ peut aller n’importe où, mais un document
+ACBF dont les images sont à côté doit rester dans leur dossier. Dans un CBZ, seul le document ACBF est réécrit ; images et
 polices sont recopiées telles quelles, sans recompression.
 
 Tessera garde tout ce qu’il ne modifie pas : autres métadonnées, calques de texte, styles,

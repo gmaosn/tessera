@@ -24,13 +24,16 @@ CBR (RAR) archives are not supported yet.
 
 | Area | What it holds |
 |---|---|
-| Top bar | File name (a dot when there are unsaved changes), page number and ACBF version, **Read** and **Save** |
+| Top bar | **‹ ›** previous and next page, file name (a dot when there are unsaved changes), page number and ACBF version, **Read** and **Save** |
 | Left strip | Every page with its number of frames; a dashed **0** marks pages without frames |
 | Canvas | The page with its frames, numbered in reading order; the tools on the left, the zoom at the bottom right |
 | Inspector | The frame list, the page settings, and the page's frames as they are written in the file |
 | Hint bar | What the current tool does, and its keys |
 
 **Texts** and **Book info** are the next steps of the project; they are greyed for now.
+
+While a page image is being decoded, the canvas says **Loading…**; large books can take a moment
+per page, and the next and previous pages are prepared in advance.
 
 ## Drawing frames
 
@@ -93,19 +96,22 @@ on the left third goes back). Esc or Space closes it.
 
 | Action | Keys |
 |---|---|
-| Next / previous page | Page Down / Page Up, or the arrows when no frame is selected |
+| Next / previous page | **‹ ›** in the top bar, a thumbnail, Page Down / Page Up, ⌥ and an arrow, or an arrow alone when no frame is selected |
 | Zoom | ⌘ and the mouse wheel, ⌘+ / ⌘−, or the zoom buttons |
 | Fit the page | ⌘0 or **Fit** |
 | Scroll | Mouse wheel (⇧ for sideways), or drag with the right or middle button |
 | Undo / redo | ⌘Z / ⇧⌘Z |
 | Save | ⌘S |
+| Save as | ⇧⌘S |
 
 On Windows and Linux, Ctrl replaces ⌘.
 
 ## Saving and compatibility
 
-Saving writes the comic back in place, through a temporary file that replaces the original only
-once complete. Inside a CBZ, only the ACBF document is rewritten; images and fonts are copied
+**Save** (⌘S) writes the comic back in place, through a temporary file that replaces the original
+only once complete. **File → Save As…** (⇧⌘S) writes a copy under another name and goes on
+editing the copy; a CBZ can go anywhere, while an ACBF document whose images lie beside it must
+stay in their folder. Inside a CBZ, only the ACBF document is rewritten; images and fonts are copied
 as they are, without recompression.
 
 Tessera keeps everything it does not edit: other metadata, text layers, styles, comments,

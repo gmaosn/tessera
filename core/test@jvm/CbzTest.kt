@@ -117,4 +117,29 @@ class CbzTest {
         val name = a.entries.first { it.name.endsWith(".acbf") }.name
         assertContentEquals(a.read(a.entry(name)!!), b.read(b.entry(name)!!))
     }
+
+    @Test
+    fun saveAsWritesANewFileAndLeavesTheOriginal() {
+        val original = File.createTempFile("acbf-src", ".cbz").apply { writeBytes(plainCbz()); deleteOnExit() }
+        val before = original.readBytes()
+        val comic = ComicFiles.open(original)
+        comic.document.pages[1].addFrame(Polygon.rectangle(0, 0, 5, 5))
+        val copy = File(original.parentFile, "acbf-copy-${System.nanoTime()}.cbz").apply { deleteOnExit() }
+        val saved = ComicFiles.saveAs(comic, original, copy)
+        assertContentEquals(before, original.readBytes())
+        assertEquals(1, ComicFiles.open(copy).document.pages[1].frames.size)
+        assertNotNull(saved.image(saved.document.pages[1].imageHref))
+    }
+
+    @Test
+    fun anAcbfWithImagesBesideItStaysInTheirFolder() {
+        val dir = kotlin.io.path.createTempDirectory("acbf").toFile().apply { deleteOnExit() }
+        val acbf = File(dir, "book.acbf").apply { writeBytes(tessera.acbf.AcbfDocument.create("Book", listOf("a.jpg", "b.jpg")).write()) }
+        val comic = ComicFiles.open(acbf)
+        val elsewhere = kotlin.io.path.createTempDirectory("acbf-other").toFile()
+        kotlin.test.assertFailsWith<tessera.acbf.OutsideImageFolder> { ComicFiles.saveAs(comic, acbf, File(elsewhere, "book.acbf")) }
+        val renamed = ComicFiles.saveAs(comic, acbf, File(dir, "renamed.acbf"))
+        assertEquals("renamed.acbf", renamed.acbfPath)
+        assertTrue(File(dir, "renamed.acbf").isFile)
+    }
 }
