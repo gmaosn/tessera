@@ -112,7 +112,7 @@ fun EditorScreen(
     LaunchedEffect(notice) { notice?.let { say(it.text) } }
 
     fun preview() {
-        if (tool.polygons.none { it != null }) say(Strings.noFramesToRead) else previewing = true
+        previewing = true
     }
 
     fun onKey(e: KeyEvent): Boolean {
@@ -180,7 +180,7 @@ fun EditorScreen(
             Hints(tool)
         }
         toast?.let { Toast(it, Modifier.align(Alignment.BottomCenter).padding(bottom = 52.dp)) }
-        if (previewing) ReaderPreview(session, image) { previewing = false; focus.requestFocus() }
+        if (previewing) ReaderPreview(session, images) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
     }
 }
 

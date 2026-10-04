@@ -81,7 +81,9 @@ Readers show frames in the order they appear in the file. Three ways to set it:
 **Read** (or Space) shows the page as a reader app would: the view glides from frame to
 frame, and everything outside the frame takes the frame's background colour (the frame's own,
 else the page's, else the book's). Arrows, Page Up/Down or a click move between frames (a click
-on the left third goes back). Esc or Space closes it.
+on the left third goes back). After a page's last frame comes the next page's first frame, with
+a fade; a page without frames is shown whole. Esc or Space closes it, and the editor goes to the
+page you reached.
 
 ![Reading frame by frame](images/reading-preview.jpg)
 

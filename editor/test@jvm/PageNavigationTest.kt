@@ -1,6 +1,7 @@
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.onRoot
@@ -56,6 +57,25 @@ class PageNavigationTest {
             Thread.sleep(1500); waitForIdle()
             val out = File(root, "build/screens").apply { mkdirs() }
             javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("11-after-page-change.png"))
+        }
+    }
+
+    @Test
+    fun readingGoesOnFromPageToPage() {
+        val file = File(root, "fixtures/samples").listFiles()?.firstOrNull { it.name.startsWith("Doctorow, Cory - Craphound") } ?: return
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name)
+        runDesktopComposeUiTest(1440, 900) {
+            setContent { TesseraTheme { EditorScreen(session, ImageCache(comic), onSave = { "" }, startPreviewing = true) } }
+            waitForIdle()
+            onNodeWithText("Page 2 of 24 · Frame 1 / 6").assertExists()
+            repeat(6) { onRoot().performKeyInput { pressKey(Key.DirectionRight) }; waitForIdle() }
+            onNodeWithText("Page 3 of 24 · Frame 1 / 5").assertExists()
+            onRoot().performKeyInput { pressKey(Key.DirectionLeft) }; waitForIdle()
+            onNodeWithText("Page 2 of 24 · Frame 6 / 6").assertExists()
+            repeat(6) { onRoot().performKeyInput { pressKey(Key.DirectionRight) }; waitForIdle() }
+            onRoot().performKeyInput { pressKey(Key.Escape) }; waitForIdle()
+            assertEquals(3, session.pageIndex, "the editor follows the reading (6 steps from page 2 frame 6: page 3 frames 1-5, then page 4)")
         }
     }
 }

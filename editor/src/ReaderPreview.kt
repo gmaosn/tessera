@@ -57,27 +57,56 @@ private val PreviewText = Color(0xFFDDDDDD)
 private val PreviewDot = Color(0xFF555555)
 private val PreviewDotOn = Color(0xFFC7B5E6)
 
+/** One stop of the reading: a page and one of its frames (the whole page when it has none). */
+private data class Stop(val page: Int, val frame: Int)
+
 /**
- * Frame-by-frame reading, as a reader app shows it: the camera glides from frame to frame and
- * everything outside the frame takes the frame's background colour. The outline morphs from one
- * frame to the next during the move.
+ * Frame-by-frame reading, as a reader app shows it, through the whole book: the camera glides
+ * from frame to frame and everything outside the frame takes the frame's background colour; the
+ * outline morphs from one frame to the next. After a page's last frame comes the next page's
+ * first one, with a fade; a page without frames is shown whole. [onClose] gets the page reached.
  */
 @Composable
-fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
-    val page = session.page
-    val frames = page.frames.mapNotNull { f -> f.polygon?.let { it to f.bgcolor } }
-    var index by remember { mutableIntStateOf(0) }
+fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> Unit) {
+    val pages = session.pages
+    var stop by remember { mutableStateOf(Stop(session.pageIndex, 0)) }
+    val page = pages[stop.page]
+    val pageImage by rememberPageImage(images, page.imageHref)
+    val image = pageImage.bitmap
     val focus = remember { FocusRequester() }
-    val fallbackBg = parseColor(page.bgcolor ?: session.document.body?.get("bgcolor")) ?: Color.Black
     LaunchedEffect(Unit) { focus.requestFocus() }
+    // The next page is decoded while this one is read.
+    LaunchedEffect(stop.page) { pages.getOrNull(stop.page + 1)?.let { images.page(it.imageHref) } }
+
+    fun framesOf(index: Int): Int = pages[index].frames.count { it.polygon != null }.coerceAtLeast(1)
+    fun next() {
+        stop = when {
+            stop.frame < framesOf(stop.page) - 1 -> stop.copy(frame = stop.frame + 1)
+            stop.page < pages.size - 1 -> Stop(stop.page + 1, 0)
+            else -> stop
+        }
+    }
+    fun previous() {
+        stop = when {
+            stop.frame > 0 -> stop.copy(frame = stop.frame - 1)
+            stop.page > 0 -> Stop(stop.page - 1, framesOf(stop.page - 1) - 1)
+            else -> stop
+        }
+    }
+
+    val pageBg = parseColor(page.bgcolor ?: session.document.body?.get("bgcolor")) ?: Color.Black
+    // This page's frames; a page without any reads as one frame covering the whole image.
+    val frames: List<Pair<Polygon, String?>> = page.frames.mapNotNull { f -> f.polygon?.let { it to f.bgcolor } }.ifEmpty {
+        if (image == null) emptyList() else listOf(Polygon.rectangle(0, 0, image.width, image.height) to null)
+    }
 
     Column(
         Modifier.fillMaxSize().background(Color.Black).focusRequester(focus).focusable().onPreviewKeyEvent { e ->
             if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
             when (e.key) {
-                Key.Escape, Key.Spacebar -> { onClose(); true }
-                Key.DirectionRight, Key.DirectionDown, Key.PageDown -> { index = (index + 1).coerceAtMost(frames.size - 1); true }
-                Key.DirectionLeft, Key.DirectionUp, Key.PageUp -> { index = (index - 1).coerceAtLeast(0); true }
+                Key.Escape, Key.Spacebar -> { onClose(stop.page); true }
+                Key.DirectionRight, Key.DirectionDown, Key.PageDown -> { next(); true }
+                Key.DirectionLeft, Key.DirectionUp, Key.PageUp -> { previous(); true }
                 else -> false
             }
         },
@@ -85,17 +114,27 @@ fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
             val vw = constraints.maxWidth.toFloat()
             val vh = constraints.maxHeight.toFloat()
-            // One progress value drives the whole transition: camera, frame outline and
-            // background move together, so nothing jumps or blinks between two frames.
+            // One progress value drives a move inside a page: camera, frame outline and background
+            // together, so nothing jumps or blinks. A new page fades in instead.
             val progress = remember { Animatable(1f) }
+            val fade = remember { Animatable(1f) }
             var from by remember { mutableStateOf<Shot?>(null) }
             var to by remember { mutableStateOf<Shot?>(null) }
-            LaunchedEffect(index, vw, vh) {
-                val (poly, bg) = frames.getOrNull(index) ?: return@LaunchedEffect
-                val target = Shot.of(poly, parseColor(bg) ?: fallbackBg, vw, vh)
+            var shownPage by remember { mutableIntStateOf(-1) }
+            LaunchedEffect(stop, image, vw, vh) {
+                if (image == null) return@LaunchedEffect
+                val (poly, bg) = frames.getOrNull(stop.frame.coerceAtMost(frames.size - 1)) ?: return@LaunchedEffect
+                val target = Shot.of(poly, parseColor(bg) ?: pageBg, vw, vh)
+                val samePage = shownPage == stop.page
                 val now = to?.let { t -> from?.lerp(t, progress.value) ?: t }
-                if (now == null) {
+                if (now == null || !samePage) {
                     from = target; to = target; progress.snapTo(1f)
+                    if (shownPage >= 0 && !samePage) {
+                        shownPage = stop.page
+                        fade.snapTo(0f)
+                        fade.animateTo(1f, tween(320, easing = FastOutSlowInEasing))
+                    }
+                    shownPage = stop.page
                     return@LaunchedEffect
                 }
                 from = now; to = target
@@ -105,13 +144,13 @@ fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
             Canvas(Modifier.fillMaxSize()) {
                 val a = from ?: return@Canvas
                 val b = to ?: return@Canvas
-                if (image == null) return@Canvas
+                if (image == null || shownPage != stop.page) return@Canvas
                 val shot = a.lerp(b, progress.value)
                 val s = shot.scale
                 val origin = Offset(vw / 2 - shot.cx * s, vh / 2 - shot.cy * s)
                 // Sub-pixel placement: rounding to whole pixels makes the page tremble in motion.
                 withTransform({ translate(origin.x, origin.y); scale(s, s, Offset.Zero) }) {
-                    drawImage(image, filterQuality = FilterQuality.High)
+                    drawImage(image, filterQuality = FilterQuality.High, alpha = fade.value)
                 }
                 val outside = Path().apply {
                     fillType = PathFillType.EvenOdd
@@ -124,23 +163,27 @@ fun ReaderPreview(session: Session, image: ImageBitmap?, onClose: () -> Unit) {
                 }
                 drawPath(outside, shot.background)
             }
+            if (pageImage.loading) {
+                Label(Strings.loading, Modifier.align(Alignment.Center), color = PreviewText)
+            }
             // Click zones: left third goes back, the rest goes forward.
             Row(Modifier.fillMaxSize()) {
-                Box(Modifier.weight(1f).fillMaxSize().clickable(remember { MutableInteractionSource() }, null) { index = (index - 1).coerceAtLeast(0) })
-                Box(Modifier.weight(2f).fillMaxSize().clickable(remember { MutableInteractionSource() }, null) { index = (index + 1).coerceAtMost(frames.size - 1) })
+                Box(Modifier.weight(1f).fillMaxSize().clickable(remember { MutableInteractionSource() }, null) { previous() })
+                Box(Modifier.weight(2f).fillMaxSize().clickable(remember { MutableInteractionSource() }, null) { next() })
             }
         }
         Row(
             Modifier.fillMaxWidth().background(PreviewBar).padding(horizontal = 16.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            Box(Modifier.clip(CircleShape).border(1.dp, Color(0xFF444444), CircleShape).clickable(onClick = onClose).padding(horizontal = 12.dp, vertical = 4.dp)) {
+            Box(Modifier.clip(CircleShape).border(1.dp, Color(0xFF444444), CircleShape).clickable { onClose(stop.page) }.padding(horizontal = 12.dp, vertical = 4.dp)) {
                 Label(Strings.close, color = PreviewText, size = 12.5.sp)
             }
-            Label(Strings.frameOf(index + 1, frames.size), color = PreviewText, size = 12.5.sp)
+            val where = if (page.isCover) Strings.coverPage else Strings.pageOf(stop.page + 1, pages.size)
+            Label("$where · " + Strings.frameOf(stop.frame + 1, framesOf(stop.page)), color = PreviewText, size = 12.5.sp)
             Spacer(Modifier.weight(1f))
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                frames.indices.forEach { k -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (k == index) PreviewDotOn else PreviewDot)) }
+                (0 until framesOf(stop.page)).forEach { k -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (k == stop.frame) PreviewDotOn else PreviewDot)) }
             }
             Spacer(Modifier.weight(1f))
             Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)

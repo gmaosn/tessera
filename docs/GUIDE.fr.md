@@ -82,7 +82,9 @@ Les liseuses montrent les cases dans l’ordre du fichier. Trois façons de le r
 **Lire** (ou Espace) montre la planche comme une liseuse : la vue glisse de case en case, et
 tout ce qui sort de la case prend sa couleur de fond (celle de la case, sinon de la planche,
 sinon du livre). Les flèches, Page préc./suiv. ou un clic passent d’une case à l’autre (un clic
-dans le tiers gauche revient en arrière). Échap ou Espace ferme.
+dans le tiers gauche revient en arrière). Après la dernière case d’une planche vient la première
+de la suivante, en fondu ; une planche sans case s’affiche en entier. Échap ou Espace ferme, et
+l’éditeur se place sur la planche atteinte.
 
 ![Lecture case par case](images/reading-preview.jpg)
 
