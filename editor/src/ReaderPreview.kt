@@ -52,6 +52,10 @@ import kotlin.math.exp
 import kotlin.math.ln
 import kotlin.math.min
 
+/** Durations of the reading transitions, in milliseconds: brisk, as in a reader app. */
+private const val FRAME_MOVE_MS = 350
+private const val PAGE_FADE_MS = 200
+
 private val PreviewBar = Color(0xFF111111)
 private val PreviewText = Color(0xFFDDDDDD)
 private val PreviewDot = Color(0xFF555555)
@@ -132,14 +136,14 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                     if (shownPage >= 0 && !samePage) {
                         shownPage = stop.page
                         fade.snapTo(0f)
-                        fade.animateTo(1f, tween(320, easing = FastOutSlowInEasing))
+                        fade.animateTo(1f, tween(PAGE_FADE_MS, easing = FastOutSlowInEasing))
                     }
                     shownPage = stop.page
                     return@LaunchedEffect
                 }
                 from = now; to = target
                 progress.snapTo(0f)
-                progress.animateTo(1f, tween(600, easing = FastOutSlowInEasing))
+                progress.animateTo(1f, tween(FRAME_MOVE_MS, easing = FastOutSlowInEasing))
             }
             Canvas(Modifier.fillMaxSize()) {
                 val a = from ?: return@Canvas
