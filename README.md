@@ -35,6 +35,13 @@ tools/run.sh path/to/comic.cbz              # the editor, in a build directory o
 tools/fetch-fixtures.sh                     # the sample books (about 120 MB) for tests and screenshots
 ```
 
+One jar for macOS, Windows and Linux, x64 and ARM64 (run with `java -jar`, Java 25):
+
+```sh
+./kotlin package -m app -p jvm -f executable-jar --build-dir /tmp/tessera-pack
+tools/package-universal.py --input /tmp/tessera-pack/tasks/_app_executableJarJvm/app-jvm-executable.jar --output Tessera-universel.jar
+```
+
 ## Documentation
 
 - [User guide](docs/GUIDE.md) · [Guide d’utilisation](docs/GUIDE.fr.md)

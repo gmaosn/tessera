@@ -36,6 +36,13 @@ tools/run.sh chemin/vers/livre.cbz            # l’éditeur, dans son propre do
 tools/fetch-fixtures.sh                        # les livres d’exemple (environ 120 Mo) pour tests et captures
 ```
 
+Un seul jar pour macOS, Windows et Linux, x64 et ARM64 (à lancer par `java -jar`, Java 25) :
+
+```sh
+./kotlin package -m app -p jvm -f executable-jar --build-dir /tmp/tessera-pack
+tools/package-universal.py --input /tmp/tessera-pack/tasks/_app_executableJarJvm/app-jvm-executable.jar --output Tessera-universel.jar
+```
+
 ## Documentation
 
 - [Guide d’utilisation](docs/GUIDE.fr.md) · [User guide](docs/GUIDE.md)
