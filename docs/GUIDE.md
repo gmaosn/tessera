@@ -91,6 +91,26 @@ page you reached.
 
 ![Reading frame by frame](images/reading-preview.jpg)
 
+## Enhanced display
+
+Low-resolution scans look blurry or blocky once enlarged, especially when reading frame by
+frame. **✧** in the zoom pill (editor) and **✧ Enhanced display** in the reading bar open the
+display settings, remembered separately for editing and reading:
+
+- **Off**: pages as they are.
+- **Sharpen**: crisper lines without halos (AMD's contrast-adaptive sharpening), instant.
+- **Restore**: Anime4K, neural networks trained on line art, removes compression blocks and
+  redraws clean lines at twice the resolution. About a second per page, computed in the
+  background (the plain page shows meanwhile, then is replaced); while reading, the next page
+  is prepared ahead.
+
+**Sharpness** and, for Restore, **Strength** adjust the effect from 0 to 100 %. The star turns
+solid (✦) when an enhancement is on. This changes only what you see: files are never touched,
+and frames are always drawn on the page's real pixels. For frame work at the pixel, leave the
+editor on Off.
+
+![Reading with Restore](images/reader-restored.jpg)
+
 ## Page settings
 
 - **Background** shows the colour readers use around a zoomed frame, and whether it is the

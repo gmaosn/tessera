@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
@@ -77,6 +78,10 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
     val page = pages[stop.page]
     val pageImage by rememberPageImage(images, page.imageHref)
     val image = pageImage.bitmap
+    val enhanced by rememberEnhanced(images, page.imageHref, EnhancePrefs.reader)
+    var enhanceOpen by remember { mutableStateOf(false) }
+    // The next page is enhanced ahead too.
+    LaunchedEffect(stop.page, EnhancePrefs.reader) { pages.getOrNull(stop.page + 1)?.let { images.enhanced(it.imageHref, EnhancePrefs.reader) } }
     val focus = remember { FocusRequester() }
     LaunchedEffect(Unit) { focus.requestFocus() }
     // The next page is decoded while this one is read.
@@ -154,7 +159,12 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
                 val origin = Offset(vw / 2 - shot.cx * s, vh / 2 - shot.cy * s)
                 // Sub-pixel placement: rounding to whole pixels makes the page tremble in motion.
                 withTransform({ translate(origin.x, origin.y); scale(s, s, Offset.Zero) }) {
-                    drawImage(image, filterQuality = FilterQuality.High, alpha = fade.value)
+                    val shown = enhanced
+                    if (shown != null) {
+                        drawImage(shown, dstSize = androidx.compose.ui.unit.IntSize(image.width, image.height), filterQuality = FilterQuality.High, alpha = fade.value)
+                    } else {
+                        drawImage(image, filterQuality = FilterQuality.High, alpha = fade.value)
+                    }
                 }
                 val outside = Path().apply {
                     fillType = PathFillType.EvenOdd
@@ -169,6 +179,13 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
             }
             if (pageImage.loading) {
                 Label(Strings.loading, Modifier.align(Alignment.Center), color = PreviewText)
+            }
+            if (enhanceOpen) {
+                EnhancePanel(
+                    EnhancePrefs.reader, busy = EnhancePrefs.reader.active && enhanced == null && image != null,
+                    onChange = { EnhancePrefs.reader = it; EnhancePrefs.onChange?.invoke() },
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp).zIndex(2f),
+                )
             }
             // Click zones: left third goes back, the rest goes forward.
             Row(Modifier.fillMaxSize()) {
@@ -191,6 +208,9 @@ fun ReaderPreview(session: Session, images: ImageCache, onClose: (page: Int) -> 
             }
             Spacer(Modifier.weight(1f))
             Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)
+            Box(Modifier.clip(CircleShape).border(1.dp, if (EnhancePrefs.reader.active) PreviewDotOn else Color(0xFF444444), CircleShape).clickable { enhanceOpen = !enhanceOpen }.padding(horizontal = 12.dp, vertical = 4.dp)) {
+                Label((if (EnhancePrefs.reader.active) "✦ " else "✧ ") + Strings.enhanceButton, color = PreviewText, size = 12.5.sp)
+            }
         }
     }
 }

@@ -64,6 +64,17 @@ archive while keeping the same in-memory document, so undo history survives savi
 - `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
   redraws the UI at once.
 
+## Display enhancement (`editor/src/enhance`)
+
+`Enhancer` turns a page's ARGB pixels into a display version: `sharpen` is AMD's
+contrast-adaptive sharpening; Restore runs two Anime4K CNNs, `RESTORE_M` then `UPSCALE_X2_M`,
+through `Cnn`, a small inference engine for Anime4K's shader passes (sums of `mat4 × input`
+terms over 3×3 neighbourhoods, CReLU activations, a final residual or depth-to-space). It works
+tile by tile (160 px plus the network's 7 px reach) on every core, so memory stays small; about
+a second for a 1000×1500 page on a laptop. `tools/anime4k_weights.py` extracts the weights from
+Anime4K's GLSL into base64 float strings. `ImageCache.enhanced` caches results by page and
+settings; the canvas and the reader draw them in place of the page at the page's own size.
+
 ## Tests
 
 - `core/test`, `core/test@jvm`: XML round trips and edits, geometry, the corpus (byte-for-byte

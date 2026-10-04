@@ -253,6 +253,24 @@ object Strings {
         else -> key
     }
 
+    // ----- Display enhancement -----
+
+    val enhanceTitle get() = t("Enhanced display", "Affichage amélioré")
+    val enhanceButton get() = t("Enhanced display", "Affichage amélioré")
+    val enhanceBusy get() = t("Computing…", "Calcul…")
+    val enhanceOff get() = t("Off", "Désactivé")
+    val enhanceSharpen get() = t("Sharpen", "Netteté")
+    val enhanceRestore get() = t("Restore", "Restauration")
+    val enhanceSharpness get() = t("Sharpness", "Netteté")
+    val enhanceStrength get() = t("Strength", "Force")
+    val enhanceOffNote get() = t("Pages are shown exactly as they are.", "Les planches s’affichent telles quelles.")
+    val enhanceSharpenNote get() = t("Crisper lines, without halos; instant.", "Des traits plus nets, sans halo ; instantané.")
+    val enhanceRestoreNote get() = t(
+        "Anime4K removes compression blocks and redraws clean lines at twice the resolution. About a second per page; the next one is prepared ahead.",
+        "Anime4K efface les blocs de compression et redessine des traits propres en double résolution. Environ une seconde par planche ; la suivante est préparée à l’avance.",
+    )
+    val enhanceScreenOnly get() = t("On screen only: files are never changed.", "Seulement à l’écran : les fichiers ne sont jamais modifiés.")
+
     // ----- Application -----
 
     val menuFile get() = t("File", "Fichier")

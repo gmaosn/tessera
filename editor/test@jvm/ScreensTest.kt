@@ -5,6 +5,9 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.pressKey
+import androidx.compose.ui.test.withKeyDown
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.v2.runDesktopComposeUiTest
 import kotlinx.coroutines.runBlocking
@@ -140,5 +143,46 @@ class ScreensTest {
     fun bookInfoFrench() {
         Strings.language = Language.French
         try { infoShot("14-info-craphound-fr", "Doctorow, Cory - Craphound") } finally { Strings.language = Language.English }
+    }
+
+    /** The editor zoomed on a frame, plain and restored, then the reader restored with its panel. */
+    @Test
+    fun enhancedDisplay() {
+        val file = book("Doctorow, Cory - Craphound") ?: return
+        val comic = ComicFiles.open(file)
+        val restore = tessera.editor.enhance.Enhancement(tessera.editor.enhance.EnhanceMode.Restore, 0.4f, 1f)
+        for ((name, settings) in listOf("15-zoom-plain" to tessera.editor.enhance.Enhancement(), "16-zoom-restored" to restore)) {
+            val session = Session(comic, file.name).apply { goToPage(1) }
+            val images = ImageCache(comic)
+            runBlocking { images.page(session.page.imageHref); images.enhanced(session.page.imageHref, settings) }
+            tessera.editor.EnhancePrefs.editor = settings
+            runDesktopComposeUiTest(1440, 900) {
+                val tool = FrameTool(session)
+                setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, tool = tool) } }
+                waitForIdle()
+                // Zoom ×4 around the robot's eye in frame 4.
+                onRoot().performKeyInput { withKeyDown(Key.MetaLeft) { repeat(6) { pressKey(Key.Equals) } } }
+                waitForIdle()
+                javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("$name.png"))
+            }
+        }
+        val session = Session(comic, file.name).apply { goToPage(1) }
+        val images = ImageCache(comic)
+        runBlocking { images.page(session.page.imageHref); images.enhanced(session.page.imageHref, restore) }
+        tessera.editor.EnhancePrefs.reader = restore
+        try {
+            runDesktopComposeUiTest(1440, 900) {
+                setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, startPreviewing = true) } }
+                waitForIdle()
+                repeat(3) { onRoot().performKeyInput { pressKey(Key.DirectionRight) }; waitForIdle() }
+                mainClock.advanceTimeBy(800)
+                onNodeWithText("✦ Enhanced display").performClick()
+                waitForIdle()
+                javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("17-reader-restored.png"))
+            }
+        } finally {
+            tessera.editor.EnhancePrefs.editor = tessera.editor.enhance.Enhancement()
+            tessera.editor.EnhancePrefs.reader = tessera.editor.enhance.Enhancement()
+        }
     }
 }

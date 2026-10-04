@@ -122,6 +122,8 @@ fun PageCanvas(
     view: CanvasView,
     focus: FocusRequester,
     modifier: Modifier = Modifier,
+    /** An enhanced version of [image] to draw in its place (any size); frames stay on [image]'s pixels. */
+    display: ImageBitmap? = null,
 ) {
     val c = LocalPalette.current
     val density = LocalDensity.current.density
@@ -216,9 +218,9 @@ fun PageCanvas(
             val map = { p: Point -> Offset(origin.x + p.x * s, origin.y + p.y * s) }
             if (image != null) {
                 drawImage(
-                    image, dstOffset = IntOffset(origin.x.roundToInt(), origin.y.roundToInt()),
+                    display ?: image, dstOffset = IntOffset(origin.x.roundToInt(), origin.y.roundToInt()),
                     dstSize = androidx.compose.ui.unit.IntSize((imageSize.width * s).roundToInt(), (imageSize.height * s).roundToInt()),
-                    filterQuality = FilterQuality.Medium,
+                    filterQuality = if (display != null) FilterQuality.High else FilterQuality.Medium,
                 )
             } else {
                 drawRect(c.paper, origin, Size(imageSize.width * s, imageSize.height * s))

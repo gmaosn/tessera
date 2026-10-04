@@ -93,6 +93,8 @@ fun EditorScreen(
     var toast by remember { mutableStateOf<String?>(null) }
     val pageImage by rememberPageImage(images, session.page.imageHref)
     val image = pageImage.bitmap
+    val enhanced by rememberEnhanced(images, session.page.imageHref, EnhancePrefs.editor)
+    var enhanceOpen by remember { mutableStateOf(false) }
 
     fun say(text: String) {
         toast = text
@@ -173,14 +175,21 @@ fun EditorScreen(
                 PageStrip(session, images, onSelect = ::goTo, modifier = Modifier.width(118.dp).fillMaxHeight())
                 VRule()
                 Box(Modifier.weight(1f).fillMaxHeight()) {
-                    PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize())
+                    PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize(), display = enhanced)
                     if (pageImage.loading || image == null) {
                         Box(Modifier.align(Alignment.Center).shadow(4.dp, CircleShape).clip(CircleShape).background(c.paper).padding(horizontal = 14.dp, vertical = 6.dp)) {
                             Label(if (pageImage.loading) Strings.loading else Strings.imageMissing, color = c.muted)
                         }
                     }
                     Toolbar(tool, Modifier.align(Alignment.TopStart).padding(12.dp))
-                    ZoomPill(view, Modifier.align(Alignment.BottomEnd).padding(12.dp))
+                    ZoomPill(view, EnhancePrefs.editor.active, { enhanceOpen = !enhanceOpen }, Modifier.align(Alignment.BottomEnd).padding(12.dp))
+                    if (enhanceOpen) {
+                        EnhancePanel(
+                            EnhancePrefs.editor, busy = EnhancePrefs.editor.active && enhanced == null && image != null,
+                            onChange = { EnhancePrefs.editor = it; EnhancePrefs.onChange?.invoke() },
+                            modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 60.dp),
+                        )
+                    }
                     if (tool.tool == Tool.Order) OrderBanner(tool, session, Modifier.align(Alignment.TopCenter).padding(top = 12.dp))
                 }
                 VRule()
@@ -342,7 +351,7 @@ private fun orderIcon(d: DrawScope, color: Color) = with(d) {
 }
 
 @Composable
-private fun ZoomPill(view: CanvasView, modifier: Modifier) {
+private fun ZoomPill(view: CanvasView, enhancing: Boolean, onEnhance: () -> Unit, modifier: Modifier) {
     val c = LocalPalette.current
     Row(
         modifier.shadow(6.dp, CircleShape).clip(CircleShape).background(c.paper).border(1.dp, c.line, CircleShape).padding(2.dp),
@@ -352,6 +361,7 @@ private fun ZoomPill(view: CanvasView, modifier: Modifier) {
         Label("${(view.shownScale * 100).roundToInt()} %", Modifier.width(52.dp).padding(horizontal = 2.dp), color = c.muted, maxLines = 1)
         ZoomButton("+") { view.zoomBy(1.25f) }
         ZoomButton(Strings.fit) { view.fit() }
+        ZoomButton(if (enhancing) "✦" else "✧", onEnhance)
     }
 }
 

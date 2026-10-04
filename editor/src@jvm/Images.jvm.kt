@@ -1,6 +1,7 @@
 package tessera.editor
 
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asComposeImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import org.jetbrains.skia.FilterMipmap
 import org.jetbrains.skia.FilterMode
@@ -25,3 +26,17 @@ actual fun decodeThumbnail(bytes: ByteArray, width: Int): ImageBitmap? = runCatc
         }
     }
 }.getOrNull()
+
+actual fun imageFromArgb(pixels: IntArray, width: Int, height: Int): ImageBitmap {
+    val bitmap = org.jetbrains.skia.Bitmap()
+    bitmap.allocPixels(org.jetbrains.skia.ImageInfo.makeN32(width, height, org.jetbrains.skia.ColorAlphaType.OPAQUE))
+    val bytes = ByteArray(pixels.size * 4)
+    for (i in pixels.indices) {
+        // N32 is BGRA in memory on every platform skiko supports.
+        val p = pixels[i]
+        bytes[i * 4] = p.toByte(); bytes[i * 4 + 1] = (p shr 8).toByte(); bytes[i * 4 + 2] = (p shr 16).toByte(); bytes[i * 4 + 3] = (p shr 24).toByte()
+    }
+    bitmap.installPixels(bytes)
+    bitmap.setImmutable()
+    return bitmap.asComposeImageBitmap()
+}

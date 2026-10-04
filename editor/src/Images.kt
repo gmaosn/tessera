@@ -10,12 +10,18 @@ import androidx.compose.ui.graphics.ImageBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tessera.acbf.Comic
+import tessera.editor.enhance.Argb
+import tessera.editor.enhance.Enhancement
+import tessera.editor.enhance.Enhancer
 
 /** Decodes JPEG, PNG, WebP, GIF or BMP; null when the bytes are not an image. */
 expect fun decodeImage(bytes: ByteArray): ImageBitmap?
 
 /** Decodes and scales down to [width] pixels wide, for page thumbnails. */
 expect fun decodeThumbnail(bytes: ByteArray, width: Int): ImageBitmap?
+
+/** An opaque bitmap from ARGB pixels (the enhancer's output). */
+expect fun imageFromArgb(pixels: IntArray, width: Int, height: Int): ImageBitmap
 
 /**
  * Page images, decoded off the main thread and cached: a few full pages (the current one and its
@@ -48,6 +54,26 @@ class ImageCache(var comic: Comic) {
         return image
     }
 
+    /** Enhanced pages, by image and settings; recomputed only when either changes. */
+    private val enhanced = LinkedHashMap<Pair<String, Enhancement>, ImageBitmap?>()
+
+    /** The page at [href] improved for display with [settings], or null when off or missing. */
+    suspend fun enhanced(href: String?, settings: Enhancement): ImageBitmap? {
+        if (href == null || !settings.active) return null
+        val key = href to settings
+        if (enhanced.containsKey(key)) return enhanced.remove(key).also { enhanced[key] = it }
+        val page = page(href) ?: return null
+        val result = withContext(Dispatchers.Default) {
+            val px = IntArray(page.width * page.height)
+            page.readPixels(px)
+            val out = Enhancer.enhance(Argb(page.width, page.height, px), settings)
+            imageFromArgb(out.pixels, out.width, out.height)
+        }
+        enhanced[key] = result
+        while (enhanced.size > 4) enhanced.remove(enhanced.keys.first())
+        return result
+    }
+
     companion object {
         /** Twice the strip's width, for sharp thumbnails on high-density screens. */
         const val THUMB_WIDTH = 168
@@ -74,6 +100,11 @@ fun rememberPageImage(cache: ImageCache, href: String?): State<PageImage> {
     }
     return state
 }
+
+/** The enhanced page, or null while it is computed (show the plain page meanwhile) or when off. */
+@Composable
+fun rememberEnhanced(cache: ImageCache, href: String?, settings: Enhancement): State<ImageBitmap?> =
+    produceState<ImageBitmap?>(null, cache, href, settings) { value = cache.enhanced(href, settings) }
 
 @Composable
 fun rememberThumbnail(cache: ImageCache, href: String?): State<ImageBitmap?> =

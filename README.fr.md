@@ -17,6 +17,8 @@ l’octet près, sauf ce que vous avez modifié.
 
 - **Éditeur de cases** (ordinateur) : tracé, retouche et ordre des cases, lecture case par case,
   annulation, enregistrement, en anglais et en français.
+- **Affichage amélioré** : netteté facultative, ou restauration Anime4K en double résolution,
+  seulement à l’écran.
 - **Informations du livre** : tous les champs de métadonnées (auteur·rices, titres par langue,
   séries, publication, historique du document…), modifiés sur place. Voir le
   [guide d’utilisation](docs/GUIDE.fr.md).
@@ -45,6 +47,12 @@ tools/fetch-fixtures.sh                        # les livres d’exemple (environ
 
 Tessera est un logiciel libre sous [licence publique générale GNU v3.0](LICENSE), comme
 ACBF Viewer et ACBF Editor d’origine.
+
+## Travaux de tiers
+
+L’affichage « Restauration » utilise les poids des réseaux d’[Anime4K](https://github.com/bloc97/Anime4K)
+(licence MIT, © bloc97), exécutés par le moteur Kotlin de Tessera ; voir
+`editor/src/enhance/Anime4KModels.kt`, produit par `tools/anime4k_weights.py`.
 
 ## Licence des livres d’exemple
 

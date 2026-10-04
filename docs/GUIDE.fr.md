@@ -91,6 +91,27 @@ l’éditeur se place sur la planche atteinte.
 
 ![Lecture case par case](images/reading-preview.jpg)
 
+## Affichage amélioré
+
+Les numérisations en basse résolution paraissent floues ou pixellisées une fois agrandies,
+surtout en lecture case par case. **✧** dans la pastille de zoom (éditeur) et **✧ Affichage
+amélioré** dans la barre de lecture ouvrent les réglages d’affichage, retenus séparément pour
+l’édition et pour la lecture :
+
+- **Désactivé** : les planches telles quelles.
+- **Netteté** : des traits plus nets sans halo (la netteté adaptative d’AMD), instantané.
+- **Restauration** : Anime4K, des réseaux de neurones entraînés sur le dessin au trait, efface
+  les blocs de compression et redessine des traits propres en double résolution. Environ une
+  seconde par planche, calculée en arrière-plan (la planche ordinaire s’affiche en attendant,
+  puis est remplacée) ; en lecture, la planche suivante est préparée à l’avance.
+
+**Netteté** et, pour la restauration, **Force** règlent l’effet de 0 à 100 %. L’étoile devient
+pleine (✦) quand une amélioration est active. Seul l’affichage change : les fichiers ne sont
+jamais modifiés, et les cases sont toujours tracées sur les vrais pixels de la planche. Pour un
+travail au pixel près sur les cases, laissez l’éditeur sur Désactivé.
+
+![Lecture avec restauration](images/reader-restored.jpg)
+
 ## Réglages de la planche
 
 - **Fond** montre la couleur utilisée par les liseuses autour d’une case zoomée, et indique si

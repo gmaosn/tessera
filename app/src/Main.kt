@@ -36,6 +36,7 @@ import tessera.acbf.ComicFiles
 import tessera.acbf.OutsideImageFolder
 import tessera.editor.EditorPrefs
 import tessera.editor.EditorScreen
+import tessera.editor.EnhancePrefs
 import tessera.editor.ImageCache
 import tessera.editor.Label
 import tessera.editor.Language
@@ -72,6 +73,12 @@ fun main(args: Array<String>) {
     }
     EditorPrefs.creator = prefs.get("creator", "")
     EditorPrefs.onChange = { prefs.put("creator", EditorPrefs.creator) }
+    EnhancePrefs.decode(prefs.get("enhance.editor", null))?.let { EnhancePrefs.editor = it }
+    EnhancePrefs.decode(prefs.get("enhance.reader", null))?.let { EnhancePrefs.reader = it }
+    EnhancePrefs.onChange = {
+        prefs.put("enhance.editor", EnhancePrefs.encode(EnhancePrefs.editor))
+        prefs.put("enhance.reader", EnhancePrefs.encode(EnhancePrefs.reader))
+    }
     application {
         var opened by remember { mutableStateOf(args.firstOrNull()?.let { runCatching { open(File(it)) }.getOrNull() }) }
         var error by remember { mutableStateOf<String?>(null) }
