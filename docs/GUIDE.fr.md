@@ -100,6 +100,11 @@ dans le tiers gauche revient en arrière). Après la dernière case d’une plan
 de la suivante, en fondu ; une planche sans case s’affiche en entier. Échap ou Espace ferme, et
 l’éditeur se place sur la planche atteinte.
 
+La découpe suit la case en douceur : ses coins restent nets, les points tracés autour d’une
+bulle deviennent une courbe ronde, et là où une bulle rejoint le bord de la case, l’angle est
+légèrement arrondi. C’est seulement à l’écran ; le fichier garde ses points. Dans l’éditeur, un
+fin pointillé montre cette découpe autour de chaque case qui n’est pas un simple rectangle.
+
 ![Lecture case par case](images/reading-preview.jpg)
 
 ## Affichage amélioré

@@ -99,6 +99,11 @@ on the left third goes back). After a page's last frame comes the next page's fi
 a fade; a page without frames is shown whole. Esc or Space closes it, and the editor goes to the
 page you reached.
 
+The cut follows the frame softly: its corners stay sharp, points traced around a balloon become
+a round curve, and where a balloon meets the frame's edge the corner is slightly rounded. This is
+on screen only; the file keeps its points. In the editor, a fine dashed line shows this cut
+around every frame that is not a plain rectangle.
+
 ![Reading frame by frame](images/reading-preview.jpg)
 
 ## Enhanced display

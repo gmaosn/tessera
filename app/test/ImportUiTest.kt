@@ -25,14 +25,14 @@ class ImportUiTest {
             runDesktopComposeUiTest(1100, 800) {
                 setContent {
                     TesseraTheme {
-                        ImportDialog(File("Chevalier Ardent 1.pdf"), PdfInfo(66, "", "", "", ""), PdfImportOptions(), File("Chevalier Ardent 1.cbz"), {}, {}, {}, {})
+                        ImportDialog(File("Mon album 1.pdf"), PdfInfo(66, "", "", "", ""), PdfImportOptions(), File("Mon album 1.cbz"), {}, {}, {}, {})
                     }
                 }
                 waitForIdle()
                 javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("18-import-fr.png"))
             }
             runDesktopComposeUiTest(1100, 500) {
-                setContent { TesseraTheme { ImportProgress(File("Chevalier Ardent 1.pdf"), 24, 66) {} } }
+                setContent { TesseraTheme { ImportProgress(File("Mon album 1.pdf"), 24, 66) {} } }
                 waitForIdle()
                 javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("19-import-progress-fr.png"))
             }

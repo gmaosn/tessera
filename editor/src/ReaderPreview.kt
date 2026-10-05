@@ -280,37 +280,10 @@ private class Shot(val cx: Float, val cy: Float, val scale: Float, val outline: 
 
     companion object {
         private const val PADDING = 16f
-        private const val OUTLINE_POINTS = 128
 
         fun of(poly: Polygon, background: Color, vw: Float, vh: Float): Shot {
             val s = min((vw - 2 * PADDING) / (poly.maxX - poly.minX).coerceAtLeast(1), (vh - 2 * PADDING) / (poly.maxY - poly.minY).coerceAtLeast(1))
-            return Shot((poly.minX + poly.maxX) / 2f, (poly.minY + poly.maxY) / 2f, s, outline(poly), background)
-        }
-
-        /**
-         * The polygon walked at even steps, always in the same direction and starting near its
-         * top-left corner, so that two frames' outlines can morph point by point.
-         */
-        fun outline(poly: Polygon): List<Offset> {
-            var pts = poly.points.map { Offset(it.x.toFloat(), it.y.toFloat()) }
-            if (poly.signedArea < 0) pts = pts.reversed()
-            val start = pts.indices.minBy { (pts[it].x - poly.minX).let { d -> d * d } + (pts[it].y - poly.minY).let { d -> d * d } }
-            pts = pts.drop(start) + pts.take(start)
-            val lengths = pts.indices.map { k -> (pts[(k + 1) % pts.size] - pts[k]).getDistance() }
-            val total = lengths.sum()
-            if (total <= 0f) return List(OUTLINE_POINTS) { pts[0] }
-            val out = ArrayList<Offset>(OUTLINE_POINTS)
-            var segment = 0
-            var walked = 0f
-            for (k in 0 until OUTLINE_POINTS) {
-                val at = total * k / OUTLINE_POINTS
-                while (segment < pts.size - 1 && walked + lengths[segment] < at) walked += lengths[segment++]
-                val a = pts[segment]
-                val b = pts[(segment + 1) % pts.size]
-                val f = if (lengths[segment] > 0f) ((at - walked) / lengths[segment]).coerceIn(0f, 1f) else 0f
-                out += Offset(a.x + (b.x - a.x) * f, a.y + (b.y - a.y) * f)
-            }
-            return out
+            return Shot((poly.minX + poly.maxX) / 2f, (poly.minY + poly.maxY) / 2f, s, Outline.of(poly), background)
         }
     }
 }

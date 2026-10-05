@@ -60,7 +60,10 @@ archive while keeping the same in-memory document, so undo history survives savi
 - `PageCanvas` (`CanvasView` holds zoom and scroll), `PageStrip`, `Inspector`, `ReaderPreview`,
   `EditorScreen`: the Compose UI, in Aster's palette (`Theme.kt`).
 - `ReaderPreview` animates one progress value: camera position, a geometric zoom, the frame
-  outline (both outlines resampled to 128 points and morphed) and the background colour.
+  outline and the background colour. `Outline` turns a frame's polygon into the cut shown:
+  sharp corners kept, curve-like runs of points smoothed (cubic curves through the points),
+  inward corners filleted, then walked at 512 even steps with every corner on a step, so that
+  two outlines morph point by point (`editor/test/OutlineTest.kt`). `PageCanvas` dashes it.
 - `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
   redraws the UI at once.
 

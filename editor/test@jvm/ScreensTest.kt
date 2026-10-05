@@ -21,6 +21,7 @@ import tessera.editor.ImageCache
 import tessera.editor.Session
 import tessera.editor.TesseraTheme
 import java.io.File
+import kotlin.math.roundToInt
 import kotlin.test.Test
 
 /**
@@ -121,6 +122,108 @@ class ScreensTest {
             for ((k, ms) in listOf(100L, 200L, 300L).withIndex()) {
                 mainClock.advanceTimeBy(if (k == 0) ms else 100L)
                 javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("09-preview-move-$ms.png"))
+            }
+        }
+    }
+
+    /**
+     * A made-up page, nothing from a real book: a tall frame whose outline goes round a balloon
+     * spilling over its right side, as frames are often traced. Written as build/screens/Exemple.cbz.
+     */
+    private fun balloonBook(): File {
+        val w = 1200
+        val h = 1700
+        fun png(draw: (java.awt.Graphics2D) -> Unit): ByteArray {
+            val img = java.awt.image.BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_RGB)
+            val g = img.createGraphics()
+            g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+            g.color = java.awt.Color.WHITE; g.fillRect(0, 0, w, h)
+            draw(g)
+            return java.io.ByteArrayOutputStream().also { javax.imageio.ImageIO.write(img, "png", it) }.toByteArray()
+        }
+        fun balloon(g: java.awt.Graphics2D, cx: Int, cy: Int, rx: Int, ry: Int, lines: Int) {
+            g.color = java.awt.Color.WHITE; g.fillOval(cx - rx, cy - ry, 2 * rx, 2 * ry)
+            g.color = java.awt.Color.BLACK; g.stroke = java.awt.BasicStroke(4f); g.drawOval(cx - rx, cy - ry, 2 * rx, 2 * ry)
+            g.color = java.awt.Color(0x9A9A9A)
+            for (k in 0 until lines) {
+                val y = cy - (lines - 1) * 18 + k * 36
+                val half = (rx * 0.75 * kotlin.math.sqrt(1.0 - ((y - cy).toDouble() / ry).let { it * it })).toInt()
+                g.fillRoundRect(cx - half, y - 8, 2 * half, 16, 8, 8)
+            }
+        }
+        val page = png { g ->
+            fun panel(x0: Int, y0: Int, x1: Int, y1: Int, sky: Int, ground: Int) {
+                g.color = java.awt.Color(sky); g.fillRect(x0, y0, x1 - x0, y1 - y0)
+                g.color = java.awt.Color(ground); g.fillRect(x0, y0 + (y1 - y0) * 2 / 3, x1 - x0, (y1 - y0) / 3)
+                g.color = java.awt.Color.BLACK; g.stroke = java.awt.BasicStroke(5f); g.drawRect(x0, y0, x1 - x0, y1 - y0)
+            }
+            panel(60, 60, 760, 1640, 0x8FB8C8, 0xC9A27A)
+            g.color = java.awt.Color(0xE8D7A8); g.fillRect(110, 500, 200, 640); g.fillRect(380, 700, 260, 440)
+            g.color = java.awt.Color(0x5E7F8C); g.fillRect(150, 560, 120, 160); g.fillRect(430, 770, 70, 110)
+            g.color = java.awt.Color(0xF2D27A); g.fillOval(520, 180, 110, 110)
+            panel(820, 60, 1140, 600, 0xB9C9A0, 0x7E9A62)
+            panel(820, 1200, 1140, 1640, 0xD9B8C4, 0x8F6A7A)
+            balloon(g, 330, 210, 220, 120, 3)
+            balloon(g, 900, 900, 230, 210, 7)
+        }
+        // Frame 1 traced round the right balloon, a little outside its outline, as by hand.
+        val reach = kotlin.math.acos((760.0 - 900) / 236) // the angle where the traced ellipse meets x = 760
+        val arc = (0..10).map { k ->
+            val a = -reach + k * 2 * reach / 10
+            "${(900 + 236 * kotlin.math.cos(a)).roundToInt()},${(900 + 216 * kotlin.math.sin(a)).roundToInt()}"
+        }
+        val frames = listOf(
+            "60,60 760,60 ${arc.joinToString(" ")} 760,1640 60,1640",
+            "820,60 1140,60 1140,600 820,600",
+            "820,1200 1140,1200 1140,1640 820,1640",
+        )
+        val acbf = """
+            <?xml version='1.0' encoding='UTF-8'?>
+            <ACBF xmlns="http://www.acbf.info/xml/acbf/1.1">
+              <meta-data>
+                <book-info>
+                  <author><nickname>Tessera</nickname></author>
+                  <book-title>Exemple</book-title>
+                  <genre>other</genre>
+                  <coverpage><image href="cover.png"/></coverpage>
+                </book-info>
+                <document-info>
+                  <author><nickname>Tessera</nickname></author>
+                  <id>tessera-exemple</id>
+                  <version>1.0</version>
+                </document-info>
+              </meta-data>
+              <body>
+                <page>
+                  <image href="page1.png"/>
+            ${frames.joinToString("\n") { "      <frame points=\"$it\"/>" }}
+                </page>
+              </body>
+            </ACBF>
+        """.trimIndent()
+        val file = out.resolve("Exemple.cbz")
+        java.util.zip.ZipOutputStream(file.outputStream()).use { zip ->
+            for ((name, bytes) in listOf("Exemple.acbf" to acbf.toByteArray(), "cover.png" to page, "page1.png" to page)) {
+                zip.putNextEntry(java.util.zip.ZipEntry(name)); zip.write(bytes); zip.closeEntry()
+            }
+        }
+        return file
+    }
+
+    /** The made-up page in the editor (smoothed outline dashed) and in the reader. */
+    @Test
+    fun smoothedCut() {
+        val file = balloonBook()
+        for ((name, previewing) in listOf("20-cut-editor" to false, "21-cut-reader" to true)) {
+            val comic = ComicFiles.open(file)
+            val session = Session(comic, file.name).apply { goToPage(1) }
+            val images = ImageCache(comic)
+            runBlocking { images.page(session.page.imageHref) }
+            runDesktopComposeUiTest(1440, 900) {
+                setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, startPreviewing = previewing) } }
+                waitForIdle()
+                if (previewing) mainClock.advanceTimeBy(1000)
+                javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("$name.png"))
             }
         }
     }

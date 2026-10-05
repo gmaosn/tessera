@@ -256,6 +256,17 @@ fun PageCanvas(
                 drawPath(path, if (sel) c.accentDeep else c.accent, style = Stroke(if (sel) stroke * 1.25f else stroke, join = StrokeJoin.Round))
             }
 
+            // What reading cuts out, where it differs from the polygon: curves and inward fillets.
+            val fine = PathEffect.dashPathEffect(floatArrayOf(3f * density, 3f * density))
+            polygons.forEach { poly ->
+                if (poly == null || poly.isRectangle) return@forEach
+                val cut = Path().apply {
+                    Outline.of(poly).forEachIndexed { k, p -> Offset(origin.x + p.x * s, origin.y + p.y * s).let { if (k == 0) moveTo(it.x, it.y) else lineTo(it.x, it.y) } }
+                    close()
+                }
+                drawPath(cut, c.accentDeep, style = Stroke(density, pathEffect = fine))
+            }
+
             val dash = PathEffect.dashPathEffect(floatArrayOf(5f * density, 4f * density))
             tool.draft?.let { pts ->
                 if (tool.tool == Tool.Rectangle) {
