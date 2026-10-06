@@ -16,7 +16,7 @@ import kotlin.math.sin
 object TextFit {
     const val REFERENCE = 100f
     /** Line height, in font sizes. */
-    const val LEADING = 1.18f
+    const val LEADING = 1.1f
 
     /** One laid-out line: its text, the x of its centre and the y of its top, in the area's own frame. */
     class Line(val text: String, val centreX: Float, val top: Float)
@@ -30,7 +30,7 @@ object TextFit {
      * characters), by its language's rules; a cut adds a hyphen [hyphenWidth] wide.
      */
     fun layout(
-        text: String, polygon: Polygon, rotation: Int, wordWidth: (String) -> Float, spaceWidth: Float, padding: Float = 0.08f,
+        text: String, polygon: Polygon, rotation: Int, wordWidth: (String) -> Float, spaceWidth: Float, padding: Float = 0.035f,
         hyphenate: (String) -> List<Int> = { emptyList() }, hyphenWidth: Float = spaceWidth,
     ): Layout? {
         val paragraphs = text.split('\n').map { p -> glued(p.split(' ', '\u00a0', '\u202f').filter { it.isNotEmpty() }) }.filter { it.isNotEmpty() }
@@ -116,9 +116,23 @@ object TextFit {
         val lh = size * LEADING
         val maxLines = ((bottom - top) / lh).toInt()
         if (maxLines < 1 && !force) return null
-        // Try n lines, centred vertically, until the words fit in n lines.
+        // Try n lines until the words fit in n lines: centred first, then higher or lower, where
+        // the shape may be wider (a balloon's widest part is rarely its middle).
         for (n in 1..max(1, if (force) 999 else maxLines)) {
-            val blockTop = (top + bottom) / 2 - n * lh / 2
+            val free = (bottom - top) - n * lh
+            val tops = if (force || free <= 0f) listOf((top + bottom) / 2 - n * lh / 2)
+                else listOf(0, -1, 1, -2, 2, -3, 3).map { step -> top + free / 2 + step * free / 6 }
+            for (blockTop in tops) placeLines(paragraphs, words, k, lh, n, blockTop, shape, inset, force)?.let { return Layout(size, it) }
+        }
+        return null
+    }
+
+    /** The paragraphs laid in [n] lines from [blockTop], or null when they need more. */
+    private fun placeLines(
+        paragraphs: List<List<String>>, words: Words, k: Float, lh: Float, n: Int, blockTop: Float,
+        shape: List<Pair<Float, Float>>, inset: Float, force: Boolean,
+    ): List<Line>? {
+        run {
             val lines = ArrayList<Line>()
             var ok = true
             // Never two lines in a row ending with an added hyphen.
@@ -158,9 +172,8 @@ object TextFit {
                     lines += Line(line.toString(), (left + right) / 2, y0)
                 }
             }
-            if (ok) return Layout(size, lines)
+            return if (ok) lines else null
         }
-        return null
     }
 
     /** The horizontal room inside the shape over the band [y0, y1], less [inset] on each side. */

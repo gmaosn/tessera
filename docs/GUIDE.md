@@ -63,6 +63,22 @@ Edges **snap** to the image border and to the corners of the other frames, so ne
 frames line up without gaps. A red dashed line shows what an edge snapped to. After drawing,
 Tessera goes back to Select with the new frame selected.
 
+## Balloons that cross a frame's edge
+
+The **Balloon** tool (**B**) finds a balloon in the page from a click inside it, on its light
+ground: its whole inside, its outline and how thick it is (the letters inside do not matter;
+a balloon whose ground runs out into the page is not taken).
+
+- In **Frames**, one click settles the balloon between the frames: the frame it belongs to (the
+  selected one, else the one holding most of it) goes round the part that spills over, cut
+  along the middle of its outline so that nothing of the next frame shows; every other frame it
+  intrudes on is cut back round it, outline and all, so that it does not show there. To give the
+  balloon to the other frame, select that frame and click again. The frames' other points stay
+  as they were; one undo step.
+- In **Texts**, a click makes a text area of the balloon's whole inside, so that the text gets
+  all the room there is and its ground hides the original text; a click inside an existing area
+  fits it to its balloon.
+
 ## Adjusting a frame
 
 With the Select tool:
@@ -186,9 +202,11 @@ pictures.
   **No ground**, rotation in degrees, and its own ground colour (`#rrggbb`; empty: the layer's).
 - **Show text** draws each area as a reader would; **Outlines** shows the shapes only. The
   frames stay faintly visible beneath.
+- **Balloon** (**B**): a click inside a balloon makes an area of its whole inside, or fits the
+  area clicked to it (see Balloons that cross a frame's edge).
 - **Fitting**: the text takes the largest size at which it stays inside the area's own shape:
   each line is as wide as the shape is at its height, so a round balloon gets short lines at
-  the top and bottom. Words are cut between syllables with a hyphen, by the rules of the
+  the top and bottom, and the lines sit where the shape is widest. Words are cut between syllables with a hyphen, by the rules of the
   layer's language (TeX's patterns: English, French, German, Spanish, Italian, Dutch,
   Portuguese, Slovak, Czech, Polish); Chinese and Japanese between characters. Cuts stay rare:
   only when they make the text at least a fifth larger than uncut, never on two lines in a row,

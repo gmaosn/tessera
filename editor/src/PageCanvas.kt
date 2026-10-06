@@ -151,7 +151,7 @@ fun PageCanvas(
 
         val icon = when {
             panning -> PointerIcon.Hand
-            tool.tool == Tool.Rectangle || tool.tool == Tool.Polygon -> PointerIcon.Crosshair
+            tool.tool == Tool.Rectangle || tool.tool == Tool.Polygon || tool.tool == Tool.Balloon -> PointerIcon.Crosshair
             tool.tool == Tool.Order && tool.hovered >= 0 -> PointerIcon.Hand
             tool.tool == Tool.Select && tool.hovered >= 0 -> PointerIcon.Hand
             else -> PointerIcon.Default

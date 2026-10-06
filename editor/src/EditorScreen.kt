@@ -114,6 +114,10 @@ fun EditorScreen(
     var toast by remember { mutableStateOf<String?>(null) }
     val pageImage by rememberPageImage(images, session.page.imageHref)
     val image = pageImage.bitmap
+    // The balloon tool looks in the page as drawn (not the enhanced display), where frames are.
+    remember(image) { image?.let { img -> { p: tessera.acbf.Point -> Balloon.find(img, p.x, p.y) } } }.let { finder ->
+        tool.balloonAt = finder; textTool.balloonAt = finder
+    }
     LaunchedEffect(session.page.imageHref) { images.wanted = listOfNotNull(session.page.imageHref) }
     val enhanced by rememberEnhanced(images, session.page.imageHref, EnhancePrefs.editor)
     var enhanceOpen by remember { mutableStateOf(false) }
@@ -195,6 +199,7 @@ fun EditorScreen(
             e.key == Key.V -> active.select(Tool.Select)
             e.key == Key.R -> active.select(Tool.Rectangle)
             e.key == Key.P -> active.select(Tool.Polygon)
+            e.key == Key.B -> active.select(Tool.Balloon)
             e.key == Key.O && mode == 0 -> tool.select(Tool.Order)
             e.key == Key.Escape -> active.cancel()
             e.key == Key.Enter || e.key == Key.NumPadEnter -> active.confirm()
@@ -408,6 +413,7 @@ private fun Toolbar(tool: FrameTool, withOrder: Boolean, modifier: Modifier) {
         ToolButton(Tool.Select, "V", tool, ::selectIcon)
         ToolButton(Tool.Rectangle, "R", tool, ::rectIcon)
         ToolButton(Tool.Polygon, "P", tool, ::polygonIcon)
+        ToolButton(Tool.Balloon, "B", tool, ::balloonIcon)
         if (withOrder) {
             Box(Modifier.padding(horizontal = 4.dp, vertical = 3.dp).width(28.dp).height(1.dp).background(c.line))
             ToolButton(Tool.Order, "O", tool, ::orderIcon)
@@ -457,6 +463,14 @@ private fun rectIcon(d: DrawScope, color: Color) = with(d) {
 private fun polygonIcon(d: DrawScope, color: Color) = with(d) {
     drawPath(poly(5f, 6f, 16f, 4f, 20f, 13f, 14f, 20f, 5f, 17f), color, style = strokeOf(color))
     for ((x, y) in listOf(5f to 6f, 16f to 4f, 20f to 13f)) drawCircle(color, u(1.4f), Offset(u(x), u(y)))
+}
+
+private fun balloonIcon(d: DrawScope, color: Color) = with(d) {
+    val p = Path().apply {
+        addOval(androidx.compose.ui.geometry.Rect(u(3f), u(4f), u(21f), u(16f)))
+        moveTo(u(8f), u(15f)); lineTo(u(6f), u(21f)); lineTo(u(12f), u(15.8f))
+    }
+    drawPath(p, color, style = strokeOf(color))
 }
 
 private fun orderIcon(d: DrawScope, color: Color) = with(d) {

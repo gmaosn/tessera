@@ -1,5 +1,6 @@
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.toAwtImage
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.onRoot
@@ -13,6 +14,7 @@ import androidx.compose.ui.test.v2.runDesktopComposeUiTest
 import kotlinx.coroutines.runBlocking
 import tessera.acbf.ComicFiles
 import tessera.acbf.addTextArea
+import tessera.acbf.textAreas
 import tessera.editor.EditorScreen
 import tessera.editor.FrameTool
 import tessera.editor.Language
@@ -251,6 +253,79 @@ class ScreensTest {
             setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, startMode = 1) } }
             waitForIdle()
             javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("18-french-balloons.png"))
+        }
+    }
+
+    /**
+     * The balloon tool on a made-up page: a balloon spilling from the left frame into the right
+     * one. One click: the left frame goes round it, the right one leaves it out; a French text
+     * area fills it. Shown in the editor and in both frames of the reading.
+     */
+    @Test
+    fun balloonTool() {
+        val img = java.awt.image.BufferedImage(1000, 800, java.awt.image.BufferedImage.TYPE_INT_RGB)
+        img.createGraphics().apply {
+            setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+            color = java.awt.Color.WHITE; fillRect(0, 0, 1000, 800)
+            color = java.awt.Color(0x8FB8C8); fillRect(50, 50, 550, 700)
+            color = java.awt.Color(0xD9B8C4); fillRect(615, 50, 335, 700)
+            color = java.awt.Color.BLACK; stroke = java.awt.BasicStroke(5f); drawRect(50, 50, 550, 700); drawRect(615, 50, 335, 700)
+            color = java.awt.Color.WHITE; fillOval(380, 140, 360, 220)
+            color = java.awt.Color.BLACK; stroke = java.awt.BasicStroke(6f); drawOval(380, 140, 360, 220)
+            font = java.awt.Font("SansSerif", java.awt.Font.BOLD, 28); drawString("AREN'T WE SUPPOSED", 425, 240); drawString("TO REPORT IT?", 465, 280)
+            dispose()
+        }
+        val png = java.io.ByteArrayOutputStream().also { javax.imageio.ImageIO.write(img, "png", it) }.toByteArray()
+        val acbf = """
+            <?xml version='1.0' encoding='UTF-8'?>
+            <ACBF xmlns="http://www.acbf.info/xml/acbf/1.1">
+              <meta-data>
+                <book-info>
+                  <book-title>Exemple</book-title>
+                  <genre>other</genre>
+                  <languages>
+                    <text-layer lang="fr" show="true"/>
+                  </languages>
+                  <coverpage><image href="page.png"/></coverpage>
+                </book-info>
+              </meta-data>
+              <body>
+                <page>
+                  <image href="page.png"/>
+                  <frame points="50,50 600,50 600,750 50,750"/>
+                  <frame points="615,50 950,50 950,750 615,750"/>
+                </page>
+              </body>
+            </ACBF>
+        """.trimIndent()
+        val file = out.resolve("Exemple-bulle.cbz")
+        java.util.zip.ZipOutputStream(file.outputStream()).use { zip ->
+            for ((name, bytes) in listOf("Exemple.acbf" to acbf.toByteArray(), "page.png" to png)) { zip.putNextEntry(java.util.zip.ZipEntry(name)); zip.write(bytes); zip.closeEntry() }
+        }
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name).apply { goToPage(1) }
+        val bitmap = img.toComposeImageBitmap()
+        val finder = { p: tessera.acbf.Point -> tessera.editor.Balloon.find(bitmap, p.x, p.y) }
+        val frames = FrameTool(session).apply { imageWidth = 1000; imageHeight = 800; balloonAt = finder }
+        frames.select(Tool.Balloon); frames.press(Offset(500f, 300f), 1f); frames.select(Tool.Select)
+        check(frames.message!!.startsWith("Frame 1")) { frames.message!! }
+        val texts = FrameTool(session, tessera.editor.TextShapes(session) { "fr" }).apply { imageWidth = 1000; imageHeight = 800; balloonAt = finder }
+        texts.select(Tool.Balloon); texts.press(Offset(500f, 300f), 1f)
+        session.editTexts { it.textAreas("fr")[0].setText("Ne sommes-nous pas censées le signaler à la reine elle-même ?") }
+        val images = ImageCache(session.comic)
+        runBlocking { for (p in session.pages) images.thumbnail(p.imageHref); images.page(session.page.imageHref) }
+        runDesktopComposeUiTest(1440, 900) {
+            setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, tool = frames) } }
+            waitForIdle()
+            javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("19-balloon-editor.png"))
+        }
+        runDesktopComposeUiTest(1440, 900) {
+            setContent { TesseraTheme { tessera.editor.ReaderPreview(session, images, textLang = "fr") {} } }
+            waitForIdle(); mainClock.advanceTimeBy(1000); waitForIdle()
+            javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("20-balloon-frame1.png"))
+            onRoot().performKeyInput { pressKey(Key.DirectionRight) }
+            mainClock.advanceTimeBy(1000); waitForIdle()
+            javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("21-balloon-frame2.png"))
         }
     }
 

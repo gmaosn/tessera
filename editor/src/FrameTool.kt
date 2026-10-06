@@ -11,7 +11,7 @@ import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.roundToInt
 
-enum class Tool { Select, Rectangle, Polygon, Order }
+enum class Tool { Select, Rectangle, Polygon, Balloon, Order }
 
 /** A snapping guide line, in image pixels. */
 data class Guide(val vertical: Boolean, val at: Int)
@@ -45,6 +45,9 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
     /** Bumped each time a shape is drawn, so that the UI can follow (focus the new text area's field). */
     var created by mutableIntStateOf(0)
         private set
+
+    /** Finds the balloon around a point of the page image; set by the editor once the image is loaded. */
+    var balloonAt: ((Point) -> Balloon.Found?)? = null
 
     /** A message for the user, consumed by the UI (a toast). */
     var message by mutableStateOf<String?>(null)
@@ -92,6 +95,7 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
                 if (pts.size > 2 && distance(pts[0], p) * scale < CLOSE_RADIUS) return closePolygon()
                 draft = pts + s
             }
+            Tool.Balloon -> pressBalloon(Point(p.x.roundToInt(), p.y.roundToInt()))
             Tool.Order -> {
                 val i = frameAt(p)
                 if (i < 0 || i in order) return
@@ -144,6 +148,45 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
                 tool = Tool.Select
             }
         }
+    }
+
+    /**
+     * A click inside a balloon. Text areas: the area under the click is fitted to the balloon's
+     * whole inside, or a new one made from it. Frames: the selected frame (else the one holding
+     * most of the balloon) goes round the part of the balloon that spills over its edge.
+     */
+    private fun pressBalloon(p: Point) {
+        val found = balloonAt?.invoke(p) ?: run { message = Strings.noBalloonHere; return }
+        if (shapes is TextShapes) {
+            val i = frameAt(Offset(p.x.toFloat(), p.y.toFloat()))
+            if (i >= 0) {
+                shapes.edit { set(i, found.inner) }
+                selected = i
+                message = Strings.areaFittedToBalloon
+            } else {
+                shapes.edit { add(found.inner) }
+                selected = polygons.size - 1
+                created++
+            }
+            return
+        }
+        // The balloon's frame goes round it; every other frame it intrudes on is cut back round it.
+        val polys = polygons
+        // How much of the balloon each frame holds, on a grid of samples inside the balloon.
+        val b = found.inner
+        val samples = (0 until 32).flatMap { i -> (0 until 32).map { j -> (b.minX + (b.maxX - b.minX) * (i + 0.5) / 32) to (b.minY + (b.maxY - b.minY) * (j + 0.5) / 32) } }
+            .filter { (x, y) -> b.contains(x, y) }
+        fun share(k: Int) = polys.getOrNull(k)?.let { f -> samples.count { (x, y) -> f.contains(x, y) } } ?: 0
+        val owner = selected.takeIf { share(it) > 0 } ?: polys.indices.maxByOrNull(::share)?.takeIf { share(it) > 0 }
+            ?: run { message = Strings.noFrameAtBalloon; return }
+        val changes = buildMap {
+            Balloon.around(polys[owner]!!, found.outer)?.let { put(owner, it) }
+            for (k in polys.indices) if (k != owner && polys[k] != null) Balloon.without(polys[k]!!, found.clear)?.let { put(k, it) }
+        }
+        if (changes.isEmpty()) { message = Strings.balloonAlreadyInside; return }
+        shapes.edit { for ((k, p) in changes) set(k, p) }
+        selected = owner
+        message = Strings.framesRoundBalloon(owner + 1, changes.keys.filter { it != owner }.map { it + 1 }, owner in changes)
     }
 
     private fun pressSelect(p: Offset, scale: Float, alt: Boolean) {

@@ -64,6 +64,22 @@ Les bords **s’aimantent** au bord de l’image et aux coins des autres cases :
 s’alignent sans interstice. Une ligne rouge pointillée montre à quoi un bord s’est aimanté.
 Après un tracé, Tessera revient à la sélection, la nouvelle case sélectionnée.
 
+## Bulles qui franchissent le bord d’une case
+
+L’outil **Bulle** (**B**) trouve une bulle dans la planche d’un clic à l’intérieur, sur son fond
+clair : tout son intérieur, son contour et son épaisseur (les lettres dedans n’y changent rien ;
+une bulle dont le fond s’ouvre sur la planche n’est pas prise).
+
+- Dans **Cases**, un clic règle la bulle entre les cases : la case à laquelle elle appartient
+  (celle sélectionnée, sinon celle qui en contient le plus) passe autour de la partie qui
+  déborde, découpée au milieu de son trait pour qu’on ne voie rien de la case voisine ; toute
+  autre case où elle entre la contourne, trait compris, pour qu’elle n’y apparaisse pas. Pour
+  donner la bulle à l’autre case, sélectionnez celle-ci et cliquez de nouveau. Les autres points
+  des cases ne bougent pas ; une seule étape d’annulation.
+- Dans **Textes**, un clic crée une zone de texte de tout l’intérieur de la bulle, pour que le
+  texte ait toute la place disponible et que son fond cache le texte d’origine ; un clic dans une
+  zone existante l’ajuste à sa bulle.
+
 ## Retoucher une case
 
 Avec l’outil Sélection :
@@ -193,9 +209,12 @@ sans toucher à ses dessins.
   vide : celle du calque).
 - **Voir le texte** dessine chaque zone comme une liseuse ; **Contours** ne montre que les
   formes. Les cases restent visibles en filigrane.
+- **Bulle** (**B**) : un clic dans une bulle crée une zone de tout son intérieur, ou ajuste à la
+  bulle la zone cliquée (voir Bulles qui franchissent le bord d’une case).
 - **Ajustement** : le texte prend la plus grande taille à laquelle il reste dans la forme même
   de la zone : chaque ligne est aussi large que la forme à sa hauteur, si bien qu’une bulle
-  ronde a des lignes courtes en haut et en bas. Les mots sont coupés entre les syllabes avec un
+  ronde a des lignes courtes en haut et en bas, et les lignes se placent là où la forme est la
+  plus large. Les mots sont coupés entre les syllabes avec un
   trait d’union, selon les règles de la langue du calque (motifs de TeX : anglais, français,
   allemand, espagnol, italien, néerlandais, portugais, slovaque, tchèque, polonais) ; le chinois
   et le japonais entre deux caractères. Les coupures restent rares : seulement si elles rendent

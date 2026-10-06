@@ -86,6 +86,7 @@ object Strings {
         Tool.Select -> t("Select", "Sélection")
         Tool.Rectangle -> t("Rectangle", "Rectangle")
         Tool.Polygon -> t("Polygon", "Polygone")
+        Tool.Balloon -> t("Balloon", "Bulle")
         Tool.Order -> t("Reading order", "Ordre de lecture")
     }
 
@@ -111,6 +112,11 @@ object Strings {
             Hint(listOf("⌫"), t("last point", "dernier point")),
             Hint(listOf(escKey), t("cancel", "annuler")),
         )
+        Tool.Balloon -> listOf(
+            Hint(text = t("Click inside a balloon:", "Clic dans une bulle :"), strong = t("the frame goes round it, or a text area fills it", "la case passe autour, ou une zone de texte la remplit")),
+            Hint(text = t("In a text area:", "Dans une zone de texte :"), strong = t("fit it to the balloon", "l’ajuster à la bulle")),
+            Hint(listOf(escKey), t("back to Select", "retour à la sélection")),
+        )
         Tool.Order -> listOf(
             Hint(text = t("Click the frames", "Cliquez les cases"), strong = t("in the order they are read", "dans l’ordre où on les lit")),
             Hint(listOf("↵"), t("done", "valider")),
@@ -124,10 +130,24 @@ object Strings {
         Tool.Select -> t("Select (V)", "Sélection (V)")
         Tool.Rectangle -> t("Rectangle (R)", "Rectangle (R)")
         Tool.Polygon -> t("Polygon (P)", "Polygone (P)")
+        Tool.Balloon -> t("Balloon (B)", "Bulle (B)")
         Tool.Order -> t("Reading order (O)", "Ordre de lecture (O)")
     }
 
     val noLanguage get() = t("No language", "Sans langue")
+    val noBalloonHere get() = t("No closed balloon here: click inside one, on its light ground", "Pas de bulle fermée ici : cliquez à l’intérieur d’une bulle, sur son fond clair")
+    val areaFittedToBalloon get() = t("Text area fitted to the balloon", "Zone de texte ajustée à la bulle")
+    val noFrameAtBalloon get() = t("This balloon is in no frame", "Cette bulle n’est dans aucune case")
+    val balloonAlreadyInside get() = t("This balloon does not cross any frame’s edge", "Cette bulle ne franchit le bord d’aucune case")
+    fun framesRoundBalloon(owner: Int, cut: List<Int>, grown: Boolean): String {
+        val g = if (grown) t("Frame $owner goes round the balloon", "La case $owner passe autour de la bulle") else null
+        val c = when (cut.size) {
+            0 -> null
+            1 -> t("frame ${cut[0]} leaves it out", "la case ${cut[0]} la contourne")
+            else -> t("frames ${cut.joinToString(", ")} leave it out", "les cases ${cut.joinToString(", ")} la contournent")
+        }
+        return listOfNotNull(g, c).joinToString(t("; ", " ; ")).replaceFirstChar { it.uppercase() }
+    }
 
     // ----- Texts tab -----
 

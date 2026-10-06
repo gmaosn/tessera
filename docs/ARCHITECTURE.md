@@ -70,6 +70,9 @@ archive while keeping the same in-memory document, so undo history survives savi
   algorithm over the hyph-utf8 patterns in `editor/resources/hyphenation` (made by
   `tools/hyphenation.py`); `groundColour` takes the colour behind a text from the page image
   (Otsu split, letters and their soft edges left out).
+- `Balloon` finds a balloon from a click (flood of the light inside, letters filled, outline
+  measured in rings of ink, notches closed, contours traced and simplified) and grows a frame
+  round it or cuts it out of one, keeping the frame's other points.
 - `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
   redraws the UI at once.
 
