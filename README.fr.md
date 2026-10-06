@@ -25,7 +25,9 @@ l’octet près, sauf ce que vous avez modifié.
   [guide d’utilisation](docs/GUIDE.fr.md).
 - **Textes et traductions** : zones de texte par langue, tracées comme les cases, saisies sur
   place, avec le texte de l’autre langue à côté de chacune et ses zones copiées d’un clic.
-- Ensuite : les calques de texte dans la lecture, puis la liseuse Android.
+- **Lecture traduite** : la lecture case par case pose la langue choisie sur les images (L pour
+  changer).
+- Ensuite : la liseuse Android.
 
 ## Compiler et lancer
 

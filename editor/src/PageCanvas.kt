@@ -351,9 +351,9 @@ class AreaLook(val text: String, val ground: Color?, val ink: Color, val rotatio
  * Draws a text area as a reader would: its ground clipped to the polygon, and its text centred
  * in the bounding box at the largest size that fits (found once per text and size, in image pixels).
  */
-private fun DrawScope.drawTextArea(
+internal fun DrawScope.drawTextArea(
     look: AreaLook, poly: Polygon, path: Path, origin: Offset, scale: Float,
-    measurer: androidx.compose.ui.text.TextMeasurer, fits: HashMap<Triple<String, Int, Int>, Float>,
+    measurer: androidx.compose.ui.text.TextMeasurer, fits: HashMap<Triple<String, Int, Int>, Float>, alpha: Float = 1f,
 ) {
     val w = (poly.maxX - poly.minX).coerceAtLeast(1)
     val h = (poly.maxY - poly.minY).coerceAtLeast(1)
@@ -377,14 +377,14 @@ private fun DrawScope.drawTextArea(
     val laid = measurer.measure(look.text, style(px), constraints = Constraints(maxWidth = (boxW * scale).toInt().coerceAtLeast(1)))
     val centre = Offset(origin.x + (poly.minX + w / 2f) * scale, origin.y + (poly.minY + h / 2f) * scale)
     clipPath(path) {
-        look.ground?.let { drawPath(path, it) }
+        look.ground?.let { drawPath(path, it, alpha = alpha) }
         rotate(-look.rotation.toFloat(), centre) {
-            drawText(laid, topLeft = centre - Offset(laid.size.width / 2f, laid.size.height / 2f))
+            drawText(laid, topLeft = centre - Offset(laid.size.width / 2f, laid.size.height / 2f), alpha = alpha)
         }
     }
 }
 
-private fun Polygon.path(map: (Point) -> Offset) = Path().apply {
+internal fun Polygon.path(map: (Point) -> Offset) = Path().apply {
     points.forEachIndexed { k, p -> map(p).let { if (k == 0) moveTo(it.x, it.y) else lineTo(it.x, it.y) } }
     close()
 }

@@ -100,6 +100,11 @@ on the left third goes back). After a page's last frame comes the next page's fi
 a fade; a page without frames is shown whole. Esc or Space closes it, and the editor goes to the
 page you reached.
 
+**Text:** in the bar chooses the text layer laid over the images, drawn as in the Texts tab and
+cut with the frame, or **As drawn** for the images alone; **L** goes through the languages.
+Reading from the Texts tab starts with its language; the choice is kept until the comic is
+closed.
+
 The cut follows the frame softly: its corners stay sharp, points traced around a balloon become
 a round curve, and where a balloon meets the frame's edge the corner is slightly rounded. This is
 on screen only; the file keeps its points. In the editor, a fine dashed line shows this cut
@@ -184,7 +189,7 @@ pictures.
 
 Deleting the last area of a language on a page removes that page's layer, as ACBF requires a
 layer to hold at least one area. Typing an area's text is one undo step; a paragraph you do not
-touch keeps its emphasis. The frame-by-frame reading does not show the text layers yet.
+touch keeps its emphasis. **Read** from this tab shows the book with the language shown here.
 
 ## Book information
 

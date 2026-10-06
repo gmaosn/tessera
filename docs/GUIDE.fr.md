@@ -101,6 +101,11 @@ dans le tiers gauche revient en arrière). Après la dernière case d’une plan
 de la suivante, en fondu ; une planche sans case s’affiche en entier. Échap ou Espace ferme, et
 l’éditeur se place sur la planche atteinte.
 
+**Texte :** dans la barre choisit le calque de texte posé sur les images, dessiné comme dans
+l’onglet Textes et découpé avec la case, ou **Tel que dessiné** pour les images seules ; **L**
+passe d’une langue à l’autre. Lire depuis l’onglet Textes commence dans sa langue ; le choix est
+gardé jusqu’à la fermeture de la bande dessinée.
+
 La découpe suit la case en douceur : ses coins restent nets, les points tracés autour d’une
 bulle deviennent une courbe ronde, et là où une bulle rejoint le bord de la case, l’angle est
 légèrement arrondi. C’est seulement à l’écran ; le fichier garde ses points. Dans l’éditeur, un
@@ -191,8 +196,8 @@ sans toucher à ses dessins.
 
 Supprimer la dernière zone d’une langue sur une planche retire le calque de cette planche, car
 ACBF exige qu’un calque contienne au moins une zone. La saisie du texte d’une zone est une seule
-étape d’annulation ; un paragraphe que vous ne touchez pas garde son italique. La lecture case
-par case n’affiche pas encore les calques de texte.
+étape d’annulation ; un paragraphe que vous ne touchez pas garde son italique. **Lire** depuis cet
+onglet montre le livre dans la langue affichée ici.
 
 ## Informations du livre
 

@@ -160,7 +160,11 @@ fun EditorScreen(
     }
     LaunchedEffect(modeRequest) { modeRequest?.let { showMode(it.mode) } }
 
+    /** The text layer the reader lays over the images; from the Texts tab, the language shown there. */
+    var readerLang by remember(session) { mutableStateOf<String?>(null) }
+
     fun preview() {
+        if (mode == 1 && texts.lang != null) readerLang = texts.lang
         previewing = true
     }
 
@@ -279,7 +283,7 @@ fun EditorScreen(
                 focus.requestFocus()
             })
         }
-        if (previewing) ReaderPreview(session, images, preparer) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
+        if (previewing) ReaderPreview(session, images, preparer, textLang = readerLang, onTextLang = { readerLang = it }) { reached -> previewing = false; goTo(reached); focus.requestFocus() }
     }
 }
 

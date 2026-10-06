@@ -24,7 +24,9 @@ byte for byte, except what you changed.
   document history…), edited in place. See the [user guide](docs/GUIDE.md).
 - **Texts and translations**: text areas per language, drawn like frames, typed in place, with
   the other language's text beside each one and its areas copied in one click.
-- Next: text layers in the reading view, then the Android reader.
+- **Reading with translations**: the frame-by-frame reading lays the chosen language over the
+  images (L to switch).
+- Next: the Android reader.
 
 ## Building and running
 

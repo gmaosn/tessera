@@ -67,7 +67,9 @@ object Strings {
     val inherited get() = t("inherited", "hérité")
     val spaceKey get() = t("Space", "Espace")
     val escKey get() = t("Esc", "Échap")
-    val previewKeys get() = t("← →  frame · Esc  close", "← →  case · Échap  fermer")
+    val previewKeys get() = t("← →  frame · L  text · Esc  close", "← →  case · L  texte · Échap  fermer")
+    val textAsDrawn get() = t("As drawn", "Tel que dessiné")
+    fun readerText(lang: String?) = t("Text: ${lang ?: "as drawn"}", "Texte : ${lang ?: "tel que dessiné"}")
 
     fun pageOf(n: Int, total: Int) = t("Page $n of $total", "Planche $n sur $total")
     fun polygon(points: Int) = t("Polygon · $points points", "Polygone · $points points")

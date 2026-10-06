@@ -218,12 +218,18 @@ private fun LayerFileSection(session: Session, lang: String) {
 }
 
 /** What the canvas needs to draw the areas of [lang] on the current page. */
-fun textOverlay(session: Session, lang: String?, preview: Boolean): TextOverlay {
-    val page = session.page
-    val layer = lang?.let { page.textLayer(it) }
-    val areas = layer?.areas.orEmpty().map { a ->
-        val ground = if (a.transparent) null else parseColor(a.bgcolor) ?: parseColor(layer?.bgcolor) ?: if (a.inverted) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
-        AreaLook(a.text, ground, if (a.inverted) androidx.compose.ui.graphics.Color.White else androidx.compose.ui.graphics.Color.Black, a.rotation)
+fun textOverlay(session: Session, lang: String?, preview: Boolean): TextOverlay =
+    TextOverlay(areaLooks(session.page, lang).map { it.second }, session.page.frames.map { it.polygon }, preview)
+
+/**
+ * The text areas of [lang] on [page] with how a reader draws them: the area's ground, else the
+ * layer's, else white (black when inverted); black text, white when inverted. Areas without
+ * readable points have a null polygon.
+ */
+fun areaLooks(page: tessera.acbf.AcbfPage, lang: String?): List<Pair<tessera.acbf.Polygon?, AreaLook>> {
+    val layer = lang?.let { page.textLayer(it) } ?: return emptyList()
+    return layer.areas.map { a ->
+        val ground = if (a.transparent) null else parseColor(a.bgcolor) ?: parseColor(layer.bgcolor) ?: if (a.inverted) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
+        a.polygon to AreaLook(a.text, ground, if (a.inverted) androidx.compose.ui.graphics.Color.White else androidx.compose.ui.graphics.Color.Black, a.rotation)
     }
-    return TextOverlay(areas, page.frames.map { it.polygon }, preview)
 }

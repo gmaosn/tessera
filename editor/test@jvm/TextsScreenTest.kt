@@ -12,11 +12,15 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.v2.runDesktopComposeUiTest
 import androidx.compose.ui.test.withKeyDown
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.runBlocking
 import tessera.acbf.ComicFiles
 import tessera.acbf.textAreas
 import tessera.editor.EditorScreen
 import tessera.editor.ImageCache
+import tessera.editor.ReaderPreview
 import tessera.editor.Session
 import tessera.editor.Strings
 import tessera.editor.TesseraTheme
@@ -109,6 +113,38 @@ class TextsScreenTest {
             val after = strip()
             val differing = before.indices.count { before[it] != after[it] }
             assertTrue(differing == 0, "$differing strip pixels changed when zooming")
+        }
+    }
+
+    @Test
+    fun readingLaysTheChosenLanguageOverTheImagesAndLCyclesIt() {
+        val file = book("Doctorow, Cory - Craphound") ?: return println("fixtures/samples missing")
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name)
+        val images = ImageCache(comic)
+        runBlocking { images.page(session.page.imageHref) }
+        val out = File(root, "build/screens").apply { mkdirs() }
+        var lang by mutableStateOf<String?>(null)
+        runDesktopComposeUiTest(1440, 900) {
+            setContent { TesseraTheme { ReaderPreview(session, images, textLang = lang, onTextLang = { lang = it }) {} } }
+            waitForIdle(); mainClock.advanceTimeBy(1000); waitForIdle()
+            val drawn = onRoot().captureToImage().toAwtImage()
+            onRoot().performKeyInput { pressKey(Key.L) } // as drawn → en
+            onRoot().performKeyInput { pressKey(Key.L) } // en → sk
+            waitForIdle()
+            assertEquals("sk", lang)
+            mainClock.advanceTimeBy(1000); waitForIdle()
+            val slovak = onRoot().captureToImage().toAwtImage()
+            javax.imageio.ImageIO.write(slovak, "png", out.resolve("17-reading-sk.png"))
+            val w = drawn.width
+            val h = drawn.height - 60
+            val a = drawn.getRGB(0, 0, w, h, null, 0, w)
+            val b = slovak.getRGB(0, 0, w, h, null, 0, w)
+            val differing = a.indices.count { a[it] != b[it] }
+            assertTrue(differing > 2000, "only $differing pixels changed with the Slovak layer")
+            onRoot().performKeyInput { pressKey(Key.L) }
+            waitForIdle()
+            assertEquals(null, lang)
         }
     }
 }

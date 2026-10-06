@@ -47,6 +47,9 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.graphics.drawscope.withTransform
 import tessera.acbf.Polygon
+import tessera.acbf.textLanguages
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.exp
@@ -73,8 +76,21 @@ private data class Stop(val page: Int, val frame: Int)
  * first one, with a fade; a page without frames is shown whole. [onClose] gets the page reached.
  */
 @Composable
-fun ReaderPreview(session: Session, images: ImageCache, preparer: Preparer? = null, onClose: (page: Int) -> Unit) {
+fun ReaderPreview(
+    session: Session, images: ImageCache, preparer: Preparer? = null,
+    /** The text layer laid over the images; null: the images as drawn. The reader can change it. */
+    textLang: String? = null, onTextLang: (String?) -> Unit = {},
+    onClose: (page: Int) -> Unit,
+) {
     val pages = session.pages
+    val langs = session.document.textLanguages
+    val measurer = rememberTextMeasurer(cacheSize = 64)
+    val fits = remember { HashMap<Triple<String, Int, Int>, Float>() }
+    var langOpen by remember { mutableStateOf(false) }
+    fun cycleLang() {
+        val options = listOf<String?>(null) + langs
+        onTextLang(options[(options.indexOf(textLang) + 1) % options.size])
+    }
     var stop by remember { mutableStateOf(Stop(session.pageIndex, 0)) }
     val page = pages[stop.page]
     val pageImage by rememberPageImage(images, page.imageHref)
@@ -142,6 +158,7 @@ fun ReaderPreview(session: Session, images: ImageCache, preparer: Preparer? = nu
             if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
             when (e.key) {
                 Key.Escape, Key.Spacebar -> { onClose(stop.page); true }
+                Key.L -> { if (langs.isNotEmpty()) cycleLang(); true }
                 Key.DirectionRight, Key.DirectionDown, Key.PageDown -> { next(); true }
                 Key.DirectionLeft, Key.DirectionUp, Key.PageUp -> { previous(); true }
                 else -> false
@@ -201,6 +218,11 @@ fun ReaderPreview(session: Session, images: ImageCache, preparer: Preparer? = nu
                         )
                     }
                 }
+                // The text layer, over the image and under the frame cut.
+                for ((poly, look) in areaLooks(page, textLang)) {
+                    if (poly == null || look.text.isBlank()) continue
+                    drawTextArea(look, poly, poly.path { p -> Offset(origin.x + p.x * s, origin.y + p.y * s) }, origin, s, measurer, fits, fade.value)
+                }
                 val outside = Path().apply {
                     fillType = PathFillType.EvenOdd
                     addRect(androidx.compose.ui.geometry.Rect(Offset.Zero, Size(vw, vh)))
@@ -255,6 +277,21 @@ fun ReaderPreview(session: Session, images: ImageCache, preparer: Preparer? = nu
                 Label(Strings.preparing(preparer.done, preparer.total, preparer.wholeBook, preparer.current?.let { images.superResProgress[it] }), color = PreviewDotOn, size = 12.5.sp, maxLines = 1)
             }
             Label(Strings.previewKeys, color = PreviewText, size = 12.5.sp)
+            if (langs.isNotEmpty()) {
+                Box {
+                    Box(
+                        Modifier.clip(CircleShape).border(1.dp, if (textLang != null) PreviewDotOn else Color(0xFF444444), CircleShape)
+                            .clickable { langOpen = true }.padding(horizontal = 12.dp, vertical = 4.dp),
+                    ) { Label(Strings.readerText(textLang?.let { languageName(it) }), color = PreviewText, size = 12.5.sp, maxLines = 1) }
+                    androidx.compose.material.DropdownMenu(langOpen, onDismissRequest = { langOpen = false; focus.requestFocus() }) {
+                        (listOf<String?>(null) + langs).forEach { l ->
+                            androidx.compose.material.DropdownMenuItem(onClick = { langOpen = false; onTextLang(l); focus.requestFocus() }) {
+                                Label(l?.let { languageName(it) } ?: Strings.textAsDrawn, weight = if (l == textLang) FontWeight.SemiBold else FontWeight.Normal)
+                            }
+                        }
+                    }
+                }
+            }
             Box(Modifier.clip(CircleShape).border(1.dp, if (EnhancePrefs.reader.active) PreviewDotOn else Color(0xFF444444), CircleShape).clickable { enhanceOpen = !enhanceOpen }.padding(horizontal = 12.dp, vertical = 4.dp)) {
                 Label((if (EnhancePrefs.reader.active) "✦ " else "✧ ") + Strings.enhanceButton, color = PreviewText, size = 12.5.sp)
             }
