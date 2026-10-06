@@ -50,6 +50,7 @@ import tessera.editor.ImageCache
 import tessera.editor.Label
 import tessera.editor.Language
 import tessera.editor.LocalPalette
+import tessera.editor.ModeRequest
 import tessera.editor.Notice
 import tessera.editor.Pill
 import tessera.editor.Session
@@ -90,10 +91,13 @@ private fun open(file: File): Opened {
 @Composable
 fun EditorFor(
     session: Session, images: ImageCache, onSave: () -> String, saveRequest: Int = 0, notice: Notice? = null, prepareRequest: Int = 0,
-    preparer: Preparer? = null, background: List<BackgroundBook> = emptyList(),
+    preparer: Preparer? = null, background: List<BackgroundBook> = emptyList(), modeRequest: ModeRequest? = null,
 ) {
     key(session) {
-        EditorScreen(session, images, onSave = onSave, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest, hostPreparer = preparer, background = background)
+        EditorScreen(
+            session, images, onSave = onSave, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest, hostPreparer = preparer,
+            background = background, modeRequest = modeRequest,
+        )
     }
 }
 
@@ -133,6 +137,7 @@ fun main(args: Array<String>) {
         var importJob by remember { mutableStateOf<Job?>(null) }
         val scope = rememberCoroutineScope()
         var notice by remember { mutableStateOf<Notice?>(null) }
+        var modeRequest by remember { mutableStateOf<ModeRequest?>(null) }
 
         fun save(o: Opened): String = runCatching {
             val addedAcbf = o.session.comic.generated
@@ -234,6 +239,7 @@ fun main(args: Array<String>) {
                 onSave = current?.let { { saveRequest++ } },
                 onSaveAs = current?.let { o -> { saveAs(o) } },
                 onPrepareBook = current?.let { { prepareRequest++ } },
+                onMode = current?.let { { m: Int -> modeRequest = ModeRequest(m) } },
             )
             TesseraTheme {
                 Box(Modifier.fillMaxSize().fileDrop(::load)) {
@@ -241,6 +247,7 @@ fun main(args: Array<String>) {
                     else EditorFor(
                         current.session, current.images, onSave = { save(current) }, saveRequest = saveRequest, notice = notice, prepareRequest = prepareRequest,
                         preparer = current.preparer, background = background.map { BackgroundBook(it.file.nameWithoutExtension, it.preparer) },
+                        modeRequest = modeRequest,
                     )
                     val p = plan
                     val progress = importProgress
@@ -284,7 +291,9 @@ private fun mayDiscard(o: Opened?, save: (Opened) -> String): Boolean {
 }
 
 @Composable
-private fun FrameWindowScope.Menus(onOpen: () -> Unit, onImport: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?, onPrepareBook: (() -> Unit)?) {
+private fun FrameWindowScope.Menus(
+    onOpen: () -> Unit, onImport: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?, onPrepareBook: (() -> Unit)?, onMode: ((Int) -> Unit)?,
+) {
     MenuBar {
         Menu(Strings.menuFile) {
             Item(Strings.menuOpen, shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
@@ -293,6 +302,10 @@ private fun FrameWindowScope.Menus(onOpen: () -> Unit, onImport: () -> Unit, onS
             Item(Strings.menuSaveAs, enabled = onSaveAs != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac, shift = true), onClick = { onSaveAs?.invoke() })
         }
         Menu(Strings.menuView) {
+            Item(Strings.menuFramesTab, enabled = onMode != null, shortcut = KeyShortcut(Key.One, meta = isMac, ctrl = !isMac), onClick = { onMode?.invoke(0) })
+            Item(Strings.menuTextsTab, enabled = onMode != null, shortcut = KeyShortcut(Key.Two, meta = isMac, ctrl = !isMac), onClick = { onMode?.invoke(1) })
+            Item(Strings.menuBookInfo, enabled = onMode != null, shortcut = KeyShortcut(Key.Three, meta = isMac, ctrl = !isMac), onClick = { onMode?.invoke(2) })
+            Separator()
             Item(Strings.menuPrepareBook, enabled = onPrepareBook != null, onClick = { onPrepareBook?.invoke() })
         }
         Menu(Strings.menuLanguage) {

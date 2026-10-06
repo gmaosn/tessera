@@ -9,6 +9,7 @@ import tessera.acbf.Comic
 import tessera.acbf.FrameState
 import tessera.acbf.Metadata
 import tessera.acbf.Section
+import tessera.acbf.TextState
 import tessera.xml.XmlElement
 
 /**
@@ -46,6 +47,7 @@ class Session(comic: Comic, fileName: String) {
     private class FramesStep(override val pageIndex: Int, val state: List<FrameState>) : Step
     private class AttributeStep(override val pageIndex: Int, val element: XmlElement, val name: String, val value: String?) : Step
     private class MetaStep(override val pageIndex: Int, val section: Section, val snapshot: String?, val key: String) : Step
+    private class TextStep(override val pageIndex: Int, val state: TextState, val key: String?) : Step
 
     /** The field being typed into: its successive changes make one undo step. */
     private var typing: String? = null
@@ -80,6 +82,38 @@ class Session(comic: Comic, fileName: String) {
 
     fun goToPage(index: Int) {
         if (index in pages.indices) pageIndex = index
+    }
+
+    /**
+     * Changes the current page's text layers, undoably. Consecutive changes with the same non-null
+     * [key] (one text being typed) are a single undo step.
+     */
+    fun editTexts(key: String? = null, change: (AcbfPage) -> Unit) {
+        val before = TextState.of(page)
+        change(page)
+        if (TextState.of(page).signature == before.signature) return
+        val top = undoStack.lastOrNull()
+        if (key != null && typing == key && top is TextStep && top.key == key) redoStack.clear()
+        else push(TextStep(pageIndex, before, key))
+        typing = key
+        changed()
+    }
+
+    /** Begins a continuous change of the text layers (a drag): one undo step. */
+    fun beginTextGesture(): TextGesture = TextGesture(pageIndex, TextState.of(page))
+
+    inner class TextGesture internal constructor(private val pageIndex: Int, private val before: TextState) {
+        private var recorded = false
+
+        fun update(change: (AcbfPage) -> Unit) {
+            val page = pages[pageIndex]
+            change(page)
+            if (!recorded) {
+                if (TextState.of(page).signature == before.signature) return
+                push(TextStep(pageIndex, before, null)); recorded = true
+            }
+            changed()
+        }
     }
 
     /** Changes the current page's frames, as one undoable step. */
@@ -128,6 +162,7 @@ class Session(comic: Comic, fileName: String) {
             is FramesStep -> pages[step.pageIndex].restoreFrames(step.state)
             is AttributeStep -> step.element[step.name] = step.value
             is MetaStep -> Metadata(document).restore(step.section, step.snapshot)
+            is TextStep -> step.state.restore(pages[step.pageIndex])
         }
         changed()
     }
@@ -137,6 +172,7 @@ class Session(comic: Comic, fileName: String) {
         is FramesStep -> FramesStep(step.pageIndex, pages[step.pageIndex].frameState())
         is AttributeStep -> AttributeStep(step.pageIndex, step.element, step.name, step.element[step.name])
         is MetaStep -> MetaStep(step.pageIndex, step.section, Metadata(document).snapshot(step.section), step.key)
+        is TextStep -> TextStep(step.pageIndex, TextState.of(pages[step.pageIndex]), step.key)
     }
 
     private fun push(step: Step) {

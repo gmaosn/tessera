@@ -51,7 +51,7 @@ object Strings {
     val noFrames get() = t("No frames yet. Draw one with R, or click point by point with P.", "Aucune case. Tracez-en une avec R, ou cliquez point par point avec P.")
     val fit get() = t("Fit", "Ajuster")
     val orderNeedsTwo get() = t("Reading order needs at least two frames", "Il faut au moins deux cases")
-    val threePointsMinimum get() = t("A frame keeps at least three points", "Une case garde au moins trois points")
+    val threePointsMinimum get() = t("A shape keeps at least three points", "Une forme garde au moins trois points")
     val orderSaved get() = t("Reading order saved", "Ordre de lecture enregistré")
     val autoOrderLtr get() = t("Order: rows top to bottom, left to right", "Ordre : lignes de haut en bas, de gauche à droite")
     val autoOrderRtl get() = t("Order: rows top to bottom, right to left", "Ordre : lignes de haut en bas, de droite à gauche")
@@ -126,6 +126,64 @@ object Strings {
     }
 
     val noLanguage get() = t("No language", "Sans langue")
+
+    // ----- Texts tab -----
+
+    val textLanguage get() = t("Language", "Langue")
+    val textAreas get() = t("Text areas", "Zones de texte")
+    val noLanguageYet get() = t(
+        "No text language yet. Add the language of the texts you will type: the one drawn in the images, or a translation.",
+        "Aucune langue de texte. Ajoutez celle des textes que vous allez saisir : celle dessinée dans les images, ou une traduction.",
+    )
+    val chooseLanguageFirst get() = t("Add a language on the right to draw text areas", "Ajoutez une langue à droite pour tracer des zones de texte")
+    val noTextAreas get() = t("No text areas on this page. Draw one with R around a balloon, or click point by point with P.", "Aucune zone de texte sur cette planche. Tracez-en une avec R autour d’une bulle, ou point par point avec P.")
+    val shownOverImage get() = t("Over the images", "Sur les images")
+    val drawnInImage get() = t("Drawn in them", "Dessiné dedans")
+    val shownNote get() = t("Readers lay this text over the images; or it is the text already drawn in them.", "Les liseuses posent ce texte sur les images ; ou c’est le texte déjà dessiné dedans.")
+    val preview get() = t("Show text", "Voir le texte")
+    val shapesOnly get() = t("Outlines", "Contours")
+    fun copyAreasFrom(lang: String) = t("Copy the areas of $lang", "Copier les zones de $lang")
+    fun copiedAreas(n: Int, lang: String) = t("$n areas copied from $lang, text to translate", "$n zones copiées de $lang, texte à traduire")
+    val typeText get() = t("Text…", "Texte…")
+    val areaType get() = t("Kind", "Genre")
+    val areaInverted get() = t("Light text on dark", "Texte clair sur fond sombre")
+    val areaTransparent get() = t("No ground", "Sans fond")
+    val areaRotation get() = t("Rotation", "Rotation")
+    val areaGround get() = t("Ground", "Fond")
+    val groundHint get() = t("#rrggbb, empty: the layer’s", "#rrggbb, vide : celui du calque")
+    val textsMode get() = t("Texts", "Textes")
+    fun areaKind(type: String?) = when (type) {
+        null, "", "speech" -> t("Speech", "Parole")
+        "commentary" -> t("Caption", "Récitatif")
+        "formal" -> t("Formal", "Formel")
+        "letter" -> t("Letter", "Lettre")
+        "code" -> t("Code", "Code")
+        "heading" -> t("Heading", "Titre")
+        "audio" -> t("Sound", "Son")
+        "thought" -> t("Thought", "Pensée")
+        "sign" -> t("Sign", "Panneau")
+        else -> type
+    }
+    val textHints get() = listOf(
+        Hint(listOf("R"), t("rectangle", "rectangle")),
+        Hint(listOf("P"), t("polygon", "polygone")),
+        Hint(text = t("Drawn:", "Tracée :"), strong = t("type its text on the right", "tapez son texte à droite")),
+        Hint(listOf(escKey), t("back to the page", "retour à la planche")),
+        Hint(listOf("⌫"), t("delete", "supprimer")),
+        Hint(listOf("${cmd}Z"), t("undo", "annuler")),
+    )
+
+    // ----- Book info, reached from anywhere -----
+
+    val bookInfoShort get() = t("Book", "Livre")
+    val editBookInfo get() = t("Edit book info", "Modifier les informations")
+    val untitled get() = t("Untitled", "Sans titre")
+    val noAuthors get() = t("No authors", "Aucun·e auteur·rice")
+    val openBookInfo get() = t("Book info (${cmd}3)", "Informations du livre (${cmd}3)")
+    val backFromInfo get() = t("back", "retour")
+    val menuFramesTab get() = t("Frames", "Cases")
+    val menuTextsTab get() = t("Texts", "Textes")
+    val menuBookInfo get() = t("Book info", "Informations du livre")
 
     // ----- Book information dialog -----
 
@@ -234,6 +292,7 @@ object Strings {
         Hint(text = t("Changes apply at once;", "Les modifications s’appliquent aussitôt ;"), strong = t("untouched fields stay as they were", "les champs non touchés restent tels quels")),
         Hint(listOf("${cmd}Z"), t("undo", "annuler")),
         Hint(listOf("${cmd}S"), t("save", "enregistrer")),
+        Hint(listOf(escKey), t("back to the page", "retour à la planche")),
     )
 
     fun activity(key: String): String = when (key) {

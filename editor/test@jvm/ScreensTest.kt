@@ -40,7 +40,8 @@ class ScreensTest {
     private fun book(prefix: String): File? = File(root, "fixtures/samples").listFiles()?.firstOrNull { it.name.startsWith(prefix) }
 
     private fun shot(
-        name: String, prefix: String, page: Int, dark: Boolean = false, previewing: Boolean = false,
+        name: String, prefix: String, page: Int, dark: Boolean = false, previewing: Boolean = false, mode: Int = 0,
+        keys: List<Key> = emptyList(),
         prepare: (Session, FrameTool) -> Unit = { _, _ -> },
     ) {
         val file = book(prefix) ?: return println("fixtures/samples missing")
@@ -54,8 +55,9 @@ class ScreensTest {
             images.page(session.page.imageHref)
         }
         runDesktopComposeUiTest(1440, 900) {
-            setContent { TesseraTheme(dark) { EditorScreen(session, images, onSave = { "" }, tool = tool, startPreviewing = previewing) } }
+            setContent { TesseraTheme(dark) { EditorScreen(session, images, onSave = { "" }, tool = tool, startPreviewing = previewing, startMode = mode) } }
             waitForIdle()
+            for (k in keys) onRoot().performKeyInput { withKeyDown(Key.MetaLeft) { pressKey(k) } }
             prepare(session, tool)
             waitForIdle()
             if (previewing) mainClock.advanceTimeBy(1000)
@@ -75,6 +77,23 @@ class ScreensTest {
             Strings.language = Language.English
         }
     }
+
+    @Test
+    fun textsTab() = shot("14-texts", "Doctorow, Cory - Craphound", 1, mode = 1)
+
+    @Test
+    fun textsTabFrench() {
+        Strings.language = Language.French
+        try {
+            shot("15-texts-fr", "Doctorow, Cory - Craphound", 1, mode = 1)
+        } finally {
+            Strings.language = Language.English
+        }
+    }
+
+    /** Zoomed far in: the page stays inside its canvas, the thumbnails and inspector untouched. */
+    @Test
+    fun deepZoomStaysInItsCanvas() = shot("16-deep-zoom", "Doctorow, Cory - Craphound", 1, keys = List(12) { Key.Equals })
 
     @Test
     fun craphoundDark() = shot("02-craphound-dark", "Doctorow, Cory - Craphound", 1, dark = true)

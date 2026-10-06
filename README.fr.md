@@ -23,7 +23,9 @@ l’octet près, sauf ce que vous avez modifié.
 - **Informations du livre** : tous les champs de métadonnées (auteur·rices, titres par langue,
   séries, publication, historique du document…), modifiés sur place. Voir le
   [guide d’utilisation](docs/GUIDE.fr.md).
-- Ensuite : calques de texte et traductions, puis la liseuse Android.
+- **Textes et traductions** : zones de texte par langue, tracées comme les cases, saisies sur
+  place, avec le texte de l’autre langue à côté de chacune et ses zones copiées d’un clic.
+- Ensuite : les calques de texte dans la lecture, puis la liseuse Android.
 
 ## Compiler et lancer
 

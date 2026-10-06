@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.geometry.CornerRadius
@@ -30,6 +31,8 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.isAltPressed
@@ -44,6 +47,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -124,16 +128,20 @@ fun PageCanvas(
     modifier: Modifier = Modifier,
     /** An enhanced version of [image] to draw in its place (any size); frames stay on [image]'s pixels. */
     display: ImageBitmap? = null,
+    /** In the Texts tab: the text areas' looks (the tool's shapes) and the frames beneath. */
+    texts: TextOverlay? = null,
 ) {
     val c = LocalPalette.current
     val density = LocalDensity.current.density
-    val measurer = rememberTextMeasurer()
+    val measurer = rememberTextMeasurer(cacheSize = 64)
+    val fits = remember { HashMap<Triple<String, Int, Int>, Float>() }
     @Suppress("UNUSED_VARIABLE") val revision = session.revision // redraw on every document change
     val imageSize = image?.let { Size(it.width.toFloat(), it.height.toFloat()) } ?: Size(1000f, 1500f)
     tool.imageWidth = imageSize.width.toInt()
     tool.imageHeight = imageSize.height.toInt()
 
-    BoxWithConstraints(modifier.background(c.well)) {
+    // Clipped: a zoomed page is far larger than the canvas and would cover the panels around it.
+    BoxWithConstraints(modifier.clipToBounds().background(c.well)) {
         view.viewport = Size(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat())
         view.imageSize = imageSize
         view.density = density
@@ -243,9 +251,18 @@ fun PageCanvas(
 
             val polygons = tool.polygons
             val stroke = 2f * density
+            // Texts tab: the frames faintly, for orientation.
+            texts?.frames?.forEach { poly -> if (poly != null) drawPath(poly.path(map), c.accent.copy(alpha = 0.45f), style = Stroke(density)) }
             polygons.forEachIndexed { i, poly ->
                 if (poly == null) return@forEachIndexed
                 val path = poly.path(map)
+                val look = texts?.areas?.getOrNull(i)
+                if (look != null && texts.preview && look.text.isNotBlank()) {
+                    drawTextArea(look, poly, path, origin, s, measurer, fits)
+                    val sel = i == tool.selected && tool.tool == Tool.Select
+                    drawPath(path, if (sel) c.accentDeep else c.accent, style = Stroke(if (sel) stroke * 1.25f else stroke * 0.6f, join = StrokeJoin.Round))
+                    return@forEachIndexed
+                }
                 val sel = i == tool.selected && tool.tool == Tool.Select
                 val alpha = when {
                     sel -> 0.14f
@@ -258,7 +275,7 @@ fun PageCanvas(
 
             // What reading cuts out, where it differs from the polygon: curves and inward fillets.
             val fine = PathEffect.dashPathEffect(floatArrayOf(3f * density, 3f * density))
-            polygons.forEach { poly ->
+            if (texts == null) polygons.forEach { poly ->
                 if (poly == null || poly.isRectangle) return@forEach
                 val cut = Path().apply {
                     Outline.of(poly).forEachIndexed { k, p -> Offset(origin.x + p.x * s, origin.y + p.y * s).let { if (k == 0) moveTo(it.x, it.y) else lineTo(it.x, it.y) } }
@@ -299,11 +316,12 @@ fun PageCanvas(
                 }
             }
 
-            // Reading-order badges at each frame's top-left.
-            val r = 11f * density
+            // Reading-order badges at each frame's top-left (smaller on text areas).
+            val r = (if (texts != null) 8f else 11f) * density
             polygons.forEachIndexed { i, poly ->
                 if (poly == null) return@forEachIndexed
-                val centre = map(Point(poly.minX, poly.minY)) + Offset(r + 6f * density, r + 6f * density)
+                // On text areas the badge sits on the corner, to leave the text readable.
+                val centre = map(Point(poly.minX, poly.minY)) + (if (texts != null) Offset.Zero else Offset(r + 6f * density, r + 6f * density))
                 val pending = tool.tool == Tool.Order && i !in tool.order
                 val label = when {
                     tool.tool != Tool.Order -> "${i + 1}"
@@ -316,9 +334,52 @@ fun PageCanvas(
                 } else {
                     drawCircle(if (i == tool.selected && tool.tool == Tool.Select) c.accentDeep else c.accent, r, centre)
                 }
-                val text = measurer.measure(label, TextStyle(color = if (pending) c.accent else c.onAccent, fontSize = 12.sp, fontWeight = FontWeight.Bold))
+                val text = measurer.measure(label, TextStyle(color = if (pending) c.accent else c.onAccent, fontSize = if (texts != null) 9.sp else 12.sp, fontWeight = FontWeight.Bold))
                 drawText(text, topLeft = centre - Offset(text.size.width / 2f, text.size.height / 2f))
             }
+        }
+    }
+}
+
+/** In the Texts tab: how each text area looks, in the tool's order, and the frames beneath. */
+class TextOverlay(val areas: List<AreaLook>, val frames: List<Polygon?>, val preview: Boolean)
+
+/** A text area's text and colours: [ground] null when transparent. */
+class AreaLook(val text: String, val ground: Color?, val ink: Color, val rotation: Int)
+
+/**
+ * Draws a text area as a reader would: its ground clipped to the polygon, and its text centred
+ * in the bounding box at the largest size that fits (found once per text and size, in image pixels).
+ */
+private fun DrawScope.drawTextArea(
+    look: AreaLook, poly: Polygon, path: Path, origin: Offset, scale: Float,
+    measurer: androidx.compose.ui.text.TextMeasurer, fits: HashMap<Triple<String, Int, Int>, Float>,
+) {
+    val w = (poly.maxX - poly.minX).coerceAtLeast(1)
+    val h = (poly.maxY - poly.minY).coerceAtLeast(1)
+    val turned = look.rotation % 180 in 45..135
+    val boxW = (if (turned) h else w) * 0.86f
+    val boxH = (if (turned) w else h) * 0.86f
+    fun style(px: Float) = TextStyle(color = look.ink, fontSize = (px / density / fontScale).sp, lineHeight = (px * 1.15f / density / fontScale).sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+    // Fitted in image pixels at a fixed resolution, so that the result does not depend on the zoom.
+    val size = fits.getOrPut(Triple(look.text, w, h)) {
+        var lo = 2f
+        var hi = boxH.coerceAtMost(200f)
+        repeat(9) {
+            val mid = (lo + hi) / 2
+            val m = measurer.measure(look.text, style(mid), constraints = Constraints(maxWidth = boxW.toInt().coerceAtLeast(1)))
+            if (m.size.height <= boxH) lo = mid else hi = mid
+        }
+        lo
+    }
+    val px = size * scale
+    if (px < 2f) return
+    val laid = measurer.measure(look.text, style(px), constraints = Constraints(maxWidth = (boxW * scale).toInt().coerceAtLeast(1)))
+    val centre = Offset(origin.x + (poly.minX + w / 2f) * scale, origin.y + (poly.minY + h / 2f) * scale)
+    clipPath(path) {
+        look.ground?.let { drawPath(path, it) }
+        rotate(-look.rotation.toFloat(), centre) {
+            drawText(laid, topLeft = centre - Offset(laid.size.width / 2f, laid.size.height / 2f))
         }
     }
 }

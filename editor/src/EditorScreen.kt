@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -61,6 +62,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import tessera.acbf.textAreas
+import tessera.acbf.textLanguages
 import tessera.editor.enhance.EnhanceMode
 import kotlin.math.roundToInt
 
@@ -82,8 +85,10 @@ fun EditorScreen(
     notice: Notice? = null,
     /** Ask for the book's title and authors when the comic had no ACBF document. */
     askBookInfo: Boolean = true,
-    /** 0: frames, 2: book info. */
+    /** 0: frames, 1: texts, 2: book info. */
     startMode: Int = 0,
+    /** A tab chosen from the host's menu; each instance is applied once. */
+    modeRequest: ModeRequest? = null,
     /** Incremented by the host (menu View → Prepare the whole book). */
     prepareRequest: Int = 0,
     /** The host's preparer for this comic, which may outlive this screen; one is made otherwise. */
@@ -95,8 +100,16 @@ fun EditorScreen(
     val view = remember(session) { CanvasView() }
     val focus = remember { FocusRequester() }
     var previewing by remember { mutableStateOf(startPreviewing) }
-    /** 0: frames, 2: book info (1, texts, comes later). */
+    /** 0: frames, 1: texts, 2: book info. */
     var mode by remember(session) { mutableStateOf(startMode) }
+    /** The tab to go back to when leaving Book info. */
+    var lastMode by remember(session) { mutableStateOf(if (startMode == 2) 0 else startMode) }
+    val texts = remember(session) { TextsView(session.document.textLanguages.firstOrNull()) }
+    val textTool = remember(session) { FrameTool(session, TextShapes(session) { texts.lang.orEmpty() }) }
+    /** The drawing tool of the tab shown: frames, or text areas. */
+    val active = if (mode == 1) textTool else tool
+    /** True while the page has the keyboard (not a text field of the inspector). */
+    var pageHasKeys by remember { mutableStateOf(false) }
     var askingBookInfo by remember(session) { mutableStateOf(askBookInfo && session.comic.generated) }
     var toast by remember { mutableStateOf<String?>(null) }
     val pageImage by rememberPageImage(images, session.page.imageHref)
@@ -118,6 +131,7 @@ fun EditorScreen(
         toast = text
     }
     tool.message?.let { say(it); tool.message = null }
+    textTool.message?.let { say(it); textTool.message = null }
     LaunchedEffect(toast) { if (toast != null) { delay(2400); toast = null } }
     LaunchedEffect(Unit) { focus.requestFocus() }
     // Decode the neighbouring pages ahead, so that turning the page is instant.
@@ -128,7 +142,7 @@ fun EditorScreen(
     fun goTo(index: Int) {
         Trace.log { "goTo($index) from ${session.pageIndex} of ${session.pages.size}" }
         if (index == session.pageIndex || index !in session.pages.indices) return
-        session.goToPage(index); tool.pageChanged(); view.fit()
+        session.goToPage(index); tool.pageChanged(); textTool.pageChanged(); view.fit()
     }
 
     fun save() {
@@ -137,6 +151,14 @@ fun EditorScreen(
 
     LaunchedEffect(saveRequest) { if (saveRequest > 0) save() }
     LaunchedEffect(notice) { notice?.let { say(it.text) } }
+
+    fun showMode(m: Int) {
+        if (m == mode) return
+        if (m == 2) lastMode = mode
+        mode = m
+        focus.requestFocus()
+    }
+    LaunchedEffect(modeRequest) { modeRequest?.let { showMode(it.mode) } }
 
     fun preview() {
         previewing = true
@@ -150,30 +172,36 @@ fun EditorScreen(
         if (e.type != KeyEventType.KeyDown) return false
         val mod = e.isMetaPressed || e.isCtrlPressed
         when {
-            mod && e.key == Key.Z -> { if (e.isShiftPressed) session.redo() else session.undo(); tool.pageChanged() }
-            mod && e.key == Key.Y -> { session.redo(); tool.pageChanged() }
+            mod && e.key == Key.Z -> { if (e.isShiftPressed) session.redo() else session.undo(); tool.pageChanged(); textTool.pageChanged() }
+            mod && e.key == Key.Y -> { session.redo(); tool.pageChanged(); textTool.pageChanged() }
+            mod && e.key == Key.One -> showMode(0)
+            mod && e.key == Key.Two -> showMode(1)
+            mod && e.key == Key.Three -> showMode(2)
             mod && e.key == Key.S -> save()
             mod && (e.key == Key.Equals || e.key == Key.Plus) -> view.zoomBy(1.25f)
             mod && e.key == Key.Minus -> view.zoomBy(1 / 1.25f)
             mod && e.key == Key.Zero -> view.fit()
             mod -> return false
-            // In Book info, plain keys belong to the text fields.
-            mode != 0 -> return false
+            // Escape leaves Book info, or a text field of the Texts tab for the page.
+            mode == 2 && e.key == Key.Escape -> showMode(lastMode)
+            mode == 1 && e.key == Key.Escape && !pageHasKeys -> focus.requestFocus()
+            // In Book info, and while typing a text, plain keys belong to the text fields.
+            mode == 2 || (mode == 1 && !pageHasKeys) -> return false
             e.key == Key.Spacebar -> preview()
-            e.key == Key.V -> tool.select(Tool.Select)
-            e.key == Key.R -> tool.select(Tool.Rectangle)
-            e.key == Key.P -> tool.select(Tool.Polygon)
-            e.key == Key.O -> tool.select(Tool.Order)
-            e.key == Key.Escape -> tool.cancel()
-            e.key == Key.Enter || e.key == Key.NumPadEnter -> tool.confirm()
-            e.key == Key.Backspace || e.key == Key.Delete -> tool.delete()
+            e.key == Key.V -> active.select(Tool.Select)
+            e.key == Key.R -> active.select(Tool.Rectangle)
+            e.key == Key.P -> active.select(Tool.Polygon)
+            e.key == Key.O && mode == 0 -> tool.select(Tool.Order)
+            e.key == Key.Escape -> active.cancel()
+            e.key == Key.Enter || e.key == Key.NumPadEnter -> active.confirm()
+            e.key == Key.Backspace || e.key == Key.Delete -> active.delete()
             e.isAltPressed && (e.key == Key.DirectionRight || e.key == Key.DirectionDown) -> goTo(session.pageIndex + 1)
             e.isAltPressed && (e.key == Key.DirectionLeft || e.key == Key.DirectionUp) -> goTo(session.pageIndex - 1)
             e.key == Key.PageDown -> goTo(session.pageIndex + 1)
             e.key == Key.PageUp -> goTo(session.pageIndex - 1)
-            e.key in ARROWS && tool.selected >= 0 && tool.tool == Tool.Select -> {
+            e.key in ARROWS && active.selected >= 0 && active.tool == Tool.Select -> {
                 val d = if (e.isShiftPressed) 10 else 1
-                tool.nudge(
+                active.nudge(
                     when (e.key) { Key.DirectionLeft -> -d; Key.DirectionRight -> d; else -> 0 },
                     when (e.key) { Key.DirectionUp -> -d; Key.DirectionDown -> d; else -> 0 },
                 )
@@ -187,17 +215,24 @@ fun EditorScreen(
 
     Box(modifier.fillMaxSize().background(c.paper)) {
         Column(
-            Modifier.fillMaxSize().focusRequester(focus).focusable().onPreviewKeyEvent { Trace.log { "key ${it.key} ${it.type}" }; onKey(it) }
+            Modifier.fillMaxSize().focusRequester(focus).onFocusChanged { pageHasKeys = it.isFocused }.focusable().onPreviewKeyEvent { Trace.log { "key ${it.key} ${it.type}" }; onKey(it) }
                 .then(if (Trace.sink != null) Modifier.traceClicks() else Modifier),
         ) {
-            TopBar(session, preparer, images, background, mode, { mode = it; focus.requestFocus() }, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
+            TopBar(session, preparer, images, background, mode, ::showMode, onPrevious = { goTo(session.pageIndex - 1) }, onNext = { goTo(session.pageIndex + 1) }, onPreview = ::preview, onSave = ::save)
             Rule()
             if (mode == 2) InfoScreen(session, Modifier.weight(1f).fillMaxWidth())
             else Row(Modifier.weight(1f).fillMaxWidth()) {
-                PageStrip(session, images, onSelect = ::goTo, modifier = Modifier.width(118.dp).fillMaxHeight())
+                val lang = texts.lang
+                PageStrip(
+                    session, images, onSelect = ::goTo, modifier = Modifier.width(118.dp).fillMaxHeight(),
+                    count = if (mode == 1) { p -> lang?.let { p.textAreas(it).size } ?: 0 } else { p -> p.frames.size },
+                )
                 VRule()
                 Box(Modifier.weight(1f).fillMaxHeight()) {
-                    PageCanvas(session, tool, image, view, focus, Modifier.fillMaxSize(), display = if (comparing) null else enhanced)
+                    PageCanvas(
+                        session, active, image, view, focus, Modifier.fillMaxSize(), display = if (comparing) null else enhanced,
+                        texts = if (mode == 1) textOverlay(session, lang, texts.preview) else null,
+                    )
                     if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
                     if ((EnhancePrefs.editor.mode == EnhanceMode.SuperRes || (EnhancePrefs.editor.mode == EnhanceMode.Restore && images.isHighDefinition(session.page.imageHref))) && enhanced == null && image != null) {
                         Toast(if (images.isHighDefinition(session.page.imageHref)) Strings.alreadyHighDefinition else Strings.superResPill(images.superResProgress[session.page.imageHref]), Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
@@ -207,7 +242,8 @@ fun EditorScreen(
                             Label(if (pageImage.loading) Strings.loading else Strings.imageMissing, color = c.muted)
                         }
                     }
-                    Toolbar(tool, Modifier.align(Alignment.TopStart).padding(12.dp))
+                    if (mode == 1 && lang == null) Toast(Strings.chooseLanguageFirst, Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
+                    else Toolbar(active, withOrder = mode == 0, Modifier.align(Alignment.TopStart).padding(12.dp))
                     ZoomPill(view, EnhancePrefs.editor.active, { enhanceOpen = !enhanceOpen }, { comparing = it }, Modifier.align(Alignment.BottomEnd).padding(12.dp))
                     if (enhanceOpen) {
                         EnhancePanel(
@@ -218,20 +254,26 @@ fun EditorScreen(
                             modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 60.dp),
                         )
                     }
-                    if (tool.tool == Tool.Order) OrderBanner(tool, session, Modifier.align(Alignment.TopCenter).padding(top = 12.dp))
+                    if (mode == 0 && tool.tool == Tool.Order) OrderBanner(tool, session, Modifier.align(Alignment.TopCenter).padding(top = 12.dp))
                 }
                 VRule()
-                Inspector(session, tool, Modifier.width(300.dp).fillMaxHeight())
+                if (mode == 1) TextInspector(session, textTool, texts, Modifier.width(300.dp).fillMaxHeight(), onBookInfo = { showMode(2) })
+                else Inspector(session, tool, Modifier.width(300.dp).fillMaxHeight(), onBookInfo = { showMode(2) })
             }
             Rule()
-            if (mode == 2) HintBar(Strings.infoMode, Strings.infoHints, null) else Hints(tool)
+            when (mode) {
+                2 -> HintBar(Strings.infoMode, Strings.infoHints, null)
+                1 -> HintBar(Strings.modeTexts + " · " + Strings.hintMode(textTool.tool), Strings.textHints, Strings.hintRead)
+                else -> Hints(tool)
+            }
         }
         toast?.let { Toast(it, Modifier.align(Alignment.BottomCenter).padding(bottom = 52.dp)) }
         if (askingBookInfo) {
             BookInfoDialog(session.fileName.substringBeforeLast('.'), suggestion = session.suggested, onDone = { book ->
                 if (book != null) {
                     session.replaceGenerated(tessera.acbf.AcbfDocument.create(book, session.pages.mapNotNull { it.imageHref }))
-                    tool.pageChanged()
+                    tool.pageChanged(); textTool.pageChanged()
+                    texts.lang = session.document.textLanguages.firstOrNull()
                 }
                 askingBookInfo = false
                 focus.requestFocus()
@@ -257,6 +299,9 @@ private fun Modifier.traceClicks() = pointerInput(Unit) {
 /** A message for the editor's toast; each instance is shown once. */
 class Notice(val text: String)
 
+/** A tab (0: frames, 1: texts, 2: book info) chosen by the host; each instance is applied once. */
+class ModeRequest(val mode: Int)
+
 private val ARROWS = setOf(Key.DirectionLeft, Key.DirectionRight, Key.DirectionUp, Key.DirectionDown)
 
 @Composable
@@ -276,16 +321,23 @@ private fun TopBar(session: Session, preparer: Preparer, images: ImageCache, bac
             RoundButton("‹", session.pageIndex > 0, onPrevious)
             RoundButton("›", session.pageIndex < session.pages.size - 1, onNext)
         }
-        Column(Modifier.weight(1f)) {
+        // The file name opens Book info: the obvious place to look for the book's details.
+        val titleHover = remember { MutableInteractionSource() }
+        val titleHovered by titleHover.collectIsHoveredAsState()
+        Column(
+            Modifier.weight(1f).clip(RoundedCornerShape(8.dp)).background(if (titleHovered && mode != 2) c.panel else c.paper)
+                .hoverable(titleHover).clickable { onMode(2) }.pointerHoverIcon(PointerIcon.Hand).padding(horizontal = 6.dp, vertical = 2.dp),
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 Label(session.fileName, weight = FontWeight.SemiBold, maxLines = 1)
                 if (session.dirty) Box(Modifier.size(7.dp).clip(CircleShape).background(c.accent))
+                if (titleHovered && mode != 2) Label("ⓘ " + Strings.openBookInfo, color = c.accent, size = 11.5.sp, maxLines = 1)
             }
             val version = session.document.version?.let { " · ACBF $it" }.orEmpty()
             val where = if (session.page.isCover) Strings.coverPage else Strings.pageOf(session.pageIndex + 1, session.pages.size)
             Label(where + version, color = c.muted, size = 11.5.sp, maxLines = 1)
         }
-        Segmented(listOf(Strings.modeFrames, Strings.modeTexts, Strings.modeInfo), mode, enabled = { it != 1 }, onSelect = onMode)
+        Segmented(listOf(Strings.modeFrames, Strings.modeTexts, Strings.modeInfo), mode, enabled = { true }, onSelect = onMode)
         Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End), verticalAlignment = Alignment.CenterVertically) {
             for (b in background) if (b.preparer.active) BackgroundPill(b)
             if (preparer.active) PreparingPill(preparer, images)
@@ -339,7 +391,7 @@ private fun RoundButton(glyph: String, enabled: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-private fun Toolbar(tool: FrameTool, modifier: Modifier) {
+private fun Toolbar(tool: FrameTool, withOrder: Boolean, modifier: Modifier) {
     val c = LocalPalette.current
     val shape = RoundedCornerShape(14.dp)
     Column(
@@ -349,8 +401,10 @@ private fun Toolbar(tool: FrameTool, modifier: Modifier) {
         ToolButton(Tool.Select, "V", tool, ::selectIcon)
         ToolButton(Tool.Rectangle, "R", tool, ::rectIcon)
         ToolButton(Tool.Polygon, "P", tool, ::polygonIcon)
-        Box(Modifier.padding(horizontal = 4.dp, vertical = 3.dp).width(28.dp).height(1.dp).background(c.line))
-        ToolButton(Tool.Order, "O", tool, ::orderIcon)
+        if (withOrder) {
+            Box(Modifier.padding(horizontal = 4.dp, vertical = 3.dp).width(28.dp).height(1.dp).background(c.line))
+            ToolButton(Tool.Order, "O", tool, ::orderIcon)
+        }
     }
 }
 

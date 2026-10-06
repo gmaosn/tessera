@@ -124,16 +124,7 @@ class Metadata(val doc: AcbfDocument) {
         if (existing == null && wanted == listOf("")) return
         if (existing != null && paragraphs(s, local, lang).ifEmpty { listOf("") } == wanted) return
         val block = existing ?: sectionOrCreate(s).childOrCreate(s, local, lang)
-        val ps = block.elements("p").toList()
-        wanted.forEachIndexed { i, text ->
-            val p = ps.getOrNull(i)
-            if (p != null) {
-                if (p.textContent.trim() != text) p.setText(text)
-            } else {
-                block.insertOrdered(block.newChild("p").also { it.setText(text) }, listOf("p"), lineBreak)
-            }
-        }
-        for (p in ps.drop(wanted.size)) block.removeElement(p)
+        writeParagraphs(block, wanted, lineBreak)
     }
 
     // ----- Authors -----
@@ -270,6 +261,28 @@ class Metadata(val doc: AcbfDocument) {
         for (local in listOf("book-title", "annotation", "keywords")) book.elements(local).forEach { langs += it["lang"] }
         book.element("languages")?.elements("text-layer")?.forEach { it["lang"]?.let { l -> langs += l } }
         return langs.toList().ifEmpty { listOf(null) }
+    }
+
+    // ----- Text layers declared in book-info/languages -----
+
+    /**
+     * Declares a text layer for [lang], shown over the images when reading. Nothing changes when
+     * the language is already declared.
+     */
+    fun declareLanguage(lang: String) {
+        if (lang.isBlank() || doc.languages.any { it.lang == lang }) return
+        val block = section(Section.Book)?.element("languages") ?: sectionOrCreate(Section.Book).childOrCreate(Section.Book, "languages", null)
+        val e = block.newChild("text-layer")
+        e["lang"] = lang
+        e["show"] = "true"
+        block.insertOrdered(e, listOf("text-layer"), lineBreak)
+    }
+
+    /** Whether readers show [lang]'s layer: false when its text is drawn in the images. */
+    fun setLanguageShown(lang: String, show: Boolean) {
+        val e = section(Section.Book)?.element("languages")?.elements("text-layer")?.firstOrNull { it["lang"] == lang } ?: return
+        if ((e["show"]?.trim()?.lowercase().let { it == "true" || it == "1" }) == show) return
+        e["show"] = if (show) "true" else "false"
     }
 
     // ----- Undo: section snapshots -----

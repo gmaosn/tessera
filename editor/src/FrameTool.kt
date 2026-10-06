@@ -17,11 +17,12 @@ enum class Tool { Select, Rectangle, Polygon, Order }
 data class Guide(val vertical: Boolean, val at: Int)
 
 /**
- * The frame tool: everything that happens between the pointer and the page's frames, in image
- * pixels. The canvas converts screen positions and passes [scale] (screen pixels per image
- * pixel), so that distances on screen stay the same at every zoom.
+ * The drawing tool: everything that happens between the pointer and the page's [shapes] (its
+ * frames, or the text areas of one language), in image pixels. The canvas converts screen
+ * positions and passes [scale] (screen pixels per image pixel), so that distances on screen stay
+ * the same at every zoom.
  */
-class FrameTool(private val session: Session) {
+class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(session)) {
     var tool by mutableStateOf(Tool.Select)
         private set
     var selected by mutableIntStateOf(-1)
@@ -41,6 +42,10 @@ class FrameTool(private val session: Session) {
 
     var rightToLeft by mutableStateOf(session.document.readingDirection == "RTL")
 
+    /** Bumped each time a shape is drawn, so that the UI can follow (focus the new text area's field). */
+    var created by mutableIntStateOf(0)
+        private set
+
     /** A message for the user, consumed by the UI (a toast). */
     var message by mutableStateOf<String?>(null)
 
@@ -50,14 +55,14 @@ class FrameTool(private val session: Session) {
     private var drag: Drag? = null
 
     private sealed interface Drag
-    private class MoveDrag(val index: Int, val start: Offset, val original: Polygon, val gesture: Session.Gesture, var moved: Boolean = false) : Drag
-    private class VertexDrag(val index: Int, val vertex: Int, val gesture: Session.Gesture) : Drag
+    private class MoveDrag(val index: Int, val start: Offset, val original: Polygon, val gesture: (ShapeEdit.() -> Unit) -> Unit, var moved: Boolean = false) : Drag
+    private class VertexDrag(val index: Int, val vertex: Int, val gesture: (ShapeEdit.() -> Unit) -> Unit) : Drag
     private class RectDrag(val start: Point) : Drag
 
-    val polygons: List<Polygon?> get() = session.page.frames.map { it.polygon }
+    val polygons: List<Polygon?> get() = shapes.polygons
 
     fun select(tool: Tool) {
-        if (tool == Tool.Order && session.page.frames.size < 2) {
+        if (tool == Tool.Order && polygons.size < 2) {
             message = Strings.orderNeedsTwo; return
         }
         this.tool = tool
@@ -91,7 +96,7 @@ class FrameTool(private val session: Session) {
                 val i = frameAt(p)
                 if (i < 0 || i in order) return
                 order = order + i
-                if (order.size == session.page.frames.size) finishOrder()
+                if (order.size == polygons.size) finishOrder()
             }
         }
     }
@@ -106,16 +111,13 @@ class FrameTool(private val session: Session) {
                 // Snap the moved frame's top-left corner, as the eye aligns frames by their edges.
                 val corner = snap(Offset((d.original.minX + dx0).toFloat(), (d.original.minY + dy0).toFloat()), scale, d.index, clamp = false)
                 val moved = d.original.translated(corner.x - d.original.minX, corner.y - d.original.minY)
-                d.gesture.update { it.frames[d.index].polygon = moved }
+                d.gesture { set(d.index, moved) }
             }
             is VertexDrag -> {
                 val s = snap(p, scale, d.index)
-                d.gesture.update { page ->
-                    val f = page.frames[d.index]
-                    val pts = f.polygon!!.points.toMutableList()
-                    pts[d.vertex] = s
-                    f.polygon = Polygon(pts)
-                }
+                val pts = polygons[d.index]!!.points.toMutableList()
+                pts[d.vertex] = s
+                d.gesture { set(d.index, Polygon(pts)) }
             }
             is RectDrag -> {
                 val s = snap(p, scale, -1)
@@ -136,8 +138,9 @@ class FrameTool(private val session: Session) {
             val r = draft?.let(::Polygon)
             draft = null
             if (r != null && (r.maxX - r.minX) * scale > MIN_SIZE && (r.maxY - r.minY) * scale > MIN_SIZE) {
-                session.edit { it.addFrame(r) }
-                selected = session.page.frames.size - 1
+                shapes.edit { add(r) }
+                selected = polygons.size - 1
+                created++
                 tool = Tool.Select
             }
         }
@@ -151,23 +154,24 @@ class FrameTool(private val session: Session) {
             val vertex = sel.points.indexOfFirst { distance(it, p) * scale <= HANDLE_RADIUS }
             if (vertex >= 0) {
                 if (alt) {
-                    if (sel.points.size > 3) session.edit { it.frames[selected].polygon = Polygon(sel.points.filterIndexed { k, _ -> k != vertex }) }
+                    if (sel.points.size > 3) shapes.edit { set(selected, Polygon(sel.points.filterIndexed { k, _ -> k != vertex })) }
                     else message = Strings.threePointsMinimum
                     return
                 }
-                drag = VertexDrag(selected, vertex, session.beginGesture()); return
+                drag = VertexDrag(selected, vertex, shapes.begin()); return
             }
             val mid = sel.points.indices.indexOfFirst { k -> distance(midpoint(sel, k), p) * scale <= MID_RADIUS }
             if (mid >= 0) {
-                val gesture = session.beginGesture()
+                val gesture = shapes.begin()
                 val m = midpoint(sel, mid)
-                gesture.update { it.frames[selected].polygon = Polygon(sel.points.toMutableList().apply { add(mid + 1, m) }) }
+                val index = selected
+                gesture { set(index, Polygon(sel.points.toMutableList().apply { add(mid + 1, m) })) }
                 drag = VertexDrag(selected, mid + 1, gesture); return
             }
         }
         val i = frameAt(p)
         selected = i
-        if (i >= 0) drag = MoveDrag(i, p, polygons[i]!!, session.beginGesture())
+        if (i >= 0) drag = MoveDrag(i, p, polygons[i]!!, shapes.begin())
     }
 
     /** True when a press at [p] would act on a frame or a handle of the selected one. */
@@ -211,8 +215,8 @@ class FrameTool(private val session: Session) {
             return
         }
         val i = selected
-        if (tool == Tool.Select && i in session.page.frames.indices) {
-            session.edit { it.removeFrame(it.frames[i]) }
+        if (tool == Tool.Select && i in polygons.indices) {
+            shapes.edit { remove(i) }
             selected = -1
         }
     }
@@ -221,14 +225,14 @@ class FrameTool(private val session: Session) {
     fun nudge(dx: Int, dy: Int) {
         val i = selected
         val poly = polygons.getOrNull(i) ?: return
-        session.edit { it.frames[i].polygon = poly.translated(dx, dy) }
+        shapes.edit { set(i, poly.translated(dx, dy)) }
     }
 
     /** Moves frame [from] to reading position [to] (the list's drag handle). */
     fun reorder(from: Int, to: Int) {
-        val frames = session.page.frames
-        if (from == to || from !in frames.indices || to !in frames.indices) return
-        session.edit { it.moveFrame(it.frames[from], to) }
+        val count = polygons.size
+        if (from == to || from !in 0 until count || to !in 0 until count) return
+        shapes.edit { reorder((0 until count).toMutableList().apply { add(to, removeAt(from)) }) }
         selected = to
     }
 
@@ -259,7 +263,7 @@ class FrameTool(private val session: Session) {
     private fun finishOrder() {
         val chosen = order
         if (chosen.isNotEmpty()) {
-            val rest = session.page.frames.indices.filter { it !in chosen }
+            val rest = polygons.indices.filter { it !in chosen }
             applyOrder(chosen + rest)
             message = Strings.orderSaved
         }
@@ -271,13 +275,7 @@ class FrameTool(private val session: Session) {
     /** Puts the frames in the order given by their current indices. */
     private fun applyOrder(target: List<Int>) {
         if (target == target.indices.toList()) return
-        session.edit { page ->
-            val elements = page.frames
-            target.forEachIndexed { position, index ->
-                val frame = elements[index]
-                if (page.frames.indexOf(frame) != position) page.moveFrame(frame, position)
-            }
-        }
+        shapes.edit { reorder(target) }
         selected = -1
     }
 
@@ -285,8 +283,9 @@ class FrameTool(private val session: Session) {
         val pts = draft
         draft = null; draftCursor = null; guides = emptyList()
         if (pts == null || pts.size < 3) return
-        session.edit { it.addFrame(Polygon(pts)) }
-        selected = session.page.frames.size - 1
+        shapes.edit { add(Polygon(pts)) }
+        selected = polygons.size - 1
+        created++
         tool = Tool.Select
     }
 

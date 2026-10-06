@@ -29,9 +29,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/** The pages down the left side, each with its frame count; a dashed zero marks pages to do. */
+/** The pages down the left side, each with its count of frames (or text areas); a dashed zero marks pages to do. */
 @Composable
-fun PageStrip(session: Session, images: ImageCache, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun PageStrip(
+    session: Session, images: ImageCache, onSelect: (Int) -> Unit, modifier: Modifier = Modifier,
+    /** The number shown under each page: its frames, or its text areas in the Texts tab. */
+    count: (tessera.acbf.AcbfPage) -> Int = { it.frames.size },
+) {
     val c = LocalPalette.current
     @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val state = rememberLazyListState()
@@ -66,7 +70,7 @@ fun PageStrip(session: Session, images: ImageCache, onSelect: (Int) -> Unit, mod
                 }
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Label(if (page.isCover) Strings.cover else "${i + 1}", color = if (current) c.ink else c.muted, size = 11.sp)
-                    CountBadge(page.frames.size)
+                    CountBadge(count(page))
                 }
             }
         }

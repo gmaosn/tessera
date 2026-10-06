@@ -58,7 +58,7 @@ import tessera.acbf.Polygon
 import kotlin.math.roundToInt
 
 @Composable
-fun Inspector(session: Session, tool: FrameTool, modifier: Modifier = Modifier) {
+fun Inspector(session: Session, tool: FrameTool, modifier: Modifier = Modifier, onBookInfo: () -> Unit = {}) {
     val c = LocalPalette.current
     @Suppress("UNUSED_VARIABLE") val revision = session.revision
     Column(modifier.background(c.paper).verticalScroll(rememberScrollState())) {
@@ -67,14 +67,41 @@ fun Inspector(session: Session, tool: FrameTool, modifier: Modifier = Modifier) 
         PageSection(session)
         Divider()
         FileSection(session)
+        Divider()
+        BookSection(session, onBookInfo)
+    }
+}
+
+/** The book's title and authors at a glance, one click away from editing every field. */
+@Composable
+internal fun BookSection(session: Session, onBookInfo: () -> Unit) {
+    val c = LocalPalette.current
+    val m = tessera.acbf.Metadata(session.document)
+    val B = tessera.acbf.Section.Book
+    InspectorSection {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            SectionTitle(Strings.bookInfoShort)
+            Spacer(Modifier.weight(1f))
+            TextLink(Strings.editBookInfo, onClick = onBookInfo)
+        }
+        val title = m.texts(B, "book-title").let { t -> t[Strings.language.code] ?: t[null] ?: t.values.firstOrNull() }.orEmpty()
+        val authors = m.authors(B).map { m.readAuthor(it).displayName }.filter { it.isNotBlank() }
+        Column(
+            Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).border(1.dp, c.line, RoundedCornerShape(8.dp)).clickable(onClick = onBookInfo)
+                .pointerHoverIcon(PointerIcon.Hand).padding(horizontal = 10.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            Label(title.ifBlank { Strings.untitled }, weight = FontWeight.Medium, color = if (title.isBlank()) c.muted else c.ink, maxLines = 2)
+            Label(authors.joinToString(", ").ifBlank { Strings.noAuthors }, color = c.muted, size = 12.sp, maxLines = 2)
+        }
     }
 }
 
 @Composable
-private fun Divider() = Box(Modifier.fillMaxWidth().padding(0.dp).background(LocalPalette.current.line).heightIn(1.dp, 1.dp))
+internal fun Divider() = Box(Modifier.fillMaxWidth().padding(0.dp).background(LocalPalette.current.line).heightIn(1.dp, 1.dp))
 
 @Composable
-private fun Section(content: @Composable () -> Unit) {
+internal fun InspectorSection(content: @Composable () -> Unit) {
     Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) { content() }
 }
 
@@ -82,7 +109,7 @@ private fun Section(content: @Composable () -> Unit) {
 private fun FramesSection(session: Session, tool: FrameTool) {
     val c = LocalPalette.current
     val polygons = tool.polygons
-    Section {
+    InspectorSection {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             SectionTitle(Strings.frames)
             CountBadge(polygons.size)
@@ -204,7 +231,7 @@ private fun MiniShape(poly: Polygon?, modifier: Modifier) {
 private fun PageSection(session: Session) {
     val c = LocalPalette.current
     val page = session.page
-    Section {
+    InspectorSection {
         SectionTitle(Strings.page)
         // The background a reader shows around a zoomed frame: page, else the book's body.
         val own = page.bgcolor
@@ -250,7 +277,7 @@ private val TRANSITIONS = listOf("fade", "blend", "scroll_right", "scroll_down",
 @Composable
 private fun FileSection(session: Session) {
     val c = LocalPalette.current
-    Section {
+    InspectorSection {
         SectionTitle(Strings.inFile)
         val frames = session.page.frames
         val text = buildAnnotatedString {
@@ -272,7 +299,7 @@ private fun FileSection(session: Session) {
 }
 
 @Composable
-private fun Field(label: String, content: @Composable () -> Unit) {
+internal fun Field(label: String, content: @Composable () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Label(label, Modifier.width(92.dp), color = LocalPalette.current.muted)
         content()
@@ -280,7 +307,7 @@ private fun Field(label: String, content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun Choice(text: String, on: Boolean, modifier: Modifier, onClick: () -> Unit) {
+internal fun Choice(text: String, on: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val c = LocalPalette.current
     val shape = RoundedCornerShape(8.dp)
     Box(

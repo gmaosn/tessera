@@ -39,13 +39,14 @@ titre, l’auteur et le sujet du PDF.
 
 | Zone | Contenu |
 |---|---|
-| Barre du haut | **‹ ›** planche précédente et suivante, nom du fichier (un point s’il y a des modifications non enregistrées), numéro de planche et version ACBF, **Lire** et **Enregistrer** |
-| Bandeau de gauche | Toutes les planches avec leur nombre de cases ; un **0** en pointillé signale une planche sans case |
+| Barre du haut | **‹ ›** planche précédente et suivante, nom du fichier (un point s’il y a des modifications non enregistrées ; un clic ouvre les informations du livre), numéro de planche et version ACBF, les onglets **Cases · Textes · Informations**, **Lire** et **Enregistrer** |
+| Bandeau de gauche | Toutes les planches avec leur nombre de cases (de zones de texte dans **Textes**) ; un **0** en pointillé signale une planche qui n’en a pas |
 | Canevas | La planche et ses cases, numérotées dans l’ordre de lecture ; les outils à gauche, le zoom en bas à droite |
-| Inspecteur | La liste des cases, les réglages de la planche, et ses cases telles qu’elles sont écrites dans le fichier |
+| Inspecteur | La liste des cases, les réglages de la planche, ses cases telles qu’elles sont écrites dans le fichier, et le titre et les auteur·rices du livre |
 | Barre d’aide | Ce que fait l’outil en cours, et ses touches |
 
-**Textes** est la prochaine étape du projet ; il est grisé pour l’instant.
+La planche reste dans le canevas à tous les niveaux de zoom : elle ne recouvre jamais les
+miniatures ni l’inspecteur.
 
 Pendant le décodage d’une image, le canevas affiche **Chargement…** ; sur les gros livres, cela
 peut prendre un instant par planche, et les planches voisines sont préparées à l’avance.
@@ -163,10 +164,42 @@ travail au pixel près sur les cases, laissez l’éditeur sur Désactivé.
 - **Transition** est l’animation depuis la planche précédente : fondu, mélange, défilement vers
   la droite, vers le bas, ou aucune.
 
+## Textes et traductions
+
+**Textes** (⌘2) montre les zones de texte de la planche dans une langue : bulles, récitatifs et
+panneaux dont les liseuses posent le texte sur l’image, si bien qu’une bande dessinée se traduit
+sans toucher à ses dessins.
+
+![L’onglet Textes](images/texts-fr.jpg)
+
+- **Langue** : choisissez la langue en haut de l’inspecteur, ou ajoutez-en une avec **+ Langue**
+  (elle est déclarée dans les informations du livre). **Sur les images** ou **Dessiné dedans**
+  indique si les liseuses affichent ce texte, ou s’il s’agit du texte déjà dessiné dans les
+  images (le `show` d’ACBF).
+- **Tracer une zone** : comme pour les cases, **R** pour un rectangle autour d’une bulle, **P**
+  pour un polygone point par point ; **V** sélectionne, déplace et ajuste. Le champ de texte de
+  la nouvelle zone prend aussitôt le clavier : tapez le texte, un paragraphe par ligne, puis
+  **Échap** pour revenir à la planche.
+- **Traduire** : sur une planche qui a des zones dans une autre langue mais aucune dans
+  celle-ci, **Copier les zones de …** copie leurs formes et réglages avec un texte vide ; chaque
+  zone montre ensuite le texte de l’autre langue au-dessus de son champ.
+- **Zone sélectionnée** : son genre (parole, récitatif, pensée, son, panneau…), **Texte clair
+  sur fond sombre**, **Sans fond**, la rotation en degrés, et sa couleur de fond (`#rrggbb` ;
+  vide : celle du calque).
+- **Voir le texte** dessine chaque zone comme une liseuse, le texte ajusté dedans ; **Contours**
+  ne montre que les formes. Les cases restent visibles en filigrane.
+
+Supprimer la dernière zone d’une langue sur une planche retire le calque de cette planche, car
+ACBF exige qu’un calque contienne au moins une zone. La saisie du texte d’une zone est une seule
+étape d’annulation ; un paragraphe que vous ne touchez pas garde son italique. La lecture case
+par case n’affiche pas encore les calques de texte.
+
 ## Informations du livre
 
-**Informations**, dans la barre du haut, montre tous les champs de métadonnées du document, en
-quatre cartes :
+**Informations** (⌘3) montre tous les champs de métadonnées du document. Elles sont aussi à un
+clic de partout : le nom du fichier dans la barre du haut, ou **Modifier les informations** sous
+le titre et les auteur·rices, en bas de l’inspecteur ; **Échap** ramène à l’onglet d’où vous
+veniez. Quatre cartes :
 
 - **Livre** : titre, auteur·rices (prénom, nom ou pseudonyme, et rôle : scénario, dessin,
   couleurs, traduction…), genres, résumé, mots-clés, personnages, séries (titre, tome, numéro).
@@ -196,6 +229,7 @@ ACBF 1.1 ne peut pas le contenir.
 | Zoomer | La molette (autour du pointeur), ⌘+ / ⌘−, ou les boutons de zoom |
 | Ajuster la planche | ⌘0 ou **Ajuster** |
 | Faire défiler | Glisser là où il n’y a pas de case (outil Sélection), glisser avec le bouton droit ou du milieu, ⌘ et la molette, ou ⇧ et la molette pour l’horizontale |
+| Cases / Textes / Informations | ⌘1 / ⌘2 / ⌘3 (aussi dans le menu **Affichage**) ; **Échap** quitte les informations |
 | Annuler / rétablir | ⌘Z / ⇧⌘Z |
 | Enregistrer | ⌘S |
 | Enregistrer sous | ⇧⌘S |

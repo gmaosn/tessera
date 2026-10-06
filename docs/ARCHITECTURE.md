@@ -52,9 +52,10 @@ archive while keeping the same in-memory document, so undo history survives savi
 ## Editor (`editor/src`)
 
 - `Session`: the open comic, the current page, undo and redo steps (frame states or attribute
-  changes), the dirty flag, and the frames' saved points for the "In the file" highlight.
+  changes, text-layer states), the dirty flag, and the frames' saved points for the "In the file" highlight.
   `beginGesture()` turns a drag into a single undo step.
-- `FrameTool`: everything between the pointer and the frames, in image pixels. The canvas
+- `FrameTool`: everything between the pointer and the page's `Shapes` (its frames, or the text
+  areas of one language: `FrameShapes`, `TextShapes`), in image pixels. The canvas
   passes the zoom so that handle sizes and snapping distances stay constant on screen. Pure
   logic, tested without a UI (`editor/test/FrameToolTest.kt`).
 - `PageCanvas` (`CanvasView` holds zoom and scroll), `PageStrip`, `Inspector`, `ReaderPreview`,

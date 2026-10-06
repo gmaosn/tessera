@@ -38,13 +38,14 @@ comic** filled in from the PDF's title, author and subject.
 
 | Area | What it holds |
 |---|---|
-| Top bar | **‹ ›** previous and next page, file name (a dot when there are unsaved changes), page number and ACBF version, **Read** and **Save** |
-| Left strip | Every page with its number of frames; a dashed **0** marks pages without frames |
+| Top bar | **‹ ›** previous and next page, file name (a dot when there are unsaved changes; click it for the book information), page number and ACBF version, the **Frames · Texts · Book info** tabs, **Read** and **Save** |
+| Left strip | Every page with its number of frames (of text areas in **Texts**); a dashed **0** marks pages without any |
 | Canvas | The page with its frames, numbered in reading order; the tools on the left, the zoom at the bottom right |
-| Inspector | The frame list, the page settings, and the page's frames as they are written in the file |
+| Inspector | The frame list, the page settings, the page's frames as they are written in the file, and the book's title and authors |
 | Hint bar | What the current tool does, and its keys |
 
-**Texts** is the next step of the project; it is greyed for now.
+The page stays inside the canvas at every zoom: the thumbnails and the inspector are never
+covered.
 
 While a page image is being decoded, the canvas says **Loading…**; large books can take a moment
 per page, and the next and previous pages are prepared in advance.
@@ -158,9 +159,38 @@ editor on Off.
 - **Transition** is the animation from the previous page: fade, blend, scroll right, scroll
   down, or none.
 
+## Texts and translations
+
+**Texts** (⌘2) shows the page's text areas in one language: the balloons, captions and signs
+whose text readers lay over the image, so that a comic can be translated without touching its
+pictures.
+
+![The Texts tab](images/texts-en.jpg)
+
+- **Language**: pick the language at the top of the inspector, or add one with **+ Language**
+  (it is declared in the book's information). **Over the images** or **Drawn in them** says
+  whether readers show this text, or whether it is the text already drawn in the pictures
+  (ACBF's `show`).
+- **Drawing an area**: as with frames, **R** for a rectangle around a balloon, **P** for a
+  polygon point by point; **V** selects, moves and adjusts. The new area's text field takes the
+  keyboard at once: type the text, one paragraph per line, then **Esc** to go back to the page.
+- **Translating**: on a page that has areas in another language but none in this one, **Copy
+  the areas of …** copies their shapes and settings with an empty text; each area then shows the
+  other language's text above its field.
+- **Selected area**: its kind (speech, caption, thought, sound, sign…), **Light text on dark**,
+  **No ground**, rotation in degrees, and its own ground colour (`#rrggbb`; empty: the layer's).
+- **Show text** draws each area as a reader would, its text fitted inside; **Outlines** shows
+  the shapes only. The frames stay faintly visible beneath.
+
+Deleting the last area of a language on a page removes that page's layer, as ACBF requires a
+layer to hold at least one area. Typing an area's text is one undo step; a paragraph you do not
+touch keeps its emphasis. The frame-by-frame reading does not show the text layers yet.
+
 ## Book information
 
-**Book info** in the top bar shows every metadata field of the document, in four cards:
+**Book info** (⌘3) shows every metadata field of the document. It is also one click away from
+anywhere: the file name in the top bar, or **Edit book info** under the book's title and
+authors at the bottom of the inspector; **Esc** goes back to the tab you came from. Four cards:
 
 - **Book**: title, authors (first name, last name or pen name, and role: writer, artist,
   colourist, translator…), genres, summary, keywords, characters, series (title, volume,
@@ -189,6 +219,7 @@ proposal, since ACBF 1.1 files may not contain it.
 | Zoom | The mouse wheel (around the pointer), ⌘+ / ⌘−, or the zoom buttons |
 | Fit the page | ⌘0 or **Fit** |
 | Scroll | Drag where there is no frame (Select tool), drag with the right or middle button, ⌘ and the wheel, or ⇧ and the wheel sideways |
+| Frames / Texts / Book info | ⌘1 / ⌘2 / ⌘3 (also in the **View** menu); **Esc** leaves Book info |
 | Undo / redo | ⌘Z / ⇧⌘Z |
 | Save | ⌘S |
 | Save as | ⇧⌘S |

@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.font.FontWeight
@@ -93,12 +94,18 @@ private fun Card(title: String, content: @Composable () -> Unit) {
 
 /** A text field bound to the document: shows its value, writes every change back. */
 @Composable
-private fun LiveInput(key: String, value: String, modifier: Modifier = Modifier, minLines: Int = 1, placeholder: String = "", valid: (String) -> Boolean = { true }, onChange: (String) -> Unit) {
+internal fun LiveInput(
+    key: String, value: String, modifier: Modifier = Modifier, minLines: Int = 1, placeholder: String = "", valid: (String) -> Boolean = { true },
+    focus: androidx.compose.ui.focus.FocusRequester? = null, onChange: (String) -> Unit,
+) {
     var local by remember(key) { mutableStateOf(value) }
     // Undo or another field changed the document: show it, unless this field is mid-typing it.
     LaunchedEffect(value) { if (value.trim() != local.trim()) local = value }
     Column(modifier) {
-        FormInput(local, { local = it; if (valid(it)) onChange(it) }, minLines = minLines, placeholder = placeholder)
+        FormInput(
+            local, { local = it; if (valid(it)) onChange(it) }, minLines = minLines, placeholder = placeholder,
+            modifier = if (focus != null) Modifier.focusRequester(focus) else Modifier,
+        )
         if (!valid(local)) Label(Strings.dateFormat, color = LocalPalette.current.danger, size = 11.5.sp)
     }
 }
@@ -310,7 +317,7 @@ private fun ReferencesCard(session: Session, m: Metadata) {
 // ----- Small controls -----
 
 @Composable
-private fun Chip(text: String, selected: Boolean, onClick: (() -> Unit)? = null, onRemove: (() -> Unit)? = null) {
+internal fun Chip(text: String, selected: Boolean, onClick: (() -> Unit)? = null, onRemove: (() -> Unit)? = null) {
     val c = LocalPalette.current
     Row(
         Modifier.clip(CircleShape).background(if (selected) c.accentSoft else c.paper).border(1.dp, if (selected) c.accent else c.line, CircleShape)
@@ -329,7 +336,7 @@ private fun Chip(text: String, selected: Boolean, onClick: (() -> Unit)? = null,
 }
 
 @Composable
-private fun AddMenu(label: String, options: List<Pair<String, String>>, onPick: (String) -> Unit) {
+internal fun AddMenu(label: String, options: List<Pair<String, String>>, onPick: (String) -> Unit) {
     val c = LocalPalette.current
     var open by remember { mutableStateOf(false) }
     Box {
@@ -344,7 +351,7 @@ private fun AddMenu(label: String, options: List<Pair<String, String>>, onPick: 
 }
 
 @Composable
-private fun RemoveButton(onClick: () -> Unit) {
+internal fun RemoveButton(onClick: () -> Unit) {
     val c = LocalPalette.current
     val hover = remember { MutableInteractionSource() }
     val hovered by hover.collectIsHoveredAsState()
