@@ -65,6 +65,11 @@ archive while keeping the same in-memory document, so undo history survives savi
   sharp corners kept, curve-like runs of points smoothed (cubic curves through the points),
   inward corners filleted, then walked at 512 even steps with every corner on a step, so that
   two outlines morph point by point (`editor/test/OutlineTest.kt`). `PageCanvas` dashes it.
+- `TextFit` lays a text out inside a polygon (each line as wide as the shape at its height,
+  largest size that fits, by bisection on widths measured once); `Hyphenator` is Liang's
+  algorithm over the hyph-utf8 patterns in `editor/resources/hyphenation` (made by
+  `tools/hyphenation.py`); `groundColour` takes the colour behind a text from the page image
+  (Otsu split, letters and their soft edges left out).
 - `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
   redraws the UI at once.
 

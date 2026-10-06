@@ -152,6 +152,9 @@ object Strings {
     val areaTransparent get() = t("No ground", "Sans fond")
     val areaRotation get() = t("Rotation", "Rotation")
     val areaGround get() = t("Ground", "Fond")
+    val groundFromImage get() = t("◐ Colour from the image", "◐ Couleur de l’image")
+    val groundFromImageAll get() = t("Grounds from the image, every area", "Fonds pris dans l’image, toutes les zones")
+    val groundTaken get() = t("Each area’s ground is now the colour behind its original text", "Le fond de chaque zone est la couleur derrière son texte d’origine")
     val groundHint get() = t("#rrggbb, empty: the layer’s", "#rrggbb, vide : celui du calque")
     val textsMode get() = t("Texts", "Textes")
     fun areaKind(type: String?) = when (type) {

@@ -57,7 +57,11 @@ class TextsView(lang: String?) {
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TextInspector(session: Session, tool: FrameTool, view: TextsView, modifier: Modifier = Modifier, onBookInfo: () -> Unit = {}) {
+fun TextInspector(
+    session: Session, tool: FrameTool, view: TextsView, modifier: Modifier = Modifier, onBookInfo: () -> Unit = {},
+    /** The colour behind the text drawn in a shape, from the page image; null while it is not loaded. */
+    sampleGround: ((tessera.acbf.Polygon) -> String?)? = null,
+) {
     val c = LocalPalette.current
     @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val doc = session.document
@@ -85,7 +89,7 @@ fun TextInspector(session: Session, tool: FrameTool, view: TextsView, modifier: 
         }
         if (lang != null) {
             Divider()
-            AreasSection(session, tool, view, lang)
+            AreasSection(session, tool, view, lang, sampleGround)
             Divider()
             LayerFileSection(session, lang)
         }
@@ -95,7 +99,7 @@ fun TextInspector(session: Session, tool: FrameTool, view: TextsView, modifier: 
 }
 
 @Composable
-private fun AreasSection(session: Session, tool: FrameTool, view: TextsView, lang: String) {
+private fun AreasSection(session: Session, tool: FrameTool, view: TextsView, lang: String, sampleGround: ((tessera.acbf.Polygon) -> String?)?) {
     // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
     @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
@@ -130,6 +134,12 @@ private fun AreasSection(session: Session, tool: FrameTool, view: TextsView, lan
                 tool.message = Strings.copiedAreas(refAreas.size, languageName(reference))
             }
         }
+        if (areas.isNotEmpty() && sampleGround != null) {
+            TextLink(Strings.groundFromImageAll) {
+                session.editTexts { p -> for (a in p.textAreas(lang)) a.polygon?.let(sampleGround)?.let { a.bgcolor = it; a.transparent = false } }
+                tool.message = Strings.groundTaken
+            }
+        }
         if (areas.isEmpty()) {
             Box(Modifier.fillMaxWidth().border(1.dp, c.line, RoundedCornerShape(8.dp)).padding(12.dp), contentAlignment = Alignment.Center) {
                 Label(Strings.noTextAreas, color = c.muted, size = 12.sp)
@@ -141,13 +151,13 @@ private fun AreasSection(session: Session, tool: FrameTool, view: TextsView, lan
             if (tool.created > 0) focusers.getOrNull(tool.selected)?.let { runCatching { it.requestFocus() } }
         }
         areas.forEachIndexed { i, area ->
-            AreaRow(session, tool, area, i, lang, refAreas.getOrNull(i)?.text, focusers[i])
+            AreaRow(session, tool, area, i, lang, refAreas.getOrNull(i)?.text, focusers[i], sampleGround)
         }
     }
 }
 
 @Composable
-private fun AreaRow(session: Session, tool: FrameTool, area: AcbfTextArea, index: Int, lang: String, reference: String?, focus: FocusRequester) {
+private fun AreaRow(session: Session, tool: FrameTool, area: AcbfTextArea, index: Int, lang: String, reference: String?, focus: FocusRequester, sampleGround: ((tessera.acbf.Polygon) -> String?)?) {
     // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
     @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
@@ -172,13 +182,13 @@ private fun AreaRow(session: Session, tool: FrameTool, area: AcbfTextArea, index
         LiveInput(key, area.text, minLines = 2, placeholder = Strings.typeText, focus = focus) { v ->
             session.editTexts(key) { p -> p.textAreas(lang).getOrNull(index)?.setText(v) }
         }
-        if (selected) AreaOptions(session, area, index, lang)
+        if (selected) AreaOptions(session, area, index, lang, sampleGround)
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun AreaOptions(session: Session, area: AcbfTextArea, index: Int, lang: String) {
+private fun AreaOptions(session: Session, area: AcbfTextArea, index: Int, lang: String, sampleGround: ((tessera.acbf.Polygon) -> String?)?) {
     // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
     @Suppress("UNUSED_VARIABLE") val revision = session.revision
     fun change(key: String? = null, f: (AcbfTextArea) -> Unit) = session.editTexts(key) { p -> p.textAreas(lang).getOrNull(index)?.let(f) }
@@ -190,6 +200,10 @@ private fun AreaOptions(session: Session, area: AcbfTextArea, index: Int, lang: 
     FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Chip(Strings.areaInverted, selected = area.inverted, onClick = { change { it.inverted = !area.inverted } })
         Chip(Strings.areaTransparent, selected = area.transparent, onClick = { change { it.transparent = !area.transparent } })
+        val poly = area.polygon
+        if (sampleGround != null && poly != null) {
+            Chip(Strings.groundFromImage, selected = false, onClick = { sampleGround(poly)?.let { hex -> change { it.bgcolor = hex; it.transparent = false } } })
+        }
     }
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         FormField(Strings.areaRotation, modifier = Modifier.weight(1f)) {
@@ -238,6 +252,6 @@ fun areaLooks(page: tessera.acbf.AcbfPage, lang: String?): List<Pair<tessera.acb
     val layer = lang?.let { page.textLayer(it) } ?: return emptyList()
     return layer.areas.map { a ->
         val ground = if (a.transparent) null else parseColor(a.bgcolor) ?: parseColor(layer.bgcolor) ?: if (a.inverted) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
-        a.polygon to AreaLook(a.text, ground, if (a.inverted) androidx.compose.ui.graphics.Color.White else androidx.compose.ui.graphics.Color.Black, a.rotation)
+        a.polygon to AreaLook(a.text, ground, if (a.inverted) androidx.compose.ui.graphics.Color.White else androidx.compose.ui.graphics.Color.Black, a.rotation, layer.lang)
     }
 }

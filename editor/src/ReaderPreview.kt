@@ -85,7 +85,7 @@ fun ReaderPreview(
     val pages = session.pages
     val langs = session.document.textLanguages
     val measurer = rememberTextMeasurer(cacheSize = 64)
-    val fits = remember { HashMap<Triple<String, Int, Int>, Float>() }
+    val fits = remember { TextFits() }
     var langOpen by remember { mutableStateOf(false) }
     fun cycleLang() {
         val options = listOf<String?>(null) + langs

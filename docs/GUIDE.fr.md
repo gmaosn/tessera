@@ -191,8 +191,19 @@ sans toucher à ses dessins.
 - **Zone sélectionnée** : son genre (parole, récitatif, pensée, son, panneau…), **Texte clair
   sur fond sombre**, **Sans fond**, la rotation en degrés, et sa couleur de fond (`#rrggbb` ;
   vide : celle du calque).
-- **Voir le texte** dessine chaque zone comme une liseuse, le texte ajusté dedans ; **Contours**
-  ne montre que les formes. Les cases restent visibles en filigrane.
+- **Voir le texte** dessine chaque zone comme une liseuse ; **Contours** ne montre que les
+  formes. Les cases restent visibles en filigrane.
+- **Ajustement** : le texte prend la plus grande taille à laquelle il reste dans la forme même
+  de la zone : chaque ligne est aussi large que la forme à sa hauteur, si bien qu’une bulle
+  ronde a des lignes courtes en haut et en bas. Les mots sont coupés entre les syllabes avec un
+  trait d’union, selon les règles de la langue du calque (motifs de TeX : anglais, français,
+  allemand, espagnol, italien, néerlandais, portugais, slovaque, tchèque, polonais) ; le chinois
+  et le japonais entre deux caractères. Un « ? », un « ! » ou un guillemet isolé reste avec son
+  mot. Pareil en lecture.
+- **◐ Couleur de l’image** (zone sélectionnée) donne au fond de la zone la couleur qu’il y a
+  derrière le texte d’origine : les lettres sont écartées, le reste est moyenné (une trame donne
+  son gris moyen). **Fonds pris dans l’image, toutes les zones** le fait pour toute la planche,
+  en une seule étape d’annulation.
 
 Supprimer la dernière zone d’une langue sur une planche retire le calque de cette planche, car
 ACBF exige qu’un calque contienne au moins une zone. La saisie du texte d’une zone est une seule

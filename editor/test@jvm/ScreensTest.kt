@@ -12,6 +12,7 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.v2.runDesktopComposeUiTest
 import kotlinx.coroutines.runBlocking
 import tessera.acbf.ComicFiles
+import tessera.acbf.addTextArea
 import tessera.editor.EditorScreen
 import tessera.editor.FrameTool
 import tessera.editor.Language
@@ -227,6 +228,30 @@ class ScreensTest {
             }
         }
         return file
+    }
+
+    /** French text in the made-up page's round balloons: each line inside the shape, words cut at syllables. */
+    @Test
+    fun frenchTextInRoundBalloons() {
+        val file = balloonBook()
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name).apply { goToPage(1) }
+        fun oval(cx: Int, cy: Int, rx: Int, ry: Int) = tessera.acbf.Polygon((0 until 20).map { k ->
+            val a = 2 * Math.PI * k / 20
+            tessera.acbf.Point((cx + rx * kotlin.math.cos(a)).roundToInt(), (cy + ry * kotlin.math.sin(a)).roundToInt())
+        })
+        session.editMeta(tessera.acbf.Section.Book, "fr") { it.declareLanguage("fr") }
+        session.editTexts { p ->
+            p.addTextArea("fr", oval(330, 210, 205, 108)).setText("Quelle est cette chose brillante ?")
+            p.addTextArea("fr", oval(900, 900, 215, 196)).setText("Oh mais il y a une personne inconsciente là-en bas !")
+        }
+        val images = ImageCache(session.comic)
+        runBlocking { for (p in session.pages) images.thumbnail(p.imageHref); images.page(session.page.imageHref) }
+        runDesktopComposeUiTest(1440, 900) {
+            setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, startMode = 1) } }
+            waitForIdle()
+            javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("18-french-balloons.png"))
+        }
     }
 
     /** The made-up page in the editor (smoothed outline dashed) and in the reader. */

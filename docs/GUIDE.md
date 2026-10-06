@@ -184,8 +184,17 @@ pictures.
   other language's text above its field.
 - **Selected area**: its kind (speech, caption, thought, sound, sign…), **Light text on dark**,
   **No ground**, rotation in degrees, and its own ground colour (`#rrggbb`; empty: the layer's).
-- **Show text** draws each area as a reader would, its text fitted inside; **Outlines** shows
-  the shapes only. The frames stay faintly visible beneath.
+- **Show text** draws each area as a reader would; **Outlines** shows the shapes only. The
+  frames stay faintly visible beneath.
+- **Fitting**: the text takes the largest size at which it stays inside the area's own shape:
+  each line is as wide as the shape is at its height, so a round balloon gets short lines at
+  the top and bottom. Words are cut between syllables with a hyphen, by the rules of the
+  layer's language (TeX's patterns: English, French, German, Spanish, Italian, Dutch,
+  Portuguese, Slovak, Czech, Polish); Chinese and Japanese between characters. A lone « ? »,
+  « ! » or quotation mark stays with its word. Same in reading.
+- **◐ Colour from the image** (selected area) makes the area's ground the colour behind the
+  original text: the letters are left out, the rest averaged (a screentone gives its average
+  grey). **Grounds from the image, every area** does it for the whole page in one undo step.
 
 Deleting the last area of a language on a page removes that page's layer, as ACBF requires a
 layer to hold at least one area. Typing an area's text is one undo step; a paragraph you do not

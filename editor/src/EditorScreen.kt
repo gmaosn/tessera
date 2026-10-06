@@ -261,7 +261,10 @@ fun EditorScreen(
                     if (mode == 0 && tool.tool == Tool.Order) OrderBanner(tool, session, Modifier.align(Alignment.TopCenter).padding(top = 12.dp))
                 }
                 VRule()
-                if (mode == 1) TextInspector(session, textTool, texts, Modifier.width(300.dp).fillMaxHeight(), onBookInfo = { showMode(2) })
+                if (mode == 1) TextInspector(
+                    session, textTool, texts, Modifier.width(300.dp).fillMaxHeight(), onBookInfo = { showMode(2) },
+                    sampleGround = image?.let { img -> { poly -> groundColour(img, poly) } },
+                )
                 else Inspector(session, tool, Modifier.width(300.dp).fillMaxHeight(), onBookInfo = { showMode(2) })
             }
             Rule()

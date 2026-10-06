@@ -50,6 +50,27 @@ bloc97; the full notice is at the top of that file.
 
 Used as a library, under the Apache License 2.0. https://pdfbox.apache.org/
 
+## Hyphenation patterns (hyph-utf8)
+
+`editor/resources/hyphenation/*.pat` are TeX hyphenation patterns from the hyph-utf8 collection
+(https://github.com/hyphenation/tex-hyphen, commit `5684c0f`), converted by
+`tools/hyphenation.py`. Each keeps its authors and licence, stated in its source file:
+
+| File | Source | Authors | Licence |
+|---|---|---|---|
+| `en.pat` | `hyph-en-us.tex` | Gerard D.C. Kuiken | Copying and distribution, with or without modification, permitted in any medium without royalty, provided the copyright notice and this notice are preserved |
+| `fr.pat` | `hyph-fr.tex` | Daniel Flipo, Bernard Gaulle, Arthur Reutenauer | MIT |
+| `de.pat` | `hyph-de-1996.tex` | Deutschsprachige Trennmustermannschaft | MIT |
+| `es.pat` | `hyph-es.tex` | Javier Bezos, CervanTeX | MIT/X11 |
+| `it.pat` | `hyph-it.tex` | Claudio Beccari | MIT (or LPPL 1.3) |
+| `nl.pat` | `hyph-nl.tex` | Piet Tutelaers | MIT |
+| `pt.pat` | `hyph-pt.tex` | Pedro J. de Rezende, J. Joao Dias Almeida, Leonardo Araujo, Aline Benevides | BSD 3-clause |
+| `sk.pat` | `hyph-sk.tex` | Jana Chlebíková | MIT |
+| `cs.pat` | `hyph-cs.tex` | Pavel Ševeček | GPL 2 or later |
+| `pl.pat` | `hyph-pl.tex` | Hanna Kołodziejska, Bogusław Jackowski, Marek Ryćko | MIT (or others) |
+
+Russian is not included: its patterns are under the LPPL only.
+
 ## ACBF schemas (tests)
 
 `fixtures/schema/` holds the ACBF 1.0 and 1.1 XML schemas, unchanged, from

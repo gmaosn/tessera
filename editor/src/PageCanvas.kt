@@ -47,7 +47,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -134,7 +133,7 @@ fun PageCanvas(
     val c = LocalPalette.current
     val density = LocalDensity.current.density
     val measurer = rememberTextMeasurer(cacheSize = 64)
-    val fits = remember { HashMap<Triple<String, Int, Int>, Float>() }
+    val fits = remember { TextFits() }
     @Suppress("UNUSED_VARIABLE") val revision = session.revision // redraw on every document change
     val imageSize = image?.let { Size(it.width.toFloat(), it.height.toFloat()) } ?: Size(1000f, 1500f)
     tool.imageWidth = imageSize.width.toInt()
@@ -344,42 +343,40 @@ fun PageCanvas(
 /** In the Texts tab: how each text area looks, in the tool's order, and the frames beneath. */
 class TextOverlay(val areas: List<AreaLook>, val frames: List<Polygon?>, val preview: Boolean)
 
-/** A text area's text and colours: [ground] null when transparent. */
-class AreaLook(val text: String, val ground: Color?, val ink: Color, val rotation: Int)
+/** A text area's text and colours: [ground] null when transparent; [lang] gives the hyphenation rules. */
+class AreaLook(val text: String, val ground: Color?, val ink: Color, val rotation: Int, val lang: String? = null)
+
+/** Text layouts already found, by text, shape and rotation: fitting is done once, not every frame. */
+typealias TextFits = HashMap<Any, TextFit.Layout?>
 
 /**
- * Draws a text area as a reader would: its ground clipped to the polygon, and its text centred
- * in the bounding box at the largest size that fits (found once per text and size, in image pixels).
+ * Draws a text area as a reader would: its ground clipped to the polygon, and its text laid out
+ * inside the shape itself (each line as wide as the shape is at its height), at the largest size
+ * that fits. The layout is found in image pixels, so it does not depend on the zoom.
  */
 internal fun DrawScope.drawTextArea(
     look: AreaLook, poly: Polygon, path: Path, origin: Offset, scale: Float,
-    measurer: androidx.compose.ui.text.TextMeasurer, fits: HashMap<Triple<String, Int, Int>, Float>, alpha: Float = 1f,
+    measurer: androidx.compose.ui.text.TextMeasurer, fits: TextFits, alpha: Float = 1f,
 ) {
-    val w = (poly.maxX - poly.minX).coerceAtLeast(1)
-    val h = (poly.maxY - poly.minY).coerceAtLeast(1)
-    val turned = look.rotation % 180 in 45..135
-    val boxW = (if (turned) h else w) * 0.86f
-    val boxH = (if (turned) w else h) * 0.86f
-    fun style(px: Float) = TextStyle(color = look.ink, fontSize = (px / density / fontScale).sp, lineHeight = (px * 1.15f / density / fontScale).sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-    // Fitted in image pixels at a fixed resolution, so that the result does not depend on the zoom.
-    val size = fits.getOrPut(Triple(look.text, w, h)) {
-        var lo = 2f
-        var hi = boxH.coerceAtMost(200f)
-        repeat(9) {
-            val mid = (lo + hi) / 2
-            val m = measurer.measure(look.text, style(mid), constraints = Constraints(maxWidth = boxW.toInt().coerceAtLeast(1)))
-            if (m.size.height <= boxH) lo = mid else hi = mid
-        }
-        lo
+    fun style(px: Float) = TextStyle(color = look.ink, fontSize = (px / density / fontScale).sp, lineHeight = (px * TextFit.LEADING / density / fontScale).sp)
+    val layout = fits.getOrPut(listOf(look.text, poly, look.rotation, look.lang)) {
+        val reference = style(TextFit.REFERENCE)
+        fun width(s: String) = measurer.measure(s, reference, softWrap = false, maxLines = 1).size.width.toFloat()
+        val space = width("a b") - width("ab")
+        val hyphenator = Hyphenator.of(look.lang)
+        TextFit.layout(look.text, poly, look.rotation, ::width, space, hyphenate = { hyphenator?.points(it).orEmpty() }, hyphenWidth = width("-"))
     }
-    val px = size * scale
-    if (px < 2f) return
-    val laid = measurer.measure(look.text, style(px), constraints = Constraints(maxWidth = (boxW * scale).toInt().coerceAtLeast(1)))
-    val centre = Offset(origin.x + (poly.minX + w / 2f) * scale, origin.y + (poly.minY + h / 2f) * scale)
+    val centre = Offset(origin.x + (poly.minX + poly.maxX) / 2f * scale, origin.y + (poly.minY + poly.maxY) / 2f * scale)
     clipPath(path) {
         look.ground?.let { drawPath(path, it, alpha = alpha) }
+        val px = (layout?.fontSize ?: 0f) * scale
+        if (layout == null || px < 2f) return@clipPath
+        val st = style(px)
         rotate(-look.rotation.toFloat(), centre) {
-            drawText(laid, topLeft = centre - Offset(laid.size.width / 2f, laid.size.height / 2f), alpha = alpha)
+            for (line in layout.lines) {
+                val laid = measurer.measure(line.text, st, softWrap = false, maxLines = 1)
+                drawText(laid, topLeft = Offset(origin.x + line.centreX * scale - laid.size.width / 2f, origin.y + line.top * scale), alpha = alpha)
+            }
         }
     }
 }
