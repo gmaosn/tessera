@@ -79,4 +79,22 @@ class HyphenationTest {
         assertTrue(layout.lines.none { it.text.trim() in setOf("?", "»", "«", "? »") }, layout.lines.joinToString(" | ") { it.text })
         assertTrue(layout.lines.first().text.startsWith("«\u00a0Quelle"))
     }
+
+    @Test
+    fun wordsAreCutOnlyWhenItPaysAndNeverTwoLinesInARow() {
+        val fr = Hyphenator.of("fr")!!
+        val w = { s: String -> s.length * 55f }
+        // A wide balloon: the words fit nearly as large uncut, so none is cut.
+        val wide = Polygon(listOf(Point(0, 0), Point(900, 0), Point(900, 300), Point(0, 300)))
+        val easy = TextFit.layout("Oh mais il y a une personne inconsciente là-bas", wide, 0, w, 28f, hyphenate = fr::points, hyphenWidth = 33f)!!
+        assertTrue(easy.lines.none { it.text.endsWith("-") }, easy.lines.joinToString(" | ") { it.text })
+        // A narrow column of long words: cutting pays, but two lines in a row never both end cut.
+        val narrow = Polygon(listOf(Point(0, 0), Point(240, 0), Point(240, 3000), Point(0, 3000)))
+        val hard = TextFit.layout("anticonstitutionnellement inconsciemment magnifiquement", narrow, 0, w, 28f, hyphenate = fr::points, hyphenWidth = 33f)!!
+        val ends = hard.lines.map { it.text.endsWith("-") }
+        assertTrue(ends.any { it }, hard.lines.joinToString(" | ") { it.text })
+        assertTrue(ends.zipWithNext().none { (a, b) -> a && b }, hard.lines.joinToString(" | ") { it.text })
+        // Each cut leaves at least three letters on each side.
+        for (line in hard.lines) if (line.text.endsWith("-")) assertTrue(line.text.trimEnd('-').takeLastWhile { it.isLetter() }.length >= 3)
+    }
 }

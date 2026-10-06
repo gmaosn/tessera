@@ -190,7 +190,9 @@ pictures.
   each line is as wide as the shape is at its height, so a round balloon gets short lines at
   the top and bottom. Words are cut between syllables with a hyphen, by the rules of the
   layer's language (TeX's patterns: English, French, German, Spanish, Italian, Dutch,
-  Portuguese, Slovak, Czech, Polish); Chinese and Japanese between characters. A lone « ? »,
+  Portuguese, Slovak, Czech, Polish); Chinese and Japanese between characters. Cuts stay rare:
+  only when they make the text at least a fifth larger than uncut, never on two lines in a row,
+  and with at least three letters on each side. A lone « ? »,
   « ! » or quotation mark stays with its word. Same in reading.
 - **◐ Colour from the image** (selected area) makes the area's ground the colour behind the
   original text: the letters are left out, the rest averaged (a screentone gives its average

@@ -41,18 +41,35 @@ object TextFit {
         val inset = padding * min(shape.maxOf { it.first } - shape.minOf { it.first }, bottom - top)
         val widths = HashMap<String, Float>()
         val cuts = HashMap<String, List<Pair<Int, Boolean>>>()
-        val words = Words({ widths.getOrPut(it) { wordWidth(it) } }, spaceWidth, hyphenWidth) { w -> cuts.getOrPut(w) { cutsOf(w, hyphenate) } }
-        var lo = 1f
-        var hi = (bottom - top).coerceAtLeast(2f)
-        var best: Layout? = null
-        repeat(16) {
-            val size = (lo + hi) / 2
-            val fitted = place(paragraphs, words, size, shape, top + inset, bottom - inset, inset)
-            if (fitted != null) { best = fitted; lo = size } else hi = size
+        val width = { w: String -> widths.getOrPut(w) { wordWidth(w) } }
+        val all = { w: String -> cuts.getOrPut(w) { cutsOf(w, hyphenate) } }
+        val withHyphens = Words(width, spaceWidth, hyphenWidth, all)
+        // Without hyphens, only the cuts that need none (after a hyphen already there, between Chinese characters).
+        val plain = Words(width, spaceWidth, hyphenWidth) { w -> all(w).filter { !it.second } }
+        fun fit(words: Words): Layout? {
+            var lo = 1f
+            var hi = (bottom - top).coerceAtLeast(2f)
+            var best: Layout? = null
+            repeat(16) {
+                val size = (lo + hi) / 2
+                val fitted = place(paragraphs, words, size, shape, top + inset, bottom - inset, inset)
+                if (fitted != null) { best = fitted; lo = size } else hi = size
+            }
+            return best
         }
+        // Words are cut only when it pays: the text must come out clearly larger than uncut.
+        val uncut = fit(plain)
+        val cut = fit(withHyphens)
+        val best = if (uncut != null && (cut == null || cut.fontSize < uncut.fontSize * HYPHEN_GAIN)) uncut else cut
         // Nothing fits (a word wider than the shape at any size): the smallest size, centred.
-        return best ?: place(paragraphs, words, 1f, shape, top, bottom, 0f, force = true)
+        return best ?: place(paragraphs, withHyphens, 1f, shape, top, bottom, 0f, force = true)
     }
+
+    /** How much larger cutting words must make the text for them to be cut. */
+    const val HYPHEN_GAIN = 1.2f
+
+    /** Letters left on each side of a hyphen added by a cut. */
+    const val MIN_PART = 3
 
     /**
      * Punctuation standing alone never starts or ends a line: French « ? », « ! », « : », « ; »
@@ -82,6 +99,7 @@ object TextFit {
     private fun cutsOf(word: String, hyphenate: (String) -> List<Int>): List<Pair<Int, Boolean>> =
         if (word.any(::unspaced)) (1 until word.length).filter { !word[it].isLowSurrogate() && word[it] !in CLOSING }.map { it to false }
         else hyphenate(word).filter { it in 1 until word.length }.map { it to (word[it - 1] != '-') }
+            .filter { (at, dash) -> !dash || (word.take(at).count { it.isLetter() } >= MIN_PART && word.drop(at).count { it.isLetter() } >= MIN_PART) }
 
     private const val CLOSING = "、。，．！？）」』】〉》ー・：；"
 
@@ -103,6 +121,8 @@ object TextFit {
             val blockTop = (top + bottom) / 2 - n * lh / 2
             val lines = ArrayList<Line>()
             var ok = true
+            // Never two lines in a row ending with an added hyphen.
+            var hyphened = false
             loop@ for (paragraph in paragraphs) {
                 val queue = ArrayDeque(paragraph)
                 while (queue.isNotEmpty()) {
@@ -122,7 +142,8 @@ object TextFit {
                             line.append(word); w += gap + ww; queue.removeFirst(); continue
                         }
                         // The longest beginning of the word that still fits, cut by its language's rules.
-                        val cut = words.cuts(word).lastOrNull { (at, dash) -> w + gap + words.width(word.substring(0, at)) * k + (if (dash) words.hyphen * k else 0f) <= room }
+                        val cut = words.cuts(word).filter { !(it.second && hyphened) }
+                            .lastOrNull { (at, dash) -> w + gap + words.width(word.substring(0, at)) * k + (if (dash) words.hyphen * k else 0f) <= room }
                         if (cut != null) {
                             if (line.isNotEmpty()) line.append(' ')
                             line.append(word, 0, cut.first); if (cut.second) line.append('-')
@@ -133,6 +154,7 @@ object TextFit {
                         }
                         break
                     }
+                    hyphened = line.endsWith('-') && queue.isNotEmpty()
                     lines += Line(line.toString(), (left + right) / 2, y0)
                 }
             }

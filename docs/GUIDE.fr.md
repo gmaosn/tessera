@@ -198,7 +198,9 @@ sans toucher à ses dessins.
   ronde a des lignes courtes en haut et en bas. Les mots sont coupés entre les syllabes avec un
   trait d’union, selon les règles de la langue du calque (motifs de TeX : anglais, français,
   allemand, espagnol, italien, néerlandais, portugais, slovaque, tchèque, polonais) ; le chinois
-  et le japonais entre deux caractères. Un « ? », un « ! » ou un guillemet isolé reste avec son
+  et le japonais entre deux caractères. Les coupures restent rares : seulement si elles rendent
+  le texte au moins d’un cinquième plus grand que sans coupure, jamais sur deux lignes de suite,
+  et avec au moins trois lettres de chaque côté. Un « ? », un « ! » ou un guillemet isolé reste avec son
   mot. Pareil en lecture.
 - **◐ Couleur de l’image** (zone sélectionnée) donne au fond de la zone la couleur qu’il y a
   derrière le texte d’origine : les lettres sont écartées, le reste est moyenné (une trame donne
