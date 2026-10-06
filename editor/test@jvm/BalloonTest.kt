@@ -35,7 +35,7 @@ class BalloonTest {
      * A page 1000 × 800: a frame (50,50)–(600,750) with a screentone-ish grey inside, and a balloon
      * centred (600, 250), 360 × 220, outline 6 px, spilling over the frame's right edge, with letters.
      */
-    private fun page(open: Boolean = false): BufferedImage {
+    private fun page(open: Int = 0): BufferedImage {
         val img = BufferedImage(1000, 800, BufferedImage.TYPE_INT_RGB)
         val g = img.createGraphics()
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
@@ -44,7 +44,7 @@ class BalloonTest {
         g.color = Color.BLACK; g.stroke = BasicStroke(5f); g.drawRect(50, 50, 550, 700)
         g.color = Color.WHITE; g.fillOval(420, 140, 360, 220)
         g.color = Color.BLACK; g.stroke = BasicStroke(6f)
-        if (open) g.drawArc(420, 140, 360, 220, 20, 320) else g.drawOval(420, 140, 360, 220)
+        if (open > 0) g.drawArc(420, 140, 360, 220, open / 2, 360 - open) else g.drawOval(420, 140, 360, 220)
         g.font = java.awt.Font("SansSerif", java.awt.Font.BOLD, 28)
         g.drawString("HELLO THERE", 510, 240); g.drawString("FRIEND!", 540, 280)
         g.dispose()
@@ -66,8 +66,13 @@ class BalloonTest {
     }
 
     @Test
-    fun anOpenBalloonIsNotFound() {
-        assertNull(Balloon.find(page(open = true).toComposeImageBitmap(), 600, 300))
+    fun aBalloonOpenOnANarrowSideIsClosedThereAndAWideOpenOneIsNotFound() {
+        // 40° of the outline missing on the right (a 75 px opening, as across a gutter): closed off.
+        val narrow = assertNotNull(Balloon.find(page(open = 40).toComposeImageBitmap(), 600, 300))
+        assertTrue(narrow.inner.maxX in 760..800, "reaches ${narrow.inner.maxX}")
+        assertTrue(narrow.inner.minY > 120 && narrow.inner.maxY < 380)
+        // Half the outline missing: no balloon to speak of.
+        assertNull(Balloon.find(page(open = 180).toComposeImageBitmap(), 600, 300))
     }
 
     @Test
@@ -131,5 +136,88 @@ class BalloonTest {
         // One click, one undo step.
         session.undo()
         assertEquals(listOf(left, right), session.page.frames.map { it.polygon })
+    }
+
+    /**
+     * A wide balloon across two stacked frames, mostly in the lower one; the upper frame's bottom
+     * edge was traced by hand round the balloon's top, wobbling. One click gives regular outlines.
+     */
+    @Test
+    fun handTracingAlongTheBalloonIsReplacedByItsOutline() {
+        val img = BufferedImage(1000, 800, BufferedImage.TYPE_INT_RGB)
+        img.createGraphics().apply {
+            setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+            color = Color.WHITE; fillRect(0, 0, 1000, 800)
+            color = Color(0xE0C080); fillRect(50, 50, 900, 350)
+            color = Color(0x80B0D0); fillRect(50, 415, 900, 365)
+            color = Color.WHITE; fillOval(200, 350, 600, 240)
+            color = Color.BLACK; stroke = BasicStroke(5f); drawOval(200, 350, 600, 240)
+            font = java.awt.Font("SansSerif", java.awt.Font.BOLD, 30); drawString("WHERE DOES THIS GO?", 320, 470)
+            dispose()
+        }
+        val bitmap = img.toComposeImageBitmap()
+        // The upper frame: its bottom edge dips round the balloon's top, by hand, ±6 px off.
+        val random = java.util.Random(7)
+        val dip = (0..16).map { k ->
+            val a = PI + PI * (k + 1) / 18 // the top half of the ellipse, left to right
+            Point((500 + 304 * kotlin.math.cos(a) + random.nextInt(13) - 6).toInt(), (470 + 124 * kotlin.math.sin(a) + random.nextInt(13) - 6).toInt())
+        }.filter { it.y < 400 }
+        val upper = Polygon(listOf(Point(50, 50), Point(950, 50), Point(950, 400)) + dip.reversed() + listOf(Point(50, 400)))
+        val lower = Polygon(listOf(Point(50, 415), Point(950, 415), Point(950, 780), Point(50, 780)))
+        val doc = AcbfDocument.create("Test", listOf("cover.png", "p1.png"))
+        val session = Session(Comic(doc, EmptyContainer, "t.acbf", generated = false), "t.cbz")
+        session.edit { it.addFrame(upper); it.addFrame(lower) }
+        val tool = FrameTool(session).apply { imageWidth = 1000; imageHeight = 800; balloonAt = { p -> Balloon.find(bitmap, p.x, p.y) } }
+        tool.select(Tool.Balloon)
+        tool.press(Offset(500f, 520f), 1f)
+        val found = Balloon.find(bitmap, 500, 520)!!
+        val (top, bottom) = session.page.frames.map { it.polygon!! }
+        for (c in listOf(Point(50, 50), Point(950, 50), Point(950, 400), Point(50, 400))) assertTrue(c in top.points, "$c kept")
+        for (c in lower.points) assertTrue(c in bottom.points, "$c kept")
+        // No hand-traced point is left: every other point of the upper frame lies on the cut round the balloon.
+        val others = top.points.filter { it !in upper.points.take(3) && it != Point(50, 400) }
+        assertTrue(others.none { it in dip }, "hand points left: ${others.filter { it in dip }}")
+        assertEquals(0, found.outer.points.count { top.contains(it.x.toDouble(), it.y.toDouble()) })
+        // The lower frame holds the whole balloon.
+        assertTrue(found.inner.points.all { p -> found.inner.inward(p).let { (x, y) -> bottom.contains(x, y) } })
+    }
+
+    /** A scanned outline with light gaps a pixel or two wide is still a closed balloon. */
+    @Test
+    fun smallGapsInAScannedOutlineAreBridged() {
+        val img = page()
+        // Gaps across the outline, 2 px wide, as a scan or JPEG leaves them.
+        for ((x, y) in listOf(600 to 140, 420 to 250, 700 to 349)) for (dx in 0..1) for (dy in -6..6) {
+            img.setRGB(x + dx, y + dy, 0xFFFFFF); img.setRGB(x + dy, y + dx, 0xFFFFFF)
+        }
+        val found = assertNotNull(Balloon.find(img.toComposeImageBitmap(), 600, 300))
+        val expected = PI * (180 - 3) * (110 - 3)
+        assertTrue(kotlin.math.abs(found.inner.area - expected) < expected * 0.08, "inner ${found.inner.area} vs $expected")
+    }
+
+    /** A second click on the same balloon gives it to the other frame. */
+    @Test
+    fun clickingAgainGivesTheBalloonToTheOtherFrame() {
+        val img = page().toComposeImageBitmap()
+        val doc = AcbfDocument.create("Test", listOf("cover.png", "p1.png"))
+        val session = Session(Comic(doc, EmptyContainer, "t.acbf", generated = false), "t.cbz")
+        val left = Polygon(listOf(Point(50, 50), Point(600, 50), Point(600, 750), Point(50, 750)))
+        val right = Polygon(listOf(Point(615, 50), Point(950, 50), Point(950, 750), Point(615, 750)))
+        session.edit { it.addFrame(left); it.addFrame(right) }
+        val tool = FrameTool(session).apply { imageWidth = 1000; imageHeight = 800; balloonAt = { p -> Balloon.find(img, p.x, p.y) } }
+        tool.select(Tool.Balloon)
+        tool.press(Offset(560f, 300f), 1f)
+        assertEquals(0, tool.selected)
+        tool.press(Offset(560f, 300f), 1f)
+        assertEquals(1, tool.selected)
+        val (a, b) = session.page.frames.map { it.polygon!! }
+        val found = Balloon.find(img, 600, 300)!!
+        assertEquals(0, found.outer.points.count { a.contains(it.x.toDouble(), it.y.toDouble()) }, "left frame leaves it out")
+        assertTrue(found.inner.points.all { p -> found.inner.inward(p).let { (x, y) -> b.contains(x, y) } }, "right frame holds it")
+        for (c in left.points) assertTrue(c in a.points, "$c kept")
+        for (c in right.points) assertTrue(c in b.points, "$c kept")
+        // And back again.
+        tool.press(Offset(560f, 300f), 1f)
+        assertEquals(0, tool.selected)
     }
 }

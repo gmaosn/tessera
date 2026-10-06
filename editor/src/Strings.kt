@@ -146,7 +146,8 @@ object Strings {
             1 -> t("frame ${cut[0]} leaves it out", "la case ${cut[0]} la contourne")
             else -> t("frames ${cut.joinToString(", ")} leave it out", "les cases ${cut.joinToString(", ")} la contournent")
         }
-        return listOfNotNull(g, c).joinToString(t("; ", " ; ")).replaceFirstChar { it.uppercase() }
+        return listOfNotNull(g, c).joinToString(t("; ", " ; ")).replaceFirstChar { it.uppercase() } +
+            t(" · click again to give it to the other frame", " · un nouveau clic la donne à l’autre case")
     }
 
     // ----- Texts tab -----

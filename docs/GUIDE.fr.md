@@ -66,16 +66,18 @@ Après un tracé, Tessera revient à la sélection, la nouvelle case sélectionn
 
 ## Bulles qui franchissent le bord d’une case
 
-L’outil **Bulle** (**B**) trouve une bulle dans la planche d’un clic à l’intérieur, sur son fond
-clair : tout son intérieur, son contour et son épaisseur (les lettres dedans n’y changent rien ;
-une bulle dont le fond s’ouvre sur la planche n’est pas prise).
+L’outil **Bulle** (**B**) trouve une bulle dans la planche d’un clic à l’intérieur, même au milieu
+de ses lettres : tout son intérieur, son contour et son épaisseur. Les petits trous d’un trait
+scanné sont comblés ; là où une bulle traverse une gouttière blanche sans trait, elle est fermée
+à cet endroit. Une bulle largement ouverte sur la planche n’est pas prise.
 
 - Dans **Cases**, un clic règle la bulle entre les cases : la case à laquelle elle appartient
   (celle sélectionnée, sinon celle qui en contient le plus) passe autour de la partie qui
   déborde, découpée au milieu de son trait pour qu’on ne voie rien de la case voisine ; toute
-  autre case où elle entre la contourne, trait compris, pour qu’elle n’y apparaisse pas. Pour
-  donner la bulle à l’autre case, sélectionnez celle-ci et cliquez de nouveau. Les autres points
-  des cases ne bougent pas ; une seule étape d’annulation.
+  autre case où elle entre la contourne, trait compris, pour qu’elle n’y apparaisse pas. Les
+  points tracés à la main le long de la bulle disparaissent (les vrais coins des cases restent),
+  et le contour devient régulier. Un nouveau clic sur la même bulle la donne à l’autre case, un
+  autre la rend. Les autres points des cases ne bougent pas ; une étape d’annulation par clic.
 - Dans **Textes**, un clic crée une zone de texte de tout l’intérieur de la bulle, pour que le
   texte ait toute la place disponible et que son fond cache le texte d’origine ; un clic dans une
   zone existante l’ajuste à sa bulle.

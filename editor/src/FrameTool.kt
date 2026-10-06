@@ -46,6 +46,9 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
     var created by mutableIntStateOf(0)
         private set
 
+    /** The last balloon clicked and the frame it was given to, so that a second click gives it to the other. */
+    private var lastBalloon: Pair<Polygon, Int>? = null
+
     /** Finds the balloon around a point of the page image; set by the editor once the image is loaded. */
     var balloonAt: ((Point) -> Balloon.Found?)? = null
 
@@ -177,11 +180,23 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
         val samples = (0 until 32).flatMap { i -> (0 until 32).map { j -> (b.minX + (b.maxX - b.minX) * (i + 0.5) / 32) to (b.minY + (b.maxY - b.minY) * (j + 0.5) / 32) } }
             .filter { (x, y) -> b.contains(x, y) }
         fun share(k: Int) = polys.getOrNull(k)?.let { f -> samples.count { (x, y) -> f.contains(x, y) } } ?: 0
-        val owner = selected.takeIf { share(it) > 0 } ?: polys.indices.maxByOrNull(::share)?.takeIf { share(it) > 0 }
+        // The frames this balloon is between; clicking it again gives it to the next of them.
+        val around = polys.indices.filter { k -> polys[k]?.let { Balloon.touches(it, found) || Balloon.borders(it, found) } == true }
+        val again = lastBalloon?.let { (inner, owner) -> inner == found.inner && selected == owner && around.size > 1 } == true
+        val owner = if (again) around[(around.indexOf(selected) + 1) % around.size]
+            else selected.takeIf { share(it) > 0 } ?: polys.indices.maxByOrNull(::share)?.takeIf { share(it) > 0 }
             ?: run { message = Strings.noFrameAtBalloon; return }
+        lastBalloon = found.inner to owner
+        // Frames the balloon touches lose the points traced by hand along it, then follow its outline.
         val changes = buildMap {
-            Balloon.around(polys[owner]!!, found.outer)?.let { put(owner, it) }
-            for (k in polys.indices) if (k != owner && polys[k] != null) Balloon.without(polys[k]!!, found.clear)?.let { put(k, it) }
+            for (k in polys.indices) {
+                val f = polys[k] ?: continue
+                if (k != owner && k !in around) continue
+                val base = Balloon.withoutTracing(f, found) ?: f
+                val done = if (k == owner) Balloon.around(base, found.outer) else Balloon.without(base, found.clear)
+                val result = done ?: base
+                if (result != f) put(k, result)
+            }
         }
         if (changes.isEmpty()) { message = Strings.balloonAlreadyInside; return }
         shapes.edit { for ((k, p) in changes) set(k, p) }

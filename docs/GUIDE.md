@@ -65,16 +65,18 @@ Tessera goes back to Select with the new frame selected.
 
 ## Balloons that cross a frame's edge
 
-The **Balloon** tool (**B**) finds a balloon in the page from a click inside it, on its light
-ground: its whole inside, its outline and how thick it is (the letters inside do not matter;
-a balloon whose ground runs out into the page is not taken).
+The **Balloon** tool (**B**) finds a balloon in the page from a click inside it, even among its
+letters: its whole inside, its outline and how thick it is. Small gaps in a scanned outline are
+bridged; where a balloon crosses a white gutter without an outline, it is closed off there. A
+balloon mostly open on the page is not taken.
 
 - In **Frames**, one click settles the balloon between the frames: the frame it belongs to (the
   selected one, else the one holding most of it) goes round the part that spills over, cut
   along the middle of its outline so that nothing of the next frame shows; every other frame it
-  intrudes on is cut back round it, outline and all, so that it does not show there. To give the
-  balloon to the other frame, select that frame and click again. The frames' other points stay
-  as they were; one undo step.
+  intrudes on is cut back round it, outline and all, so that it does not show there. Points
+  traced by hand along the balloon go (the frames' real corners stay), so the outline becomes
+  regular. Click the same balloon again to give it to the other frame, and again to come back.
+  The frames' other points stay as they were; one undo step per click.
 - In **Texts**, a click makes a text area of the balloon's whole inside, so that the text gets
   all the room there is and its ground hides the original text; a click inside an existing area
   fits it to its balloon.
