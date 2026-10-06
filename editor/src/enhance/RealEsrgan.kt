@@ -54,10 +54,22 @@ object RealEsrgan {
     /** Thrown when a computation gives way to a more urgent one (see [upscale2x]). */
     class Yielded : Exception("gave way to a more urgent page")
 
-    suspend fun upscale2x(page: Argb, progress: (Float) -> Unit = {}, shouldYield: () -> Boolean = { false }): Argb {
+    /**
+     * A ×2 computation in progress: its result so far and the tiles done, so that one that gave
+     * way ([Yielded]) takes up where it stopped instead of starting again.
+     */
+    class Partial internal constructor(val width: Int, val height: Int) {
+        internal val out = IntArray(width * 2 * height * 2)
+        internal val done = BooleanArray(((width + TILE - 1) / TILE) * ((height + TILE - 1) / TILE))
+    }
+
+    fun partial2x(page: Argb) = Partial(page.width, page.height)
+
+    suspend fun upscale2x(page: Argb, progress: (Float) -> Unit = {}, shouldYield: () -> Boolean = { false }, partial: Partial = partial2x(page)): Argb {
+        check(partial.width == page.width && partial.height == page.height) { "partial result of another size" }
         val w2 = page.width * 2
-        val out = IntArray(w2 * page.height * 2)
-        run(page, progress, shouldYield) { x, y, block, o, _, _ ->
+        val out = partial.out
+        run(page, progress, shouldYield, partial.done) { x, y, block, o, _, _ ->
             for (j in 0..1) for (i in 0..1) {
                 var px = 0xFF shl 24
                 for (c in 0 until 3) {
@@ -75,7 +87,7 @@ object RealEsrgan {
     suspend fun upscale4x(page: Argb): Argb {
         val w4 = page.width * SCALE
         val out = IntArray(w4 * page.height * SCALE)
-        run(page, {}, { false }) { x, y, block, o, _, _ ->
+        run(page, {}, { false }, BooleanArray(((page.width + TILE - 1) / TILE) * ((page.height + TILE - 1) / TILE))) { x, y, block, o, _, _ ->
             for (dy in 0 until 4) for (dx in 0 until 4) {
                 var px = 0xFF shl 24
                 for (c in 0 until 3) px = px or (channel(block[o + c * 16 + dy * 4 + dx]) shl (16 - 8 * c))
@@ -87,16 +99,22 @@ object RealEsrgan {
 
     private fun channel(v: Float) = (v.coerceIn(0f, 1f) * 255f + 0.5f).toInt()
 
-    /** [shouldYield] is asked before each tile: true stops the computation with [Yielded]. */
-    private suspend fun run(page: Argb, progress: (Float) -> Unit, shouldYield: () -> Boolean, sink: Sink) = coroutineScope {
+    /**
+     * [shouldYield] is asked before each tile: true stops the computation with [Yielded]. Tiles
+     * marked in [finished] are skipped, and each tile done is marked there.
+     */
+    private suspend fun run(page: Argb, progress: (Float) -> Unit, shouldYield: () -> Boolean, finished: BooleanArray, sink: Sink) = coroutineScope {
         val net = layers ?: error("Real-ESRGAN weights missing")
         val tiles = buildList { for (y in 0 until page.height step TILE) for (x in 0 until page.width step TILE) add(x to y) }
-        val done = kotlinx.coroutines.flow.MutableStateFlow(0)
-        tiles.map { (x, y) ->
+        val done = kotlinx.coroutines.flow.MutableStateFlow(finished.count { it })
+        if (done.value > 0) progress(done.value.toFloat() / tiles.size)
+        tiles.withIndex().filter { !finished[it.index] }.map { (k, xy) ->
+            val (x, y) = xy
             async(computeDispatcher) {
                 coroutineContext.ensureActive()
                 if (shouldYield()) throw Yielded()
                 tile(net, page, x, y, minOf(TILE, page.width - x), minOf(TILE, page.height - y), sink)
+                finished[k] = true
                 val n = done.updateAndGet { it + 1 }
                 progress(n.toFloat() / tiles.size)
             }

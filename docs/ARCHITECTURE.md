@@ -96,8 +96,10 @@ compares it with a PyTorch output in `fixtures/sr`). Tiles of 128 px plus an 18 
 every core; four neighbouring pixels share each weight load; about two minutes for a 1000×1500
 page on an M1. The ×4 result is averaged down to ×2 as it is produced. `ImageCache` runs one page
 at a time, drops queued pages no longer shown, keeps started ones going, and saves results
-through a `SuperResStore` (the app's `SuperResSidecar`: `Book.cbz.tessera/real-esrgan-x2/`,
-keyed by the image's CRC and size; the user cache folder when the book's folder is read-only).
+through a `SuperResStore` (the app's `SuperResSidecar`: `Book.cbz.tessera/real-esrgan-x2/`
+and the user cache folder, keyed by the image's CRC and size, so a moved or copied book finds
+them). A started computation is never thrown away: when its page or frame is left, it gives way
+to everything wanted, between tiles, and takes up from the tiles done (`RealEsrgan.Partial`).
 
 ## Tests
 

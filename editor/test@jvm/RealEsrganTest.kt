@@ -37,6 +37,27 @@ class RealEsrganTest {
         assertTrue(worst <= 2, "worst difference $worst")
     }
 
+    /** A computation that gave way takes up from the tiles done, and ends as one never stopped. */
+    @Test
+    fun resumesWhereItGaveWay() = runBlocking {
+        val input = argb(File(root, "fixtures/sr/input.png"))
+        // The fixture repeated over 300 × 300 pixels: nine tiles.
+        val page = Argb(300, 300, IntArray(300 * 300) { i ->
+            val x = i % 300; val y = i / 300
+            input.pixels[(y % input.height) * input.width + x % input.width]
+        })
+        val whole = RealEsrgan.upscale2x(page)
+        val partial = RealEsrgan.partial2x(page)
+        val asked = java.util.concurrent.atomic.AtomicInteger()
+        val gaveWay = runCatching { RealEsrgan.upscale2x(page, shouldYield = { asked.incrementAndGet() > 2 }, partial = partial) }
+        assertTrue(gaveWay.exceptionOrNull() is RealEsrgan.Yielded, "should have given way")
+        asked.set(0)
+        val resumed = RealEsrgan.upscale2x(page, shouldYield = { asked.incrementAndGet(); false }, partial = partial)
+        assertTrue(whole.pixels.contentEquals(resumed.pixels), "resumed result differs")
+        val tiles = ((page.width + 127) / 128) * ((page.height + 127) / 128)
+        assertTrue(asked.get() < tiles, "tiles done before were computed again (${asked.get()} of $tiles)")
+    }
+
     @Test
     fun timesARealPage() = runBlocking {
         val page = File(root, "ref/ACBF/Sample Comic Book/Doctorow, Cory - Craphound-1.1/page1.jpg")

@@ -152,7 +152,9 @@ display settings, remembered separately for editing and reading:
 Pages already in high definition (above about 4 megapixels, such as 300 dpi scans) are not
 enlarged as a whole: that would take many minutes for little. When reading frame by frame,
 Restore and Super-res improve the frame you read instead (about a minute per frame with
-Super-res, kept beside the book too). While you read, the next 15 frames are prepared in
+Super-res, kept beside the book too, and in your cache folder, so that a book moved or copied
+elsewhere finds its frames again). A frame you leave before it is done is not lost: it is
+finished later, after the frames ahead. While you read, the next 15 frames are prepared in
 reading order, across pages (a lower-definition page as a whole); the reading bar counts how
 many are ready. The frame shown always goes first. Frames done stay enhanced, and frames
 computed earlier show at once when you come back to a page.

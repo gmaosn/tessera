@@ -155,7 +155,9 @@ l’édition et pour la lecture :
 Les planches déjà en haute définition (au-delà d’environ 4 mégapixels, comme les numérisations
 à 300 dpi) ne sont pas agrandies en entier : cela prendrait de longues minutes pour peu de chose.
 En lecture case par case, la restauration et la super-résolution améliorent plutôt la case que
-vous lisez (environ une minute par case en super-résolution, gardée elle aussi à côté du livre).
+vous lisez (environ une minute par case en super-résolution, gardée elle aussi à côté du livre,
+et dans votre dossier de cache, pour qu’un livre déplacé ou copié retrouve ses cases). Une case
+quittée avant la fin n’est pas perdue : elle est terminée plus tard, après les cases suivantes.
 Pendant la lecture, les 15 cases suivantes sont préparées dans l’ordre de lecture, d’une planche à
 l’autre (une planche en définition plus basse en entier) ; la barre de lecture compte celles qui
 sont prêtes. La case affichée passe toujours en premier. Les cases faites restent améliorées, et

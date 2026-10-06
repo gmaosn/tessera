@@ -62,6 +62,31 @@ class SuperResCacheTest {
         assertTrue(store.saved.isEmpty())
     }
 
+    /** Left once started (owner, 2026-10-07: reading on, nothing was ever finished), it still ends and is saved. */
+    @Test
+    fun aStartedComputationFinishesWhenLeft() = runBlocking {
+        val large = ByteArrayOutputStream().also { out ->
+            val img = BufferedImage(400, 300, BufferedImage.TYPE_INT_RGB)
+            img.createGraphics().apply { color = java.awt.Color.WHITE; fillRect(0, 0, 400, 300); color = java.awt.Color.BLACK; drawLine(5, 5, 395, 295); dispose() }
+            ImageIO.write(img, "png", out)
+        }.toByteArray()
+        val container = object : Container {
+            override val paths = listOf("a.png", "b.png")
+            override fun read(path: String) = large
+        }
+        val store = MemoryStore()
+        val cache = ImageCache(Comic(AcbfDocument.create("T", listOf("a.png", "b.png")), container, "t.acbf", generated = false), store)
+            .apply { wanted = listOf("a.png") }
+        val reader = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Default).async { cache.enhanced("a.png", Enhancement(EnhanceMode.SuperRes)) }
+        while ((cache.superResProgress["a.png"] ?: 0f) <= 0f) kotlinx.coroutines.delay(20)
+        // The reader moves on: another page shown, the waiting caller gone.
+        cache.wanted = listOf("b.png")
+        reader.cancel()
+        val start = System.currentTimeMillis()
+        while (store.saved.isEmpty() && System.currentTimeMillis() - start < 180_000) kotlinx.coroutines.delay(100)
+        assertEquals(1, store.saved.size, "the computation left was not finished")
+    }
+
     @Test
     fun highDefinitionPagesAreLeftAsTheyAre() = runBlocking {
         val big = ByteArrayOutputStream().also { ImageIO.write(BufferedImage(2200, 2200, BufferedImage.TYPE_INT_RGB), "png", it) }.toByteArray()
@@ -78,6 +103,7 @@ class SuperResCacheTest {
         assertTrue(store.saved.isEmpty(), "nothing computed")
         // Sharpening stays available: it keeps the size and is quick.
         assertNotNull(cache.enhanced("a.png", Enhancement(EnhanceMode.Sharpen, 0.5f)))
+        Unit // a @Test returning a value is never run (it was skipped until 2026-10-07)
     }
 
     @Test

@@ -67,7 +67,8 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         set(value) { shown = value }
 
 
-    private val superResJobs = HashMap<String, Deferred<Argb?>>()
+    /** Computations by page or frame, until they end (not when their caller leaves). */
+    private val superResJobs = java.util.concurrent.ConcurrentHashMap<String, Deferred<Argb?>>()
     private val superResScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     /** Least recently used first. */
@@ -164,7 +165,9 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
     /**
      * Real-ESRGAN's ×2 result for a page image: from the store when it was computed before,
      * otherwise computed (minutes) and saved there. A computation, once started, finishes even
-     * if the page is left, so that coming back is instant.
+     * if the page is left (owner, 2026-10-07: reading on, nothing was ever finished): it then
+     * gives way to everything wanted and takes up where it stopped, never starting again. One
+     * only queued, not started, is dropped when no longer wanted.
      */
     private suspend fun superRes(href: String, region: Region? = null, computeIfMissing: Boolean = true): Argb? {
         if (!RealEsrgan.available) return null
@@ -176,18 +179,20 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         if (!computeIfMissing) {
             return store?.runCatching { load(key) }?.getOrNull()?.let { withContext(Dispatchers.Default) { decodeArgb(it) } }
         }
-        val job = superResScope.async {
+        val job = superResScope.async(start = kotlinx.coroutines.CoroutineStart.LAZY) {
             store?.runCatching { load(key) }?.getOrNull()?.let { decodeArgb(it) }?.let { return@async it }
-            // Give way to a more urgent page between tiles, then take the turn again.
+            // Give way to a more urgent page between tiles, then take the turn again where it stopped.
             val ticket = Any()
+            var partial: RealEsrgan.Partial? = null
             while (true) {
                 SuperResScheduler.takeTurn(ticket) { priorityOf(id) }
                 try {
-                    if (id !in wanted) return@async null
+                    if (partial == null && id !in wanted) return@async null
                     val decoded = decodeArgb(bytes) ?: return@async null
                     val page = region?.let { decoded.crop(it) } ?: decoded
+                    val work = partial ?: RealEsrgan.partial2x(page).also { partial = it }
                     superResProgress[id] = 0f
-                    val sr = RealEsrgan.upscale2x(page, { superResProgress[id] = it }, shouldYield = { id !in wanted || SuperResScheduler.moreUrgentWaiting(priorityOf(id)) })
+                    val sr = RealEsrgan.upscale2x(page, { superResProgress[id] = it }, shouldYield = { SuperResScheduler.moreUrgentWaiting(priorityOf(id)) }, partial = work)
                     store?.runCatching { save(key, encodeJpeg(sr, 92)) }
                     return@async sr
                 } catch (e: RealEsrgan.Yielded) {
@@ -199,8 +204,11 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
             }
             @Suppress("UNREACHABLE_CODE") null
         }
-        superResJobs[id] = job
-        return try { job.await() } finally { superResJobs.remove(id) }
+        val running = superResJobs.putIfAbsent(id, job)
+        if (running != null) return running.await()
+        job.invokeOnCompletion { superResJobs.remove(id, job) }
+        job.start()
+        return job.await()
     }
 
     /**
