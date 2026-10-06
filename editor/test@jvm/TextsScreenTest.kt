@@ -7,6 +7,8 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performMouseInput
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.pressKey
@@ -145,6 +147,29 @@ class TextsScreenTest {
             onRoot().performKeyInput { pressKey(Key.L) }
             waitForIdle()
             assertEquals(null, lang)
+        }
+    }
+
+    /** A text area just drawn shows at once in the inspector, its field ready for typing. */
+    @Test
+    fun aDrawnAreaCanBeTypedInAtOnce() {
+        val file = book("Doctorow, Cory - Craphound") ?: return println("fixtures/samples missing")
+        val comic = ComicFiles.open(file)
+        val session = Session(comic, file.name)
+        val images = ImageCache(comic)
+        runBlocking { images.page(session.page.imageHref) }
+        runDesktopComposeUiTest(1440, 900) {
+            setContent { TesseraTheme { EditorScreen(session, images, onSave = { "" }, startMode = 1) } }
+            waitForIdle()
+            val before = onAllNodes(hasSetTextAction()).fetchSemanticsNodes().size
+            onRoot().performKeyInput { pressKey(Key.R) }
+            onRoot().performMouseInput { moveTo(Offset(560f, 420f)); press(); moveTo(Offset(600f, 450f)); moveTo(Offset(660f, 480f)); release() }
+            waitForIdle()
+            assertEquals(12, session.page.textAreas("en").size)
+            // Its text field, and the rotation and ground fields of the selected area.
+            assertEquals(before + 3, onAllNodes(hasSetTextAction()).fetchSemanticsNodes().size)
+            // The new field has the keyboard, so one can type at once.
+            onNode(hasSetTextAction() and androidx.compose.ui.test.isFocused()).assertExists()
         }
     }
 }

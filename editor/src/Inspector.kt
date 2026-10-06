@@ -75,6 +75,8 @@ fun Inspector(session: Session, tool: FrameTool, modifier: Modifier = Modifier, 
 /** The book's title and authors at a glance, one click away from editing every field. */
 @Composable
 internal fun BookSection(session: Session, onBookInfo: () -> Unit) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     val m = tessera.acbf.Metadata(session.document)
     val B = tessera.acbf.Section.Book
@@ -107,6 +109,8 @@ internal fun InspectorSection(content: @Composable () -> Unit) {
 
 @Composable
 private fun FramesSection(session: Session, tool: FrameTool) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     val polygons = tool.polygons
     InspectorSection {
@@ -229,6 +233,8 @@ private fun MiniShape(poly: Polygon?, modifier: Modifier) {
 
 @Composable
 private fun PageSection(session: Session) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     val page = session.page
     InspectorSection {
@@ -276,6 +282,8 @@ private val TRANSITIONS = listOf("fade", "blend", "scroll_right", "scroll_down",
 
 @Composable
 private fun FileSection(session: Session) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     InspectorSection {
         SectionTitle(Strings.inFile)

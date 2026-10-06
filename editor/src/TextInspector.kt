@@ -96,6 +96,8 @@ fun TextInspector(session: Session, tool: FrameTool, view: TextsView, modifier: 
 
 @Composable
 private fun AreasSection(session: Session, tool: FrameTool, view: TextsView, lang: String) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     val page = session.page
     val areas = page.textAreas(lang)
@@ -146,6 +148,8 @@ private fun AreasSection(session: Session, tool: FrameTool, view: TextsView, lan
 
 @Composable
 private fun AreaRow(session: Session, tool: FrameTool, area: AcbfTextArea, index: Int, lang: String, reference: String?, focus: FocusRequester) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     val selected = index == tool.selected
     val shape = RoundedCornerShape(8.dp)
@@ -175,6 +179,8 @@ private fun AreaRow(session: Session, tool: FrameTool, area: AcbfTextArea, index
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AreaOptions(session: Session, area: AcbfTextArea, index: Int, lang: String) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     fun change(key: String? = null, f: (AcbfTextArea) -> Unit) = session.editTexts(key) { p -> p.textAreas(lang).getOrNull(index)?.let(f) }
     FormField(Strings.areaType) {
         FormChoice(Strings.areaKind(area.type), TEXT_AREA_TYPES.map { it to Strings.areaKind(it) }) { t ->
@@ -204,6 +210,8 @@ private fun AreaOptions(session: Session, area: AcbfTextArea, index: Int, lang: 
 /** The page's layer in this language, as written in the file. */
 @Composable
 private fun LayerFileSection(session: Session, lang: String) {
+    // Read the revision: Compose skips a section whose arguments are the same objects, even when the document changed.
+    @Suppress("UNUSED_VARIABLE") val revision = session.revision
     val c = LocalPalette.current
     InspectorSection {
         SectionTitle(Strings.inFile)
