@@ -135,6 +135,9 @@ fun main(args: Array<String>) {
         var importTarget by remember { mutableStateOf(File("")) }
         var importProgress by remember { mutableStateOf<Pair<Int, Int>?>(null) }
         var importJob by remember { mutableStateOf<Job?>(null) }
+        // Scans import: the folder and its scans, the options and destination; progress as above.
+        var scanPlan by remember { mutableStateOf<Pair<File, List<File>>?>(null) }
+        var scanOptions by remember { mutableStateOf(ScanImportOptions()) }
         val scope = rememberCoroutineScope()
         var notice by remember { mutableStateOf<Notice?>(null) }
         var modeRequest by remember { mutableStateOf<ModeRequest?>(null) }
@@ -203,7 +206,38 @@ fun main(args: Array<String>) {
                 }
             }
 
+            fun planScans(dir: File) {
+                if (!mayDiscard(opened, ::save)) return
+                val scans = ScanImport.scansIn(dir)
+                if (scans.isEmpty()) { Strings.noScans.let { error = it; notice = Notice(it) }; return }
+                scanPlan = dir to scans
+                importTarget = freeName(File(dir.absoluteFile.parentFile, dir.name + ".scans"))
+            }
+
+            fun runScans() {
+                val (dir, scans) = scanPlan ?: return
+                val target = importTarget
+                importProgress = 0 to scans.size * 2
+                importJob = scope.launch {
+                    try {
+                        val result = ScanImport.import(scans, target, scanOptions) { done, total -> importProgress = done to total }
+                        val o = open(target)
+                        o.session.suggested = NewBook(title = dir.name, authors = emptyList(), annotation = "")
+                        switchTo(o)
+                        error = null
+                        notice = Notice(Strings.scansDone(result.scans, result.pages, result.keptWhole))
+                    } catch (e: kotlinx.coroutines.CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Strings.importFailed(e.message).let { error = it; notice = Notice(it) }
+                    } finally {
+                        importProgress = null; scanPlan = null; importJob = null
+                    }
+                }
+            }
+
             fun load(f: File) {
+                if (f.isDirectory) return planScans(f)
                 if (f.extension.equals("pdf", ignoreCase = true)) return planImport(f)
                 if (!mayDiscard(opened, ::save)) return
                 // A comic still being prepared in the background is taken back as it is.
@@ -236,6 +270,7 @@ fun main(args: Array<String>) {
             Menus(
                 onOpen = { pickFile(window)?.let(::load) },
                 onImport = { pickPdf(window)?.let(::planImport) },
+                onImportScans = { pickFolder(window)?.let(::planScans) },
                 onSave = current?.let { { saveRequest++ } },
                 onSaveAs = current?.let { o -> { saveAs(o) } },
                 onPrepareBook = current?.let { { prepareRequest++ } },
@@ -251,7 +286,18 @@ fun main(args: Array<String>) {
                     )
                     val p = plan
                     val progress = importProgress
-                    if (p != null && progress != null) {
+                    val sp = scanPlan
+                    if (sp != null && progress != null) {
+                        ImportProgress(sp.first, progress.first, progress.second, Strings.scansProgress(progress.first, progress.second)) { importJob?.cancel() }
+                    } else if (sp != null) {
+                        ScanImportDialog(
+                            sp.first, sp.second.size, scanOptions, importTarget,
+                            onOptions = { scanOptions = it },
+                            onChangeTarget = { pickSaveFile(window, importTarget)?.let { importTarget = it } },
+                            onCancel = { scanPlan = null },
+                            onImport = ::runScans,
+                        )
+                    } else if (p != null && progress != null) {
                         ImportProgress(p.first, progress.first, progress.second) { importJob?.cancel() }
                     } else if (p != null) {
                         ImportDialog(
@@ -292,12 +338,13 @@ private fun mayDiscard(o: Opened?, save: (Opened) -> String): Boolean {
 
 @Composable
 private fun FrameWindowScope.Menus(
-    onOpen: () -> Unit, onImport: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?, onPrepareBook: (() -> Unit)?, onMode: ((Int) -> Unit)?,
+    onOpen: () -> Unit, onImport: () -> Unit, onImportScans: () -> Unit, onSave: (() -> Unit)?, onSaveAs: (() -> Unit)?, onPrepareBook: (() -> Unit)?, onMode: ((Int) -> Unit)?,
 ) {
     MenuBar {
         Menu(Strings.menuFile) {
             Item(Strings.menuOpen, shortcut = KeyShortcut(Key.O, meta = isMac, ctrl = !isMac), onClick = onOpen)
             Item(Strings.menuImportPdf, shortcut = KeyShortcut(Key.I, meta = isMac, ctrl = !isMac), onClick = onImport)
+            Item(Strings.menuImportScans, shortcut = KeyShortcut(Key.I, meta = isMac, ctrl = !isMac, shift = true), onClick = onImportScans)
             Item(Strings.save, enabled = onSave != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac), onClick = { onSave?.invoke() })
             Item(Strings.menuSaveAs, enabled = onSaveAs != null, shortcut = KeyShortcut(Key.S, meta = isMac, ctrl = !isMac, shift = true), onClick = { onSaveAs?.invoke() })
         }
@@ -347,6 +394,18 @@ private fun pickPdf(window: java.awt.Frame): File? {
     dialog.setFilenameFilter { _, name -> name.endsWith(".pdf", ignoreCase = true) }
     dialog.isVisible = true
     return dialog.file?.let { File(dialog.directory, it) }
+}
+
+/** A folder, through the system's dialog (macOS lets a file dialog choose folders when asked). */
+private fun pickFolder(window: java.awt.Frame): File? {
+    System.setProperty("apple.awt.fileDialogForDirectories", "true")
+    try {
+        val dialog = FileDialog(window, Strings.importScansDialog, FileDialog.LOAD)
+        dialog.isVisible = true
+        return dialog.file?.let { File(dialog.directory, it) }?.takeIf { it.isDirectory }
+    } finally {
+        System.setProperty("apple.awt.fileDialogForDirectories", "false")
+    }
 }
 
 /** "Book.cbz" beside the PDF, or "Book (2).cbz" and so on when taken. */

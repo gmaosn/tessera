@@ -31,7 +31,9 @@ import tessera.editor.Label
 import tessera.editor.LocalPalette
 import tessera.editor.Pill
 import tessera.editor.Segmented
+import tessera.editor.SliderRow
 import tessera.editor.Strings
+import tessera.editor.scan.ScanFinish
 import java.io.File
 
 /** A dimmed backdrop with a centred card, catching clicks so the window behind stays still. */
@@ -85,16 +87,64 @@ fun ImportDialog(
     }
 }
 
+/** The scans import: what will happen to each scan, the reading order and where the CBZ goes. */
+@Composable
+fun ScanImportDialog(
+    dir: File,
+    scans: Int,
+    options: ScanImportOptions,
+    target: File,
+    onOptions: (ScanImportOptions) -> Unit,
+    onChangeTarget: () -> Unit,
+    onCancel: () -> Unit,
+    onImport: () -> Unit,
+) = Modal {
+    val c = LocalPalette.current
+    Label(Strings.scansTitle(dir.name), size = 18.sp, weight = FontWeight.SemiBold, maxLines = 2)
+    Label(Strings.scansCount(scans), color = c.muted)
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.Top) {
+        Label("✓", color = c.ok, weight = FontWeight.Bold)
+        Label(Strings.scansWhat, color = c.ink)
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Label(Strings.readingOrder, weight = FontWeight.Medium, size = 12.5.sp)
+        Segmented(listOf(Strings.scansRightToLeft, Strings.scansLeftToRight), if (options.rightToLeft) 0 else 1, { true }) {
+            onOptions(options.copy(rightToLeft = it == 0))
+        }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        SliderRow(Strings.scansUnfold, options.finish.unfold.toFloat(), max = 2f) { onOptions(options.copy(finish = options.finish.copy(unfold = it.toDouble()))) }
+        SliderRow(Strings.scansSharpen, options.finish.sharpen.toFloat(), max = 2f) { onOptions(options.copy(finish = options.finish.copy(sharpen = it.toDouble()))) }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Label(Strings.scansSettingsNote, Modifier.weight(1f), color = c.muted, size = 12.sp)
+            Pill(Strings.scansDefaults, { onOptions(options.copy(finish = ScanFinish())) }, enabled = options.finish != ScanFinish())
+        }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Label(Strings.importTarget, weight = FontWeight.Medium, size = 12.5.sp)
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Box(Modifier.weight(1f).clip(RoundedCornerShape(8.dp)).background(c.panel).border(1.dp, c.line, RoundedCornerShape(8.dp)).padding(horizontal = 10.dp, vertical = 8.dp)) {
+                Label(target.name, maxLines = 1)
+            }
+            Pill(Strings.change, onChangeTarget)
+        }
+    }
+    Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End)) {
+        Pill(Strings.cancel, onCancel)
+        Pill(Strings.importStart, onImport, primary = true)
+    }
+}
+
 /** Progress while pages are converted, with a way out. */
 @Composable
-fun ImportProgress(pdf: File, done: Int, total: Int, onCancel: () -> Unit) = Modal {
+fun ImportProgress(pdf: File, done: Int, total: Int, label: String = Strings.importProgress(done, total), onCancel: () -> Unit) = Modal {
     val c = LocalPalette.current
     Label(Strings.importing(pdf.name), size = 16.sp, weight = FontWeight.SemiBold, maxLines = 2)
     Box(Modifier.fillMaxWidth().height(8.dp).clip(CircleShape).background(c.panel)) {
         Box(Modifier.fillMaxWidth(if (total > 0) done.toFloat() / total else 0f).fillMaxHeight().clip(CircleShape).background(c.accent))
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Label(Strings.importProgress(done, total), Modifier.weight(1f), color = c.muted)
+        Label(label, Modifier.weight(1f), color = c.muted)
         Pill(Strings.cancel, onCancel)
     }
 }

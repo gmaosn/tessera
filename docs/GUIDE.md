@@ -34,6 +34,20 @@ resolution, as PNG; a page with text or vector drawings is rendered as PNG at 30
 its images are finer (up to 600). A bar shows the progress, with **Cancel**. The comic then opens with **About this
 comic** filled in from the PDF's title, author and subject.
 
+### Importing scans of a book
+
+**File → Import Scans…** (⇧⌘I), or a folder dropped on the window, turns flatbed scans of an
+open book (one double page per image: PNG, JPEG, TIFF or BMP, in the order of their names, 2
+before 10) into a CBZ beside the folder. For each scan Tessera finds the fold, turns the double
+page upright and straight, takes the spine's shadow off, unfolds the paper where it curves into
+the spine (the scan sees it squeezed) and brings it back into focus, then cuts it at the fold, or
+keeps it whole when a picture runs across both pages, and trims it to the paper; the page size
+is agreed over the whole folder. Choose the **reading order**: right to left for a manga, the right
+page first. Pages are saved without loss, as PNG.
+
+The unfolding reads the paper's shape from its shadow: the darker, the steeper. It was calibrated
+on one flatbed scanner, with the same double pages scanned pressed and loose.
+
 ## The window
 
 | Area | What it holds |

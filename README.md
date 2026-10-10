@@ -18,6 +18,8 @@ byte for byte, except what you changed.
 - **Frame editor** (desktop): drawing, adjusting and ordering frames, reading preview, undo,
   saving, English and French.
 - **PDF import**: always lossless, at the best quality the PDF holds; becomes a CBZ.
+- **Scans import**: flatbed scans of an open book become straight pages, cut at the fold (double
+  pages kept whole), unfolded near the spine, shadow taken off, trimmed; a lossless CBZ.
 - **Enhanced display**: optional sharpening, Anime4K restoration (instant) or Real-ESRGAN
   super-resolution (slow, kept beside the book), at twice the resolution, on screen only.
 - **Book information**: every metadata field (authors, titles per language, series, publishing,

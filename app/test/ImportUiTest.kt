@@ -7,6 +7,8 @@ import tessera.app.ImportDialog
 import tessera.app.ImportProgress
 import tessera.app.PdfImportOptions
 import tessera.app.PdfInfo
+import tessera.app.ScanImportDialog
+import tessera.app.ScanImportOptions
 import tessera.editor.Language
 import tessera.editor.Strings
 import tessera.editor.TesseraTheme
@@ -35,6 +37,13 @@ class ImportUiTest {
                 setContent { TesseraTheme { ImportProgress(File("Mon album 1.pdf"), 24, 66) {} } }
                 waitForIdle()
                 javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("19-import-progress-fr.png"))
+            }
+            runDesktopComposeUiTest(1100, 860) {
+                setContent {
+                    TesseraTheme { ScanImportDialog(File("Mon album 2"), 37, ScanImportOptions(), File("Mon album 2.cbz"), {}, {}, {}, {}) }
+                }
+                waitForIdle()
+                javax.imageio.ImageIO.write(onRoot().captureToImage().toAwtImage(), "png", out.resolve("20-import-scans-fr.png"))
             }
         } finally {
             Strings.language = Language.English

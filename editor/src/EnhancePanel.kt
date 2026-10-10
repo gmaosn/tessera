@@ -89,9 +89,9 @@ fun EnhancePanel(settings: Enhancement, busy: Boolean, onChange: (Enhancement) -
     }
 }
 
-/** A labelled slider from 0 to 100 %; the value is applied when the thumb is released. */
+/** A labelled slider from 0 to [max] (shown as 0 to max × 100 %), in steps of 5 %; the value is applied when the thumb is released. */
 @Composable
-private fun SliderRow(label: String, value: Float, onChange: (Float) -> Unit) {
+fun SliderRow(label: String, value: Float, max: Float = 1f, onChange: (Float) -> Unit) {
     val c = LocalPalette.current
     var live by remember(value) { mutableStateOf(value) }
     Column {
@@ -100,7 +100,7 @@ private fun SliderRow(label: String, value: Float, onChange: (Float) -> Unit) {
             Label("${(live * 100).roundToInt()} %", color = c.muted, size = 12.5.sp)
         }
         Slider(
-            live, { live = (it * 20).roundToInt() / 20f }, onValueChangeFinished = { onChange(live) },
+            live, { live = (it * 20).roundToInt() / 20f }, onValueChangeFinished = { onChange(live) }, valueRange = 0f..max,
             colors = SliderDefaults.colors(thumbColor = c.accent, activeTrackColor = c.accent, inactiveTrackColor = c.line),
             modifier = Modifier.padding(top = 0.dp),
         )

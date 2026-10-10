@@ -35,6 +35,20 @@ vectoriel est rendue en PNG à 300 dpi, ou plus si ses images sont plus fines (j
 La bande dessinée s’ouvre ensuite avec **À propos de cette bande dessinée** prérempli d’après le
 titre, l’auteur et le sujet du PDF.
 
+### Importer les scans d’un livre
+
+**Fichier → Importer des scans…** (⇧⌘I), ou un dossier déposé sur la fenêtre, transforme des
+scans à plat d’un livre ouvert (une double page par image : PNG, JPEG, TIFF ou BMP, dans l’ordre de
+leurs noms, 2 avant 10) en CBZ à côté du dossier. Pour chaque scan, Tessera trouve le pli, remet la
+double page droite et à l’endroit, efface l’ombre de la reliure, déplie le papier là où il plonge
+vers le dos (le scan le voit tassé) et le remet au net, puis le coupe au pli, ou le garde entier
+quand un dessin passe sur les deux pages, et le recadre au papier ; la taille des pages est
+accordée sur tout le dossier. Choisissez le **sens de lecture** : de droite à gauche pour un manga,
+la page de droite d’abord. Les pages sont enregistrées sans perte, en PNG.
+
+Le dépliage lit la forme du papier dans son ombre : plus elle est sombre, plus il monte. Il a été
+étalonné sur un scanner à plat, avec les mêmes doubles pages scannées pressées et non pressées.
+
 ## La fenêtre
 
 | Zone | Contenu |
