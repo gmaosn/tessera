@@ -6,7 +6,8 @@ Each language becomes editor/resources/hyphenation/<code>.pat, plain UTF-8:
   then one pattern per line, then a line "-" and one exception per line (hyphens marked).
 
 Sources: https://github.com/hyphenation/tex-hyphen, at the commit below. Licences: see
-docs/THIRD_PARTY.md. Russian is left out: its patterns are under the LPPL only.
+docs/THIRD_PARTY.md. Russian is left out: its patterns are under the LPPL only; Czech too, under the GPL 2 or later
+only (Tessera is under the Apache License since 29 October 2026).
 """
 import os
 import re
@@ -18,7 +19,7 @@ URL = "https://raw.githubusercontent.com/hyphenation/tex-hyphen/{}/hyph-utf8/tex
 # Tessera's language code: the hyph-utf8 file.
 LANGUAGES = {
     "en": "en-us", "fr": "fr", "de": "de-1996", "es": "es", "it": "it", "nl": "nl",
-    "pt": "pt", "sk": "sk", "cs": "cs", "pl": "pl",
+    "pt": "pt", "sk": "sk", "pl": "pl",
 }
 
 

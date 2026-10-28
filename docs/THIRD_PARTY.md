@@ -1,6 +1,7 @@
 # Third-party work
 
-Tessera is GPL-3.0. It includes or uses the following, under their own licences.
+Tessera is under the Apache License 2.0 (GPL-3.0 until 29 October 2026, before its first publication).
+It includes or uses the following, under their own licences.
 
 ## Real-ESRGAN (super-resolution display)
 
@@ -66,12 +67,13 @@ Used as a library, under the Apache License 2.0. https://pdfbox.apache.org/
 | `nl.pat` | `hyph-nl.tex` | Piet Tutelaers | MIT |
 | `pt.pat` | `hyph-pt.tex` | Pedro J. de Rezende, J. Joao Dias Almeida, Leonardo Araujo, Aline Benevides | BSD 3-clause |
 | `sk.pat` | `hyph-sk.tex` | Jana Chlebíková | MIT |
-| `cs.pat` | `hyph-cs.tex` | Pavel Ševeček | GPL 2 or later |
 | `pl.pat` | `hyph-pl.tex` | Hanna Kołodziejska, Bogusław Jackowski, Marek Ryćko | MIT (or others) |
 
-Russian is not included: its patterns are under the LPPL only.
+Russian is not included: its patterns are under the LPPL only. Czech was removed on 29 October 2026, when
+Tessera moved to the Apache License: its patterns are under the GPL 2 or later only.
 
 ## ACBF schemas (tests)
 
 `fixtures/schema/` holds the ACBF 1.0 and 1.1 XML schemas, unchanged, from
-https://github.com/ACBF-Advanced-Comic-Book-Format/ACBF (GPL-3.0).
+https://github.com/ACBF-Advanced-Comic-Book-Format/ACBF (GPL-3.0). They are test data only and are not part
+of Tessera's programs.

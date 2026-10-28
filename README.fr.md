@@ -59,8 +59,8 @@ tools/package-universal.py --input /tmp/tessera-pack/tasks/_app_executableJarJvm
 
 ## Licence
 
-Tessera est un logiciel libre sous [licence publique générale GNU v3.0](LICENSE), comme
-ACBF Viewer et ACBF Editor d’origine.
+Tessera est un logiciel libre sous [licence Apache, version 2.0](LICENSE) (voir [NOTICE](NOTICE)).
+Jusqu’au 29 octobre 2026, avant sa première publication, il était sous licence publique générale GNU v3.0.
 
 ## Travaux de tiers
 
