@@ -1,0 +1,18 @@
+Tessera
+Copyright 2026 Ruben Begert
+
+Licensed under the Apache License, Version 2.0 (see LICENSE). Until 29 October 2026, before its first
+publication, Tessera was under the GNU General Public License v3.0; its only author changed the licence.
+
+Tessera reads and writes the Advanced Comic Book Format (ACBF). Its compatibility notes (docs/COMPATIBILITY.md)
+describe how the original ACBF Viewer and ACBF Editor behave; none of their code is in Tessera.
+
+Third-party work, each under its own licence (details and full notices in docs/THIRD_PARTY.md):
+- Real-ESRGAN's realesr-animevideov3 weights (editor/resources/realesr-animevideov3.bin): BSD 3-Clause,
+  Copyright (c) 2021 Xintao Wang.
+- Anime4K's CNN weights (editor/src/enhance/Anime4KModels.kt): MIT, Copyright (c) 2019-2021 bloc97.
+- TeX hyphenation patterns from hyph-utf8 (editor/resources/hyphenation): each under the licence of its
+  source file (MIT, BSD 3-Clause or a permissive notice), listed in docs/THIRD_PARTY.md.
+- Apache PDFBox, used as a library: Apache License 2.0.
+- The ACBF XML schemas in fixtures/schema (test data only): GPL-3.0, from the ACBF project.
+- The sample books in fixtures/acbf-xml keep their own Creative Commons licences (fixtures/README.md).
