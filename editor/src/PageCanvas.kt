@@ -129,6 +129,8 @@ fun PageCanvas(
     display: ImageBitmap? = null,
     /** In the Texts tab: the text areas' looks (the tool's shapes) and the frames beneath. */
     texts: TextOverlay? = null,
+    /** What reading cuts each frame with, by frame (null while unknown): dashed where it differs from the frame. */
+    cuts: List<Spill.Cut?>? = null,
 ) {
     val c = LocalPalette.current
     val density = LocalDensity.current.density
@@ -272,12 +274,19 @@ fun PageCanvas(
                 drawPath(path, if (sel) c.accentDeep else c.accent, style = Stroke(if (sel) stroke * 1.25f else stroke, join = StrokeJoin.Round))
             }
 
-            // What reading cuts out, where it differs from the polygon: curves and inward fillets.
+            // What reading cuts out, where it differs from the polygon: curves, inward fillets,
+            // balloons and ink that spill out, other frames' balloons taken out.
             val fine = PathEffect.dashPathEffect(floatArrayOf(3f * density, 3f * density))
-            if (texts == null) polygons.forEach { poly ->
-                if (poly == null || poly.isRectangle) return@forEach
+            if (texts == null) polygons.forEachIndexed { i, poly ->
+                if (poly == null) return@forEachIndexed
+                val shown = cuts?.getOrNull(i)
+                val outline = when {
+                    shown != null -> if (shown.plain) return@forEachIndexed else shown.outline
+                    poly.isRectangle -> return@forEachIndexed
+                    else -> Outline.of(poly)
+                }
                 val cut = Path().apply {
-                    Outline.of(poly).forEachIndexed { k, p -> Offset(origin.x + p.x * s, origin.y + p.y * s).let { if (k == 0) moveTo(it.x, it.y) else lineTo(it.x, it.y) } }
+                    outline.forEachIndexed { k, p -> Offset(origin.x + p.x * s, origin.y + p.y * s).let { if (k == 0) moveTo(it.x, it.y) else lineTo(it.x, it.y) } }
                     close()
                 }
                 drawPath(cut, c.accentDeep, style = Stroke(density, pathEffect = fine))

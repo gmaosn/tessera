@@ -16,11 +16,17 @@ import kotlin.math.roundToInt
 object Balloon {
     /**
      * A balloon: [inner] covers its whole inside, reaching just onto its outline; [outer] runs
-     * along the middle of the outline, to cut a frame around it (slightly inside, so that nothing
-     * beyond the balloon shows); [clear] runs a little outside the outline, to cut it out of a
-     * frame it intrudes on (so that nothing of it shows). [stroke] is the outline's width.
+     * along the middle of the outline; [clear] runs outside the outline with a sliver of paper
+     * round it, to cut a frame round the balloon (all of its outline shows, and a little of what
+     * is round it) or to cut it out of a frame it intrudes on (nothing of it shows); [halo] is the
+     * same cut traced closely (many points, for the display, never for the file). [stroke] is the
+     * outline's width; [outlined] whether a dark outline was found at all; [letters] how many
+     * letter-sized dark pieces lie inside.
      */
-    class Found(val inner: Polygon, val outer: Polygon, val clear: Polygon, val stroke: Int)
+    class Found(val inner: Polygon, val outer: Polygon, val clear: Polygon, val halo: Polygon, val stroke: Int, val outlined: Boolean, val letters: Int)
+
+    /** The paper left round an outline [stroke] pixels wide when a frame is cut round or without a balloon. */
+    fun paperRound(stroke: Int): Int = (1.2 * stroke).roundToInt().coerceIn(5, 16)
 
     /** The balloon around image pixel ([x], [y]) of [image], or null when there is no closed one. */
     fun find(image: ImageBitmap, x: Int, y: Int): Found? {
@@ -126,35 +132,75 @@ object Balloon {
         }
         val inside = flooded
         if (minX < 1 || minY < 1 || maxX > w - 2 || maxY > h - 2) return null
+        return measure(pixels, w, h, { inside[it] }, minX, minY, maxX, maxY, luma(seed))
+    }
 
+    /**
+     * The balloon whose light inside is [inside] (bounded by [minX]..[maxX], [minY]..[maxY]):
+     * its outline measured, its letters counted, and the polygons of [Found] traced. Null when
+     * no outline can be traced. [ground] is the luma of the inside, which the ink is darker than.
+     */
+    internal fun measure(pixels: IntArray, w: Int, h: Int, inside: (Int) -> Boolean, minX: Int, minY: Int, maxX: Int, maxY: Int, ground: Int): Found? {
+        fun luma(i: Int): Int { val c = pixels[i]; return (299 * ((c shr 16) and 255) + 587 * ((c shr 8) and 255) + 114 * (c and 255)) / 1000 }
         // A window around it, with room for the outline: outside is whatever its border reaches
         // without crossing the light inside; the rest (the letters too) is the balloon.
         val margin = 48
         val x0 = max(0, minX - margin); val y0 = max(0, minY - margin)
         val ww = min(w, maxX + margin + 1) - x0
         val wh = min(h, maxY + margin + 1) - y0
+        if (ww <= 0 || wh <= 0) return null
+        val queue = IntArray(ww * wh)
         val outside = BooleanArray(ww * wh)
-        head = 0; tail = 0
+        var head = 0
+        var tail = 0
         fun at(lx: Int, ly: Int) = (y0 + ly) * w + x0 + lx
-        for (lx in 0 until ww) for (ly in intArrayOf(0, wh - 1)) { val l = ly * ww + lx; if (!outside[l] && !inside[at(lx, ly)]) { outside[l] = true; queue[tail++] = l } }
-        for (ly in 0 until wh) for (lx in intArrayOf(0, ww - 1)) { val l = ly * ww + lx; if (!outside[l] && !inside[at(lx, ly)]) { outside[l] = true; queue[tail++] = l } }
+        for (lx in 0 until ww) for (ly in intArrayOf(0, wh - 1)) { val l = ly * ww + lx; if (!outside[l] && !inside(at(lx, ly))) { outside[l] = true; queue[tail++] = l } }
+        for (ly in 0 until wh) for (lx in intArrayOf(0, ww - 1)) { val l = ly * ww + lx; if (!outside[l] && !inside(at(lx, ly))) { outside[l] = true; queue[tail++] = l } }
         while (head < tail) {
             val l = queue[head++]
             val lx = l % ww
             val ly = l / ww
-            if (lx > 0) visit(l - 1, outside, inside, at(lx - 1, ly), queue, tail).let { tail = it }
-            if (lx < ww - 1) visit(l + 1, outside, inside, at(lx + 1, ly), queue, tail).let { tail = it }
-            if (ly > 0) visit(l - ww, outside, inside, at(lx, ly - 1), queue, tail).let { tail = it }
-            if (ly < wh - 1) visit(l + ww, outside, inside, at(lx, ly + 1), queue, tail).let { tail = it }
+            if (lx > 0 && !outside[l - 1] && !inside(at(lx - 1, ly))) { outside[l - 1] = true; queue[tail++] = l - 1 }
+            if (lx < ww - 1 && !outside[l + 1] && !inside(at(lx + 1, ly))) { outside[l + 1] = true; queue[tail++] = l + 1 }
+            if (ly > 0 && !outside[l - ww] && !inside(at(lx, ly - 1))) { outside[l - ww] = true; queue[tail++] = l - ww }
+            if (ly < wh - 1 && !outside[l + ww] && !inside(at(lx, ly + 1))) { outside[l + ww] = true; queue[tail++] = l + ww }
         }
         val balloon = BooleanArray(ww * wh) { !outside[it] }
+
+        // The lettering: dark pieces inside the balloon about a letter's size (a few pixels to a
+        // thirtieth of the page's width high, not much wider than high).
+        val letterMin = max(5, w / 400)
+        val letterMax = max(20, w / 30)
+        var letters = 0
+        run {
+            val seen = BooleanArray(ww * wh)
+            for (s in balloon.indices) {
+                if (seen[s] || !balloon[s] || inside(at(s % ww, s / ww))) continue
+                head = 0; tail = 0
+                seen[s] = true; queue[tail++] = s
+                var lx0 = ww; var lx1 = 0; var ly0 = wh; var ly1 = 0
+                while (head < tail) {
+                    val l = queue[head++]
+                    val lx = l % ww
+                    val ly = l / ww
+                    lx0 = min(lx0, lx); lx1 = max(lx1, lx); ly0 = min(ly0, ly); ly1 = max(ly1, ly)
+                    if (lx > 0 && !seen[l - 1] && balloon[l - 1] && !inside(at(lx - 1, ly))) { seen[l - 1] = true; queue[tail++] = l - 1 }
+                    if (lx < ww - 1 && !seen[l + 1] && balloon[l + 1] && !inside(at(lx + 1, ly))) { seen[l + 1] = true; queue[tail++] = l + 1 }
+                    if (ly > 0 && !seen[l - ww] && balloon[l - ww] && !inside(at(lx, ly - 1))) { seen[l - ww] = true; queue[tail++] = l - ww }
+                    if (ly < wh - 1 && !seen[l + ww] && balloon[l + ww] && !inside(at(lx, ly + 1))) { seen[l + ww] = true; queue[tail++] = l + ww }
+                }
+                val lh = ly1 - ly0 + 1
+                val lw = lx1 - lx0 + 1
+                if (tail >= 10 && lh in letterMin..letterMax && lw <= 5 * lh) letters++
+            }
+        }
 
         // Distance outward from the balloon, to measure its outline and grow it.
         val distance = IntArray(ww * wh) { if (balloon[it]) 0 else Int.MAX_VALUE }
         head = 0; tail = 0
         for (l in balloon.indices) if (balloon[l]) queue[tail++] = l
         // Ink: clearly darker than the grey or screentone often around a balloon.
-        val ink = (luma(seed) * 0.4).toInt()
+        val ink = (ground * 0.4).toInt()
         val ring = IntArray(margin + 1)
         val ringDark = IntArray(margin + 1)
         while (head < tail) {
@@ -185,6 +231,7 @@ object Balloon {
         while (halo < 3 && ring[halo + 1] > 0 && inked(halo + 1) < 0.6f * peak) halo++
         var stroke = 0
         while (halo + stroke < margin && ring[halo + stroke + 1] > 0 && inked(halo + stroke + 1) >= max(0.5f, 0.6f * peak)) stroke++
+        val outlined = stroke > 0
         if (stroke == 0) halo = 0
         stroke = stroke.coerceIn(1, 30)
 
@@ -234,7 +281,8 @@ object Balloon {
         }
 
         fun polygon(grow: Int, tolerance: Float): Polygon? {
-            val mask = BooleanArray(ww * wh) { reach[it] <= grow }
+            val limit = min(grow, margin - 1)
+            val mask = BooleanArray(ww * wh) { reach[it] <= limit }
             val contour = trace(mask, ww, wh) ?: return null
             val simple = simplify(contour, tolerance)
             if (simple.size < 3) return null
@@ -242,8 +290,12 @@ object Balloon {
         }
         val inner = polygon(halo + 2, 1.2f) ?: return null
         val outer = polygon(halo + (stroke / 2.0).roundToInt(), 1.5f) ?: return null
-        val clear = polygon(halo + stroke + 2, 1.5f) ?: return null
-        return Found(inner, outer, clear, stroke)
+        // A balloon against a dark ground measures a very wide "outline": the cut stays close all the same.
+        val width = min(stroke, 12)
+        val paper = paperRound(width)
+        val clear = polygon(halo + width + paper, 1.5f) ?: return null
+        val haloPoly = polygon(halo + width + paper, 0.4f) ?: return null
+        return Found(inner, outer, clear, haloPoly, stroke, outlined, letters)
     }
 
     /**
@@ -372,13 +424,6 @@ object Balloon {
             }
         }
         return open
-    }
-
-    private fun visit(l: Int, outside: BooleanArray, inside: BooleanArray, image: Int, queue: IntArray, tail: Int): Int {
-        if (outside[l] || inside[image]) return tail
-        outside[l] = true
-        queue[tail] = l
-        return tail + 1
     }
 
     /** The outer boundary of the mask's shape, pixel by pixel (Moore neighbour tracing). */

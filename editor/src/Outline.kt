@@ -6,6 +6,7 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.ceil
+import kotlin.math.exp
 import kotlin.math.hypot
 import kotlin.math.max
 import kotlin.math.min
@@ -147,6 +148,67 @@ object Outline {
             }
         }
         return out
+    }
+
+    /** A sharp corner of a frame: its point and the ends of its two sides. */
+    class Corner(val at: Offset, val before: Offset, val after: Offset)
+
+    /** The smoothing along a traced outline, in pixels. */
+    private const val SIGMA = 2.5f
+    private const val RADIUS = 8
+
+    /**
+     * The outline of a [ww]×[wh] pixel mask at ([x0], [y0]) of the page, walked like [of]: the
+     * pixel steps smoothed away, but the frame's own [corners] kept sharp where the mask still
+     * has them.
+     */
+    fun fromMask(mask: BooleanArray, ww: Int, wh: Int, x0: Int, y0: Int, corners: List<Corner>): List<Offset> {
+        val raw = Balloon.trace(mask, ww, wh)?.map { Offset(x0 + it.first + 0.5f, y0 + it.second + 0.5f) }
+            ?: return List(POINTS) { Offset(x0.toFloat(), y0.toFloat()) }
+        val n = raw.size
+        if (n < 3) return List(POINTS) { raw[0] }
+        val weights = FloatArray(2 * RADIUS + 1) { k -> val d = (k - RADIUS) / SIGMA; exp(-d * d / 2) }
+        val sum = weights.sum()
+        val pts = ArrayList<Offset>(n)
+        for (i in 0 until n) {
+            var x = 0f
+            var y = 0f
+            for (k in -RADIUS..RADIUS) {
+                val p = raw[(i + k + n) % n]
+                val wgt = weights[k + RADIUS]
+                x += p.x * wgt; y += p.y * wgt
+            }
+            pts += Offset(x / sum, y / sum)
+        }
+        // Near a corner, the outline goes back onto the corner's two sides.
+        val sharp = ArrayList<Int>()
+        for (c in corners) {
+            val i = raw.indices.minBy { (raw[it] - c.at).getDistanceSquared() }
+            if ((raw[i] - c.at).getDistance() > 2f) continue
+            for (k in -RADIUS - 2..RADIUS + 2) {
+                val j = (i + k + n) % n
+                if (k == 0) { pts[j] = c.at; continue }
+                val p = raw[j]
+                val a = project(p, c.at, c.before)
+                val b = project(p, c.at, c.after)
+                pts[j] = if ((a - p).getDistanceSquared() <= (b - p).getDistanceSquared()) a else b
+            }
+            sharp += i
+        }
+        // The same way round as shape() gives, so that outlines morph into one another.
+        var area = 0f
+        for (i in 0 until n) { val p = pts[i]; val q = pts[(i + 1) % n]; area += p.x * q.y - q.x * p.y }
+        val ordered = if (area < 0f) pts.reversed() else pts
+        val cornerIndices = (if (area < 0f) sharp.map { n - 1 - it } else sharp).sorted()
+        return walk(Dense(ordered, cornerIndices), POINTS, Offset(ordered.minOf { it.x }, ordered.minOf { it.y }))
+    }
+
+    private fun project(p: Offset, a: Offset, b: Offset): Offset {
+        val d = b - a
+        val len2 = d.getDistanceSquared()
+        if (len2 == 0f) return a
+        val t = ((p.x - a.x) * d.x + (p.y - a.y) * d.y) / len2
+        return a + d * t
     }
 
     private fun unit(v: Offset): Offset = v.getDistance().let { if (it > 0f) v / it else Offset.Zero }

@@ -72,7 +72,21 @@ archive while keeping the same in-memory document, so undo history survives savi
   (Otsu split, letters and their soft edges left out).
 - `Balloon` finds a balloon from a click (flood of the light inside, letters filled, outline
   measured in rings of ink, notches closed, contours traced and simplified) and grows a frame
-  round it or cuts it out of one, keeping the frame's other points.
+  round it or cuts it out of one, keeping the frame's other points. `Balloon.measure` is the
+  shared part: from a light inside, the outline, the letter count and the polygons (`inner`,
+  `outer`, `clear` for the file, `halo` traced closely for the display).
+- `Spill` reads a page for what spills over its frames, on screen only. `analyse` finds which
+  pixels are paper (the colour of the page's outer strips) and every balloon: the light pieces
+  of the paper's colour that are closed by an outline and hold lettering. `cuts` gives each
+  frame's cut: the frame's smoothed polygon rasterized in a window round it, plus the ink that
+  runs out of it into the paper (non-paper pixels of the gutters, paper pockets closed off by
+  ink filled, lines opened away, what touches the frame within reach, a rim of paper added),
+  plus the halos of its own balloons that spill (the frame holding most of a balloon owns it),
+  minus the halos of other frames' balloons. `Raster` holds the mask operations;
+  `Outline.fromMask` traces the mask, smooths it along the contour and puts the frame's corners
+  back sharp, then walks it like any outline. `ImageCache.ink` and `cuts` cache them per page
+  and per frames; the reader, the editor's dashed cut and the preparer's regions all use `cuts`
+  (`editor/test@jvm/SpillTest.kt`).
 - `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
   redraws the UI at once.
 

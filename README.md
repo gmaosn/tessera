@@ -28,6 +28,9 @@ byte for byte, except what you changed.
   the other language's text beside each one and its areas copied in one click.
 - **Reading with translations**: the frame-by-frame reading lays the chosen language over the
   images (L to switch).
+- **What spills over**: when reading, balloons and drawings that run out of a frame follow it,
+  cut smoothly with a sliver of paper; other frames' balloons are taken out of it. Automatic,
+  from the page image, without touching the file.
 - Next: the Android reader.
 
 ## Building and running

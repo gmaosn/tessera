@@ -100,8 +100,12 @@ fun ReaderPreview(
     var comparing by remember { mutableStateOf(false) }
     val focus = remember { FocusRequester() }
     LaunchedEffect(Unit) { focus.requestFocus() }
-    // The next page is decoded while this one is read.
-    LaunchedEffect(stop.page) { pages.getOrNull(stop.page + 1)?.let { images.page(it.imageHref) } }
+    // The next page is decoded, and what spills over its frames found, while this one is read.
+    LaunchedEffect(stop.page) {
+        val next = pages.getOrNull(stop.page + 1) ?: return@LaunchedEffect
+        val img = images.page(next.imageHref) ?: return@LaunchedEffect
+        images.cuts(next.imageHref, next.frames.mapNotNull { it.polygon }.ifEmpty { listOf(Polygon.rectangle(0, 0, img.width, img.height)) })
+    }
 
     fun framesOf(index: Int): Int = pages[index].frames.count { it.polygon != null }.coerceAtLeast(1)
     fun next() {
@@ -124,12 +128,23 @@ fun ReaderPreview(
     val frames: List<Pair<Polygon, String?>> = page.frames.mapNotNull { f -> f.polygon?.let { it to f.bgcolor } }.ifEmpty {
         if (image == null) emptyList() else listOf(Polygon.rectangle(0, 0, image.width, image.height) to null)
     }
+    // What each frame is cut with: the frame with what spills out of it, from the page image,
+    // so it comes a moment after the page.
+    val polys = frames.map { it.first }
+    var cutsFor by remember { mutableStateOf<Pair<List<Polygon>, List<Spill.Cut>>?>(null) }
+    LaunchedEffect(page.imageHref, polys, image) {
+        if (image == null) return@LaunchedEffect
+        cutsFor = polys to images.cuts(page.imageHref, polys)
+    }
+    val cuts = cutsFor?.takeIf { it.first == polys }?.second
+    // Until they are known, the frames as they are: the page shows at once, and the cut morphs on.
+    val shownCuts = cuts ?: remember(polys) { Spill.cuts(null, polys) }
     // A high-definition page is enhanced frame by frame: the frame read fills the screen, and a
     // frame costs a fraction of the page. Frames done stay enhanced while the page is read.
     val settings = EnhancePrefs.reader
     val byFrame = image != null && images.isHighDefinition(page.imageHref) &&
         (settings.mode == tessera.editor.enhance.EnhanceMode.Restore || settings.mode == tessera.editor.enhance.EnhanceMode.SuperRes)
-    val frameRegions = if (byFrame && image != null) frames.map { Region.around(it.first, image.width, image.height) } else emptyList()
+    val frameRegions = if (byFrame && image != null && cuts != null) cuts.map { Region.around(it, image.width, image.height) } else emptyList()
     val readyRegions = remember(page.imageHref, settings) { androidx.compose.runtime.mutableStateMapOf<Region, ImageBitmap>() }
     val currentRegion = frameRegions.getOrNull(stop.frame)
     // Frames of this page computed earlier (or by the preparer meanwhile) show at once.
@@ -175,10 +190,12 @@ fun ReaderPreview(
             var from by remember { mutableStateOf<Shot?>(null) }
             var to by remember { mutableStateOf<Shot?>(null) }
             var shownPage by remember { mutableIntStateOf(-1) }
-            LaunchedEffect(stop, image, vw, vh) {
+            LaunchedEffect(stop, image, shownCuts, vw, vh) {
                 if (image == null) return@LaunchedEffect
-                val (poly, bg) = frames.getOrNull(stop.frame.coerceAtMost(frames.size - 1)) ?: return@LaunchedEffect
-                val target = Shot.of(poly, parseColor(bg) ?: pageBg, vw, vh)
+                val index = stop.frame.coerceAtMost(frames.size - 1)
+                val frame = frames.getOrNull(index) ?: return@LaunchedEffect
+                val cut = shownCuts.getOrNull(index) ?: return@LaunchedEffect
+                val target = Shot.of(cut, parseColor(frame.second) ?: pageBg, vw, vh)
                 val samePage = shownPage == stop.page
                 val now = to?.let { t -> from?.lerp(t, progress.value) ?: t }
                 if (now == null || !samePage) {
@@ -318,9 +335,9 @@ private class Shot(val cx: Float, val cy: Float, val scale: Float, val outline: 
     companion object {
         private const val PADDING = 16f
 
-        fun of(poly: Polygon, background: Color, vw: Float, vh: Float): Shot {
-            val s = min((vw - 2 * PADDING) / (poly.maxX - poly.minX).coerceAtLeast(1), (vh - 2 * PADDING) / (poly.maxY - poly.minY).coerceAtLeast(1))
-            return Shot((poly.minX + poly.maxX) / 2f, (poly.minY + poly.maxY) / 2f, s, Outline.of(poly), background)
+        fun of(cut: Spill.Cut, background: Color, vw: Float, vh: Float): Shot {
+            val s = min((vw - 2 * PADDING) / (cut.maxX - cut.minX).coerceAtLeast(1f), (vh - 2 * PADDING) / (cut.maxY - cut.minY).coerceAtLeast(1f))
+            return Shot((cut.minX + cut.maxX) / 2f, (cut.minY + cut.maxY) / 2f, s, cut.outline, background)
         }
     }
 }
