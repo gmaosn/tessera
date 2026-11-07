@@ -52,6 +52,9 @@ One jar for macOS, Windows and Linux, x64 and ARM64 (run with `java -jar`, Java 
 tools/package-universal.py --input /tmp/tessera-pack/tasks/_app_executableJarJvm/app-jvm-executable.jar --output Tessera-universel.jar
 ```
 
+On Linux the window takes the desktop's scale (the X resources' `Xft.dpi`, or Hyprland's monitors
+when it leaves X11 programs unscaled); `-Dsun.java2d.uiScale=2` or `GDK_SCALE` override it.
+
 ## Documentation
 
 - [User guide](docs/GUIDE.md) · [Guide d’utilisation](docs/GUIDE.fr.md)
