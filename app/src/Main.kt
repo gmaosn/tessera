@@ -56,7 +56,6 @@ import tessera.editor.Pill
 import tessera.editor.Session
 import tessera.editor.Strings
 import tessera.editor.TesseraTheme
-import java.awt.FileDialog
 import java.awt.datatransfer.DataFlavor
 import java.io.File
 import java.util.Locale
@@ -102,10 +101,47 @@ fun EditorFor(
 }
 
 private val isMac = System.getProperty("os.name").lowercase().contains("mac")
+private val isLinux = System.getProperty("os.name") == "Linux"
 private val prefs: Preferences = Preferences.userRoot().node("tessera")
+
+/**
+ * The desktop's scale for X11 programs. AWT runs under XWayland and sees the screen at 100 % whatever
+ * the desktop's scale (a 2880 × 1920 screen at 200 % under KDE: a window of tiny controls), so it is
+ * read from the X resources' Xft.dpi (192 at 200 %, as KDE and GNOME set it), else from Hyprland's
+ * monitors, and given to Java before Swing and Compose start. Null: nothing found, below 1,
+ * unreadable, or chosen by the person (sun.java2d.uiScale, GDK_SCALE).
+ */
+private fun linuxUiScale(): String? {
+    if (System.getProperty("sun.java2d.uiScale") != null || System.getenv("GDK_SCALE") != null) return null
+    val dpi = commandOutput("xrdb", "-query")?.let { Regex("""(?m)^Xft\.dpi:\s*([\d.]+)""").find(it)?.groupValues?.get(1)?.toDoubleOrNull() }
+    val scale = dpi?.let { it / 96.0 } ?: hyprlandUiScale() ?: return null
+    return if (scale > 1.0 && scale <= 4.0) scale.toString() else null
+}
+
+/**
+ * Hyprland with `xwayland:force_zero_scaling` leaves X11 programs unscaled and sets no Xft.dpi: they
+ * must scale themselves. Its monitors' largest scale then (`hyprctl monitors -j`); null when Hyprland
+ * is not the desktop, or scales X11 programs itself (they would be scaled twice).
+ */
+private fun hyprlandUiScale(): Double? {
+    if (System.getenv("HYPRLAND_INSTANCE_SIGNATURE").isNullOrEmpty()) return null
+    val option = commandOutput("hyprctl", "getoption", "xwayland:force_zero_scaling", "-j") ?: return null
+    // « "bool": true » (Hyprland since 2025), « "int": 1 » before.
+    if (!Regex(""""(?:bool|int)"\s*:\s*(?:true|1)\b""").containsMatchIn(option)) return null
+    val monitors = commandOutput("hyprctl", "monitors", "-j") ?: return null
+    return Regex(""""scale"\s*:\s*([\d.]+)""").findAll(monitors).mapNotNull { it.groupValues[1].toDoubleOrNull() }.maxOrNull()
+}
+
+/** A short command's output, or null when it cannot run. */
+private fun commandOutput(vararg command: String): String? = runCatching {
+    val process = ProcessBuilder(*command).redirectErrorStream(true).start()
+    val text = process.inputStream.bufferedReader().use { it.readText() }
+    if (process.waitFor() == 0) text else null
+}.getOrNull()
 
 fun main(args: Array<String>) {
     startTrace()
+    if (isLinux) linuxUiScale()?.let { System.setProperty("sun.java2d.uiScale", it) }
     // The language chosen in the menu, else the system's.
     Strings.language = Language.of(prefs.get("language", null) ?: Locale.getDefault().language)
     if (!isMac) {
@@ -119,10 +155,15 @@ fun main(args: Array<String>) {
         prefs.put("enhance.editor", EnhancePrefs.encode(EnhancePrefs.editor))
         prefs.put("enhance.reader", EnhancePrefs.encode(EnhancePrefs.reader))
     }
+    // The file dialogs open where the last file was chosen.
+    FilePicker.folder = prefs.get("folder", null)?.let(::File)
+    FilePicker.onFolder = { prefs.put("folder", it.path) }
     application {
         var opened by remember { mutableStateOf(args.firstOrNull()?.let { runCatching { open(File(it)) }.getOrNull() }) }
         var error by remember { mutableStateOf<String?>(null) }
-        val state = rememberWindowState(size = DpSize(1440.dp, 920.dp))
+        // 1440 × 920, or what the screen leaves (a 1440 × 960 screen at 200 % minus its panel).
+        val room = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().maximumWindowBounds
+        val state = rememberWindowState(size = DpSize(minOf(1440, room.width).dp, minOf(920, room.height).dp))
         val title = opened?.let { "${it.file.name}${if (it.session.dirty) " •" else ""} — Tessera" } ?: "Tessera"
 
         var saveRequest by remember { mutableStateOf(0) }
@@ -382,31 +423,11 @@ private fun Welcome(error: String?, onOpen: () -> Unit) {
     }
 }
 
-private fun pickFile(window: java.awt.Frame): File? {
-    val dialog = FileDialog(window, Strings.openDialog, FileDialog.LOAD)
-    dialog.setFilenameFilter { _, name -> name.substringAfterLast('.').lowercase() in setOf("cbz", "zip", "acbf", "pdf") }
-    dialog.isVisible = true
-    return dialog.file?.let { File(dialog.directory, it) }
-}
+private fun pickFile(window: java.awt.Frame): File? = FilePicker.open(window, Strings.openDialog, Strings.comicFiles, listOf("cbz", "zip", "acbf", "pdf"))
 
-private fun pickPdf(window: java.awt.Frame): File? {
-    val dialog = FileDialog(window, Strings.importPdfDialog, FileDialog.LOAD)
-    dialog.setFilenameFilter { _, name -> name.endsWith(".pdf", ignoreCase = true) }
-    dialog.isVisible = true
-    return dialog.file?.let { File(dialog.directory, it) }
-}
+private fun pickPdf(window: java.awt.Frame): File? = FilePicker.open(window, Strings.importPdfDialog, "PDF", listOf("pdf"))
 
-/** A folder, through the system's dialog (macOS lets a file dialog choose folders when asked). */
-private fun pickFolder(window: java.awt.Frame): File? {
-    System.setProperty("apple.awt.fileDialogForDirectories", "true")
-    try {
-        val dialog = FileDialog(window, Strings.importScansDialog, FileDialog.LOAD)
-        dialog.isVisible = true
-        return dialog.file?.let { File(dialog.directory, it) }?.takeIf { it.isDirectory }
-    } finally {
-        System.setProperty("apple.awt.fileDialogForDirectories", "false")
-    }
-}
+private fun pickFolder(window: java.awt.Frame): File? = FilePicker.folder(window, Strings.importScansDialog)
 
 /** "Book.cbz" beside the PDF, or "Book (2).cbz" and so on when taken. */
 private fun freeName(pdf: File): File {
@@ -418,15 +439,12 @@ private fun freeName(pdf: File): File {
 }
 
 private fun pickSaveFile(window: java.awt.Frame, current: File): File? {
-    val dialog = FileDialog(window, Strings.saveAsDialog, FileDialog.SAVE)
-    dialog.directory = current.absoluteFile.parent
-    dialog.file = current.name
-    dialog.isVisible = true
-    val name = dialog.file ?: return null
+    val chosen = FilePicker.save(window, Strings.saveAsDialog, current) ?: return null
     // Keep the comic's kind: a CBZ stays a CBZ, an ACBF document stays one.
     val ext = current.extension.lowercase()
+    val name = chosen.name
     val fixed = if (name.substringAfterLast('.', "").lowercase() == ext || ext.isEmpty()) name else "$name.$ext"
-    return File(dialog.directory, fixed)
+    return File(chosen.absoluteFile.parentFile, fixed)
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)

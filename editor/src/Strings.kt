@@ -426,6 +426,8 @@ object Strings {
     val menuLanguage get() = t("Language", "Langue")
     val welcome get() = t("Open a CBZ or ACBF comic, or drop it here.", "Ouvrez une bande dessinée CBZ ou ACBF, ou déposez-la ici.")
     val openDialog get() = t("Open a comic", "Ouvrir une bande dessinée")
+    /** The open dialog's filter: CBZ, ZIP, ACBF and PDF files. */
+    val comicFiles get() = t("Comics", "Bandes dessinées")
     val unsavedTitle get() = t("Unsaved changes", "Modifications non enregistrées")
     fun unsavedMessage(file: String) = t("Save the changes to “$file” before closing?", "Enregistrer les modifications de « $file » avant de fermer ?")
     val dontSave get() = t("Don’t save", "Ne pas enregistrer")

@@ -6,7 +6,7 @@
 |---|---|---|
 | `core` | JVM, Android | Lossless XML, the ACBF model, ZIP (CBZ) reading and raw rewriting. No UI. |
 | `editor` | JVM, Android | The frame editor: session (undo, dirty state), frame tool, Compose UI, strings. |
-| `app` | JVM desktop | The window, menus, file dialogs, drag and drop, the unsaved-changes prompt. |
+| `app` | JVM desktop | The window, menus, file dialogs, drag and drop, the unsaved-changes prompt; on Linux the desktop's scale, which AWT under XWayland does not see (`linuxUiScale`: `Xft.dpi`, else Hyprland's monitors), and the desktop's own file dialogs (`FilePicker`: `kdialog` under KDE, else `zenity`, run as programs with the window's events flowing; Swing's chooser without them), since AWT's GTK dialog comes up blank with JDK 25. |
 
 Everything is pure Kotlin. Platform code is small and isolated: DEFLATE (`java.util.zip`) in
 `core/src@jvm` and `core/src@android`, image decoding (Skia on the desktop, `BitmapFactory` on
