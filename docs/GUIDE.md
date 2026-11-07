@@ -73,9 +73,10 @@ per page, and the next and previous pages are prepared in advance.
 | Polygon | P | Click each corner; double-click, click the first point again, or press ↵, to close. ⌫ removes the last point, Esc gives up |
 | Reading order | O | Click the frames in the order they are read |
 
-Edges **snap** to the image border and to the corners of the other frames, so neighbouring
-frames line up without gaps. A red dashed line shows what an edge snapped to. After drawing,
-Tessera goes back to Select with the new frame selected.
+Edges **snap** to the printed panel border, two pixels inside it on the frame's side (once the
+page is analysed, a moment after it opens), or else to the image border and to the corners of
+the other frames: draw roughly, the frame lands right. A red dashed line shows what an edge
+snapped to. After drawing, Tessera goes back to Select with the new frame selected.
 
 ## What spills over a frame's edge
 
@@ -88,6 +89,8 @@ file: Tessera reads the page itself, as soon as it is open.
   other frame it enters is cut round it the same way, so that none of it shows there.
 - Anything that runs out of a frame into the margin or a gutter (hair, a sound effect, a balloon
   without text) follows it too, with the same sliver; plain panel borders do not count.
+- A frame drawn a little over its printed border, or a little short of it, reads flush with
+  the line, two pixels inside it: nothing of the gutter or the next frame shows.
 - The cut is smooth: the frame's corners stay sharp, the cut hugs the balloon and meets the
   edge without a break.
 
