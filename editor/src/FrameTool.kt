@@ -193,7 +193,7 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
                 val f = polys[k] ?: continue
                 if (k != owner && k !in around) continue
                 val base = Balloon.withoutTracing(f, found) ?: f
-                val done = if (k == owner) Balloon.around(base, found.outer) else Balloon.without(base, found.clear)
+                val done = if (k == owner) Balloon.around(base, found.clear) else Balloon.without(base, found.clear)
                 val result = done ?: base
                 if (result != f) put(k, result)
             }

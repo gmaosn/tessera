@@ -29,6 +29,9 @@ l’octet près, sauf ce que vous avez modifié.
   place, avec le texte de l’autre langue à côté de chacune et ses zones copiées d’un clic.
 - **Lecture traduite** : la lecture case par case pose la langue choisie sur les images (L pour
   changer).
+- **Ce qui déborde** : à la lecture, bulles et dessins qui sortent d’une case la suivent,
+  découpés en douceur avec un liseré de papier ; les bulles des autres cases en sont retirées.
+  Automatique, lu dans l’image, sans toucher au fichier.
 - Ensuite : la liseuse Android.
 
 ## Compiler et lancer

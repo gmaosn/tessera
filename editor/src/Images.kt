@@ -97,6 +97,39 @@ class ImageCache(var comic: Comic, var store: SuperResStore? = null) {
         return image
     }
 
+    /** What spills over each page's frames, from the page as drawn; least recently used first. */
+    private val inks = LinkedHashMap<String, Spill.Ink?>()
+
+    /** The page at [href] analysed for what spills over its frames, or null when it is missing. */
+    suspend fun ink(href: String?): Spill.Ink? {
+        if (href == null) return null
+        if (inks.containsKey(href)) return inks.remove(href).also { inks[href] = it }
+        val page = page(href)
+        val result = if (page == null) null else withContext(Dispatchers.Default) {
+            val px = IntArray(page.width * page.height)
+            page.readPixels(px)
+            Spill.analyse(px, page.width, page.height)
+        }
+        inks[href] = result
+        while (inks.size > 4) inks.remove(inks.keys.first())
+        return result
+    }
+
+    /** The reader's cuts, by page and frames. */
+    private val cuts = LinkedHashMap<Pair<String, List<tessera.acbf.Polygon>>, List<Spill.Cut>>()
+
+    /** What the reader cuts each of [frames] of the page at [href] with: see [Spill.cuts]. */
+    suspend fun cuts(href: String?, frames: List<tessera.acbf.Polygon>): List<Spill.Cut> {
+        if (href == null) return Spill.cuts(null, frames)
+        val key = href to frames
+        cuts[key]?.let { return cuts.remove(key)!!.also { cuts[key] = it } }
+        val ink = ink(href)
+        val result = withContext(Dispatchers.Default) { Spill.cuts(ink, frames) }
+        cuts[key] = result
+        while (cuts.size > 12) cuts.remove(cuts.keys.first())
+        return result
+    }
+
     /** Enhanced pages, by image and settings; recomputed only when either changes. */
     private val enhanced = LinkedHashMap<Pair<String, Enhancement>, ImageBitmap?>()
 
@@ -233,11 +266,17 @@ data class Region(val x: Int, val y: Int, val width: Int, val height: Int) {
 
     companion object {
         /** A polygon's bounding box plus [margin] pixels, kept inside a [w]×[h] page. */
-        fun around(poly: tessera.acbf.Polygon, w: Int, h: Int, margin: Int = 8): Region {
-            val x0 = (poly.minX - margin).coerceIn(0, w - 1)
-            val y0 = (poly.minY - margin).coerceIn(0, h - 1)
-            val x1 = (poly.maxX + margin).coerceIn(x0 + 1, w)
-            val y1 = (poly.maxY + margin).coerceIn(y0 + 1, h)
+        fun around(poly: tessera.acbf.Polygon, w: Int, h: Int, margin: Int = 8): Region =
+            around(poly.minX.toFloat(), poly.minY.toFloat(), poly.maxX.toFloat(), poly.maxY.toFloat(), w, h, margin)
+
+        /** The box of what the reader cuts a frame with (its balloons included), plus [margin] pixels. */
+        fun around(cut: Spill.Cut, w: Int, h: Int, margin: Int = 8): Region = around(cut.minX, cut.minY, cut.maxX, cut.maxY, w, h, margin)
+
+        private fun around(minX: Float, minY: Float, maxX: Float, maxY: Float, w: Int, h: Int, margin: Int): Region {
+            val x0 = (kotlin.math.floor(minX).toInt() - margin).coerceIn(0, w - 1)
+            val y0 = (kotlin.math.floor(minY).toInt() - margin).coerceIn(0, h - 1)
+            val x1 = (kotlin.math.ceil(maxX).toInt() + margin).coerceIn(x0 + 1, w)
+            val y1 = (kotlin.math.ceil(maxY).toInt() + margin).coerceIn(y0 + 1, h)
             return Region(x0, y0, x1 - x0, y1 - y0)
         }
     }

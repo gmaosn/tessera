@@ -64,6 +64,41 @@ class OutlineTest {
         assertTrue(out.any { near(it, Offset(1000f, 1500f)) })
     }
 
+    /** A pixel mask of a rectangle with a half-disc bump: sides straight, corners exact, the bump round. */
+    @Test
+    fun aMaskIsWalkedSmoothlyWithItsCornersSharp() {
+        val ww = 500
+        val wh = 400
+        val mask = BooleanArray(ww * wh) { l ->
+            val x = l % ww + 0.5f
+            val y = l / ww + 0.5f
+            (x in 10f..410f && y in 20f..320f) || (x - 410f) * (x - 410f) + (y - 170f) * (y - 170f) <= 60f * 60f
+        }
+        val corners = listOf(
+            Outline.Corner(Offset(10f, 20f), Offset(10f, 320f), Offset(410f, 20f)),
+            Outline.Corner(Offset(410f, 20f), Offset(10f, 20f), Offset(410f, 320f)),
+            Outline.Corner(Offset(410f, 320f), Offset(410f, 20f), Offset(10f, 320f)),
+            Outline.Corner(Offset(10f, 320f), Offset(410f, 320f), Offset(10f, 20f)),
+        )
+        val out = Outline.fromMask(mask, ww, wh, 0, 0, corners)
+        assertEquals(Outline.POINTS, out.size)
+        for (c in corners) assertTrue(out.any { near(it, c.at) }, "corner ${c.at}")
+        // The left side straight, within the half pixel the trace runs inside the edge.
+        assertTrue(out.filter { it.y in 40f..300f && it.x < 100f }.all { abs(it.x - 10f) <= 0.6f })
+        // The bump round: on the circle, give or take a pixel.
+        val onArc = out.filter { it.x > 420f }
+        assertTrue(onArc.size > 20)
+        val worst = onArc.maxOf { abs((it - Offset(410f, 170f)).getDistance() - 60f) }
+        assertTrue(worst < 1.5f, "worst gap to the circle: $worst")
+        // No pixel steps left: successive steps turn gently along the bump.
+        val arc = out.indices.filter { out[it].x > 430f }
+        for (i in arc) {
+            val a = out[(i + out.size - 1) % out.size]; val b = out[i]; val c = out[(i + 1) % out.size]
+            val turn = abs(kotlin.math.atan2((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x), (b.x - a.x) * (c.x - b.x) + (b.y - a.y) * (c.y - b.y))) * 180 / PI
+            assertTrue(turn < 12.0, "turn of $turn° at $b")
+        }
+    }
+
     @Test
     fun sameCountForEveryShape() {
         val shapes = listOf(

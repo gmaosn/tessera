@@ -113,10 +113,11 @@ class Preparer(
             done += step.units
             return
         }
-        val polys = page.frames.mapNotNull { it.polygon }
+        // The regions the reader shows: each frame with what spills out of it.
+        val cuts = images.cuts(href, page.frames.mapNotNull { it.polygon })
         for (k in step.frames ?: 0 until 1) {
-            val poly = polys.getOrNull(k)
-            if (poly != null) prepare(href, Region.around(poly, image.width, image.height))
+            val cut = cuts.getOrNull(k)
+            if (cut != null) prepare(href, Region.around(cut, image.width, image.height))
             done += 1
         }
     }

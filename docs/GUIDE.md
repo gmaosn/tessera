@@ -77,20 +77,36 @@ Edges **snap** to the image border and to the corners of the other frames, so ne
 frames line up without gaps. A red dashed line shows what an edge snapped to. After drawing,
 Tessera goes back to Select with the new frame selected.
 
-## Balloons that cross a frame's edge
+## What spills over a frame's edge
 
-The **Balloon** tool (**B**) finds a balloon in the page from a click inside it, even among its
+When reading, each frame is cut with whatever spills out of it, and nothing changes in the
+file: Tessera reads the page itself, as soon as it is open.
+
+- **Balloons** (a light inside closed by an outline, with lettering) are found over the whole
+  page. A balloon crossing a frame's edge belongs to the frame holding most of it: that frame
+  goes round it, outline and all with a sliver of paper, so that the balloon shows whole; every
+  other frame it enters is cut round it the same way, so that none of it shows there.
+- Anything that runs out of a frame into the margin or a gutter (hair, a sound effect, a balloon
+  without text) follows it too, with the same sliver; plain panel borders do not count.
+- The cut is smooth: the frame's corners stay sharp, the cut hugs the balloon and meets the
+  edge without a break.
+
+The editor shows this cut as a fine dashed line round every frame concerned, once the frames
+stop moving.
+
+The **Balloon** tool (**B**) is for deciding yourself, and for writing the result into the file
+for other readers. It finds a balloon in the page from a click inside it, even among its
 letters: its whole inside, its outline and how thick it is. Small gaps in a scanned outline are
 bridged; where a balloon crosses a white gutter without an outline, it is closed off there. A
 balloon mostly open on the page is not taken.
 
 - In **Frames**, one click settles the balloon between the frames: the frame it belongs to (the
-  selected one, else the one holding most of it) goes round the part that spills over, cut
-  along the middle of its outline so that nothing of the next frame shows; every other frame it
-  intrudes on is cut back round it, outline and all, so that it does not show there. Points
-  traced by hand along the balloon go (the frames' real corners stay), so the outline becomes
-  regular. Click the same balloon again to give it to the other frame, and again to come back.
-  The frames' other points stay as they were; one undo step per click.
+  selected one, else the one holding most of it) goes round the part that spills over, outline
+  and sliver of paper included; every other frame it intrudes on is cut back round it the same
+  way, so that it does not show there. Points traced by hand along the balloon go (the frames'
+  real corners stay), so the outline becomes regular. Click the same balloon again to give it to
+  the other frame, and again to come back. The frames' other points stay as they were; one undo
+  step per click.
 - In **Texts**, a click makes a text area of the balloon's whole inside, so that the text gets
   all the room there is and its ground hides the original text; a click inside an existing area
   fits it to its balloon.
@@ -138,9 +154,11 @@ Reading from the Texts tab starts with its language; the choice is kept until th
 closed.
 
 The cut follows the frame softly: its corners stay sharp, points traced around a balloon become
-a round curve, and where a balloon meets the frame's edge the corner is slightly rounded. This is
-on screen only; the file keeps its points. In the editor, a fine dashed line shows this cut
-around every frame that is not a plain rectangle.
+a round curve, and where a balloon meets the frame's edge the corner is slightly rounded. What
+spills out of the frame is cut with it, and other frames' balloons are taken out of it (see
+What spills over a frame's edge). This is on screen only; the file keeps its points. In the
+editor, a fine dashed line shows this cut around every frame where it differs from the plain
+rectangle.
 
 ![Reading frame by frame](images/reading-preview.jpg)
 

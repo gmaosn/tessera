@@ -119,6 +119,18 @@ fun EditorScreen(
         tool.balloonAt = finder; textTool.balloonAt = finder
     }
     LaunchedEffect(session.page.imageHref) { images.wanted = listOfNotNull(session.page.imageHref) }
+    // What reading cuts each frame with (its balloons and ink that spill out), shown dashed;
+    // computed once the frames stop moving.
+    val polygons = tool.polygons
+    var cutsFor by remember(session) { mutableStateOf<Pair<List<tessera.acbf.Polygon?>, List<Spill.Cut?>>?>(null) }
+    LaunchedEffect(image, session.page.imageHref, polygons) {
+        if (image == null) { cutsFor = null; return@LaunchedEffect }
+        delay(150)
+        val found = images.cuts(session.page.imageHref, polygons.filterNotNull())
+        var k = 0
+        cutsFor = polygons to polygons.map { p -> if (p == null) null else found.getOrNull(k++) }
+    }
+    val cuts = cutsFor?.takeIf { it.first == polygons }?.second
     val enhanced by rememberEnhanced(images, session.page.imageHref, EnhancePrefs.editor)
     var enhanceOpen by remember { mutableStateOf(false) }
     // The preparer runs on the composition's own (UI) thread, which owns the image cache.
@@ -240,7 +252,7 @@ fun EditorScreen(
                 Box(Modifier.weight(1f).fillMaxHeight()) {
                     PageCanvas(
                         session, active, image, view, focus, Modifier.fillMaxSize(), display = if (comparing) null else enhanced,
-                        texts = if (mode == 1) textOverlay(session, lang, texts.preview) else null,
+                        texts = if (mode == 1) textOverlay(session, lang, texts.preview) else null, cuts = cuts,
                     )
                     if (comparing && enhanced != null) ComparingBadge(Modifier.align(Alignment.TopCenter).padding(top = 14.dp))
                     if ((EnhancePrefs.editor.mode == EnhanceMode.SuperRes || (EnhancePrefs.editor.mode == EnhanceMode.Restore && images.isHighDefinition(session.page.imageHref))) && enhanced == null && image != null) {

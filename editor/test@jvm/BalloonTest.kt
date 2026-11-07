@@ -79,14 +79,16 @@ class BalloonTest {
     fun theFrameGoesRoundTheSpillingPartAndKeepsItsOtherCorners() {
         val found = Balloon.find(page().toComposeImageBitmap(), 600, 300)!!
         val frame = Polygon(listOf(Point(50, 50), Point(600, 50), Point(600, 750), Point(50, 750)))
-        val grown = assertNotNull(Balloon.around(frame, found.outer))
+        val grown = assertNotNull(Balloon.around(frame, found.clear))
         for (corner in listOf(Point(50, 50), Point(600, 750), Point(50, 750), Point(600, 50))) assertTrue(corner in grown.points, "$corner kept")
-        // Everything of the balloon is in the grown frame, nothing much beyond it.
+        // Everything of the balloon is in the grown frame, with its outline and a sliver of paper (7 px for a 6 px stroke).
         val outside = found.inner.points.count { p -> found.inner.inward(p).let { (x, y) -> !grown.contains(x, y) } }
         assertEquals(0, outside)
-        assertTrue(grown.maxX in 775..786, "reaches ${grown.maxX}")
+        assertTrue(grown.maxX in 786..798, "reaches ${grown.maxX}")
+        assertTrue(found.letters >= 8, "letters ${found.letters}")
+        assertTrue(found.outlined)
         // A balloon wholly inside the frame changes nothing.
-        assertNull(Balloon.around(Polygon(listOf(Point(0, 0), Point(999, 0), Point(999, 799), Point(0, 799))), found.outer))
+        assertNull(Balloon.around(Polygon(listOf(Point(0, 0), Point(999, 0), Point(999, 799), Point(0, 799))), found.clear))
     }
 
     @Test
