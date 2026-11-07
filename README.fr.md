@@ -30,8 +30,9 @@ l’octet près, sauf ce que vous avez modifié.
 - **Lecture traduite** : la lecture case par case pose la langue choisie sur les images (L pour
   changer).
 - **Ce qui déborde** : à la lecture, bulles et dessins qui sortent d’une case la suivent,
-  découpés en douceur avec un liseré de papier ; les bulles des autres cases en sont retirées.
-  Automatique, lu dans l’image, sans toucher au fichier.
+  découpés en douceur avec un liseré de papier ; les bulles des autres cases en sont retirées ;
+  une case tracée un peu à côté de son trait de cadre est lue au ras du trait. Automatique, lu
+  dans l’image, sans toucher au fichier. Le tracé s’aimante aussi aux traits de cadre.
 - Ensuite : la liseuse Android.
 
 ## Compiler et lancer

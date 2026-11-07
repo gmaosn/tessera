@@ -52,6 +52,9 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
     /** Finds the balloon around a point of the page image; set by the editor once the image is loaded. */
     var balloonAt: ((Point) -> Balloon.Found?)? = null
 
+    /** The page's ink, for snapping onto its printed borders; set by the editor once the page is analysed. */
+    var ink: Spill.Ink? = null
+
     /** A message for the user, consumed by the UI (a toast). */
     var message by mutableStateOf<String?>(null)
 
@@ -63,7 +66,8 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
     private sealed interface Drag
     private class MoveDrag(val index: Int, val start: Offset, val original: Polygon, val gesture: (ShapeEdit.() -> Unit) -> Unit, var moved: Boolean = false) : Drag
     private class VertexDrag(val index: Int, val vertex: Int, val gesture: (ShapeEdit.() -> Unit) -> Unit) : Drag
-    private class RectDrag(val start: Point) : Drag
+    /** [start] is the press as it was: it snaps again at each move, once the frame's inside is known. */
+    private class RectDrag(val start: Offset) : Drag
 
     val polygons: List<Polygon?> get() = shapes.polygons
 
@@ -90,11 +94,11 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
             Tool.Select -> pressSelect(p, scale, alt)
             Tool.Rectangle -> {
                 val s = snap(p, scale, skip = -1)
-                drag = RectDrag(s); draft = listOf(s, s, s, s)
+                drag = RectDrag(p); draft = listOf(s, s, s, s)
             }
             Tool.Polygon -> {
-                val s = snap(p, scale, skip = -1)
                 val pts = draft.orEmpty()
+                val s = snap(p, scale, skip = -1, inside = centroid(pts))
                 if (pts.size > 2 && distance(pts[0], p) * scale < CLOSE_RADIUS) return closePolygon()
                 draft = pts + s
             }
@@ -116,22 +120,25 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
                 val dx0 = (p.x - d.start.x).roundToInt()
                 val dy0 = (p.y - d.start.y).roundToInt()
                 // Snap the moved frame's top-left corner, as the eye aligns frames by their edges.
-                val corner = snap(Offset((d.original.minX + dx0).toFloat(), (d.original.minY + dy0).toFloat()), scale, d.index, clamp = false)
+                val centre = Offset((d.original.minX + d.original.maxX) / 2f + dx0, (d.original.minY + d.original.maxY) / 2f + dy0)
+                val corner = snap(Offset((d.original.minX + dx0).toFloat(), (d.original.minY + dy0).toFloat()), scale, d.index, clamp = false, inside = centre)
                 val moved = d.original.translated(corner.x - d.original.minX, corner.y - d.original.minY)
                 d.gesture { set(d.index, moved) }
             }
             is VertexDrag -> {
-                val s = snap(p, scale, d.index)
                 val pts = polygons[d.index]!!.points.toMutableList()
+                val s = snap(p, scale, d.index, inside = centroid(pts.filterIndexed { i, _ -> i != d.vertex }))
                 pts[d.vertex] = s
                 d.gesture { set(d.index, Polygon(pts)) }
             }
             is RectDrag -> {
-                val s = snap(p, scale, -1)
-                draft = Polygon.rectangle(d.start.x, d.start.y, s.x, s.y).points
+                // Both corners snap with the frame between them known.
+                val anchor = snap(d.start, scale, -1, inside = p)
+                val s = snap(p, scale, -1, inside = d.start)
+                draft = Polygon.rectangle(anchor.x, anchor.y, s.x, s.y).points
             }
             null -> {
-                if (tool == Tool.Polygon && draft != null) draftCursor = snap(p, scale, -1)
+                if (tool == Tool.Polygon && draft != null) draftCursor = snap(p, scale, -1, inside = centroid(draft.orEmpty()))
                 else if (tool == Tool.Select || tool == Tool.Order) hovered = frameAt(p)
             }
         }
@@ -349,17 +356,30 @@ class FrameTool(private val session: Session, val shapes: Shapes = FrameShapes(s
 
     // ----- Snapping -----
 
+    /** The middle of [pts], a point inside a frame being drawn, once it has three points. */
+    private fun centroid(pts: List<Point>): Offset? =
+        if (pts.size < 3) null else Offset(pts.map { it.x }.average().toFloat(), pts.map { it.y }.average().toFloat())
+
     /**
-     * Rounds [p] to a pixel and pulls it onto the image edges or the corners' lines of other
-     * frames within [SNAP_RADIUS] screen pixels. Records the guides it snapped to.
+     * Rounds [p] to a pixel and pulls it onto a printed border of the page (two pixels inside
+     * its ink, on the side of [inside] when the frame's inside is known, else on the point's
+     * side), or else onto the image edges or the corners' lines of other frames, within
+     * [SNAP_RADIUS] screen pixels. Records the guides it snapped to.
      */
-    private fun snap(p: Offset, scale: Float, skip: Int, clamp: Boolean = true): Point {
+    private fun snap(p: Offset, scale: Float, skip: Int, clamp: Boolean = true, inside: Offset? = null): Point {
         val radius = SNAP_RADIUS / scale
         val xs = mutableListOf(0, imageWidth)
         val ys = mutableListOf(0, imageHeight)
         polygons.forEachIndexed { i, poly -> if (i != skip && poly != null) poly.points.forEach { xs += it.x; ys += it.y } }
-        val gx = xs.minByOrNull { abs(it - p.x) }?.takeIf { abs(it - p.x) <= radius }
-        val gy = ys.minByOrNull { abs(it - p.y) }?.takeIf { abs(it - p.y) <= radius }
+        var gx = xs.minByOrNull { abs(it - p.x) }?.takeIf { abs(it - p.x) <= radius }
+        var gy = ys.minByOrNull { abs(it - p.y) }?.takeIf { abs(it - p.y) <= radius }
+        val page = ink
+        if (page != null) {
+            val r = radius.roundToInt().coerceIn(6, 40)
+            fun beside(band: IntRange, ref: Float): Int? = if (ref > band.last) band.last + 2 else if (ref < band.first) band.first - 1 else null
+            Spill.borderNear(page, p.x.roundToInt(), p.y.roundToInt(), r, vertical = true)?.let { band -> beside(band, inside?.x ?: p.x)?.let { gx = it } }
+            Spill.borderNear(page, p.x.roundToInt(), p.y.roundToInt(), r, vertical = false)?.let { band -> beside(band, inside?.y ?: p.y)?.let { gy = it } }
+        }
         guides = listOfNotNull(gx?.let { Guide(true, it) }, gy?.let { Guide(false, it) })
         var x = gx ?: p.x.roundToInt()
         var y = gy ?: p.y.roundToInt()

@@ -74,8 +74,10 @@ peut prendre un instant par planche, et les planches voisines sont préparées �
 | Polygone | P | Cliquez chaque coin ; double-cliquez, recliquez le premier point, ou appuyez sur ↵, pour fermer. ⌫ retire le dernier point, Échap abandonne |
 | Ordre de lecture | O | Cliquez les cases dans l’ordre où on les lit |
 
-Les bords **s’aimantent** au bord de l’image et aux coins des autres cases : des cases voisines
-s’alignent sans interstice. Une ligne rouge pointillée montre à quoi un bord s’est aimanté.
+Les bords **s’aimantent** au trait de cadre imprimé, deux pixels en retrait du côté de la case
+(dès que la planche est analysée, un instant après son ouverture), sinon au bord de l’image et
+aux coins des autres cases : on trace en gros, la case tombe juste. Une ligne rouge pointillée
+montre à quoi un bord s’est aimanté.
 Après un tracé, Tessera revient à la sélection, la nouvelle case sélectionnée.
 
 ## Ce qui déborde d’une case
@@ -90,6 +92,8 @@ fichier : Tessera lit la planche elle-même, dès qu’elle est ouverte.
 - Tout ce qui sort d’une case dans la marge ou la gouttière (une chevelure, une onomatopée, une
   bulle sans texte) la suit aussi, avec le même liseré ; les simples traits de cadre ne comptent
   pas.
+- Une case tracée un peu au-delà de son trait de cadre, ou un peu en deçà, est lue au ras du
+  trait, deux pixels à l’intérieur : rien de la gouttière ni de la case voisine ne se voit.
 - Le contour est lissé : les angles de la case restent nets, la découpe épouse la bulle et
   rejoint le bord sans cassure.
 

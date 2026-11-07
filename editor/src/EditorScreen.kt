@@ -124,9 +124,10 @@ fun EditorScreen(
     val polygons = tool.polygons
     var cutsFor by remember(session) { mutableStateOf<Pair<List<tessera.acbf.Polygon?>, List<Spill.Cut?>>?>(null) }
     LaunchedEffect(image, session.page.imageHref, polygons) {
-        if (image == null) { cutsFor = null; return@LaunchedEffect }
+        if (image == null) { cutsFor = null; tool.ink = null; return@LaunchedEffect }
         delay(150)
         val found = images.cuts(session.page.imageHref, polygons.filterNotNull())
+        tool.ink = images.ink(session.page.imageHref)
         var k = 0
         cutsFor = polygons to polygons.map { p -> if (p == null) null else found.getOrNull(k++) }
     }

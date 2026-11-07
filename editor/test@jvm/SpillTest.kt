@@ -70,8 +70,31 @@ class SpillTest {
         assertTrue(balloon.halo.maxX in 804..820, "halo reaches ${balloon.halo.maxX}")
         assertTrue(balloon.inner.maxX in 795..800)
         assertTrue(balloon.halo.points.size > 150 && balloon.halo.points.size > 3 * balloon.clear.points.size, "traced closely: ${balloon.halo.points.size} points")
-        // The paper: the margins, not the frames' grounds.
-        assertTrue(ink.paper[10 * 1200 + 10] && !ink.paper[300 * 1200 + 300] && !ink.paper[300 * 1200 + 900])
+        // The paper: the margins, not the frames' grounds; the ink: the borders.
+        assertTrue(ink.kind[10 * 1200 + 10] == Spill.PAPER && ink.kind[300 * 1200 + 300] == Spill.OTHER && ink.kind[300 * 1200 + 900] == Spill.OTHER)
+        assertTrue(ink.kind[60 * 1200 + 700] == Spill.INK && ink.kind[500 * 1200 + 620] == Spill.INK)
+    }
+
+    /** A frame drawn 8 px over its printed border, and one 6 px short of it, both read as the panel: two pixels inside the ink. */
+    @Test
+    fun framesDrawnOverOrShortOfTheBorderAreTightenedOntoIt() {
+        val ink = Spill.analyse(page(), 1200, 900)
+        val over = Polygon.rectangle(52, 52, 628, 848)
+        val short = Polygon.rectangle(66, 66, 614, 834)
+        for (f in listOf(over, short)) {
+            val cut = Spill.cuts(ink, listOf(f, right)).first()
+            assertTrue(!cut.plain)
+            val leftSide = cut.outline.filter { it.x < 100f && it.y in 200f..700f }
+            assertTrue(leftSide.isNotEmpty() && leftSide.all { kotlin.math.abs(it.x - 64f) <= 1f }, "left side of $f: ${leftSide.map { it.x }.distinct()}")
+            val rightSide = cut.outline.filter { it.x > 580f && it.y in 400f..800f }
+            assertTrue(rightSide.isNotEmpty() && rightSide.all { kotlin.math.abs(it.x - 617f) <= 1f }, "right side of $f: ${rightSide.map { it.x }.distinct()}")
+            assertTrue(cut.outline.hasCorner(Point(617, 837)) && cut.outline.hasCorner(Point(64, 837)) && cut.outline.hasCorner(Point(617, 64)), "corners of $f")
+        }
+        // The polygon itself, before the spills: the border two pixels in, all round.
+        assertEquals(Polygon.rectangle(64, 64, 617, 837), Spill.tightened(ink, over))
+        assertEquals(Polygon.rectangle(64, 64, 617, 837), Spill.tightened(ink, short))
+        // A frame far from any line stays.
+        assertEquals(Polygon.rectangle(700, 400, 1100, 800), Spill.tightened(ink, Polygon.rectangle(700, 400, 1100, 800)))
     }
 
     @Test
@@ -85,14 +108,13 @@ class SpillTest {
         assertTrue(a.minY in 0f..16f, "caption reaches ${a.minY}")
         assertTrue(a.maxY in 876f..892f, "hair reaches ${a.maxY}")
         assertTrue(a.outline.contains(700f, 250f) && a.outline.contains(300f, 30f) && a.outline.contains(330f, 865f))
-        // Its free corners stay exact; the corner under the caption's box side is gone.
-        for (c in listOf(Point(620, 60), Point(620, 840), Point(60, 840))) assertTrue(a.outline.hasCorner(c), "corner $c")
-        assertTrue(a.outline.hasCorner(Point(60, 60)))
+        // Its corners stay exact, two pixels inside the printed border the frames were drawn on.
+        for (c in listOf(Point(617, 64), Point(617, 837), Point(64, 837), Point(64, 64))) assertTrue(a.outline.hasCorner(c), "corner $c")
         // The right frame: nothing of the balloon, corners kept, the rest untouched.
         assertTrue(!b.outline.contains(700f, 250f) && !b.outline.contains(665f, 250f))
         assertTrue(b.outline.contains(900f, 250f) && b.outline.contains(700f, 500f))
-        for (c in right.points) assertTrue(b.outline.hasCorner(c), "corner $c")
-        assertTrue(b.minX >= 659f && b.maxX <= 1141f && b.minY >= 59f && b.maxY <= 841f)
+        for (c in listOf(Point(664, 64), Point(1137, 64), Point(1137, 837), Point(664, 837))) assertTrue(b.outline.hasCorner(c), "corner $c")
+        assertTrue(b.minX >= 663f && b.maxX <= 1138f && b.minY >= 63f && b.maxY <= 838f)
         // The balloon's cut follows the ellipse at a steady distance: outline plus paper, about 10 px.
         val centre = Offset(620f, 250f)
         val arc = a.outline.filter { it.x > 640f && it.y in 170f..330f }

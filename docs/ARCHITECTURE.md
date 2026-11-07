@@ -84,9 +84,15 @@ archive while keeping the same in-memory document, so undo history survives savi
   plus the halos of its own balloons that spill (the frame holding most of a balloon owns it),
   minus the halos of other frames' balloons. `Raster` holds the mask operations;
   `Outline.fromMask` traces the mask, smooths it along the contour and puts the frame's corners
-  back sharp, then walks it like any outline. `ImageCache.ink` and `cuts` cache them per page
-  and per frames; the reader, the editor's dashed cut and the preparer's regions all use `cuts`
-  (`editor/test@jvm/SpillTest.kt`).
+  back sharp, then walks it like any outline. Before all that, `tightened` puts each straight
+  side of the frame's outline onto the printed border found along it (`borderAlong`: a thin
+  band of ink, solid along the side with its balloons left out, paper beyond it, darker than
+  what is just inside; the farthest inside the side, else one just outside), two pixels inside
+  the ink; the segments of a curve traced round a balloon are left alone.
+  `borderNear` finds such a line near a point, for `FrameTool.snap` (two pixels inside, on the
+  side of the frame's inside when known). `ImageCache.ink` and `cuts` cache them per page and
+  per frames; the reader, the editor's dashed cut and the preparer's regions all use `cuts`
+  (`editor/test@jvm/SpillTest.kt`, `editor/test/FrameToolTest.kt`).
 - `Strings`: every text in English and French. `Strings.language` is Compose state; changing it
   redraws the UI at once.
 

@@ -36,6 +36,25 @@ class FrameToolTest {
         assertEquals("480,0 1000,0 1000,701 480,701", session.page.frames[1].element["points"])
     }
 
+    /** Once the page is analysed, the corners snap two pixels inside the printed border, from either side of it. */
+    @Test
+    fun rectanglesSnapJustInsideThePrintedBorder() {
+        val (session, tool) = setup()
+        // A page of paper with a panel's border 5 px thick: columns 98–102 and 298–302, rows 48–52 and 248–252.
+        val kind = ByteArray(1000 * 1500) { tessera.editor.Spill.PAPER }
+        for (y in 48..252) for (x in 98..302) if (x <= 102 || x >= 298 || y <= 52 || y >= 248) kind[y * 1000 + x] = tessera.editor.Spill.INK
+        tool.ink = tessera.editor.Spill.Ink(1000, 1500, kind, 250, emptyList())
+        // Dragged from outside the corner to outside the opposite one.
+        tool.dragRect(92f, 44f, 308f, 258f)
+        assertEquals("104,54 297,54 297,247 104,247", session.page.frames.single().element["points"])
+        // Dragged from inside: the same frame.
+        tool.dragRect(107f, 57f, 293f, 243f)
+        assertEquals("104,54 297,54 297,247 104,247", session.page.frames[1].element["points"])
+        // Far from any line, nothing pulls.
+        tool.dragRect(500f, 500f, 700f, 800f)
+        assertEquals("500,500 700,500 700,800 500,800", session.page.frames[2].element["points"])
+    }
+
     @Test
     fun ignoresTinyAccidentalDrags() {
         val (session, tool) = setup()
